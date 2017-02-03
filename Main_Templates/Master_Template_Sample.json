@@ -1,0 +1,407 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "CustomerName": {
+      "type": "string",
+      "metadata": {
+        "description": "Customer  name."
+      }
+    },
+    "VMName": {
+      "type": "string",
+      "metadata": {
+        "description": "Virtual Machine name."
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
+    },
+    //"dnsLabelPrefix": {
+    //  "type": "string",
+    //  "metadata": {
+    //    "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
+    //  }
+    //},
+    "windowsOSVersion": {
+      "type": "string",
+      "defaultValue": "2012-R2-Datacenter",
+      "allowedValues": [
+        "2008-R2-SP1",
+        "2012-Datacenter",
+        "2012-R2-Datacenter",
+        "2016-Nano-Server-Technical-Preview",
+        "2016-Technical-Preview-with-Containers",
+        "Windows-Server-Technical-Preview"
+      ],
+      "metadata": {
+        "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
+      }
+    },
+    "VMSize": {
+      "type": "string",
+      "defaultValue": "Standard_D1",
+      "allowedValues": [
+        "Standard_D1",
+        "Standard_D2",
+        "Standard_D3",
+        "Standard_D4",
+        "Standard_D11",
+        "Standard_D12",
+        "Standard_D13",
+        "Standard_A1",
+        "Standard_A2",
+        "Standard_A3",
+        "Standard_A4",
+        "Standard_A5"
+      ],
+      "metadata": {
+        "description": "The size of the VM."
+      }
+    },
+    "_artifactsLocation": {
+      "type": "string",
+      "metadata": {
+        "group": "Infrastructure settings",
+        "description": "Change this value to your repo name if deploying from a fork"
+      },
+      "defaultValue": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources"
+    },
+    "_artifactsLocationSasToken": {
+      "type": "securestring",
+      "metadata": {
+        "group": "Infrastructure settings",
+        "description": "Auto-generated token to access _artifactsLocation",
+        "artifactsLocationSasToken": ""
+      },
+      "defaultValue": ""
+    },
+    "storageAcctNewOrExisting": {
+      "type": "string",
+      "allowedValues": [
+        "new",
+        "existing"
+      ] ,
+      "metadata": {
+        "description": "Use a new or existing storage account"
+      },
+      "defaultValue": "new"
+    },
+    "storageAcctResourceGroup": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource Group for storage account for VHD placement. Only needed if using existing storage account"
+      },
+      "defaultValue": ""
+    },
+
+    "storageAcctName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of storage Account for VHD placement."
+      },
+      "defaultValue": "[tolower(concat(parameters('CustomerName'),'sa'))]"
+    },
+    "storageAcctContainerName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of storage Account container for VHD placement."
+      },
+      "defaultValue": "vhds"
+    },
+    "frontEndPort": {
+      "type": "string",
+      "metadata": {
+        "description": "Front end port for NAT purposes for load balancer."
+      },
+      "defaultValue": ""
+    },
+    "backEndPort": {
+      "type": "string",
+      "metadata": {
+        "description": "Back end port for NAT purposes for load balancer."
+      },
+      "defaultValue": ""
+    }
+  
+  },//End of Parameters
+
+
+  "variables": {
+    //"dnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName'),'-pip'))]",
+    //"storageAccountName": "[parameters('storageAcctName')]",
+    //"virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
+    //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+    //Template URIs
+    "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
+    ////  This is a loadbalanced NIC:
+    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_lb.json')]",
+    ////This is a standard NIC with a Public IP attached:
+    //    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_pip.json')]",
+    ////This is a standard NIC without a Public IP or Load balancer:
+    //    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
+    ////  Comment out the LoadBalancerResource section as well if you want to forego Load balancer
+    ////  Comment out the Public IP section as well if you want to forego Public IP
+    "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
+    "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
+    "VMURI": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
+    "StorageAccountURI": "[concat(parameters('_artifactsLocation'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
+    "NetworkSecurityGroupURI": "[concat(parameters('_artifactsLocation'),'/','rdp_network_security_group.json')]",
+    "LoadBalancerURI": "[concat(parameters('_artifactsLocation'),'/','load_balancer.json')]",
+    //Objects
+    "VNetObject": {
+      "Name": "[concat(parameters('CustomerName'),'VNET01')]",
+      "AddressPrefix": "172.31.0.0/22",
+      "subnet1Name": "DCs",
+      "subnet1Prefix": "172.31.0.0/25",
+      "subnet2Name": "Subnet-1",
+      "subnet2Prefix": "172.31.0.128/25",
+      "subnet3Name": "Subnet-2",
+      "subnet3Prefix": "172.31.1.0/25",
+      "subnet4Name": "Subnet-3",
+      "subnet4Prefix": "172.31.1.128/25",
+      "subnet5Name": "Subnet-4",
+      "subnet5Prefix": "172.31.2.0/25",
+      "subnet6Name": "Subnet-5",
+      "subnet6Prefix": "172.31.2.128/25",
+      "subnet7Name": "Subnet-6",
+      "subnet7Prefix": "172.31.3.0/25",
+      "subnet8Name": "External",
+      "subnet8Prefix": "172.31.3.128/29"
+    },
+    "ASObject": {
+      "Name": "[concat(parameters('VMName'),'-AS')]",
+      "Location": "East US"
+    },
+    "StorageAccountObject": {
+      "Name": "[parameters('storageAcctName')]",
+      "SkuName": "Standard_LRS",
+      "ResourceGroup": "[parameters('storageAcctResourceGroup')]"
+    },
+    "PIPObject": {
+      "Name": "[tolower(concat(parameters('VMName'),'-pip'))]",
+      "AllocationMethod": "Dynamic",
+      "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName'),'-pip'))]"
+    },
+    "LBObject": {
+      "Name": "[concat(parameters('VMName'),'-LB')]",
+      "FrontEndName": "[concat(parameters('VMName'),'-publicFrontEnd')]",
+      "PIPName": "[variables('PIPObject').Name]",
+      "BackEndName": "[concat(parameters('VMName'),'-BackEnd')]",
+      "FrontEndPort": "[parameters('frontEndPort')]",
+      "BackEndPort": "[parameters('backEndPort')]"
+    },
+    "NICObject": {
+      "Name": "[concat(parameters('VMName'),'-Nic')]",
+      "PublicIPAddressName": "[variables('PIPObject').Name]",
+//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').Name, variables('VNetObject').subnet2Name)]",
+      "LoadBalancerName": "[concat(parameters('VMName'),'-LB')]",
+      "LoadBalancerBackEndName": "[variables('LBObject').BackEndName]"
+    },
+    "NSGObject": {
+      "Name": "FrontEnd-NSG",
+      "Rule1SourcePort": "*",
+      "Rule1DestinationPort": "145",
+      "Rule1Access": "Allow",
+      "LoadBalancerBackEndName": "[variables('LBObject').BackEndName]"
+    },
+      "VMObject": {
+      "Name": "[parameters('VMName')]",
+      "Size": "[parameters('VMSize')]",
+      "ASName": "[variables('ASObject').Name]",
+      "nicName": "[variables('NICObject').Name]",
+      "adminUserName": "[parameters('adminUsername')]",
+      "adminPassword": "[parameters('adminPassword')]",
+      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "storageAccountName": "[parameters('storageAcctName')]",
+      "storageAccountContainerName":"[parameters('storageAcctContainerName')]"
+    }
+  },
+  "resources": [
+   {
+    "name": "AvailabilitySetResource",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+    "dependsOn": [],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+        "uri": "[variables('AvailabilitySetURI')]",
+        "contentVersion": "1.0.0.0"
+      },
+      "parameters": {
+        "ASObject": {
+          //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
+          "value": "[variables('ASObject')]"
+        }
+      }
+    }
+  },
+
+    {
+    "name": "StorageAccountResource",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+    "dependsOn": [],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+        "uri": "[variables('StorageAccountURI')]",
+        "contentVersion": "1.0.0.0"
+      },
+      "parameters": {
+        "StorageAccountObject": {
+          //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
+          "value": "[variables('StorageAccountObject')]"
+        }
+      }
+    }    
+    },
+    {
+    "name": "PublicIPResource",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+    "dependsOn": [],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+        "uri": "[variables('PublicIPURI')]",
+        "contentVersion": "1.0.0.0"
+      },
+      "parameters": {
+        "PIPObject": {
+          //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
+          "value": "[variables('PIPObject')]"
+        }
+      }
+    }    
+    },
+    {
+      "name": "VirtualNetworkResource",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('VNetURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+          "VNetObject": {
+            "value": "[variables('VNetObject')]"
+          }
+        }
+      }
+    },
+    {
+       "name": "NetworkInterfaceResource",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource')]"
+        
+        ],      
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+          "NICObject": {
+            "value": "[variables('NICObject')]"
+          }
+        }
+      }
+    },
+   {
+    "name": "LoadBalancerResource",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+    "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"
+    ],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+        "uri": "[variables('LoadBalancerURI')]",
+        "contentVersion": "1.0.0.0"
+      },
+      "parameters": {
+        "LBObject": {
+          //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
+          "value": "[variables('LBObject')]"
+        }
+      }
+    }
+  },
+    {
+    "name": "NetworkSecurityGroupResource",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+//    "dependsOn": [
+//         "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"
+//   ],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+        "uri": "[variables('NetworkSecurityGroupURI')]",
+        "contentVersion": "1.0.0.0"
+      },
+      "parameters": {
+        "NSGObject": {
+          //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
+          "value": "[variables('NSGObject')]"
+        }
+      }
+    }
+  },   
+    {
+      "name": "VMResource",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+       //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+          "uri": "[variables('VMURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "VMObject": {
+            "value": "[variables('VMObject')]"
+          }
+        }
+      }
+    }
+  ]//,
+  //"outputs": {
+    //"hostname": {
+     // "type": "string",
+      //"value": "[reference(variables('PIPObject').Name).dnsSettings.fqdn]"
+   // }
+ // }
+}

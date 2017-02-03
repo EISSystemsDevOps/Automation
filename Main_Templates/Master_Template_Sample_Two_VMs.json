@@ -1,0 +1,621 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "CustomerName": {
+      "type": "string",
+      "metadata": {
+        "description": "Customer  name."
+      }
+    },
+    "VMName1": {
+      "type": "string",
+      "metadata": {
+        "description": "Virtual Machine name."
+      }
+    },
+    "VMName2": {
+      "type": "string",
+      "metadata": {
+        "description": "Virtual Machine name."
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
+    },
+    //"dnsLabelPrefix": {
+    //  "type": "string",
+    //  "metadata": {
+    //    "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
+    //  }
+    //},
+    "windowsOSVersion": {
+      "type": "string",
+      "defaultValue": "2012-R2-Datacenter",
+      "allowedValues": [
+        "2008-R2-SP1",
+        "2012-Datacenter",
+        "2012-R2-Datacenter",
+        "2016-Nano-Server-Technical-Preview",
+        "2016-Technical-Preview-with-Containers",
+        "Windows-Server-Technical-Preview"
+      ],
+      "metadata": {
+        "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
+      }
+    },
+    "VMSize1": {
+      "type": "string",
+      "defaultValue": "Standard_D1",
+      "allowedValues": [
+        "Standard_D1",
+        "Standard_D2",
+        "Standard_D3",
+        "Standard_D4",
+        "Standard_D11",
+        "Standard_D12",
+        "Standard_D13",
+        "Standard_A1",
+        "Standard_A2",
+        "Standard_A3",
+        "Standard_A4",
+        "Standard_A5"
+      ],
+      "metadata": {
+        "description": "The size of the VM."
+      }
+    },
+    "VMSize2": {
+      "type": "string",
+      "defaultValue": "Standard_D1",
+      "allowedValues": [
+        "Standard_D1",
+        "Standard_D2",
+        "Standard_D3",
+        "Standard_D4",
+        "Standard_D11",
+        "Standard_D12",
+        "Standard_D13",
+        "Standard_A1",
+        "Standard_A2",
+        "Standard_A3",
+        "Standard_A4",
+        "Standard_A5"
+      ],
+      "metadata": {
+        "description": "The size of the VM."
+      }
+    },
+    "_artifactsLocation": {
+      "type": "string",
+      "metadata": {
+        "group": "Infrastructure settings",
+        "description": "Change this value to your repo name if deploying from a fork"
+      },
+      "defaultValue": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources"
+    },
+    "_artifactsLocationSasToken": {
+      "type": "securestring",
+      "metadata": {
+        "group": "Infrastructure settings",
+        "description": "Auto-generated token to access _artifactsLocation",
+        "artifactsLocationSasToken": ""
+      },
+      "defaultValue": ""
+    },
+    "storageAcctNewOrExisting": {
+      "type": "string",
+      "allowedValues": [
+        "new",
+        "existing"
+      ] ,
+      "metadata": {
+        "description": "Use a new or existing storage account"
+      },
+      "defaultValue": "new"
+    },
+    "storageAcctResourceGroup": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource Group for storage account for VHD placement. Only needed if using existing storage account"
+      },
+      "defaultValue": ""
+    },
+
+    "storageAcctName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of storage Account for VHD placement."
+      },
+      "defaultValue": "[tolower(concat(parameters('CustomerName'),'sa'))]"
+    },
+    "storageAcctContainerName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of storage Account container for VHD placement."
+      },
+      "defaultValue": "vhds"
+    },
+    "frontEndPort": {
+      "type": "string",
+      "metadata": {
+        "description": "Front end port for NAT purposes for load balancer."
+      },
+      "defaultValue": ""
+    },
+    "backEndPort": {
+      "type": "string",
+      "metadata": {
+        "description": "Back end port for NAT purposes for load balancer."
+      },
+      "defaultValue": ""
+    }
+  
+  },//End of Parameters
+
+
+  "variables": {
+    //"dnsLabelPrefix1": "[tolower(concat(parameters('CustomerName'),parameters('VMName1'),'-pip'))]",
+    //"dnsLabelPrefix2": "[tolower(concat(parameters('CustomerName'),parameters('VMName2'),'-pip'))]",
+    //"storageAccountName": "[parameters('storageAcctName')]",
+    //"virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
+    //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+    //Template URIs
+    "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
+    ////  This is a NIC with a Load Balancer attached:
+    "NetworkInterfaceLBURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_lb.json')]",
+    ////This is a standard NIC with a Public IP attached:
+    "NetworkInterfacePIPURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_pip.json')]",
+    ////This is a standard NIC without a Public IP or Load balancer:
+    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
+    ////  Comment out the LoadBalancerResource section as well if you want to forego Load balancer
+    ////  Comment out the Public IP section as well if you want to forego Public IP
+    "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
+    "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
+    "VMURI": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
+    "StorageAccountURI": "[concat(parameters('_artifactsLocation'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
+    "NetworkSecurityGroupURI": "[concat(parameters('_artifactsLocation'),'/','rdp_network_security_group.json')]",
+    "LoadBalancerURI": "[concat(parameters('_artifactsLocation'),'/','load_balancer.json')]",
+    //Objects
+    "VNetObject": {
+      "Name": "[concat(parameters('CustomerName'),'VNET01')]",
+      "AddressPrefix": "172.32.0.0/22",
+      "subnet1Name": "DCs",
+      "subnet1Prefix": "172.32.0.0/25",
+      "subnet2Name": "Subnet-1",
+      "subnet2Prefix": "172.32.0.128/25",
+      "subnet3Name": "Subnet-2",
+      "subnet3Prefix": "172.32.1.0/25",
+      "subnet4Name": "Subnet-3",
+      "subnet4Prefix": "172.32.1.128/25",
+      "subnet5Name": "Subnet-4",
+      "subnet5Prefix": "172.32.2.0/25",
+      "subnet6Name": "Subnet-5",
+      "subnet6Prefix": "172.32.2.128/25",
+      "subnet7Name": "Subnet-6",
+      "subnet7Prefix": "172.32.3.0/25",
+      "subnet8Name": "External",
+      "subnet8Prefix": "172.32.3.128/29"
+    },
+    "ASObject1": {
+      "Name": "[concat(parameters('VMName1'),'-AS')]",
+      "Location": "East US"
+    },
+    "ASObject2": {
+      "Name": "[concat(parameters('VMName2'),'-AS')]",
+      "Location": "East US"
+    },
+
+    "StorageAccountObject": {
+      "Name": "[parameters('storageAcctName')]",
+      "SkuName": "Standard_LRS",
+      "ResourceGroup": "[parameters('storageAcctResourceGroup')]"
+    },
+    "PIPObject1": {
+      "Name": "[tolower(concat(parameters('VMName1'),'-pip'))]",
+      "AllocationMethod": "Static",
+      "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName1'),'-pip'))]"
+    },
+    "PIPObject2": {
+      "Name": "[tolower(concat(parameters('VMName2'),'-pip'))]",
+      "AllocationMethod": "Dynamic",
+      "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName2'),'-pip'))]"
+    },
+    "LBObject1": {
+      "Name": "[concat(parameters('VMName1'),'-LB')]",
+      "FrontEndName": "[concat(parameters('VMName1'),'-publicFrontEnd')]",
+      "PIPName": "[variables('PIPObject1').Name]",
+      "BackEndName": "[concat(parameters('VMName1'),'-BackEnd')]",
+      "FrontEndPort": "[parameters('frontEndPort')]",
+      "BackEndPort": "[parameters('backEndPort')]"
+    },
+    "LBObject2": {
+      "Name": "[concat(parameters('VMName2'),'-LB')]",
+      "FrontEndName": "[concat(parameters('VMName2'),'-publicFrontEnd')]",
+      "PIPName": "[variables('PIPObject2').Name]",
+      "BackEndName": "[concat(parameters('VMName2'),'-BackEnd')]",
+      "FrontEndPort": "[parameters('frontEndPort')]",
+      "BackEndPort": "[parameters('backEndPort')]"
+    },
+
+    "NICObject1": {
+      "Name": "[concat(parameters('VMName1'),'-Nic')]",
+      "PublicIPAddressName": "[variables('PIPObject1').Name]",
+      //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').Name, variables('VNetObject').subnet2Name)]",
+      "LoadBalancerName": "[concat(parameters('VMName1'),'-LB')]",
+      "LoadBalancerBackEndName": "[variables('LBObject1').BackEndName]"
+    },
+    "NICObject2": {
+      "Name": "[concat(parameters('VMName2'),'-Nic')]",
+      "PublicIPAddressName": "[variables('PIPObject2').Name]",
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').Name, variables('VNetObject').subnet2Name)]",
+
+      "LoadBalancerName": "[concat(parameters('VMName2'),'-LB')]",
+      "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
+    },
+    "NSGObject1": {
+      "Name": "FrontEnd-NSG",
+      "Rule1SourcePort": "*",
+      "Rule1DestinationPort": "145",
+      "Rule1Access": "Allow",
+      "LoadBalancerBackEndName": "[variables('LBObject1').BackEndName]"
+    },
+    "NSGObject2": {
+      "Name": "FrontEnd-NSG-2",
+      "Rule1SourcePort": "*",
+      "Rule1DestinationPort": "145",
+      "Rule1Access": "Allow",
+      "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
+    },
+    "VMObject1": {
+      "Name": "[parameters('VMName1')]",
+      "Size": "[parameters('VMSize1')]",
+      "ASName": "[variables('ASObject1').Name]",
+      "nicName": "[variables('NICObject1').Name]",
+      "adminUserName": "[parameters('adminUsername')]",
+      "adminPassword": "[parameters('adminPassword')]",
+      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "storageAccountName": "[parameters('storageAcctName')]",
+      "storageAccountContainerName": "[parameters('storageAcctContainerName')]"
+    },
+    "VMObject2": {
+      "Name": "[parameters('VMName2')]",
+      "Size": "[parameters('VMSize2')]",
+      "ASName": "[variables('ASObject2').Name]",
+      "nicName": "[variables('NICObject2').Name]",
+      "adminUserName": "[parameters('adminUsername')]",
+      "adminPassword": "[parameters('adminPassword')]",
+      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "storageAccountName": "[parameters('storageAcctName')]",
+      "storageAccountContainerName": "[parameters('storageAcctContainerName')]"
+    }
+
+
+  },
+  "resources": [
+  // {
+  //  "name": "AvailabilitySetResource1",
+  //  "type": "Microsoft.Resources/deployments",
+  //  "apiVersion": "2016-02-01",
+  //  "dependsOn": [],
+  //  "properties": {
+  //      "mode": "Incremental",
+  //    "templateLink": {
+  //     //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+  //      "uri": "[variables('AvailabilitySetURI')]",
+  //      "contentVersion": "1.0.0.0"
+  //    },
+  //    "parameters": {
+  //      "ASObject": {
+  //        //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+  //        "value": "[variables('ASObject1')]"
+  //      }
+  //    }
+  //  }
+  //},
+   {
+    "name": "AvailabilitySetResource2",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+    "dependsOn": [],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+        "uri": "[variables('AvailabilitySetURI')]",
+        "contentVersion": "1.0.0.0"
+      },
+      "parameters": {
+        "ASObject": {
+          //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+          "value": "[variables('ASObject2')]"
+        }
+      }
+    }
+  },
+    {
+    "name": "StorageAccountResource",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+    "dependsOn": [],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+        "uri": "[variables('StorageAccountURI')]",
+        "contentVersion": "1.0.0.0"
+      },
+      "parameters": {
+        "StorageAccountObject": {
+          //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+          "value": "[variables('StorageAccountObject')]"
+        }
+      }
+    }    
+    },
+    {
+    "name": "PublicIPResource1",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+    "dependsOn": [],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+        "uri": "[variables('PublicIPURI')]",
+        "contentVersion": "1.0.0.0"
+      },
+      "parameters": {
+        "PIPObject": {
+          //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+          "value": "[variables('PIPObject1')]"
+        }
+      }
+    }    
+    },
+    //{
+    //"name": "PublicIPResource2",
+    //"type": "Microsoft.Resources/deployments",
+    //"apiVersion": "2016-02-01",
+    //"dependsOn": [],
+    //"properties": {
+    //    "mode": "Incremental",
+    //  "templateLink": {
+    //   //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //    "uri": "[variables('PublicIPURI')]",
+    //    "contentVersion": "1.0.0.0"
+    //  },
+    //  "parameters": {
+    //    "PIPObject": {
+    //      //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+    //      "value": "[variables('PIPObject2')]"
+    //    }
+    //  }
+    //}    
+    //},
+
+
+    {
+      "name": "VirtualNetworkResource",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('VNetURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+          "VNetObject": {
+            "value": "[variables('VNetObject')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "NetworkInterfaceResource1",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource1')]"
+
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceLBURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+          "NICObject": {
+            "value": "[variables('NICObject1')]"
+          }
+        }
+      }
+    },
+    {
+       "name": "NetworkInterfaceResource2",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+ //       "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]"//,
+ //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
+        
+        ],      
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+          "NICObject": {
+            "value": "[variables('NICObject2')]"
+          }
+        }
+      }
+    },
+   {
+    "name": "LoadBalancerResource1",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2016-02-01",
+    "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]"
+    ],
+    "properties": {
+        "mode": "Incremental",
+      "templateLink": {
+       //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+        "uri": "[variables('LoadBalancerURI')]",
+        "contentVersion": "1.0.0.0"
+      },
+      "parameters": {
+        "LBObject": {
+          //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+          "value": "[variables('LBObject1')]"
+        }
+      }
+    }
+  },
+  // {
+  //  "name": "LoadBalancerResource2",
+  //  "type": "Microsoft.Resources/deployments",
+  //  "apiVersion": "2016-02-01",
+  //  "dependsOn": [
+  //        "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]"
+  //  ],
+  //  "properties": {
+  //      "mode": "Incremental",
+  //    "templateLink": {
+  //     //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+  //      "uri": "[variables('LoadBalancerURI')]",
+  //      "contentVersion": "1.0.0.0"
+  //    },
+  //    "parameters": {
+  //      "LBObject": {
+  //        //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+  //        "value": "[variables('LBObject2')]"
+  //      }
+  //    }
+  //  }
+  //},
+
+
+
+    {
+      "name": "NetworkSecurityGroupResource1",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      //    "dependsOn": [
+      //         "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"
+      //   ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+          "uri": "[variables('NetworkSecurityGroupURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "NSGObject": {
+            //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+            "value": "[variables('NSGObject1')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "NetworkSecurityGroupResource2",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      //    "dependsOn": [
+      //         "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"
+      //   ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+          "uri": "[variables('NetworkSecurityGroupURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "NSGObject": {
+            //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+            "value": "[variables('NSGObject2')]"
+          }
+        }
+      }
+    },
+
+
+    {
+      "name": "VMResource1",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]",
+//        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+          "uri": "[variables('VMURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "VMObject": {
+            "value": "[variables('VMObject1')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "VMResource2",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource2')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource2')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+       //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+          "uri": "[variables('VMURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "VMObject": {
+            "value": "[variables('VMObject2')]"
+          }
+        }
+      }
+    }
+
+  ]//,
+  //"outputs": {
+    //"hostname": {
+     // "type": "string",
+      //"value": "[reference(variables('PIPObject').Name).dnsSettings.fqdn]"
+   // }
+ // }
+}
