@@ -109,7 +109,7 @@
         "group": "Infrastructure settings",
         "description": "Change this value to your repo name if deploying from a fork"
       },
-      "defaultValue": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources"
+      "defaultValue": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources"
     },
     "_artifactsLocationSasToken": {
       "type": "securestring",
