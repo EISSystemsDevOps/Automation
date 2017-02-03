@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "StorageAccountObject": {
+      //StorageAccountObject requires following properties:
+      //Name // SkuName // ResourceGroup
+      "type": "object",
+      "metadata": {
+        "description": "object containing StorageAccount details."
+      }
+    }
+  },
+  "variables": {
+    "_artifactsLocation": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources",
+    "StorageAccountURI": "[concat(variables('_artifactsLocation'),'/','existing','_storage_account.json')]"
+  },
+  "resources": [
+    //{
+    //   "type": "Microsoft.Storage/storageAccounts",
+    //   "name": "[parameters('storageAccountObject').Name]",
+    //   "apiVersion": "2016-01-01",
+    //   "dependsOn": [
+    //     "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]"
+
+    //   ],
+    //   "location": "[resourceGroup().location]",
+    //   "sku": {
+    //     "name": "[parameters('storageAccountObject').SkuName]"
+    //   },
+    //   "kind": "Storage",
+    //   "properties": {}
+    // }, // end of new storage account resource
+    //
+    {
+      "name": "StorageAccountResource",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [ ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('StorageAccountURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "StorageAccountObject": {
+            //"value": "[concat(parameters('VMName'),'-','availabilityset')]"
+            "value": "[parameters('StorageAccountObject')]"
+          }
+        }
+      }
+    } // end of get existing resource
+  ] //end of resources
+  ,
+
+}

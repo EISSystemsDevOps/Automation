@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "NICObject": {
+      //NICObject requires following properties:
+      //Name // PublicIPAddressName // SubnetRef
+      "type": "object",
+      "metadata": {
+        "description": "object containing network interface details."
+      }
+    }
+  },
+  "variables": { },
+  "resources": [
+   {
+    "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[parameters('NICObject').Name]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+   //     "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('NICObject').publicIPAddressName)]"
+   //     "[resourceid('Microsoft.Resources/deployments/','VirtualNetworkResource')]"
+      ],
+    "properties": {
+      "ipConfigurations": [
+        {
+          "name": "ipconfig1",
+          "properties": {
+            "privateIPAllocationMethod": "Dynamic",
+            "publicIPAddress": {
+              "id": "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('NICObject').publicIPAddressName)]"
+            },
+            "subnet": {
+              "id": "[parameters('NICObject').subnetRef]"
+            }
+          }
+        }
+      ]
+    } //end of properties
+
+   } // end of resources
+  ] //end of resources
+}

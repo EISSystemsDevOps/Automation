@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "NICObject": {
+      //NICObject requires following properties:
+      //Name // PublicIPAddressName // SubnetRef //LoadBalancerName 
+      "type": "object",
+      "metadata": {
+        "description": "object containing network interface details."
+      }
+    }
+  },
+  "variables": {
+    "loadBalancerName": "[parameters('NICObject').LoadBalancerName]",
+    "loadBalancerBackEndName": "[parameters('NICOBject').LoadBalancerBackEndName]",
+    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]"
+  },
+  "resources": [
+   {
+    "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[parameters('NICObject').Name]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+   //     "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('NICObject').publicIPAddressName)]"
+   //     "[resourceid('Microsoft.Resources/deployments/','VirtualNetworkResource')]"
+      ],
+    "properties": {
+      "ipConfigurations": [
+        {
+          "name": "ipconfig1",
+          "properties": {
+            "privateIPAllocationMethod": "Dynamic",
+//            "publicIPAddress": {
+//              "id": "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('NICObject').publicIPAddressName)]"
+//            },
+            "subnet": {
+              "id": "[parameters('NICObject').subnetRef]"
+             //"id": "[reference(resourceId(parameters('NICObject').VNetResourceGroup,'Microsoft.Network/virtualNetworks/subnets', parameters('NICObject').VnetName, parameters('NICObject').subnetName),'2015-06-15')]"
+           
+            },
+            "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[concat(variables('lbID'), '/backendAddressPools/', variables('LoadBalancerBackendName'))]"
+                }
+              ],
+            "loadBalancerInboundNatRules": [
+                {
+                  "id": "[concat(variables('lbID'),'/inboundNatRules/RDP')]"
+                }
+              ]
+
+          }
+        }
+      ]
+    } //end of properties
+
+   } // end of resources
+  ] //end of resources
+}

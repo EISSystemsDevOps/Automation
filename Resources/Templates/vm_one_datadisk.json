@@ -1,0 +1,126 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "VMObject": {
+      //VMObject requires following properties:
+      //Name // Size // ASName // NicName // AdminUserName //AdminPassword //WindowsOSVersion //StorageAccountName //StorageAccountContainerName // DataDiskSizeGB
+      "type": "object",
+      "metadata": {
+        "description": "object containing network interface details."
+      }
+    }
+
+
+
+  },
+  "variables": {
+    //"storageAccountName": "satestvm2",
+    //"nicName": "[concat(parameters('VMObject').Name,'-Nic')]",
+    //"addressPrefix": "10.0.0.0/16",
+    //"subnetName": "Subnet",
+    //"subnetPrefix": "10.0.0.0/24",
+    //"publicIPAddressName": "[concat(parameters('VMObject').Name,'-PublicIP')]",
+    //"virtualNetworkName": "MyVNET",
+    //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
+    //"ASName":"[concat(parameters('VMObject').Name, '-as')]"
+    //"ASTemplateURL": "[concat(variables('TemplateRepository'),'/availability_set.json')]"
+  },
+  "resources": [
+    //     {
+    //   "name": "AvailabilitySetResource",
+    //   "type": "Microsoft.Resources/deployments",
+    //    "apiVersion": "2016-02-01",
+    //    "dependsOn": [],
+    //   "properties": {
+    //        "mode": "Incremental",
+    //        "templateLink": {
+    //           "uri": "",
+    //            "contentVersion": "1.0.0.0"
+    //        },
+    //      "parameters": {
+    //
+    //        "ASName": {
+    //          "value": "[parameters('VMObject').ASName]"
+    //       }
+    //     }
+    //   }
+    //},
+
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('VMObject').Name]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        //  "[resourceId('Microsoft.Storage/storageAccounts/', parameters('VMObject').storageAccountName)]",
+        //  "[resourceId('Microsoft.Network/networkInterfaces/', parameters('VMObject').nicName)]"
+        //"[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource')]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          //"vmSize": "Standard_D1"
+          "vmSize": "[parameters('VMObject').Size]"
+        },
+  //       "availabilitySet": {
+          ////"id": "[resourceId('Microsoft.Compute/availabilitySets','availabilityset')]"
+//          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('VMObject').ASName)]"
+//        },
+        "osProfile": {
+          "computerName": "[parameters('VMObject').Name]",
+          "adminUsername": "[parameters('VMObject').adminUserName]",
+          "adminPassword": "[parameters('VMObject').adminPassword]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[parameters('VMObject').publisher]",
+            "offer": "[parameters('VMObject').offer]",
+            "sku": "[parameters('VMObject').sku]",
+            "version": "[parameters('VMObject').version]"
+          },
+          "osDisk": {
+            "name": "[concat(parameters('VMObject').Name,'-osdisk')]",
+            "vhd": {
+              //"uri": "[concat(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName')).primaryEndpoints.blob, 'vhds/',parameters('VMObject').Name,'-osdisk.vhd')]"
+              "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-osdisk.vhd'))]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          },
+            "dataDisks": [
+              {
+                "name": "[concat(parameters('VMObject').Name,'-datadisk1')]",
+                //"diskSizeGB": "100",
+                "diskSizeGB": "[parameters('VMObject').DataDiskSizeGB]",
+                "lun": 0,
+                "vhd": {
+              "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk1.vhd'))]"
+                },
+                "createOption": "Empty"
+              }
+             ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',parameters('VMObject').nicName)]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+            //,
+            //"storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', parameters('VMObject').storageAccountName)).primaryEndpoints.blob]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+    //"hostname": {
+    //  "type": "string",
+    //  "value": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
+    //}
+  }
+}

@@ -1,0 +1,87 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+      "VNetObject": {
+      //VNetObject required following properties:
+      //Name // AddressPrefix // subnet(1-8)Name // subnet(1-8)Prefix
+      //DNSServer1 //DNSServer2
+      "type": "object",
+      "metadata": {
+        "description": "object containing VirtualNetwork details."
+      }
+    }
+  },
+  "variables": { },
+  "resources": [
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('VNetObject').Name]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('VnetObject').AddressPrefix]"
+          ]
+        },
+        "dhcpOptions": {
+           "dnsServers": [
+              "[parameters('VnetObject').dnsserver1]",
+              "[parameters('VnetObject').dnsserver2]"
+            ]
+                },        
+        "subnets": [
+          {
+            "name": "[parameters('VNetObject').subnet1Name]",
+            "properties": {
+              "addressPrefix": "[parameters('VnetObject').subnet1Prefix]"
+            }
+          },
+          {
+            "name": "[parameters('VNetObject').subnet2Name]",
+            "properties": {
+              "addressPrefix": "[parameters('VNetObject').subnet2Prefix]"
+            }
+          },
+                  {
+            "name": "[parameters('VNetObject').subnet3Name]",
+            "properties": {
+              "addressPrefix": "[parameters('VNetObject').subnet3Prefix]"
+            }
+          },
+          {
+            "name": "[parameters('VNetObject').subnet4Name]",
+            "properties": {
+              "addressPrefix": "[parameters('VNetObject').subnet4Prefix]"
+            }
+          },
+          {
+            "name": "[parameters('VNetObject').subnet5Name]",
+            "properties": {
+              "addressPrefix": "[parameters('VNetObject').subnet5Prefix]"
+            }
+          },
+          {
+            "name": "[parameters('VNetObject').subnet6Name]",
+            "properties": {
+              "addressPrefix": "[parameters('VNetObject').subnet6Prefix]"
+            }
+          },
+                  {
+            "name": "[parameters('VNetObject').subnet7Name]",
+            "properties": {
+              "addressPrefix": "[parameters('VNetObject').subnet7Prefix]"
+            }
+          },
+          {
+            "name": "[parameters('VNetObject').subnet8Name]",
+            "properties": {
+              "addressPrefix": "[parameters('VNetObject').subnet8Prefix]"
+            }
+          }        
+        ]
+      } //end of vnet properties
+    } // end of vnet resource
+  ] //end of resources
+}

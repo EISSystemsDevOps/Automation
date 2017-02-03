@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "StorageAccountObject": {
+      //StorageAccountObject requires following properties:
+      //Name // Resourcegroup  
+      "type": "object",
+      "metadata": {
+        "description": "object containing StorageAccount details."
+      }
+    }
+  },
+  "variables": {},
+  "resources": [],
+  "outputs": {
+    "storageAccountInfo": {
+      "value":"[reference(resourceId(parameters('StorageAccountObject').ResourceGroup,'Microsoft.Storage/storageAccounts/', parameters('storageAccountObject').Name), '2016-01-01')]",
+      //"value": "[reference(concat('rgirmc01/Microsoft.Storage/storageAccounts/', parameters('storageAccountName')),providers('Microsoft.Storage', 'storageAccounts').apiVersions[0])]",
+      //       "[reference(resourceId(parameters('relatedGroup'), 'Microsoft.Storage/storageAccounts/', parameters('storageAccountName')), '2016-01-01').primaryEndpoints.blob]"
+      "type" : "object"
+    }
+  }
+}

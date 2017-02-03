@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "NSGObject": {
+        //NSGObject requires following properties:
+        // Remote Desktop NSG has two rules.  Standard mgmt rule (Allow-12000) and User Configurable rule to allow given source/destination port range. 
+        //Name // Rule1SourcePort // Rule1DestinationPort
+        "type": "object",
+        "metadata": {
+          "description": "object containing network security group details."
+        }
+      }
+    },
+    "variables": {},
+    "resources": [
+      {
+        "apiVersion": "2016-03-30",
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "dependsOn": [ ],
+        "location": "[resourceGroup().location]",
+        "name": "[parameters('NSGObject').Name]",
+        "properties": {
+          "securityRules": [
+            {
+              "name": "[concat('Allow-',parameters('NSGObject').Rule1DestinationPort)]",
+              "properties": {
+                "protocol": "TCP",
+                "sourcePortRange": "[parameters('NSGObject').Rule1SourcePort]",
+                "destinationPortRange": "[parameters('NSGObject').Rule1DestinationPort]",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 101,
+                "direction": "Inbound"
+              }
+            },
+            {
+              "name": "Allow-12000",
+              "properties": {
+                "protocol": "TCP",
+                "sourcePortRange": "*",
+                "destinationPortRange": "12000",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 113,
+                "direction": "Inbound"
+              }
+            }
+          ] //end of security rules
+        },
+      } //End of resources
+    ]//end of resources
+}

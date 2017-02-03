@@ -1,0 +1,67 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "LBObject": {
+      //LBObject requires following properties:
+      //Name // FrontEndName // PIPName // BackEndName // FrontEndPort // BackEndPort
+      "type": "object",
+      "metadata": {
+        "description": "object containing StorageAccount details."
+      }
+    }
+  },
+  "variables": {
+    "loadBalancerName": "[parameters('LBObject').Name]",
+    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
+    //    "lbID": "[resourceId('Microsoft.Network/loadBalancers/','IRMCVM1-LB')]",
+    //     "lbID": "[resourceId('Microsoft.Network/loadBalancers',parameters('LBObject').Name)]",
+    "lbPIPName": "[parameters('LBObject').PIPName]",
+    "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/',parameters('LBObject').FrontEndName)]"
+  },
+  "resources": [
+  {
+    "apiVersion": "2016-03-30",
+    "name": "[variables('loadBalancerName')]",
+    "type": "Microsoft.Network/loadBalancers",
+    "location": "[resourceGroup().location]",
+    "dependsOn": [],
+    "properties": {
+      "frontendIPConfigurations": [
+        {
+          "name": "[parameters('LBObject').FrontEndName]",
+          "properties": {
+            "publicIPAddress": {
+              //"id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('LBObject').PIPName)]"
+              "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('lbPIPName'))]"
+              //"id": "[resourceId('Microsoft.Network/publicIPAddresses', 'irmcvm1-pip')]"
+
+            }
+          }
+        }
+      ],
+      "backendAddressPools": [
+        {
+          "name": "[parameters('LBObject').BackEndName]"
+        }
+      ],
+      "inboundNatRules": [
+        {
+          "name": "RDP",
+          "properties": {
+            "frontendIPConfiguration": {
+              ///subscriptions/bde9722b-6c61-42e0-a1fe-d63306baf727/resourceGroups/irmchostedapps1/providers/Microsoft.Network/loadBalancers/MGMT03-LB/frontendIPConfigurations/pip-mgmt03-publicFrontEnd
+
+             "id": "[variables('frontEndIPConfigID')]"
+            },
+            "protocol": "tcp",
+            "frontendPort": "[parameters('LBObject').frontEndPort]",
+            "backendPort": "[parameters('LBObject').backEndPort]",
+            "enableFloatingIP": false
+          }
+        }
+      ]
+    }
+  } //end of load balancer resource
+] //end of resources
+}
