@@ -650,6 +650,32 @@ Configuration BreServerConfig
             Name = "Check for a pending reboot before changing anything" 
         }
 
+		Script InstallSSMS2014
+        	{
+	            SetScript = 
+                    {  
+                        $Path='C:\downloads\common\'
+                        Expand-Archive -Path C:\downloads\common\ssms2014.zip  -DestinationPath C:\downloads\common
+                        $ArgumentList= "/q /Action=Install /IACCEPTSQLSERVERLICENSETERMS /FEATURES=Tools,BC,Conn,SSMS,ADV_SSMS"
+                        Start-Process C:\downloads\common\ssms2014\setup.exe  -ArgumentList $ArgumentList -Wait
+                    }
+	            GetScript =  { @{} }
+	            TestScript = 
+                    { 
+                          $module=get-module -listavailable -name azure -refresh -erroraction silentlycontinue
+                          if($module)
+                          {
+                            $true
+                          }
+                          else
+                          {
+                            $false
+                          }                        
+                    }
+                DependsOn = "[xAzureBlobFiles]DownloadCommon"            
+        	}
+
+
 
     } #End of Node
 }#End of config
