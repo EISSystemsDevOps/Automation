@@ -268,9 +268,9 @@
     },
     "SubscriptionID": {
       "type": "string",
-      "defaultValue": "18dd1721-6522-4c42-9fdf-00534ed402ff",
+      "defaultValue": "",
       "metadata": {
-        "description": "Subnet to deploy VMs into."
+        "description": "subscription ID referenced by VNet."
       }
     }
 
