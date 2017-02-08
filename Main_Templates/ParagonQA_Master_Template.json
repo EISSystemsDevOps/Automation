@@ -334,7 +334,8 @@
       "Name": "[concat(parameters('VMNameBRE'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       // "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      //     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef":"/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1"
       //"dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -343,7 +344,8 @@
       "Name": "[concat(parameters('VMNameNTR'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef":"/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1"
       //"dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -352,7 +354,9 @@
       "Name": "[concat(parameters('VMNameWEB'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef":"/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1"
+
       //"dnsServer": "[variables('domainControllerIPAddress')]"
 
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
@@ -362,7 +366,8 @@
       "Name": "[concat(parameters('VMNamePPS'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef":"/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1"
       //"IPAddress": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -371,8 +376,10 @@
       "Name": "[concat(parameters('VMNameCON'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-     // "dnsServer": "[variables('domainControllerIPAddress')]"
+//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef":"/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1"
+ 
+          // "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
@@ -380,7 +387,8 @@
       "Name": "[concat(parameters('VMNameSVC'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef":"/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1"
      // "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
