@@ -246,7 +246,7 @@
     },
     "VNetRG": {
       "type": "string",
-      "defaultValue": "ParagonDevOpsARMVNet",
+      "defaultValue": "ParagonDevOpsARMVNetRG",
       "metadata": {
         "description": "VNet to deploy VMs into."
       }
@@ -254,7 +254,7 @@
 
     "VNetName": {
       "type": "string",
-      "defaultValue": "ParagonDevOpsARMVNetRG",
+      "defaultValue": "ParagonDevOpsARMVNet",
       "metadata": {
         "description": "VNet resource group to deploy VMs into."
       }
