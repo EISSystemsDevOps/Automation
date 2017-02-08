@@ -244,11 +244,19 @@
         "description": "Storage account container for use when dowloading from storage account to local VMs"
       }
     },
-    "VNetName": {
+    "VNetRG": {
       "type": "string",
       "defaultValue": "ParagonDevOpsARMVNet",
       "metadata": {
         "description": "VNet to deploy VMs into."
+      }
+    },
+
+    "VNetName": {
+      "type": "string",
+      "defaultValue": "ParagonDevOpsARMVNetRG",
+      "metadata": {
+        "description": "VNet resource group to deploy VMs into."
       }
     },
     "SubnetName": {
@@ -268,7 +276,9 @@
     //"dnsLabelPrefix2": "[tolower(concat(parameters('CustomerName'),parameters('VMNameBRE'),'-pip'))]",
     //"storageAccountName": "[parameters('storageAcctName')]",
     //"virt adualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
-    "subnetRef": "/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1",
+    //"subnetRef": "/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1",
+    "subnetRef": "[concat('/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/',parameters('SubnetName'))",
+
     //"domainControllerIPAddress": "172.32.0.4",
    // "domainUserA": "[concat(parameters('domainName'),'\\')]",
    //parameters('adminUsername'))",
