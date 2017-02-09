@@ -879,7 +879,7 @@
             "typeHandlerVersion": "2.19",
             "autoUpgradeMinorVersion": false,
             "settings": {
-              "ModulesUrl": "[variables('BreDSCModuleUrl')]",
+              "modulesUrl": "[variables('BreDSCModuleUrl')]",
               "SasToken": "",
               "configurationFunction": "[variables('BreConfigurationFunction')]",
               "configurationData": {
@@ -913,7 +913,7 @@
             "typeHandlerVersion": "2.19",
             "autoUpgradeMinorVersion": false,
             "settings": {
-              "ModulesUrl": "[variables('NtierDSCModuleUrl')]",
+              "modulesUrl": "[variables('NtierDSCModuleUrl')]",
               "SasToken": "",
               "configurationFunction": "[variables('NtierConfigurationFunction')]",
               "configurationData": {
@@ -946,7 +946,7 @@
             "typeHandlerVersion": "2.19",
             "autoUpgradeMinorVersion": false,
             "settings": {
-              "ModulesUrl": "[variables('NtierDSCModuleUrl')]",
+              "modulesUrl": "[variables('NtierDSCModuleUrl')]",
               "SasToken": "",
               "configurationFunction": "[variables('NtierConfigurationFunction')]",
               "configurationData": {
@@ -979,7 +979,7 @@
             "typeHandlerVersion": "2.19",
             "autoUpgradeMinorVersion": false,
             "settings": {
-              "ModulesUrl": "[variables('NtierDSCModuleUrl')]",
+              "modulesUrl": "[variables('NtierDSCModuleUrl')]",
               "SasToken": "",
               "configurationFunction": "[variables('NtierConfigurationFunction')]",
               "configurationData": {
