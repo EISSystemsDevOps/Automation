@@ -837,8 +837,7 @@
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
-            "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]",
-            "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC"
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
           ],
           "properties": {
             "publisher": "Microsoft.Powershell",
@@ -870,8 +869,7 @@
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
-            "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]",
-            "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC"
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
           ],
           "properties": {
             "publisher": "Microsoft.Powershell",
@@ -905,8 +903,7 @@
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
-            "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]",
-            "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC"
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
           ],
           "properties": {
             "publisher": "Microsoft.Powershell",
