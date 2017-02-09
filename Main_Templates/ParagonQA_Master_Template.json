@@ -299,15 +299,12 @@
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
-    "WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig.ps1.zip')]",
+    "WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14x.ps1.zip')]",
     "WebConfigurationFunction": "WebServerConfig.ps1\\WebServerConfig",
-    "NtierDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtierServerConfig.ps1.zip')]",
+    "NtierDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtierServerConfig14x.ps1.zip')]",
     "NtierConfigurationFunction": "NtierServerConfig.ps1\\NtierServerConfig",
-    "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig.ps1.zip')]",
+    "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig14x.ps1.zip')]",
     "BreConfigurationFunction": "BreServerConfig.ps1\\BreServerConfig",
-    "DomainJoinFunction": "Configuration.ps1\\DomainJoin",
-    //    "DBDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'TestDSCScript.ps1.zip')]",
-//    "DBConfigurationFunction": "TestDSCScript.ps1\\DBServerConfig",
     "Configurationurl":"https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
     
       //Template URIs
@@ -362,7 +359,7 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1"
+      "subnetRef":"[variables('subnetRef')]"
       //"dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -372,8 +369,7 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1"
-
+      "subnetRef":"[variables('subnetRef')]"
       //"dnsServer": "[variables('domainControllerIPAddress')]"
 
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
@@ -384,7 +380,7 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1"
+      "subnetRef":"[variables('subnetRef')]"
       //"IPAddress": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -394,8 +390,7 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1"
- 
+      "subnetRef":"[variables('subnetRef')]"
           // "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -405,7 +400,7 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1"
+      "subnetRef":"[variables('subnetRef')]"
      // "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -835,6 +830,107 @@
       }
     }
    
+    //    Web Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('VMNameWEB'),'/WebConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]",
+            "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('WebDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('WebConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+               },
+              //"wmfVersion": "4.0",
+              "Properties": {
+               "storageAccountName": "[parameters('dlStorageAccountName')]",
+               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+               "storageAccountContainer": "[parameters('webStorageAccountContainer')]"
+               
+              }
+            },
+            "protectedSettings": { }
+          }
+        },
+ //       BRE Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('VMNameBRE'),'/BreConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]",
+            "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "ModulesUrl": "[variables('BreDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('BreConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+               },
+             // "wmfVersion": "4.0",
+              "Properties": {
+               "storageAccountName": "[parameters('dlStorageAccountName')]",
+               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+               "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
+               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
+               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
+               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
+              }
+            },
+            "protectedSettings": { }
+          }
+        },
+     //   NTier Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('VMNameNTR'),'/NtierConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]",
+            "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "ModulesUrl": "[variables('NtierDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('NtierConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+               },
+              //"wmfVersion": "4.0",
+              "Properties": {
+               "storageAccountName": "[parameters('dlStorageAccountName')]",
+               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+               "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
+
+              }
+            },
+            "protectedSettings": { }
+          }
+        },
 
 
   ] //,
