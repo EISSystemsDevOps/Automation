@@ -300,11 +300,11 @@
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
     "WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14x.ps1.zip')]",
-    "WebConfigurationFunction": "WebServerConfig.ps1\\WebServerConfig",
+    "WebConfigurationFunction": "WebServerConfig.ps1\\WebServerConfig14x",
     "NtierDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtierServerConfig14x.ps1.zip')]",
-    "NtierConfigurationFunction": "NtierServerConfig.ps1\\NtierServerConfig",
+    "NtierConfigurationFunction": "NtierServerConfig.ps1\\NtierServerConfig14x",
     "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig14x.ps1.zip')]",
-    "BreConfigurationFunction": "BreServerConfig.ps1\\BreServerConfig",
+    "BreConfigurationFunction": "BreServerConfig.ps1\\BreServerConfig14x",
     "Configurationurl":"https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
     
       //Template URIs
