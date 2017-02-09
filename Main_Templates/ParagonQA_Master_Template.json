@@ -846,169 +846,169 @@
     },
    
     //    Web Server
-        {
-          "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(parameters('VMNameWEB'),'/WebConfigDscExtension')]",
-          "apiVersion": "2015-06-15",
-          "location": "[resourceGroup().location]",
-          "dependsOn": [
-            "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Powershell",
-            "type": "DSC",
-            "typeHandlerVersion": "2.19",
-            "autoUpgradeMinorVersion": false,
-            "settings": {
-              "modulesUrl": "[variables('WebDSCModuleUrl')]",
-              "SasToken": "",
-              "configurationFunction": "[variables('WebConfigurationFunction')]",
-              "configurationData": {
-                "url": "[variables('Configurationurl')]"
-               },
-              //"wmfVersion": "4.0",
-              "Properties": {
-  //             "storageAccountName": "[parameters('dlStorageAccountName')]",
-  //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-  //             "storageAccountContainer": "[parameters('webStorageAccountContainer')]"
+//        {
+//          "type": "Microsoft.Compute/virtualMachines/extensions",
+//          "name": "[concat(parameters('VMNameWEB'),'/WebConfigDscExtension')]",
+//          "apiVersion": "2015-06-15",
+//          "location": "[resourceGroup().location]",
+//          "dependsOn": [
+//            "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
+//          ],
+//          "properties": {
+//            "publisher": "Microsoft.Powershell",
+//            "type": "DSC",
+//            "typeHandlerVersion": "2.19",
+//            "autoUpgradeMinorVersion": false,
+//            "settings": {
+//              "modulesUrl": "[variables('WebDSCModuleUrl')]",
+//              "SasToken": "",
+//              "configurationFunction": "[variables('WebConfigurationFunction')]",
+//              "configurationData": {
+//                "url": "[variables('Configurationurl')]"
+//               },
+//              //"wmfVersion": "4.0",
+//              "Properties": {
+//  //             "storageAccountName": "[parameters('dlStorageAccountName')]",
+//  //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+//  //             "storageAccountContainer": "[parameters('webStorageAccountContainer')]"
                
-              }
-            },
-            "protectedSettings": { }
-          }
-        },
- //       BRE Server
-        {
-          "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(parameters('VMNameBRE'),'/BreConfigDscExtension')]",
-          "apiVersion": "2015-06-15",
-          "location": "[resourceGroup().location]",
-          "dependsOn": [
-            "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Powershell",
-            "type": "DSC",
-            "typeHandlerVersion": "2.19",
-            "autoUpgradeMinorVersion": false,
-            "settings": {
-              "modulesUrl": "[variables('BreDSCModuleUrl')]",
-              "SasToken": "",
-              "configurationFunction": "[variables('BreConfigurationFunction')]",
-              "configurationData": {
-                "url": "[variables('Configurationurl')]"
-               },
-             // "wmfVersion": "4.0",
-              "Properties": {
-//               "storageAccountName": "[parameters('dlStorageAccountName')]",
-//               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-//               "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
-//               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
-//               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
-//               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
-              }
-            },
-            "protectedSettings": { }
-          }
-        },
-     //   NTier Server
-        {
-          "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(parameters('VMNameNTR'),'/NtierConfigDscExtension')]",
-          "apiVersion": "2015-06-15",
-          "location": "[resourceGroup().location]",
-          "dependsOn": [
-            "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Powershell",
-            "type": "DSC",
-            "typeHandlerVersion": "2.19",
-            "autoUpgradeMinorVersion": false,
-            "settings": {
-              "modulesUrl": "[variables('NtierDSCModuleUrl')]",
-              "SasToken": "",
-              "configurationFunction": "[variables('NtierConfigurationFunction')]",
-              "configurationData": {
-                "url": "[variables('Configurationurl')]"
-               },
-              //"wmfVersion": "4.0",
-              "Properties": {
- //              "storageAccountName": "[parameters('dlStorageAccountName')]",
- //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
- //              "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
+//              }
+//            },
+//            "protectedSettings": { }
+//          }
+//        },
+// //       BRE Server
+//        {
+//          "type": "Microsoft.Compute/virtualMachines/extensions",
+//          "name": "[concat(parameters('VMNameBRE'),'/BreConfigDscExtension')]",
+//          "apiVersion": "2015-06-15",
+//          "location": "[resourceGroup().location]",
+//          "dependsOn": [
+//            "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+//          ],
+//          "properties": {
+//            "publisher": "Microsoft.Powershell",
+//            "type": "DSC",
+//            "typeHandlerVersion": "2.19",
+//            "autoUpgradeMinorVersion": false,
+//            "settings": {
+//              "modulesUrl": "[variables('BreDSCModuleUrl')]",
+//              "SasToken": "",
+//              "configurationFunction": "[variables('BreConfigurationFunction')]",
+//              "configurationData": {
+//                "url": "[variables('Configurationurl')]"
+//               },
+//             // "wmfVersion": "4.0",
+//              "Properties": {
+////               "storageAccountName": "[parameters('dlStorageAccountName')]",
+////               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+////               "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
+////               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
+////               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
+////               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
+//              }
+//            },
+//            "protectedSettings": { }
+//          }
+//        },
+//     //   NTier Server
+//        {
+//          "type": "Microsoft.Compute/virtualMachines/extensions",
+//          "name": "[concat(parameters('VMNameNTR'),'/NtierConfigDscExtension')]",
+//          "apiVersion": "2015-06-15",
+//          "location": "[resourceGroup().location]",
+//          "dependsOn": [
+//            "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
+//          ],
+//          "properties": {
+//            "publisher": "Microsoft.Powershell",
+//            "type": "DSC",
+//            "typeHandlerVersion": "2.19",
+//            "autoUpgradeMinorVersion": false,
+//            "settings": {
+//              "modulesUrl": "[variables('NtierDSCModuleUrl')]",
+//              "SasToken": "",
+//              "configurationFunction": "[variables('NtierConfigurationFunction')]",
+//              "configurationData": {
+//                "url": "[variables('Configurationurl')]"
+//               },
+//              //"wmfVersion": "4.0",
+//              "Properties": {
+// //              "storageAccountName": "[parameters('dlStorageAccountName')]",
+// //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+// //              "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
 
-              }
-            },
-            "protectedSettings": { }
-          }
-        },
+//              }
+//            },
+//            "protectedSettings": { }
+//          }
+//        },
 
-     //   Patient Portal Server
-        {
-          "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(parameters('VMNamePPS'),'/SVCConfigDscExtension')]",
-          "apiVersion": "2015-06-15",
-          "location": "[resourceGroup().location]",
-          "dependsOn": [
-            "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Powershell",
-            "type": "DSC",
-            "typeHandlerVersion": "2.19",
-            "autoUpgradeMinorVersion": false,
-            "settings": {
-              "modulesUrl": "[variables('NtierDSCModuleUrl')]",
-              "SasToken": "",
-              "configurationFunction": "[variables('NtierConfigurationFunction')]",
-              "configurationData": {
-                "url": "[variables('Configurationurl')]"
-               },
-              //"wmfVersion": "4.0",
-              "Properties": {
- //              "storageAccountName": "[parameters('dlStorageAccountName')]",
- //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
- //              "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
+//     //   Patient Portal Server
+//        {
+//          "type": "Microsoft.Compute/virtualMachines/extensions",
+//          "name": "[concat(parameters('VMNamePPS'),'/SVCConfigDscExtension')]",
+//          "apiVersion": "2015-06-15",
+//          "location": "[resourceGroup().location]",
+//          "dependsOn": [
+//            "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+//          ],
+//          "properties": {
+//            "publisher": "Microsoft.Powershell",
+//            "type": "DSC",
+//            "typeHandlerVersion": "2.19",
+//            "autoUpgradeMinorVersion": false,
+//            "settings": {
+//              "modulesUrl": "[variables('NtierDSCModuleUrl')]",
+//              "SasToken": "",
+//              "configurationFunction": "[variables('NtierConfigurationFunction')]",
+//              "configurationData": {
+//                "url": "[variables('Configurationurl')]"
+//               },
+//              //"wmfVersion": "4.0",
+//              "Properties": {
+// //              "storageAccountName": "[parameters('dlStorageAccountName')]",
+// //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+// //              "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
 
-              }
-            },
-            "protectedSettings": { }
-          }
-        },
+//              }
+//            },
+//            "protectedSettings": { }
+//          }
+//        },
 
-             //   Service Bus Server
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMNameSVC'),'/SVCConfigDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('NtierDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('NtierConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-            //              "storageAccountName": "[parameters('dlStorageAccountName')]",
-            //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            //              "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
+//             //   Service Bus Server
+//    {
+//      "type": "Microsoft.Compute/virtualMachines/extensions",
+//      "name": "[concat(parameters('VMNameSVC'),'/SVCConfigDscExtension')]",
+//      "apiVersion": "2015-06-15",
+//      "location": "[resourceGroup().location]",
+//      "dependsOn": [
+//        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
+//      ],
+//      "properties": {
+//        "publisher": "Microsoft.Powershell",
+//        "type": "DSC",
+//        "typeHandlerVersion": "2.19",
+//        "autoUpgradeMinorVersion": false,
+//        "settings": {
+//          "modulesUrl": "[variables('NtierDSCModuleUrl')]",
+//          "SasToken": "",
+//          "configurationFunction": "[variables('NtierConfigurationFunction')]",
+//          "configurationData": {
+//            "url": "[variables('Configurationurl')]"
+//          },
+//          //"wmfVersion": "4.0",
+//          "Properties": {
+//            //              "storageAccountName": "[parameters('dlStorageAccountName')]",
+//            //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+//            //              "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
 
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
+//          }
+//        },
+//        "protectedSettings": { }
+//      }
+//    },
     //Domain Join using Native DomainJoin Extension - depends on AD Configuration Extension on Domain Controller
     {
       "comments": "Join domain - JsonADDomainExtension",
