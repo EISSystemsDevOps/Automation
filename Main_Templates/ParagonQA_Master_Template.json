@@ -1027,7 +1027,6 @@
         "settings": {
           "Name": "[parameters('domainName')]",
           "User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
-          //"User": "IRMCHOSTED.COM\\LocalAdmin",
           "Restart": "true",
           //                    "Options": "[variables('domainJoinOptions')]",
           "Options": "3" //,
