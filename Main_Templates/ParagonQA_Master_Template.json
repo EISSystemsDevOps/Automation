@@ -853,9 +853,9 @@
                },
               //"wmfVersion": "4.0",
               "Properties": {
-               "storageAccountName": "[parameters('dlStorageAccountName')]",
-               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-               "storageAccountContainer": "[parameters('webStorageAccountContainer')]"
+  //             "storageAccountName": "[parameters('dlStorageAccountName')]",
+  //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+  //             "storageAccountContainer": "[parameters('webStorageAccountContainer')]"
                
               }
             },
@@ -885,12 +885,12 @@
                },
              // "wmfVersion": "4.0",
               "Properties": {
-               "storageAccountName": "[parameters('dlStorageAccountName')]",
-               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-               "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
-               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
-               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
-               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
+//               "storageAccountName": "[parameters('dlStorageAccountName')]",
+//               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+//               "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
+//               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
+//               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
+//               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
               }
             },
             "protectedSettings": { }
@@ -919,9 +919,9 @@
                },
               //"wmfVersion": "4.0",
               "Properties": {
-               "storageAccountName": "[parameters('dlStorageAccountName')]",
-               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-               "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
+ //              "storageAccountName": "[parameters('dlStorageAccountName')]",
+ //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+ //              "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
 
               }
             },
