@@ -1042,35 +1042,35 @@
           "Password": "[parameters('DomPassword')]"
         }
       }
-    }
+    },
     //Domain Join using Native DomainJoin Extension - depends on AD Configuration Extension on Domain Controller
-    //{
-    //  "comments": "Join domain - JsonADDomainExtension",
-    //  "apiVersion": "2015-06-15",
-    //  "type": "Microsoft.Compute/virtualMachines/extensions",
-    //  "name": "[concat(parameters('VMNameNTR'),'/joindomain')]",
-    //  "location": "[resourceGroup().location]",
-    //  "dependsOn": [
-    //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
-    //  ],
-    //  "properties": {
-    //    "publisher": "Microsoft.Compute",
-    //    "type": "JsonADDomainExtension",
-    //    "typeHandlerVersion": "1.3",
-    //    "autoUpgradeMinorVersion": true,
-    //    "settings": {
-    //      "Name": "[parameters('domainName')]",
-    //      "User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
-    //      "Restart": "true",
-    //      //                    "Options": "[variables('domainJoinOptions')]",
-    //      "Options": "3" ,
-    //       "OUPath": "[parameters('OUPath')]"
-    //    },
-    //    "protectedSettings": {
-    //      "Password": "[parameters('DomPassword')]"
-    //    }
-    //  }
-    //},
+    {
+      "comments": "Join domain - JsonADDomainExtension",
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('VMNameNTR'),'/joindomain')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "JsonADDomainExtension",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "Name": "[parameters('domainName')]",
+          "User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
+          "Restart": "true",
+          //                    "Options": "[variables('domainJoinOptions')]",
+          "Options": "3" ,
+           "OUPath": "[parameters('OUPath')]"
+        },
+        "protectedSettings": {
+          "Password": "[parameters('DomPassword')]"
+        }
+      }
+    }//,
     ////Domain Join using Native DomainJoin Extension - depends on AD Configuration Extension on Domain Controller
     //{
     //  "comments": "Join domain - JsonADDomainExtension",
