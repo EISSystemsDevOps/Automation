@@ -292,9 +292,7 @@
       "metadata": {
         "description": "OU to place VMs when joining to domain."
       }
-    },
-
-
+    }
         
        
   },//End of Parameters
