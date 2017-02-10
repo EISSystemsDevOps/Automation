@@ -984,37 +984,37 @@
 //        },
 
              //   Service Bus Server
-    //{
-    //  "type": "Microsoft.Compute/virtualMachines/extensions",
-    //  "name": "[concat(parameters('VMNameSVC'),'/SVCConfigDscExtension')]",
-    //  "apiVersion": "2015-06-15",
-    //  "location": "[resourceGroup().location]",
-    //  "dependsOn": [
-    //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
-    //  ],
-    //  "properties": {
-    //    "publisher": "Microsoft.Powershell",
-    //    "type": "DSC",
-    //    "typeHandlerVersion": "2.19",
-    //    "autoUpgradeMinorVersion": false,
-    //    "settings": {
-    //      "modulesUrl": "[variables('SvcConfigurationFunction')]",
-    //      "SasToken": "",
-    //      "configurationFunction": "[variables('SvcConfigurationFunction')]",
-    //      "configurationData": {
-    //        "url": "[variables('Configurationurl')]"
-    //      },
-    //      //"wmfVersion": "4.0",
-    //      "Properties": {
-    //        //              "storageAccountName": "[parameters('dlStorageAccountName')]",
-    //        //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-    //        //              "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('VMNameSVC'),'/SVCConfigDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('SvcConfigurationFunction')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('SvcConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+            //              "storageAccountName": "[parameters('dlStorageAccountName')]",
+            //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+            //              "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
 
-    //      }
-    //    },
-    //    "protectedSettings": { }
-    //  }
-    //},
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
     //Domain Join using Native DomainJoin Extension - depends on AD Configuration Extension on Domain Controller
     {
       "comments": "Join domain - JsonADDomainExtension",
