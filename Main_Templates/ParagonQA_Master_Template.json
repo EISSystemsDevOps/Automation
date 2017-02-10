@@ -285,7 +285,15 @@
       "metadata": {
         "description": "subscription ID referenced by VNet."
       }
-    }
+    },
+    "OUPath": {
+      "type": "string",
+      "defaultValue": "OU=Computers,OU=Azure,DC=paragon,DC=mckesson,DC=com",
+      "metadata": {
+        "description": "OU to place VMs when joining to domain."
+      }
+    },
+
 
         
        
@@ -1029,8 +1037,8 @@
           "User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
           "Restart": "true",
           //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3" //,
-          // "OUPath": "OU=testOU,DC=domain,DC=Domain,DC=com"
+          "Options": "3" ,
+           "OUPath": "[parameters('OUPath')]"
         },
         "protectedSettings": {
           "Password": "[parameters('DomPassword')]"
