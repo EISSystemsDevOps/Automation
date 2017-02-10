@@ -1051,7 +1051,7 @@
       "name": "[concat(parameters('VMNameNTR'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
       ],
       "properties": {
         "publisher": "Microsoft.Compute",
@@ -1079,7 +1079,7 @@
       "name": "[concat(parameters('VMNameWEB'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
       ],
       "properties": {
         "publisher": "Microsoft.Compute",
@@ -1108,7 +1108,7 @@
       "name": "[concat(parameters('VMNamePPS'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
       ],
       "properties": {
         "publisher": "Microsoft.Compute",
@@ -1136,7 +1136,7 @@
       "name": "[concat(parameters('VMNameCON'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]"
       ],
       "properties": {
         "publisher": "Microsoft.Compute",
@@ -1164,7 +1164,7 @@
       "name": "[concat(parameters('VMNameSVC'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
       ],
       "properties": {
         "publisher": "Microsoft.Compute",
