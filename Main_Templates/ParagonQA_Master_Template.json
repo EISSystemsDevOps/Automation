@@ -1033,7 +1033,7 @@
           // "OUPath": "OU=testOU,DC=domain,DC=Domain,DC=com"
         },
         "protectedSettings": {
-          "Password": "[parameters('LocalAdminPassword')]"
+          "Password": "[parameters('DomPassword')]"
         }
       }
     },
