@@ -12,7 +12,7 @@
 
 Configuration ConServerConfig14x
  {
-  #Import-Module WebAdministration
+  Import-Module WebAdministration
   Import-DscResource -ModuleName xWebAdministration
   $appPools = Get-ChildItem IIS:\AppPools | where {$_.Name -notlike "*.Net*"} | Where {$_.Name -ne "WebStation"}
   Node ("localhost")
