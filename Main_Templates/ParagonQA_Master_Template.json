@@ -998,7 +998,7 @@
         "typeHandlerVersion": "2.19",
         "autoUpgradeMinorVersion": false,
         "settings": {
-          "modulesUrl": "[variables('SvcConfigurationFunction')]",
+          "modulesUrl": "[variables('SvcDSCModuleUrl')]",
           "SasToken": "",
           "configurationFunction": "[variables('SvcConfigurationFunction')]",
           "configurationData": {
