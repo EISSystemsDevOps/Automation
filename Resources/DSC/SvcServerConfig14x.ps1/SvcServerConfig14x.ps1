@@ -14,7 +14,7 @@ Configuration SvcServerConfig14x
  {
   #Import-Module WebAdministration
   Import-DscResource -ModuleName xWebAdministration
-  $appPools = Get-ChildItem IIS:\AppPools | where {$_.Name -notlike "*.Net*"} | Where {$_.Name -ne "WebStation"}
+  #$appPools = Get-ChildItem IIS:\AppPools | where {$_.Name -notlike "*.Net*"} | Where {$_.Name -ne "WebStation"}
   Node ("localhost")
    {
       #Set-PowerPlan
@@ -285,7 +285,7 @@ Configuration SvcServerConfig14x
 		}
      }
 
-      #Set the App Pools Recycle setting
+     <# #Set the App Pools Recycle setting
 
          foreach ($appPool in $appPools)
           {
@@ -298,6 +298,6 @@ Configuration SvcServerConfig14x
              }
 
           }
- 
+ #>
   }
 }
