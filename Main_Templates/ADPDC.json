@@ -325,7 +325,6 @@
         //       "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]",
        // "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]" //,
         //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
-
       ],
       "properties": {
         "mode": "Incremental",
