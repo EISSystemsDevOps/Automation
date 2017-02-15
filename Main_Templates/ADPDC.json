@@ -217,7 +217,7 @@
     },
     "NICObject5": {
       "Name": "[concat(parameters('VMNameDC'),'-Nic')]",
-      "subnetRef": "[variables('subnetRef')]"  ,   
+      "subnetRef": "[variables('subnetRef')]",   
       "IPAddress": "[parameters('DCIPAddress')]"
       //   "LoadBalancerName": "[concat(variables('VMName2'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
