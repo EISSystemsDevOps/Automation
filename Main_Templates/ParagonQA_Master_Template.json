@@ -852,37 +852,37 @@
     },
    
     //    Web Server
-//        {
-//          "type": "Microsoft.Compute/virtualMachines/extensions",
-//          "name": "[concat(parameters('VMNameWEB'),'/WebConfigDscExtension')]",
-//          "apiVersion": "2015-06-15",
-//          "location": "[resourceGroup().location]",
-//          "dependsOn": [
-//            "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
-//          ],
-//          "properties": {
-//            "publisher": "Microsoft.Powershell",
-//            "type": "DSC",
-//            "typeHandlerVersion": "2.19",
-//            "autoUpgradeMinorVersion": false,
-//            "settings": {
-//              "modulesUrl": "[variables('WebDSCModuleUrl')]",
-//              "SasToken": "",
-//              "configurationFunction": "[variables('WebConfigurationFunction')]",
-//              "configurationData": {
-//                "url": "[variables('Configurationurl')]"
-//               },
-//              //"wmfVersion": "4.0",
-//              "Properties": {
-//  //             "storageAccountName": "[parameters('dlStorageAccountName')]",
-//  //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-//  //             "storageAccountContainer": "[parameters('webStorageAccountContainer')]"
+       {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('VMNameWEB'),'/WebConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('WebDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('WebConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+               },
+              //"wmfVersion": "4.0",
+              "Properties": {
+  //             "storageAccountName": "[parameters('dlStorageAccountName')]",
+  //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+  //             "storageAccountContainer": "[parameters('webStorageAccountContainer')]"
                
-//              }
-//            },
-//            "protectedSettings": { }
-//          }
-//        },
+              }
+            },
+            "protectedSettings": { }
+          }
+        },
 // //       BRE Server
 //        {
 //          "type": "Microsoft.Compute/virtualMachines/extensions",
