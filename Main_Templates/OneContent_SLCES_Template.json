@@ -2,12 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "CustomerName": {
-      "type": "string",
-      "metadata": {
-        "description": "Customer  name."
-      }
-    },
     "OCReleaseVMName": {
       "type": "string",
       "metadata": {
@@ -190,8 +184,8 @@
       "type": "string",
       "metadata": {
         "description": "Name of storage Account for VHD placement."
-      },
-      "defaultValue": "[tolower(concat(parameters('CustomerName'),'sa'))]"
+      }//,
+//      "defaultValue": "[tolower(concat(parameters('CustomerName'),'sa'))]"
     },
     "storageAcctContainerName": {
       "type": "string",
