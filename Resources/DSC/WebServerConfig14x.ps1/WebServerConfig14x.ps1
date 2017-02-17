@@ -16,9 +16,13 @@
 
 Configuration WebServerConfig14x
  {
-  Import-Module WebAdministration
-  Import-DscResource -ModuleName xWebAdministration
-  $appPools = Get-ChildItem IIS:\AppPools | where {$_.Name -notlike "*.Net*"} | Where {$_.Name -ne "WebStation"}
+  Param (
+         [Parameter(Mandatory=$True)]
+         [String[]]$SourcePath
+         )
+ 
+  #Import-DscResource -ModuleName xWebAdministration
+  
   Node ("localhost") 
    {
 
@@ -281,9 +285,14 @@ Configuration WebServerConfig14x
 #>
     
      #WebServer Configuration specific settings
-   
+    WindowsFeature IISWindowsFeature
+    {
+     Ensure = "Present"
+     Name = "Web-Server"
+    }
+
         
-    $WindowsFeatures = "AS-HTTP-Activation", "WAS-NET-Environment", "Web-Server", "Web-WebServer", "Web-Common-Http", "Web-Default-Doc", "Web-Dir-Browsing", "Web-Http-Errors", `
+    $WindowsFeatures = "AS-HTTP-Activation", "WAS-NET-Environment", "Web-WebServer", "Web-Common-Http", "Web-Default-Doc", "Web-Dir-Browsing", "Web-Http-Errors", `
 					   "Web-Static-Content", "Web-Health", "Web-Http-Logging", "Web-Http-Tracing", "Web-Performance", "Web-Stat-Compression", "Web-Security", "Web-Filtering", "Web-App-Dev", "Web-Net-Ext45", `
 					   "Web-Asp-Net45", "Web-ISAPI-Ext", "Web-ISAPI-Filter", "Web-Mgmt-Tools", "Web-Mgmt-Console", "Web-Mgmt-Compat", "Web-Metabase", "NET-Framework-Core", "NET-HTTP-Activation", "NET-Framework-45-Features", `
 					   "NET-Framework-45-Core", "NET-Framework-45-ASPNET", "NET-WCF-Services45", "NET-WCF-TCP-PortSharing45", "Web-Net-Ext", "Web-Asp-Net"
@@ -293,34 +302,46 @@ Configuration WebServerConfig14x
 		{
 			Ensure = "Present"
 			Name = "$WindowsFeature"
+            Source = "$SourcePath"
+            DependsOn = "[WindowsFeature]IISWindowsFeature"
+            
 		}
      }
 	
 
+
    #Set the App Pools Recycle setting and WebStation to enable 32bit
 
-         foreach ($appPool in $appPools)
-          {
-            xWebAppPool $appPool.Name
-             {
-               Name = $appPool.Name
-               Ensure = "Present"
-               RestartTimeLimit = (New-TimeSpan -Minutes 0).ToString()
-               RestartSchedule = ("2:00:00")
-             }
+    Script SetAppPoolSetting
+     {
+      GetScript={$null}
+      TestScript={$test=Get-Module -ListAvailable | ? {$_.Name -like "WebAdmin%"}
+                  If ($test -eq $null)
+                   {$false}
+                  
+                 }
+                     
+                 
+      SetScript={ Import-Module WebAdministration
+                  $appPools = Get-ChildItem IIS:\AppPools | where {$_.Name -notlike "*.Net*"} | Where {$_.Name -ne "WebStation"}
+                  foreach ($appPool in $appPools)
+                   {
+                    # set the Recycling Time Interval to 0, which disables the setting
+                    Set-ItemProperty -Path ("IIS:\AppPools\" + $appPool.name) -Name recycling.periodicrestart.time -Value ([TimeSpan]::FromMinutes(0))
 
-          }
+                    # set the Recycling schedule to 2 AM
+                    Set-ItemProperty -Path ("IIS:\AppPools\" + $AppPool.name) -Name Recycling.periodicRestart.schedule -Value @{value="02:00:00"}
+                   }
+                   
+                     Set-ItemProperty -Path "IIS:\AppPools\WebStation" -Name enable32BitAppOnWin64 -Value True
+                     Set-ItemProperty -Path "IIS:\AppPools\WebStation" -Name recycling.periodicrestart.time -Value ([TimeSpan]::FromMinutes(0))
+                     Set-ItemProperty -Path "IIS:\AppPools\WebStation" -Name Recycling.periodicRestart.schedule -Value @{value="02:00:00"}
+                    
+                 }
+      DependsOn="[WindowsFeature]IISWindowsFeature"
+
+     }
     
-    xWebAppPool WebStation
-        {
-            Name = "WebStation"
-            Ensure = "Present"
-            Enable32BitAppOnWin64 = $true
-            RestartTimeLimit = (New-TimeSpan -Minutes 0).ToString()
-            RestartSchedule = ("2:00:00")
-           
-        }
-   
 
  }
 }
