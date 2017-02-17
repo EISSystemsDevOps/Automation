@@ -194,20 +194,20 @@
       },
       "defaultValue": "vhds"
     },
-    "frontEndPort": {
-      "type": "string",
-      "metadata": {
-        "description": "Front end port for NAT purposes for load balancer."
-      },
-      "defaultValue": ""
-    },
-    "backEndPort": {
-      "type": "string",
-      "metadata": {
-        "description": "Back end port for NAT purposes for load balancer."
-      },
-      "defaultValue": ""
-    },
+    //"frontEndPort": {
+    //  "type": "string",
+    //  "metadata": {
+    //    "description": "Front end port for NAT purposes for load balancer."
+    //  },
+    //  "defaultValue": ""
+    //},
+    //"backEndPort": {
+    //  "type": "string",
+    //  "metadata": {
+    //    "description": "Back end port for NAT purposes for load balancer."
+    //  },
+    //  "defaultValue": ""
+    //},
     "domainName": {
       "type": "string",
       "metadata": {
@@ -215,14 +215,35 @@
       },
       "defaultValue": "OCTRAIN.COM"
     },
-    "domainControllerIPAddress": {
+    //"domainControllerIPAddress": {
+    //  "type": "string",
+    //  "metadata": {
+    //    "description": "IP address to use for domain controller and DNS."
+    //  },
+    //  "defaultValue": "172.216.16.17"
+    //},
+    "VNetRG": {
       "type": "string",
+      "defaultValue": "ParagonDevOpsARMVNetRG",
       "metadata": {
-        "description": "IP address to use for domain controller and DNS."
-      },
-      "defaultValue": "172.216.16.17"
+        "description": "VNet to deploy VMs into."
+      }
     },
 
+    "VNetName": {
+      "type": "string",
+      "defaultValue": "ParagonDevOpsARMVNet",
+      "metadata": {
+        "description": "VNet resource group to deploy VMs into."
+      }
+    },
+    "SubnetName": {
+      "type": "string",
+      "defaultValue": "Subnet-1",
+      "metadata": {
+        "description": "Subnet to deploy VMs into."
+      }
+    }
   
   },//End of Parameters
 
@@ -259,7 +280,7 @@
     "NetworkInterfacePIPURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_pip.json')]",
     ////This is a standard NIC without a Public IP or Load balancer:
     "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
-    "NetworkInterfaceDNSURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_dns.json')]",
+    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_dns.json')]",
     ////  Comment out the LoadBalancerResource section as well if you want to forego Load balancer
     ////  Comment out the Public IP section as well if you want to forego Public IP
     "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
@@ -284,8 +305,9 @@
     },
     //has to be outside of VNetObject to avoid circular reference
     "VnetRefObject": {
-      "vnetID": "[resourceId(variables('VNetObject').ResourceGroup, 'Microsoft.Network/virtualNetworks', variables('VNetObject').VNetName)]"
+      "vnetID": "[resourceId(parameters('VNetRG'), 'Microsoft.Network/virtualNetworks', parameters('VNetName'))]"
     },
+    "subnetRef": "[concat(variables('VnetRefObject').vnetID,'/subnets/', parameters('subnetName'))]",
 
     "ASObject1": {
       "Name": "[concat(parameters('OCReleaseVMName'),'-AS')]",
@@ -301,12 +323,12 @@
       "SkuName": "Standard_LRS",
       "ResourceGroup": "[parameters('storageAcctResourceGroup')]"
     },
-    "PIPObject1": {
-      "Name": "[tolower(concat(parameters('OCAgentVMName'),'-pip'))]",
-      "AllocationMethod": "Static",
-            "DnsLabelPrefix": "[tolower(concat('pip-',parameters('CustomerName'),parameters('OCAgentVMName')))]"
-  //    "DnsLabelPrefix": "[tolower(concat(parameters('OCAgentVMName'),'-pip'))]"
-    },
+  //  "PIPObject1": {
+  //    "Name": "[tolower(concat(parameters('OCAgentVMName'),'-pip'))]",
+  //    "AllocationMethod": "Static",
+  //          "DnsLabelPrefix": "[tolower(concat('pip-',parameters('CustomerName'),parameters('OCAgentVMName')))]"
+  ////    "DnsLabelPrefix": "[tolower(concat(parameters('OCAgentVMName'),'-pip'))]"
+  //  },
     //"PIPObject2": {
     //  "Name": "[tolower(concat(parameters('OCTransAgtVMName'),'-pip'))]",
     //  "AllocationMethod": "Dynamic",
@@ -331,20 +353,20 @@
 
     "NICObject1": {
       "Name": "[concat(parameters('OCReleaseVMName'),'-Nic')]",
-      "PublicIPAddressName": "[variables('PIPObject1').Name]",
+      //"PublicIPAddressName": "[variables('PIPObject1').Name]",
       //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       //    [reference(resourceId(parameters('StorageAccountObject').ResourceGroup,'Microsoft.Storage/storageAccounts/', parameters('storageAccountObject').Name), '2016-01-01')]
       //     "subnetRef":"[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
       //     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').Name, variables('VNetObject').subnet2Name)]"
       //"LoadBalancerName": "[concat(parameters('OCReleaseVMName'),'-LB')]",
       //"LoadBalancerBackEndName": "[variables('LBObject1').BackEndName]"
-      "VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      "VNetName": "[variables('VNetObject').VnetName]",
-      "SubnetName": "[variables('VNetObject').subnet2Name]",
+      //"VNetResourceGroup": "[parameters('VNetRG')]",
+      //"VNetName": "[parameters('VNetName')]",
+      //"SubnetName": "[variables('VNetObject').subnet2Name]",
       //"SubnetRef": "[variables('VNetObject').SubnetRef]",
-      "subnetRef": "[concat(variables('VnetRefObject').vnetID,'/subnets/', variables('VNetObject').subnet2Name)]",
+      "subnetRef": "[variables('SubnetRef')]"
       //"IPAddress": "172.216.16.4"
-      "IPAddress": "[parameters('domainControllerIPAddress')]"
+      //"IPAddress": "[parameters('domainControllerIPAddress')]"
 
     },
     "NICObject2": {
@@ -352,11 +374,10 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       //"subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
-      "VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      "VNetName": "[variables('VNetObject').VnetName]",
-      "SubnetName": "[variables('VNetObject').subnet2Name]",
-      "subnetRef": "[concat(variables('VnetRefObject').vnetID,'/subnets/', variables('VNetObject').subnet2Name)]",
-      "dnsServer": "[variables('NICObject1').IPAddress]"
+      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
+      //"VNetName": "[variables('VNetObject').VnetName]",
+      //"SubnetName": "[variables('VNetObject').subnet2Name]",
+      "subnetRef": "[variables('SubnetRef')]"
       // "LoadBalancerName": "[concat(parameters('OCTransAgtVMName'),'-LB')]",
       //"LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
 
@@ -368,11 +389,10 @@
       // "subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
       //"LoadBalancerName": "[concat(parameters('OCReleaseVMName'),'-LB')]",
       //  "LoadBalancerBackEndName": "[variables('LBObject1').BackEndName]"
-      "VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      "VNetName": "[variables('VNetObject').VnetName]",
-      "SubnetName": "[variables('VNetObject').subnet2Name]",
-      "subnetRef": "[concat(variables('VnetRefObject').vnetID,'/subnets/', variables('VNetObject').subnet2Name)]",
-      "dnsServer": "[variables('NICObject1').IPAddress]"
+      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
+      //"VNetName": "[variables('VNetObject').VnetName]",
+      //"SubnetName": "[variables('VNetObject').subnet2Name]",
+      "subnetRef": "[variables('SubnetRef')]"
 
     },
     "NICObject4": {
@@ -380,33 +400,31 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       //"subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
-      "VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      "VNetName": "[variables('VNetObject').VnetName]",
-      "SubnetName": "[variables('VNetObject').subnet2Name]",
+      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
+      //"VNetName": "[variables('VNetObject').VnetName]",
+      //"SubnetName": "[variables('VNetObject').subnet2Name]",
       //"LoadBalancerName": "[concat(parameters('OCTransAgtVMName'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
-      "subnetRef": "[concat(variables('VnetRefObject').vnetID,'/subnets/', variables('VNetObject').subnet2Name)]",
-      "dnsServer": "[variables('NICObject1').IPAddress]"
+      "subnetRef": "[variables('SubnetRef')]"
 
     },
     "NICObject5": {
-      "Name": "[concat(parameters('OCAPP2VMName'),'-Nic')]",
+      "Name": "[concat(parameters('OCApp1VMName'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject1').Name]",
       //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       //"subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
-      "VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      "VNetName": "[variables('VNetObject').VnetName]",
-      "SubnetName": "[variables('VNetObject').subnet2Name]",
+      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
+      //"VNetName": "[variables('VNetObject').VnetName]",
+      //"SubnetName": "[variables('VNetObject').subnet2Name]",
       // "LoadBalancerName": "[concat(parameters('OCReleaseVMName'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject1').BackEndName]"
-      "subnetRef": "[concat(variables('VnetRefObject').vnetID,'/subnets/', variables('VNetObject').subnet2Name)]",
-      "dnsServer": "[variables('NICObject1').IPAddress]"
+      "subnetRef": "[variables('SubnetRef')]"
 
 
 
     },
     "NICObject6": {
-      "Name": "[concat(parameters('VMName6'),'-Nic')]",
+      "Name": "[concat(parameters('OCApp2VMName'),'-Nic')]",
       // "PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       //"subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
@@ -415,22 +433,17 @@
       "SubnetName": "[variables('VNetObject').subnet2Name]",
       //"LoadBalancerName": "[concat(parameters('OCTransAgtVMName'),'-LB')]",
       //"LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
-      "subnetRef": "[concat(variables('VnetRefObject').vnetID,'/subnets/', variables('VNetObject').subnet2Name)]",
-      "dnsServer": "[variables('NICObject1').IPAddress]"
-
+      "subnetRef": "[variables('SubnetRef')]"
     },
     "NICObject7": {
       "Name": "[concat(parameters('OCAgentVMName'),'-Nic')]",
       //  "PublicIPAddressName": "[variables('PIPObject1').Name]",
       //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       //"subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]",
-      "VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      "VNetName": "[variables('VNetObject').VnetName]",
-      "SubnetName": "[variables('VNetObject').subnet2Name]",
-      "LoadBalancerName": "[concat(parameters('OCAgentVMName'),'-LB')]",
-      "LoadBalancerBackEndName": "[variables('LBObject1').BackEndName]",
-      "subnetRef": "[concat(variables('VnetRefObject').vnetID,'/subnets/', variables('VNetObject').subnet2Name)]",
-      "dnsServer": "[variables('NICObject1').IPAddress]"
+      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
+      //"VNetName": "[variables('VNetObject').VnetName]",
+      //"SubnetName": "[variables('VNetObject').subnet2Name]",
+      "subnetRef": "[variables('SubnetRef')]"
 
     },
     "NICObject8": {
@@ -438,27 +451,21 @@
       // "PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       //"subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
-      "VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      "VNetName": "[variables('VNetObject').VnetName]",
-      "SubnetName": "[variables('VNetObject').subnet2Name]",
+      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
+      //"VNetName": "[variables('VNetObject').VnetName]",
+      //"SubnetName": "[variables('VNetObject').subnet2Name]",
       // "LoadBalancerName": "[concat(parameters('OCTransAgtVMName'),'-LB')]",
-      // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
-      "subnetRef": "[concat(variables('VnetRefObject').vnetID,'/subnets/', variables('VNetObject').subnet2Name)]",
-      "dnsServer": "[variables('NICObject1').IPAddress]"
-
+      "subnetRef": "[variables('SubnetRef')]"
     },
     "NICObject9": {
       "Name": "[concat(parameters('FormFastVMName'),'-Nic')]",
       // "PublicIPAddressName": "[variables('PIPObject1').Name]",
       //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       // "subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
-      "VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      "VNetName": "[variables('VNetObject').VnetName]",
-      "SubnetName": "[variables('VNetObject').subnet2Name]",
-      "subnetRef": "[concat(variables('VnetRefObject').vnetID,'/subnets/', variables('VNetObject').subnet2Name)]",
-      //  "LoadBalancerName": "[concat(parameters('OCReleaseVMName'),'-LB')]",
-      //  "LoadBalancerBackEndName": "[variables('LBObject1').BackEndName]",
-      "dnsServer": "[variables('NICObject1').IPAddress]"
+      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
+      //"VNetName": "[variables('VNetObject').VnetName]",
+      //"SubnetName": "[variables('VNetObject').subnet2Name]",
+      "subnetRef": "[variables('SubnetRef')]"
 
     
     },
@@ -467,13 +474,10 @@
       //  "PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       // "subnetRef": "[[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
-      "VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      "VNetName": "[variables('VNetObject').VnetName]",
-      "SubnetName": "[variables('VNetObject').subnet2Name]",
-      "subnetRef": "[concat(variables('VnetRefObject').vnetID,'/subnets/', variables('VNetObject').subnet2Name)]",
-      //   "LoadBalancerName": "[concat(parameters('OCTransAgtVMName'),'-LB')]",
-      //  "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]",
-      "dnsServer": "[variables('NICObject1').IPAddress]"
+      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
+      //"VNetName": "[variables('VNetObject').VnetName]",
+      //"SubnetName": "[variables('VNetObject').subnet2Name]",
+      "subnetRef": "[variables('SubnetRef')]"
 
     },
     "NICObject11": {
@@ -481,13 +485,10 @@
       //  "PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       // "subnetRef": "[[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
-      "VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      "VNetName": "[variables('VNetObject').VnetName]",
-      "SubnetName": "[variables('VNetObject').subnet2Name]",
-      "subnetRef": "[concat(variables('VnetRefObject').vnetID,'/subnets/', variables('VNetObject').subnet2Name)]",
-      //   "LoadBalancerName": "[concat(parameters('OCTransAgtVMName'),'-LB')]",
-      //  "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]",
-      "dnsServer": "[variables('NICObject1').IPAddress]"
+      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
+      //"VNetName": "[variables('VNetObject').VnetName]",
+      //"SubnetName": "[variables('VNetObject').subnet2Name]",
+      "subnetRef": "[variables('SubnetRef')]"
 
     },
 
@@ -530,11 +531,8 @@
       "windowsOSVersion": "[parameters('windowsOSVersion')]",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
-      "URI": "[variables('VMFourDataDisksURI')]",
-      "DataDisk1SizeGB": "120",
-      "DataDisk2SizeGB": "120",
-      "DataDisk3SizeGB": "120",
-      "DataDisk4SizeGB": "120"
+      "URI": "[variables('VMOneDataDiskUri')]",
+      "DataDiskSizeGB": "80"
 
     },
     "VMObject3": {
@@ -547,9 +545,8 @@
       "windowsOSVersion": "[parameters('windowsOSVersion')]",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
-      "URI": "[variables('VMTwoDataDisksURI')]",
-      "DataDisk1SizeGB": "100",
-      "DataDisk2SizeGB": "100"
+      "URI": "[variables('VMOneDataDiskUri')]",
+      "DataDiskSizeGB": "80"
 
     },
     "VMObject4": {
@@ -567,7 +564,7 @@
 
     },
     "VMObject5": {
-      "Name": "[parameters('OCAPP2VMName')]",
+      "Name": "[parameters('OCApp1VMName')]",
       "Size": "[parameters('VMSize1')]",
       //     "ASName": "[variables('ASObject1').Name]",
       "nicName": "[variables('NICObject5').Name]",
@@ -581,7 +578,7 @@
 
     },
     "VMObject6": {
-      "Name": "[parameters('VMName6')]",
+      "Name": "[parameters('OCApp2VMName')]",
       "Size": "[parameters('VMSize1')]",
       //     "ASName": "[variables('ASObject2').Name]",
       "nicName": "[variables('NICObject6').Name]",
@@ -728,26 +725,26 @@
         }
       }
     },
-    {
-      "name": "PublicIPResource1",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2016-02-01",
-      "dependsOn": [ ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-          "uri": "[variables('PublicIPURI')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "PIPObject": {
-            //"value": "[concat(parameters('OCReleaseVMName'),'-','availabilityset')]"
-            "value": "[variables('PIPObject1')]"
-          }
-        }
-      }
-    },
+    //{
+    //  "name": "PublicIPResource1",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [ ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //      "uri": "[variables('PublicIPURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "PIPObject": {
+    //        //"value": "[concat(parameters('OCReleaseVMName'),'-','availabilityset')]"
+    //        "value": "[variables('PIPObject1')]"
+    //      }
+    //    }
+    //  }
+    //},
     //{
     //"name": "PublicIPResource2",
     //"type": "Microsoft.Resources/deployments",
@@ -801,7 +798,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceStaticURI')]",
+          "uri": "[variables('NetworkInterfaceURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -825,7 +822,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceDNSURI')]",
+          "uri": "[variables('NetworkInterfaceURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -850,7 +847,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceDNSURI')]",
+          "uri": "[variables('NetworkInterfaceURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -874,7 +871,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceDNSURI')]",
+          "uri": "[variables('NetworkInterfaceURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -900,7 +897,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceDNSURI')]",
+          "uri": "[variables('NetworkInterfaceURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -926,7 +923,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceDNSURI')]",
+          "uri": "[variables('NetworkInterfaceURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -942,10 +939,10 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2016-02-01",
       "dependsOn": [
-                "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]",
-               "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]",
+                "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]"
+              // "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]",
         // "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource1')]"
+        //"[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource1')]"
 
       ],
       "properties": {
@@ -977,7 +974,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceDNSURI')]",
+          "uri": "[variables('NetworkInterfaceURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -1003,7 +1000,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceDNSURI')]",
+          "uri": "[variables('NetworkInterfaceURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -1028,7 +1025,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceDNSURI')]",
+          "uri": "[variables('NetworkInterfaceURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -1053,7 +1050,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceDNSURI')]",
+          "uri": "[variables('NetworkInterfaceURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -1065,28 +1062,28 @@
       }
     },
 
-    {
-      "name": "LoadBalancerResource1",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2016-02-01",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-          "uri": "[variables('LoadBalancerURI')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "LBObject": {
-            //"value": "[concat(parameters('OCReleaseVMName'),'-','availabilityset')]"
-            "value": "[variables('LBObject1')]"
-          }
-        }
-      }
-    },
+    //{
+    //  "name": "LoadBalancerResource1",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [
+    //    "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]"
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //      "uri": "[variables('LoadBalancerURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "LBObject": {
+    //        //"value": "[concat(parameters('OCReleaseVMName'),'-','availabilityset')]"
+    //        "value": "[variables('LBObject1')]"
+    //      }
+    //    }
+    //  }
+    //},
     // {
     //  "name": "LoadBalancerResource2",
     //  "type": "Microsoft.Resources/deployments",
@@ -1164,7 +1161,7 @@
       "apiVersion": "2015-01-01",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]"
         //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
       ],
       "properties": {
@@ -1187,7 +1184,7 @@
       "apiVersion": "2015-01-01",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource2')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource2')]"
         //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
       ],
       "properties": {
@@ -1210,7 +1207,7 @@
       "apiVersion": "2015-01-01",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource3')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource3')]"
         //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
       ],
       "properties": {
@@ -1233,7 +1230,7 @@
           "apiVersion": "2015-01-01",
           "dependsOn": [
             "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource4')]",
+            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource4')]"
     //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
           ],
           "properties": {
@@ -1256,7 +1253,7 @@
           "apiVersion": "2015-01-01",
           "dependsOn": [
             "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource5')]",
+            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource5')]"
     //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
           ],
           "properties": {
@@ -1279,7 +1276,7 @@
           "apiVersion": "2015-01-01",
           "dependsOn": [
             "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource6')]",
+            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource6')]"
     //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
           ],
           "properties": {
@@ -1302,7 +1299,7 @@
       "apiVersion": "2015-01-01",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource7')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource7')]"
         //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
       ],
       "properties": {
@@ -1325,7 +1322,7 @@
           "apiVersion": "2015-01-01",
           "dependsOn": [
             "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource8')]",
+            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource8')]"
             //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
           ],
           "properties": {
@@ -1349,7 +1346,7 @@
           "apiVersion": "2015-01-01",
           "dependsOn": [
             "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource9')]",
+            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource9')]"
     //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
           ],
           "properties": {
@@ -1372,7 +1369,7 @@
           "apiVersion": "2015-01-01",
           "dependsOn": [
             "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource10')]",
+            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource10')]"
     //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
           ],
           "properties": {
@@ -1395,7 +1392,7 @@
           "apiVersion": "2015-01-01",
           "dependsOn": [
             "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource11')]",
+            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource11')]"
     //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
           ],
           "properties": {
