@@ -756,7 +756,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceLBURI')]",
+          "uri": "[variables('NetworkInterfaceURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
