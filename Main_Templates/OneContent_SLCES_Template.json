@@ -150,7 +150,7 @@
         "group": "Infrastructure settings",
         "description": "Change this value to your repo name if deploying from a fork"
       },
-      "defaultValue": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources"
+      "defaultValue": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources"
     },
     "_artifactsLocationSasToken": {
       "type": "securestring",
@@ -257,8 +257,8 @@
     //"domainName": "OCTRAIN.COM",
     "domainUser": "concat(parameters('domainName'),'\\',parameters('adminUsername'))",
     //DSC URLs
-    //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
-    "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
+    "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
+    //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
     "WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig.ps1.zip')]",
     "WebConfigurationFunction": "WebServerConfig.ps1\\WebServerConfig",
     "NtierDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtierServerConfig.ps1.zip')]",
@@ -272,37 +272,40 @@
     "adPDCConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
 
     //Template URIs
-    "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
+    "TemplateUrl": "[concat(parameters('_artifactsLocation'),'/Templates')]",
+    "AvailabilitySetURI": "[concat(variables('TemplateUrl'),'/','availability_set.json')]",
     ////  This is a NIC with a Load Balancer attached:
-    "NetworkInterfaceStaticURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_static.json')]",
-    "NetworkInterfaceLBURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_lb.json')]",
+    "NetworkInterfaceLBURI": "[concat(variables('TemplateUrl'),'/','network_interface_lb.json')]",
+    ////  This is a network interface with static IP address
+    "NetworkInterfaceStaticURI": "[concat(variables('TemplateUrl'),'/','network_interface_static.json')]",
     ////This is a standard NIC with a Public IP attached:
-    "NetworkInterfacePIPURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_pip.json')]",
+    "NetworkInterfacePIPURI": "[concat(variables('TemplateUrl'),'/','network_interface_pip.json')]",
     ////This is a standard NIC without a Public IP or Load balancer:
-    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
-    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_dns.json')]",
+    "NetworkInterfaceURI": "[concat(variables('TemplateUrl'),'/','network_interface.json')]",
+    "NetworkInterfaceDNSURI": "[concat(variables('TemplateUrl'),'/','network_interface_dns.json')]",
     ////  Comment out the LoadBalancerResource section as well if you want to forego Load balancer
     ////  Comment out the Public IP section as well if you want to forego Public IP
-    "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
-    "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
-    "VMURI": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
-    "VMOneDataDiskURI": "[concat(parameters('_artifactsLocation'),'/','vm_one_datadisk.json')]",
-    "VMTwoDataDisksURI": "[concat(parameters('_artifactsLocation'),'/','vm_two_datadisks.json')]",
-    "VMFourDataDisksURI": "[concat(parameters('_artifactsLocation'),'/','vm_four_datadisks.json')]",
-    "StorageAccountURI": "[concat(parameters('_artifactsLocation'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
-    "NetworkSecurityGroupURI": "[concat(parameters('_artifactsLocation'),'/','rdp_network_security_group.json')]",
-    "LoadBalancerURI": "[concat(parameters('_artifactsLocation'),'/','load_balancer.json')]",
+    "PublicIPURI": "[concat(variables('TemplateUrl'),'/','public_ip.json')]",
+    "VNetURI": "[concat(variables('TemplateUrl'),'/','full_vnet.json')]",
+    "VMURI": "[concat(variables('TemplateUrl'),'/','vm.json')]",
+    "VMOneDataDiskURI": "[concat(variables('TemplateUrl'),'/','vm_one_datadisk.json')]",
+    "VMTwoDataDisksURI": "[concat(variables('TemplateUrl'),'/','vm_two_datadisks.json')]",
+    "VMFourDataDisksURI": "[concat(variables('TemplateUrl'),'/','vm_four_datadisks.json')]",
+    "VMEightDataDisksURI": "[concat(variables('TemplateUrl'),'/','vm_eight_datadisks.json')]",
+    "StorageAccountURI": "[concat(variables('TemplateUrl'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
+    "NetworkSecurityGroupURI": "[concat(variables('TemplateUrl'),'/','rdp_network_security_group.json')]",
+    "LoadBalancerURI": "[concat(variables('TemplateUrl'),'/','load_balancer.json')]",
 
     //Objects
-    "VNetObject": {
-      "ResourceGroup": "rgslcesprodarmvnet",
-      "VNetName": "slcesprodarmvnet",
-      "AddressPrefix": "172.216.0.0/16",
-      "subnet1Name": "Subnet-1",
-      "subnet1Prefix": "172.216.0.0/20",
-      "subnet2Name": "Subnet-2",
-      "subnet2Prefix": "172.216.16.0/20"
-    },
+    //"VNetObject": {
+    //  "ResourceGroup": "rgslcesprodarmvnet",
+    //  "VNetName": "slcesprodarmvnet",
+    //  "AddressPrefix": "",
+    //  "subnet1Name": "Subnet-1",
+    //  "subnet1Prefix": ""
+    //  "subnet2Name": "Subnet-2",
+    //  "subnet2Prefix": ""
+    //},
     //has to be outside of VNetObject to avoid circular reference
     "VnetRefObject": {
       "vnetID": "[resourceId(parameters('VNetRG'), 'Microsoft.Network/virtualNetworks', parameters('VNetName'))]"
