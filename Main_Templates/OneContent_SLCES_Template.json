@@ -323,33 +323,6 @@
       "SkuName": "Standard_LRS",
       "ResourceGroup": "[parameters('storageAcctResourceGroup')]"
     },
-  //  "PIPObject1": {
-  //    "Name": "[tolower(concat(parameters('OCAgentVMName'),'-pip'))]",
-  //    "AllocationMethod": "Static",
-  //          "DnsLabelPrefix": "[tolower(concat('pip-',parameters('CustomerName'),parameters('OCAgentVMName')))]"
-  ////    "DnsLabelPrefix": "[tolower(concat(parameters('OCAgentVMName'),'-pip'))]"
-  //  },
-    //"PIPObject2": {
-    //  "Name": "[tolower(concat(parameters('OCTransAgtVMName'),'-pip'))]",
-    //  "AllocationMethod": "Dynamic",
-    //  "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('OCTransAgtVMName'),'-pip'))]"
-    //},
-    //"LBObject1": {
-    //  "Name": "[concat(parameters('OCAgentVMName'),'-LB')]",
-    //  "FrontEndName": "[concat(parameters('OCAgentVMName'),'-publicFrontEnd')]",
-    //  "PIPName": "[variables('PIPObject1').Name]",
-    //  "BackEndName": "[concat(parameters('OCAgentVMName'),'-BackEnd')]",
-    //  "FrontEndPort": "[parameters('frontEndPort')]",
-    //  "BackEndPort": "[parameters('backEndPort')]"
-    //},
-    //"LBObject2": {
-    //  "Name": "[concat(parameters('OCTransAgtVMName'),'-LB')]",
-    //  "FrontEndName": "[concat(parameters('OCTransAgtVMName'),'-publicFrontEnd')]",
-    //  "PIPName": "[variables('PIPObject2').Name]",
-    //  "BackEndName": "[concat(parameters('OCTransAgtVMName'),'-BackEnd')]",
-    //  "FrontEndPort": "[parameters('frontEndPort')]",
-    //  "BackEndPort": "[parameters('backEndPort')]"
-    //},
 
     "NICObject1": {
       "Name": "[concat(parameters('OCReleaseVMName'),'-Nic')]",
@@ -425,71 +398,32 @@
     },
     "NICObject6": {
       "Name": "[concat(parameters('OCApp2VMName'),'-Nic')]",
-      // "PublicIPAddressName": "[variables('PIPObject2').Name]",
-      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
-      //"subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
       "VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
       "VNetName": "[variables('VNetObject').VnetName]",
       "SubnetName": "[variables('VNetObject').subnet2Name]",
-      //"LoadBalancerName": "[concat(parameters('OCTransAgtVMName'),'-LB')]",
-      //"LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
       "subnetRef": "[variables('SubnetRef')]"
     },
     "NICObject7": {
       "Name": "[concat(parameters('OCAgentVMName'),'-Nic')]",
-      //  "PublicIPAddressName": "[variables('PIPObject1').Name]",
-      //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
-      //"subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]",
-      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      //"VNetName": "[variables('VNetObject').VnetName]",
-      //"SubnetName": "[variables('VNetObject').subnet2Name]",
       "subnetRef": "[variables('SubnetRef')]"
 
     },
     "NICObject8": {
       "Name": "[concat(parameters('OCBDIVMName'),'-Nic')]",
-      // "PublicIPAddressName": "[variables('PIPObject2').Name]",
-      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
-      //"subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
-      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      //"VNetName": "[variables('VNetObject').VnetName]",
-      //"SubnetName": "[variables('VNetObject').subnet2Name]",
-      // "LoadBalancerName": "[concat(parameters('OCTransAgtVMName'),'-LB')]",
       "subnetRef": "[variables('SubnetRef')]"
     },
     "NICObject9": {
       "Name": "[concat(parameters('FormFastVMName'),'-Nic')]",
-      // "PublicIPAddressName": "[variables('PIPObject1').Name]",
-      //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
-      // "subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
-      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      //"VNetName": "[variables('VNetObject').VnetName]",
-      //"SubnetName": "[variables('VNetObject').subnet2Name]",
-      "subnetRef": "[variables('SubnetRef')]"
-
-    
+      "subnetRef": "[variables('SubnetRef')]"    
     },
     "NICObject10": {
       "Name": "[concat(parameters('OCMDVMName'),'-Nic')]",
-      //  "PublicIPAddressName": "[variables('PIPObject2').Name]",
-      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
-      // "subnetRef": "[[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
-      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      //"VNetName": "[variables('VNetObject').VnetName]",
-      //"SubnetName": "[variables('VNetObject').subnet2Name]",
       "subnetRef": "[variables('SubnetRef')]"
 
     },
     "NICObject11": {
       "Name": "[concat(parameters('OCCaptivaVMName'),'-Nic')]",
-      //  "PublicIPAddressName": "[variables('PIPObject2').Name]",
-      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
-      // "subnetRef": "[[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]"
-      //"VNetResourceGroup": "[variables('VNetObject').ResourceGroup]",
-      //"VNetName": "[variables('VNetObject').VnetName]",
-      //"SubnetName": "[variables('VNetObject').subnet2Name]",
       "subnetRef": "[variables('SubnetRef')]"
-
     },
 
 
