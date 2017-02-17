@@ -382,7 +382,10 @@
       "nicName": "[variables('NICObject1').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
@@ -395,7 +398,10 @@
       "nicName": "[variables('NICObject2').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
@@ -409,7 +415,10 @@
       "nicName": "[variables('NICObject3').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
@@ -423,7 +432,10 @@
       "nicName": "[variables('NICObject4').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
@@ -437,7 +449,10 @@
       "nicName": "[variables('NICObject5').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
@@ -451,7 +466,10 @@
       "nicName": "[variables('NICObject6').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
@@ -466,7 +484,10 @@
       "nicName": "[variables('NICObject7').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
@@ -480,7 +501,10 @@
       "nicName": "[variables('NICObject8').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
@@ -494,7 +518,10 @@
       "nicName": "[variables('NICObject9').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
@@ -508,7 +535,10 @@
       "nicName": "[variables('NICObject10').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
@@ -522,7 +552,10 @@
       "nicName": "[variables('NICObject11').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "windowsOSVersion": "[parameters('windowsOSVersion')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
@@ -870,97 +903,8 @@
       }
     },
 
-    //{
-    //  "name": "LoadBalancerResource1",
-    //  "type": "Microsoft.Resources/deployments",
-    //  "apiVersion": "2016-02-01",
-    //  "dependsOn": [
-    //    "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]"
-    //  ],
-    //  "properties": {
-    //    "mode": "Incremental",
-    //    "templateLink": {
-    //      //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-    //      "uri": "[variables('LoadBalancerURI')]",
-    //      "contentVersion": "1.0.0.0"
-    //    },
-    //    "parameters": {
-    //      "LBObject": {
-    //        //"value": "[concat(parameters('OCReleaseVMName'),'-','availabilityset')]"
-    //        "value": "[variables('LBObject1')]"
-    //      }
-    //    }
-    //  }
-    //},
-    // {
-    //  "name": "LoadBalancerResource2",
-    //  "type": "Microsoft.Resources/deployments",
-    //  "apiVersion": "2016-02-01",
-    //  "dependsOn": [
-    //        "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]"
-    //  ],
-    //  "properties": {
-    //      "mode": "Incremental",
-    //    "templateLink": {
-    //     //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-    //      "uri": "[variables('LoadBalancerURI')]",
-    //      "contentVersion": "1.0.0.0"
-    //    },
-    //    "parameters": {
-    //      "LBObject": {
-    //        //"value": "[concat(parameters('OCReleaseVMName'),'-','availabilityset')]"
-    //        "value": "[variables('LBObject2')]"
-    //      }
-    //    }
-    //  }
-    //},
+ 
 
-
-
-    //{
-    //  "name": "NetworkSecurityGroupResource1",
-    //  "type": "Microsoft.Resources/deployments",
-    //  "apiVersion": "2016-02-01",
-    //  //    "dependsOn": [
-    //  //         "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"
-    //  //   ],
-    //  "properties": {
-    //    "mode": "Incremental",
-    //    "templateLink": {
-    //      //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-    //      "uri": "[variables('NetworkSecurityGroupURI')]",
-    //      "contentVersion": "1.0.0.0"
-    //    },
-    //    "parameters": {
-    //      "NSGObject": {
-    //        //"value": "[concat(parameters('OCReleaseVMName'),'-','availabilityset')]"
-    //        "value": "[variables('NSGObject1')]"
-    //      }
-    //    }
-    //  }
-    //},
-    //{
-    //  "name": "NetworkSecurityGroupResource2",
-    //  "type": "Microsoft.Resources/deployments",
-    //  "apiVersion": "2016-02-01",
-    //  //    "dependsOn": [
-    //  //         "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"
-    //  //   ],
-    //  "properties": {
-    //    "mode": "Incremental",
-    //    "templateLink": {
-    //      //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-    //      "uri": "[variables('NetworkSecurityGroupURI')]",
-    //      "contentVersion": "1.0.0.0"
-    //    },
-    //    "parameters": {
-    //      "NSGObject": {
-    //        //"value": "[concat(parameters('OCReleaseVMName'),'-','availabilityset')]"
-    //        "value": "[variables('NSGObject2')]"
-    //      }
-    //    }
-    //  }
-    //},
 
 
     {

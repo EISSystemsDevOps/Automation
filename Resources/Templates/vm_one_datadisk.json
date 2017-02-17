@@ -5,6 +5,7 @@
     "VMObject": {
       //VMObject requires following properties:
       //Name // Size // ASName // NicName // AdminUserName //AdminPassword //WindowsOSVersion //StorageAccountName //StorageAccountContainerName // DataDiskSizeGB
+      //Publisher //Offer //Sku //Version
       "type": "object",
       "metadata": {
         "description": "object containing network interface details."
