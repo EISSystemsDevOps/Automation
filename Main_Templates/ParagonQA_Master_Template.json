@@ -292,7 +292,15 @@
       "metadata": {
         "description": "OU to place VMs when joining to domain."
       }
+    },
+    "SourcePath": {
+      "type": "string",
+      //"defaultValue": '\\azrdevfile01\Root\WindowsServer2012R2\sources\sxs',
+      "metadata": {
+        "description": "DSC path for WinSXS folder."
+      }
     }
+
         
        
   },//End of Parameters
@@ -876,7 +884,7 @@
               "Properties": {
   //             "storageAccountName": "[parameters('dlStorageAccountName')]",
   //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-  //             "storageAccountContainer": "[parameters('webStorageAccountContainer')]"
+             "sourcepath": "[parameters('SourcePath')]"
                
               }
             },
