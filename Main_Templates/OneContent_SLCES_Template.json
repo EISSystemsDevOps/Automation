@@ -334,14 +334,14 @@
     //  "AllocationMethod": "Dynamic",
     //  "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('OCTransAgtVMName'),'-pip'))]"
     //},
-    "LBObject1": {
-      "Name": "[concat(parameters('OCAgentVMName'),'-LB')]",
-      "FrontEndName": "[concat(parameters('OCAgentVMName'),'-publicFrontEnd')]",
-      "PIPName": "[variables('PIPObject1').Name]",
-      "BackEndName": "[concat(parameters('OCAgentVMName'),'-BackEnd')]",
-      "FrontEndPort": "[parameters('frontEndPort')]",
-      "BackEndPort": "[parameters('backEndPort')]"
-    },
+    //"LBObject1": {
+    //  "Name": "[concat(parameters('OCAgentVMName'),'-LB')]",
+    //  "FrontEndName": "[concat(parameters('OCAgentVMName'),'-publicFrontEnd')]",
+    //  "PIPName": "[variables('PIPObject1').Name]",
+    //  "BackEndName": "[concat(parameters('OCAgentVMName'),'-BackEnd')]",
+    //  "FrontEndPort": "[parameters('frontEndPort')]",
+    //  "BackEndPort": "[parameters('backEndPort')]"
+    //},
     //"LBObject2": {
     //  "Name": "[concat(parameters('OCTransAgtVMName'),'-LB')]",
     //  "FrontEndName": "[concat(parameters('OCTransAgtVMName'),'-publicFrontEnd')]",
