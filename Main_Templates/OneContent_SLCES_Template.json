@@ -1017,66 +1017,296 @@
                     "password": "[parameters('dompassword')]"
                 }
             }
-        }//,
+        },
 
-//        {
-//            "comments": "join domain - jsonaddomainextension",
-//            "apiVersion": "2015-06-15",
-//            "dependsOn": [
-//              "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
-//            ],
-//            "type": "microsoft.compute/virtualmachines/extensions",
-//            "name": "[concat(parameters('OCTransAgtVMName'),'/joindomain')]",
-//            "location": "[resourcegroup().location]",
-//            "properties": {
-//                "publisher": "microsoft.compute",
-//                "type": "jsonaddomainextension",
-//                "typehandlerversion": "1.3",
-//                "autoupgrademinorversion": true,
-//                "settings": {
-//                    "name": "[parameters('domainname')]",
-//                    "user": "[variables('domainUser')]",
-//                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
-//                    "restart": "true",
-////                    "options": "[variables('domainjoinoptions')]",
-//                    "options": "3",
-//                    "oupath": "ou=testou,dc=SLCES,dc=com"
-//                },
-//                "protectedsettings": {
-//                    "password": "[parameters('dompassword')]"
-//                }
-//            }
-//        },
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('OCTransAgtVMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3",
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        },
 
-//        {
-//            "comments": "join domain - jsonaddomainextension",
-//            "apiVersion": "2015-06-15",
-//            "dependsOn": [
-//              "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]"
-//            ],
-//            "type": "microsoft.compute/virtualmachines/extensions",
-//            "name": "[concat(parameters('ocagentvmname'),'/joindomain')]",
-//            "location": "[resourcegroup().location]",
-//            "properties": {
-//                "publisher": "microsoft.compute",
-//                "type": "jsonaddomainextension",
-//                "typehandlerversion": "1.3",
-//                "autoupgrademinorversion": true,
-//                "settings": {
-//                    "name": "[parameters('domainname')]",
-//                    "user": "[variables('domainUser')]",
-//                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
-//                    "restart": "true",
-////                    "options": "[variables('domainjoinoptions')]",
-//                    "options": "3",
-//                    "oupath": "ou=testou,dc=SLCES,dc=com"
-//                },
-//                "protectedsettings": {
-//                    "password": "[parameters('dompassword')]"
-//                }
-//            }
-//        }  
-  
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('OCWeb1VMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3",
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        }  
+ 
+
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('OCWeb2VMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3"//,
+                   // "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        },
+
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('OCApp1VMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3",
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        },
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('OCApp2VMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3",
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        },
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('OCAgentVMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3",
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        },  
+ 
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('OCBDIVMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3"//,
+                   // "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        },
+
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('FormFastVMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3",
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        },
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource10')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('OCMDVMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3",
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        },
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource11')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('OCCaptivaVMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3",
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        }
+         
+         
   ] //,
   //"outputs": {
   //"hostname": {
