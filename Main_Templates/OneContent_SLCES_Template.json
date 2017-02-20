@@ -236,7 +236,7 @@
 
 
   "variables": {
-    "domainUser": "concat(parameters('domainName'),'\\',parameters('DomUsername'))",
+    "domainUser": "[concat(parameters('domainName'),'\\',parameters('DomUsername'))]",
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
@@ -1010,7 +1010,7 @@
                     //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
                     "restart": "true",
 //                    "options": "[variables('domainjoinoptions')]",
-                    "options": "3",
+                    "options": "3"//,
                     //"oupath": "ou=testou,dc=SLCES,dc=com"
                 },
                 "protectedsettings": {
