@@ -1006,8 +1006,8 @@
                 "autoupgrademinorversion": true,
                 "settings": {
                     "name": "[parameters('domainname')]",
-                    //"user": "[variables('domainUser')]",
-                    "User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
                     "restart": "true",
 //                    "options": "[variables('domainjoinoptions')]",
                     "options": "3",
