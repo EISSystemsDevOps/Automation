@@ -993,7 +993,10 @@
         {
             "comments": "join domain - jsonaddomainextension",
             "apiversion": "2015-06-15",
-             "type": "microsoft.compute/virtualmachines/extensions",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
             "name": "[concat(parameters('ocagentvmname'),'/joindomain')]",
             "location": "[resourcegroup().location]",
             "properties": {
