@@ -1,8 +1,6 @@
 ﻿
 #Config file for Push mode and Azure setup with extension
-#Make sure xWebAdministration module is present at C:\Program Files\WindowsPowerShell\Modules
-## Version number of this module.
-#ModuleVersion = '1.15.0.0'
+
 
 #PARAGON Server Common Config ####################################################################
 <#
@@ -21,7 +19,7 @@ Configuration WebServerConfig14x
          [String[]]$SourcePath
          )
  
-  #Import-DscResource -ModuleName xWebAdministration
+  
   
   Node ("localhost") 
    {
@@ -315,16 +313,10 @@ Configuration WebServerConfig14x
     Script SetAppPoolSetting
      {
       GetScript={$null}
-      TestScript={$test=Get-Module -ListAvailable | ? {$_.Name -like "WebAdmin%"}
-                  If ($test -eq $null)
-                   {$false}
-                  
-                 }
-                     
-                 
+      TestScript={$false}
       SetScript={ Import-Module WebAdministration
                   $AppPools = Get-ChildItem IIS:\AppPools 
-                  $ParagonAppPools = $AppPools | Where {$_.Name -notlike "*.Net*"} | Where {$_.Name -ne "WebStation"}
+                  $ParagonAppPools = $AppPools | Where {$_.Name -notlike "*.Net*"}
                   foreach ($ParagonAppPool in $ParagonAppPools)
                    {
                     # set the Recycling Time Interval to 0, which disables the setting
@@ -333,21 +325,14 @@ Configuration WebServerConfig14x
                     # set the Recycling schedule to 2 AM
                     Set-ItemProperty -Path ("IIS:\AppPools\" + $ParagonAppPool.name) -Name recycling.periodicRestart.schedule -Value @{value="02:00:00"}
                    }
+                   # set WebStation App Pool to enable 32 bit support
                    If ($AppPools.Name -contains "WebStation")
                     {
                      $WSAppPool = "IIS:\AppPools\WebStation"
                      $WS32BitApp = Get-ItemProperty -Path $WSAppPool -Name enable32BitAppOnWin64
-                     $WSRestartTime = Get-ItemProperty -Path $WSAppPool -Name recycling.periodicrestart.time
-                     $WSRestartSchedule = Get-ItemProperty -Path $WSAppPool -Name recycling.periodicRestart.schedule
-                    # write-output "contain Webstation app pool"
+                    
                      If ($WS32BitApp -ne "True")
                       {Set-ItemProperty -Path $WSAppPool -Name enable32BitAppOnWin64 -Value True}
-                     If ($WSRestartTime -ne "0")
-                      {Set-ItemProperty -Path $WSAppPool -Name recycling.periodicrestart.time -Value ([TimeSpan]::FromMinutes(0))}
-                     If ($WSRestartSchedule -ne "02:00:00")
-                      {Set-ItemProperty -Path $WSAppPool -Name recycling.periodicRestart.schedule -Value @{value="02:00:00"}}
-
-
                     }
                    
                 }
