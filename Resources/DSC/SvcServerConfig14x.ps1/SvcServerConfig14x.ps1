@@ -12,9 +12,12 @@
 
 Configuration SvcServerConfig14x
  {
-  Import-Module WebAdministration
-  Import-DscResource -ModuleName xWebAdministration
-  $appPools = Get-ChildItem IIS:\AppPools | where {$_.Name -notlike "*.Net*"} | Where {$_.Name -ne "WebStation"}
+
+  Param (
+         [Parameter(Mandatory=$True)]
+         [String[]]$SourcePath
+         )
+
   Node ("localhost")
    {
       #Set-PowerPlan
@@ -262,12 +265,12 @@ Configuration SvcServerConfig14x
 
 <#
 -Install all the required Roles and Features
--Set App Pools Recycle Setting (Recycle at 2AM)
+
 #>
 
  #ServiceBus Configuration specific settings
    
-        
+            
     $WindowsFeatures = "FileAndStorage-Services","File-Services","FS-FileServer","Storage-Services","Web-Server","Web-WebServer","Web-Common-Http","Web-Default-Doc", `
                        "Web-Dir-Browsing","Web-Http-Errors","Web-Static-Content","Web-Health","Web-Http-Logging","Web-Performance","Web-Stat-Compression", `
                        "Web-Dyn-Compression","Web-Security","Web-Filtering","Web-Basic-Auth","Web-Windows-Auth","Web-App-Dev","Web-Net-Ext45","Web-Asp-Net45", `
@@ -276,29 +279,21 @@ Configuration SvcServerConfig14x
                        "NET-WCF-MSMQ-Activation45","NET-WCF-Pipe-Activation45","NET-WCF-TCP-Activation45","NET-WCF-TCP-PortSharing45","MSMQ","MSMQ-Services","MSMQ-Server", `
                        "RDC","FS-SMB1","User-Interfaces-Infra","Server-Gui-Mgmt-Infra","Server-Gui-Shell","PowerShellRoot","PowerShell","PowerShell-V2","PowerShell-ISE","WAS", `
                        "WAS-Process-Model","WAS-Config-APIs","WoW64-Support"
+
     foreach ($WindowsFeature in $WindowsFeatures)
      {
       WindowsFeature $WindowsFeature
 		{
 			Ensure = "Present"
 			Name = "$WindowsFeature"
+            Source = "$SourcePath"
+           
 		}
      }
 
-      #Set the App Pools Recycle setting
+     
 
-         foreach ($appPool in $appPools)
-          {
-           
-            xWebAppPool $appPool.Name
-             {
-               Name = $appPool.Name
-               Ensure = "Present"
-               RestartTimeLimit = (New-TimeSpan -Minutes 0).ToString()
-               RestartSchedule = ("2:00:00")
-             }
-
-          }
+     
  
   }
 }
