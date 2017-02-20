@@ -1006,11 +1006,12 @@
                 "autoupgrademinorversion": true,
                 "settings": {
                     "name": "[parameters('domainname')]",
-                    "user": "[variables('domainUser')]",
+                    //"user": "[variables('domainUser')]",
+                    "User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
                     "restart": "true",
 //                    "options": "[variables('domainjoinoptions')]",
                     "options": "3",
-                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                    //"oupath": "ou=testou,dc=SLCES,dc=com"
                 },
                 "protectedsettings": {
                     "password": "[parameters('dompassword')]"
