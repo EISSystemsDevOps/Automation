@@ -300,6 +300,6 @@
   } #end of node       
 }#end of configuration
 
-OC_BDIConfig -OutputPath "C:\DSC"
+#OC_BDIConfig -OutputPath "C:\DSC"
 #Start-DscConfiguration "C:\DSC" -wait -verbose -force 
 

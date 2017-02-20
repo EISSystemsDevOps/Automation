@@ -279,7 +279,14 @@
     "OCReleaseConfigurationFunction": "OC_ReleaseConfig.ps1\\OC_ReleaseConfig",
     "OCTransAgentDSCModuleUrl": "[concat(parameters('_artifactsLocation'),'/OC_TransAgentConfig.ps1.zip')]",
     "OCTransAgentConfigurationFunction": "OC_TransAgentConfig.ps1\\OC_TransAgentConfig",
+    "OCAgentDSCModuleUrl": "[concat(parameters('_artifactsLocation'),'/OC_AgentConfig.ps1.zip')]",
+    "OCAgentConfigurationFunction": "OC_AgentConfig.ps1\\OC_AgentConfig",
+    "OCBDIDSCModuleUrl": "[concat(parameters('_artifactsLocation'),'/OC_BDIConfig.ps1.zip')]",
+    "OCBDIConfigurationFunction": "OC_BDIConfig.ps1\\OC_BDIConfig",
+    "OCCaptivaDSCModuleUrl": "[concat(parameters('_artifactsLocation'),'/OC_CaptivaConfig.ps1.zip')]",
+    "OCCaptivaConfigurationFunction": "OC_CaptivaConfig.ps1\\OC_CaptivaConfig",
 
+    
     "Configurationurl":"https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
     //Template URIs
@@ -1734,7 +1741,7 @@
             },
             "protectedSettings": { }
           }
-        }//,         
+        },         
 
     //    OC Trans Agent
         {
@@ -1763,9 +1770,93 @@
             },
             "protectedSettings": { }
           }
-        }//,         
-   
-         
+        },         
+
+    //    OC Agent
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('OCAgentVMName'),'/OCAgentDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('OCAgentDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('OCAgentConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+               },
+              //"wmfVersion": "4.0",
+              "Properties": {               
+              }
+            },
+            "protectedSettings": { }
+          }
+        },         
+ 
+    //    OC BDI
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('OCBDIVMName'),'/OCBDIDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('OCBDIDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('OCBDIConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+               },
+              //"wmfVersion": "4.0",
+              "Properties": {               
+              }
+            },
+            "protectedSettings": { }
+          }
+        },             
+    //    OC Captiva
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('OCCaptivaVMName'),'/OCCaptivaDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource11')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('OCCaptivaDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('OCCaptivaConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+               },
+              //"wmfVersion": "4.0",
+              "Properties": {               
+              }
+            },
+            "protectedSettings": { }
+          }
+        },            
   ] //,
   //"outputs": {
   //"hostname": {

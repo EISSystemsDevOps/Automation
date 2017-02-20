@@ -590,5 +590,5 @@ Configuration OC_CaptivaConfig
     }#end node
 }#end config
 
-OC_CaptivaConfig -OutputPath "C:\DSC"
+#OC_CaptivaConfig -OutputPath "C:\DSC"
 #Start-DscConfiguration "C:\DSC" -wait -verbose -force 
