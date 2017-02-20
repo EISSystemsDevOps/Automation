@@ -1727,11 +1727,7 @@
                 "url": "[variables('Configurationurl')]"
                },
               //"wmfVersion": "4.0",
-              "Properties": {
-               "storageAccountName": "[parameters('dlStorageAccountName')]",
-               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-               "storageAccountContainer": "[parameters('webStorageAccountContainer')]"
-               
+              "Properties": {               
               }
             },
             "protectedSettings": { }
