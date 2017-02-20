@@ -69,6 +69,33 @@
         "description": "Virtual Machine name."
       }
     },
+
+    "HBVMName": {
+      "type": "string",
+      "metadata": {
+        "description": "Virtual Machine name."
+      }
+    },
+
+    "PNNTierVMName": {
+      "type": "string",
+      "metadata": {
+        "description": "Virtual Machine name."
+      }
+    },
+
+    "PNWebVMName": {
+      "type": "string",
+      "metadata": {
+        "description": "Virtual Machine name."
+      }
+    },
+    "RDSVMName": {
+      "type": "string",
+      "metadata": {
+        "description": "Virtual Machine name."
+      }
+    },
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -330,6 +357,26 @@
       "subnetRef": "[variables('SubnetRef')]"
     },
 
+    "NICObject12": {
+      "Name": "[concat(parameters('HBVMName'),'-Nic')]",
+      "subnetRef": "[variables('SubnetRef')]"
+    },
+
+    "NICObject13": {
+      "Name": "[concat(parameters('PNNTierVMName'),'-Nic')]",
+      "subnetRef": "[variables('SubnetRef')]"    
+    },
+
+    "NICObject14": {
+      "Name": "[concat(parameters('PNWebVMName'),'-Nic')]",
+      "subnetRef": "[variables('SubnetRef')]"
+    },
+
+    "NICObject15": {
+      "Name": "[concat(parameters('RDSVMName'),'-Nic')]",
+      "subnetRef": "[variables('SubnetRef')]"
+    },
+
     "VMObject1": {
       "Name": "[parameters('OCReleaseVMName')]",
       "Size": "[parameters('VMSize1')]",
@@ -494,6 +541,71 @@
       "Name": "[parameters('OCCaptivaVMName')]",
       "Size": "[parameters('VMSize1')]",
       "nicName": "[variables('NICObject11').Name]",
+      "adminUserName": "[parameters('adminUsername')]",
+      "adminPassword": "[parameters('adminPassword')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
+      "storageAccountName": "[parameters('storageAcctName')]",
+      "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
+      "URI": "[variables('VMOneDataDiskUri')]",
+      "DataDiskSizeGB": "80"
+
+    },
+
+    "VMObject12": {
+      "Name": "[parameters('HBVMName')]",
+      "Size": "[parameters('VMSize1')]",
+      "nicName": "[variables('NICObject12').Name]",
+      "adminUserName": "[parameters('adminUsername')]",
+      "adminPassword": "[parameters('adminPassword')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
+      "storageAccountName": "[parameters('storageAcctName')]",
+      "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
+      "URI": "[variables('VMOneDataDiskUri')]",
+      "DataDiskSizeGB": "80"
+
+    },
+    "VMObject13": {
+      "Name": "[parameters('PNNTierVMName')]",
+      "Size": "[parameters('VMSize1')]",
+      "nicName": "[variables('NICObject13').Name]",
+      "adminUserName": "[parameters('adminUsername')]",
+      "adminPassword": "[parameters('adminPassword')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
+      "storageAccountName": "[parameters('storageAcctName')]",
+      "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
+      "URI": "[variables('VMOneDataDiskUri')]",
+      "DataDiskSizeGB": "80"
+
+    },
+    "VMObject14": {
+      "Name": "[parameters('PNWebVMName')]",
+      "Size": "[parameters('VMSize1')]",
+      "nicName": "[variables('NICObject14').Name]",
+      "adminUserName": "[parameters('adminUsername')]",
+      "adminPassword": "[parameters('adminPassword')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version":"latest",
+      "storageAccountName": "[parameters('storageAcctName')]",
+      "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
+      "URI": "[variables('VMOneDataDiskUri')]",
+      "DataDiskSizeGB": "80"
+
+    },
+    "VMObject15": {
+      "Name": "[parameters('RDSVMName')]",
+      "Size": "[parameters('VMSize1')]",
+      "nicName": "[variables('NICObject15').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
       "publisher": "MicrosoftWindowsServer",
@@ -752,9 +864,86 @@
         }
       }
     },
+    {
+      "name": "NetworkInterfaceResource12",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+     ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
 
- 
+          "NICObject": {
+            "value": "[variables('NICObject12')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "NetworkInterfaceResource13",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+    ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
 
+          "NICObject": {
+            "value": "[variables('NICObject13')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "NetworkInterfaceResource14",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+     ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+          "NICObject": {
+            "value": "[variables('NICObject14')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "NetworkInterfaceResource15",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+     ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+          "NICObject": {
+            "value": "[variables('NICObject15')]"
+          }
+        }
+      }
+    },
 
 
     {
@@ -989,6 +1178,92 @@
             }
           }
         },
+        {
+          "name": "VMResource12",
+          "type": "Microsoft.Resources/deployments",
+          "apiVersion": "2015-01-01",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource12')]"
+          ],
+          "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+              "uri": "[variables('VMObject12').URI]",
+              "contentVersion": "1.0.0.0"
+            },
+            "parameters": {
+              "VMObject": {
+                "value": "[variables('VMObject8')]"
+              }
+            }
+          }
+        },
+
+        {
+          "name": "VMResource13",
+          "type": "Microsoft.Resources/deployments",
+          "apiVersion": "2015-01-01",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource13')]"
+          ],
+          "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+              "uri": "[variables('VMObject13').URI]",
+              "contentVersion": "1.0.0.0"
+            },
+            "parameters": {
+              "VMObject": {
+                "value": "[variables('VMObject13')]"
+              }
+            }
+          }
+        },
+        {
+          "name": "VMResource14",
+          "type": "Microsoft.Resources/deployments",
+          "apiVersion": "2015-01-01",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource14')]"
+          ],
+          "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+              "uri": "[variables('VMObject14').URI]",
+              "contentVersion": "1.0.0.0"
+            },
+            "parameters": {
+              "VMObject": {
+                "value": "[variables('VMObject14')]"
+              }
+            }
+          }
+        },
+
+        {
+          "name": "VMResource15",
+          "type": "Microsoft.Resources/deployments",
+          "apiVersion": "2015-01-01",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource15')]"
+          ],
+          "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+              "uri": "[variables('VMObject15').URI]",
+              "contentVersion": "1.0.0.0"
+            },
+            "parameters": {
+              "VMObject": {
+                "value": "[variables('VMObject15')]"
+              }
+            }
+          }
+        },
 
         {
             "comments": "join domain - jsonaddomainextension",
@@ -1134,6 +1409,7 @@
                 }
             }
         },
+
         {
             "comments": "join domain - jsonaddomainextension",
             "apiVersion": "2015-06-15",
@@ -1162,6 +1438,7 @@
                 }
             }
         },
+
         {
             "comments": "join domain - jsonaddomainextension",
             "apiVersion": "2015-06-15",
@@ -1248,6 +1525,7 @@
                 }
             }
         },
+
         {
             "comments": "join domain - jsonaddomainextension",
             "apiVersion": "2015-06-15",
@@ -1276,6 +1554,7 @@
                 }
             }
         },
+
         {
             "comments": "join domain - jsonaddomainextension",
             "apiVersion": "2015-06-15",
@@ -1284,6 +1563,122 @@
             ],
             "type": "microsoft.compute/virtualmachines/extensions",
             "name": "[concat(parameters('OCCaptivaVMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3",
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        }
+         
+         {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource12')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('HBVMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3"//,
+                   // "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        },
+
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource13')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('PNNTierVMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3",
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        },
+
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource14')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('PNWebVMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3",
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        },
+
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource15')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('RDSVMName'),'/joindomain')]",
             "location": "[resourcegroup().location]",
             "properties": {
                 "publisher": "microsoft.compute",
