@@ -1017,7 +1017,7 @@
                     "password": "[parameters('dompassword')]"
                 }
             }
-        },
+        }//,
 
 //        {
 //            "comments": "join domain - jsonaddomainextension",
