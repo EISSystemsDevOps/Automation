@@ -275,6 +275,9 @@
     "BreConfigurationFunction": "BreServerConfig.ps1\\BreServerConfig",
     "adPDCModulesURL": "[concat(parameters('_artifactsLocation'),'/CreateADPDC.ps1.zip')]",
     "adPDCConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
+    "OCReleaseDSCModuleUrl": "[concat(parameters('_artifactsLocation'),'/OC_ReleaseConfig.ps1.zip')]",
+    "OCReleaseConfigurationFunction": "OC_ReleaseConfig.ps1\\OC_ReleaseConfig",
+
 
     //Template URIs
     "TemplateUrl": "[concat(parameters('_artifactsLocation'),'/Templates')]",
@@ -1698,8 +1701,41 @@
                     "password": "[parameters('dompassword')]"
                 }
             }
-        }
-         
+        },
+
+    //    DSC Server Config
+    //    OC Release Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('OCReleaseVMName'),'/OCReleaseDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('OCReleaseDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('OCReleaseConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+               },
+              //"wmfVersion": "4.0",
+              "Properties": {
+               "storageAccountName": "[parameters('dlStorageAccountName')]",
+               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+               "storageAccountContainer": "[parameters('webStorageAccountContainer')]"
+               
+              }
+            },
+            "protectedSettings": { }
+          }
+        },         
          
   ] //,
   //"outputs": {

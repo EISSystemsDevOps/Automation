@@ -278,7 +278,6 @@
              $Test = Test-Path -Path $ShortcutFile
              $Shortcut.TargetPath = $TargetFile
              $Shortcut.Save()
-
            }
          TestScript = 
            {#Beginning of test script
@@ -300,6 +299,6 @@
   } #end of node       
 }#end of configuration
 
-OC_ReleaseConfig -OutputPath "C:\DSC"
+#OC_ReleaseConfig -OutputPath "C:\DSC"
 #Start-DscConfiguration "C:\DSC" -wait -verbose -force 
 
