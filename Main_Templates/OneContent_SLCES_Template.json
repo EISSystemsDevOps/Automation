@@ -8,7 +8,7 @@
         "description": "Virtual Machine name."
       }
     },
-    "OCTransAgtVMName": {
+    "OCTransAgentVMName": {
       "type": "string",
       "metadata": {
         "description": "Virtual Machine name."
@@ -277,6 +277,8 @@
     "adPDCConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
     "OCReleaseDSCModuleUrl": "[concat(parameters('_artifactsLocation'),'/OC_ReleaseConfig.ps1.zip')]",
     "OCReleaseConfigurationFunction": "OC_ReleaseConfig.ps1\\OC_ReleaseConfig",
+    "OCTransAgentDSCModuleUrl": "[concat(parameters('_artifactsLocation'),'/OC_TransAgentConfig.ps1.zip')]",
+    "OCTransAgentConfigurationFunction": "OC_TransAgentConfig.ps1\\OC_TransAgentConfig",
 
     "Configurationurl":"https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
@@ -318,7 +320,7 @@
       "subnetRef": "[variables('SubnetRef')]"
     },
     "NICObject2": {
-      "Name": "[concat(parameters('OCTransAgtVMName'),'-Nic')]",
+      "Name": "[concat(parameters('OCTransAgentVMName'),'-Nic')]",
       "subnetRef": "[variables('SubnetRef')]"
     },
     "NICObject3": {
@@ -397,7 +399,7 @@
       "DataDiskSizeGB": "80"
     },
     "VMObject2": {
-      "Name": "[parameters('OCTransAgtVMName')]",
+      "Name": "[parameters('OCTransAgentVMName')]",
       "Size": "[parameters('VMSize1')]",
       "nicName": "[variables('NICObject2').Name]",
       "adminUserName": "[parameters('adminUsername')]",
@@ -1305,7 +1307,7 @@
               "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
             ],
             "type": "microsoft.compute/virtualmachines/extensions",
-            "name": "[concat(parameters('OCTransAgtVMName'),'/joindomain')]",
+            "name": "[concat(parameters('OCTransAgentVMName'),'/joindomain')]",
             "location": "[resourcegroup().location]",
             "properties": {
                 "publisher": "microsoft.compute",
@@ -1733,6 +1735,36 @@
             "protectedSettings": { }
           }
         }//,         
+
+    //    OC Trans Agent
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('OCTransAgentVMName'),'/OCTransAgentDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('OCTransAgentDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('OCTransAgentConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+               },
+              //"wmfVersion": "4.0",
+              "Properties": {               
+              }
+            },
+            "protectedSettings": { }
+          }
+        }//,         
+   
          
   ] //,
   //"outputs": {
