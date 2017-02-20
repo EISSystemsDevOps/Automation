@@ -81,7 +81,12 @@
         "description": "Password for the Virtual Machine."
       }
     },
-
+    "domPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Dom Password."
+      }
+    },
     "windowsOSVersion": {
       "type": "string",
       "defaultValue": "2012-R2-Datacenter",
@@ -996,10 +1001,10 @@
                     "restart": "true",
 //                    "options": "[variables('domainjoinoptions')]",
                     "options": "3",
-                    "oupath": "ou=testou,dc=domain,dc=domain,dc=com"
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
                 },
                 "protectedsettings": {
-                    "password": "[parameters('adminpassword')]"
+                    "password": "[parameters('dompassword')]"
                 }
             }
         }
