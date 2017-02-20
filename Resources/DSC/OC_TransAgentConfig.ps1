@@ -364,6 +364,6 @@
   } #end of node       
 }#end of configuration
 
-OC_TransAgentConfig -OutputPath "C:\DSC"
+#OC_TransAgentConfig -OutputPath "C:\DSC"
 #Start-DscConfiguration "C:\DSC" -wait -verbose -force 
 
