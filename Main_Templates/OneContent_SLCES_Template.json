@@ -1194,7 +1194,7 @@
             },
             "parameters": {
               "VMObject": {
-                "value": "[variables('VMObject8')]"
+                "value": "[variables('VMObject12')]"
               }
             }
           }
