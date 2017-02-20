@@ -81,6 +81,12 @@
         "description": "Password for the Virtual Machine."
       }
     },
+    "domUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Dom Password."
+      }
+    },
     "domPassword": {
       "type": "securestring",
       "metadata": {
@@ -230,7 +236,7 @@
 
 
   "variables": {
-    "domainUser": "concat(parameters('domainName'),'\\',parameters('adminUsername'))",
+    "domainUser": "concat(parameters('domainName'),'\\',parameters('DomUsername'))",
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
