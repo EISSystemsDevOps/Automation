@@ -323,25 +323,40 @@ Configuration WebServerConfig14x
                      
                  
       SetScript={ Import-Module WebAdministration
-                  $appPools = Get-ChildItem IIS:\AppPools | where {$_.Name -notlike "*.Net*"} | Where {$_.Name -ne "WebStation"}
-                  foreach ($appPool in $appPools)
+                  $AppPools = Get-ChildItem IIS:\AppPools 
+                  $ParagonAppPools = $AppPools | Where {$_.Name -notlike "*.Net*"} | Where {$_.Name -ne "WebStation"}
+                  foreach ($ParagonAppPool in $ParagonAppPools)
                    {
                     # set the Recycling Time Interval to 0, which disables the setting
-                    Set-ItemProperty -Path ("IIS:\AppPools\" + $appPool.name) -Name recycling.periodicrestart.time -Value ([TimeSpan]::FromMinutes(0))
+                    Set-ItemProperty -Path ("IIS:\AppPools\" + $ParagonappPool.name) -Name recycling.periodicrestart.time -Value ([TimeSpan]::FromMinutes(0))
 
                     # set the Recycling schedule to 2 AM
-                    Set-ItemProperty -Path ("IIS:\AppPools\" + $AppPool.name) -Name Recycling.periodicRestart.schedule -Value @{value="02:00:00"}
+                    Set-ItemProperty -Path ("IIS:\AppPools\" + $ParagonAppPool.name) -Name recycling.periodicRestart.schedule -Value @{value="02:00:00"}
                    }
+                   If ($AppPools.Name -contains "WebStation")
+                    {
+                     $WSAppPool = "IIS:\AppPools\WebStation"
+                     $WS32BitApp = Get-ItemProperty -Path $WSAppPool -Name enable32BitAppOnWin64
+                     $WSRestartTime = Get-ItemProperty -Path $WSAppPool -Name recycling.periodicrestart.time
+                     $WSRestartSchedule = Get-ItemProperty -Path $WSAppPool -Name recycling.periodicRestart.schedule
+                    # write-output "contain Webstation app pool"
+                     If ($WS32BitApp -ne "True")
+                      {Set-ItemProperty -Path $WSAppPool -Name enable32BitAppOnWin64 -Value True}
+                     If ($WSRestartTime -ne "0")
+                      {Set-ItemProperty -Path $WSAppPool -Name recycling.periodicrestart.time -Value ([TimeSpan]::FromMinutes(0))}
+                     If ($WSRestartSchedule -ne "02:00:00")
+                      {Set-ItemProperty -Path $WSAppPool -Name recycling.periodicRestart.schedule -Value @{value="02:00:00"}}
+
+
+                    }
                    
-                     Set-ItemProperty -Path "IIS:\AppPools\WebStation" -Name enable32BitAppOnWin64 -Value True
-                     Set-ItemProperty -Path "IIS:\AppPools\WebStation" -Name recycling.periodicrestart.time -Value ([TimeSpan]::FromMinutes(0))
-                     Set-ItemProperty -Path "IIS:\AppPools\WebStation" -Name Recycling.periodicRestart.schedule -Value @{value="02:00:00"}
-                    
-                 }
+                }
       DependsOn="[WindowsFeature]IISWindowsFeature"
 
      }
     
+    
+
 
  }
 }
