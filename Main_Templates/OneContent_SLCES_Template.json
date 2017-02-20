@@ -992,7 +992,35 @@
 
         {
             "comments": "join domain - jsonaddomainextension",
-            "apiversion": "2015-06-15",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('OCReleaseVMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3",
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        },
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
             "dependsOn": [
               "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
             ],
@@ -1010,14 +1038,15 @@
                     //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
                     "restart": "true",
 //                    "options": "[variables('domainjoinoptions')]",
-                    "options": "3"//,
-                    //"oupath": "ou=testou,dc=SLCES,dc=com"
+                    "options": "3",
+                    "oupath": "ou=testou,dc=SLCES,dc=com"
                 },
                 "protectedsettings": {
                     "password": "[parameters('dompassword')]"
                 }
             }
-        }
+        }  
+  
   ] //,
   //"outputs": {
   //"hostname": {
