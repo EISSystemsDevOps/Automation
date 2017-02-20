@@ -1075,9 +1075,8 @@
                     "password": "[parameters('dompassword')]"
                 }
             }
-        }  
+        },  
  
-
         {
             "comments": "join domain - jsonaddomainextension",
             "apiVersion": "2015-06-15",
