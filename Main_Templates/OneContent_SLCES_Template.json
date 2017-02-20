@@ -278,6 +278,7 @@
     "OCReleaseDSCModuleUrl": "[concat(parameters('_artifactsLocation'),'/OC_ReleaseConfig.ps1.zip')]",
     "OCReleaseConfigurationFunction": "OC_ReleaseConfig.ps1\\OC_ReleaseConfig",
 
+    "Configurationurl":"https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
     //Template URIs
     "TemplateUrl": "[concat(parameters('_artifactsLocation'),'/Templates')]",
