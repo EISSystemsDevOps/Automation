@@ -1930,7 +1930,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('RDSVMName'),'/ConfigureGateway')]",
+      "name": "[concat(parameters('RDSVMName'),'/ConfigureRDS')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments/', 'VMResource15')]",
