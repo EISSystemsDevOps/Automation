@@ -1942,19 +1942,13 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "modulesUrl": "[variables('RDSDSCModuleUrL')]",
-              "configurationFunction": "[variables('RDSConfigurationFunction')]",
+          "configurationFunction": "[variables('RDSConfigurationFunction')]",
           "Properties": {
-            }
           }
         },
-        "protectedSettings": {
-          "Items": {
-            "AdminPassword": "[parameters('adminPassword')]"
-          }
+          "protectedSettings": { }
         }
       }
-    }
-  
   ] //,
   //"outputs": {
   //"hostname": {
