@@ -271,7 +271,7 @@
 
   "variables": {
     "domainUser": "[concat(parameters('domainName'),'\\',parameters('DomUsername'))]",
-    "sourcePath": "[concat('\\','slcesfs01\windowsserver2012r2\sources\sxs')]",
+    "sourcePath": "\\\\slcesfs01\\windowsserver2012r2\\sources\\sxs",
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
