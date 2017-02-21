@@ -12,13 +12,22 @@
 
 Configuration BreServerConfig14x
  {
+  
   Param (
          [Parameter(Mandatory=$True)]
          [String[]]$SourcePath
          )
 
+  Import-DscResource -ModuleName xPendingReboot
+
   Node ("localhost")
    {
+
+      #Check Reboot and reboot as needed
+      xPendingReboot CheckForReboot {
+         Name = "Check for Reboot and Reboot as needed"
+      }
+
       #Set-PowerPlan
  		Script Set-ParagonPowerPlan
         {
@@ -266,7 +275,8 @@ Configuration BreServerConfig14x
             ValueName = "DisableForceUnload"
             ValueData = "1"
         }
-        
+
+               
 
 
 #End of Paragon Common Config #########################################################################

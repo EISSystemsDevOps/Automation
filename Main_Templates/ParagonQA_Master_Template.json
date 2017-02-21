@@ -334,7 +334,7 @@
     "BreConfigurationFunction": "BreServerConfig14x.ps1\\BreServerConfig14x",
     "SvcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'SvcServerConfig14x.ps1.zip')]",
     "SvcConfigurationFunction": "SvcServerConfig14x.ps1\\SvcServerConfig14x",
-    "Configurationurl":"https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
+    "Configurationurl":"https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
     
       //Template URIs
     "TemplateUrl": "[concat(parameters('_artifactsLocation'),'/Templates')]",
