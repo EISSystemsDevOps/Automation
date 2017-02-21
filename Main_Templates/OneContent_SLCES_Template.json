@@ -257,8 +257,15 @@
       "metadata": {
         "description": "Subnet to deploy VMs into."
       }
-    }
-  
+    },
+
+    "SourcePath": {
+      "type": "string",
+      "defaultValue": "\\slcesfs01\windowsserver2012r2\sources\sxs",
+      "metadata": {
+        "description": "Server 2012 R2 SxS source path for installing windows roles and features."
+      }
+    },  
   },//End of Parameters
 
 
@@ -1908,7 +1915,8 @@
                 "url": "[variables('Configurationurl')]"
                },
               //"wmfVersion": "4.0",
-              "Properties": {               
+              "Properties": {
+                "SourcePath": "[parameters('SourcePath')]"
               }
             },
             "protectedSettings": { }
