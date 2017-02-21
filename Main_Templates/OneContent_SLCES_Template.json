@@ -293,6 +293,8 @@
     "OCBDIConfigurationFunction": "OC_BDIConfig.ps1\\OC_BDIConfig",
     "OCCaptivaDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/OC_CaptivaConfig.ps1.zip')]",
     "OCCaptivaConfigurationFunction": "OC_CaptivaConfig.ps1\\OC_CaptivaConfig",
+    "RDSDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/RDS.ps1.zip')]",
+    "RDSConfigurationFunction": "RDS.ps1\\RDS",
 
     
     "Configurationurl":"https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
@@ -1922,7 +1924,40 @@
             },
             "protectedSettings": { }
           }
-        }  
+        },  
+
+    //    Remote Desktop Services Configuration via DSC Extension
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('RDSVMName'),'/ConfigureGateway')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments/', 'VMResource15')]",
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.11",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "modulesUrl": "[variables('RDSDSCModuleUrL')]",
+              "configurationFunction": "[variables('RDSConfigurationFunction')]",
+          "Properties": {
+            "DomainName": "[parameters('DomainName')]",
+            "AdminCreds": {
+              "UserName": "[parameters('adminUsername')]",
+              "Password": "PrivateSettingsRef:AdminPassword"
+            }
+          }
+        },
+        "protectedSettings": {
+          "Items": {
+            "AdminPassword": "[parameters('adminPassword')]"
+          }
+        }
+      }
+    }
   
   ] //,
   //"outputs": {
