@@ -169,7 +169,7 @@
     //Environment VM Sizes
     "VMSize1": "Standard_A2",
     "VMSize2": "Standard_A1",
-    "VMSize3": "Standard_D12",
+    "VMSize3": "Standard_D2",
     "VMSize4": "Standard_A1",
     "VMSize5": "Standard_D3",
 
@@ -269,15 +269,15 @@
       "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
-      "Uri": "[variables('VMEightDataDisksURI')]",
+      "Uri": "[variables('VMFourDataDisksURI')]",
       "DataDisk1SizeGB": "1023",
       "DataDisk2SizeGB": "1023",
       "DataDisk3SizeGB": "1023",
-      "DataDisk4SizeGB": "1023",
-      "DataDisk5SizeGB": "1023",
-      "DataDisk6SizeGB": "1023",
-      "DataDisk7SizeGB": "1023",
-      "DataDisk8SizeGB": "1023"
+      "DataDisk4SizeGB": "1023"//,
+ //     "DataDisk5SizeGB": "1023",
+ //     "DataDisk6SizeGB": "1023",
+ //     "DataDisk7SizeGB": "1023",
+ //     "DataDisk8SizeGB": "1023"
 
     }
 
