@@ -11,10 +11,7 @@
 #>
 Configuration NtierServerConfig14x
  {
-  Param (
-         [Parameter(Mandatory=$True)]
-         [String[]]$SourcePath
-         )
+  
   
   Node ("localhost")
    {
@@ -287,7 +284,7 @@ Configuration NtierServerConfig14x
 		{
 			Ensure = "Present"
 			Name = "$WindowsFeature"
-            Source = "$SourcePath"
+            
 		}
      }
         
