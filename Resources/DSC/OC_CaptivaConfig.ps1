@@ -297,7 +297,7 @@ Configuration OC_CaptivaConfig
 			Name = "FS-SMB1"
 		}
         #Install User Interface and Infrastructure
-		WindowsFeature SMBCIFSSupport
+		WindowsFeature UserInterfacesInfra
 		{
 			Ensure = "Present"	
 			Name = "User-Interfaces-Infra"
@@ -315,7 +315,7 @@ Configuration OC_CaptivaConfig
 			Name = "Server-Gui-Shell"
 		}
         #Install Windows
-		WindowsFeature SMBCIFSSupport
+		WindowsFeature FSSMB1
 		{
 			Ensure = "Present"	
 			Name = "FS-SMB1"
@@ -334,14 +334,14 @@ Configuration OC_CaptivaConfig
         }
 
   #Set-ItemProperty -Path “HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}” -Name “IsInstalled” -Value 0 -Type "Dword"
-        Registry IsInstalled
-        {
-            Ensure = "Present"
-            Key = “HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}”
-            ValueName = “IsInstalled”
-            ValueData = "0"
-            ValueType = "Dword"
-        }
+ #       Registry IsInstalled
+ #       {
+ #           Ensure = "Present"
+ #           Key = “HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}”
+ #           ValueName = “IsInstalled”
+ #           ValueData = "0"
+ #           ValueType = "Dword"
+  #      }
 
   #Disable Windows Firewall
   #Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\SharedAccess\Parameters\FirewallPolicy\DomainProfile" -Name “EnableFirewall” -Value 0 -Type "Dword"
