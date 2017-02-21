@@ -257,20 +257,21 @@
       "metadata": {
         "description": "Subnet to deploy VMs into."
       }
-    },
+    }
 
-    "SourcePath": {
-      "type": "string",
-      "defaultValue": "[concat('\\','slcesfs01\windowsserver2012r2\sources\sxs')]",
-      "metadata": {
-        "description": "Server 2012 R2 SxS source path for installing windows roles and features."
-      }
-    },  
+    //"SourcePath": {
+    //  "type": "string",
+    //  "defaultValue": "[concat('\\','slcesfs01\windowsserver2012r2\sources\sxs')]",
+    //  "metadata": {
+    //    "description": "Server 2012 R2 SxS source path for installing windows roles and features."
+    //  }
+    //},  
   },//End of Parameters
 
 
   "variables": {
     "domainUser": "[concat(parameters('domainName'),'\\',parameters('DomUsername'))]",
+    "sourcePath": "[concat('\\','slcesfs01\windowsserver2012r2\sources\sxs')]",
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
@@ -1916,7 +1917,7 @@
                },
               //"wmfVersion": "4.0",
               "Properties": {
-                "SourcePath": "[parameters('SourcePath')]"
+                "SourcePath": "[variables('SourcePath')]"
               }
             },
             "protectedSettings": { }
