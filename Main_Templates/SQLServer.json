@@ -218,7 +218,7 @@
     "VMEightDataDisksURI": "[concat(variables('TemplateUrl'),'/','vm_eight_datadisks.json')]",
     "StorageAccountURI": "[concat(variables('TemplateUrl'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
     "NetworkSecurityGroupURI": "[concat(variables('TemplateUrl'),'/','rdp_network_security_group.json')]",
-    "LoadBalancerURI": "[concat(variables('TemplateUrl'),'/','load_balancer.json')]",
+    //"LoadBalancerURI": "[concat(variables('TemplateUrl'),'/','load_balancer.json')]",
 
     //Objects
       
