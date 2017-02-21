@@ -261,7 +261,7 @@
 
     "SourcePath": {
       "type": "string",
-      "defaultValue": "\\slcesfs01\windowsserver2012r2\sources\sxs",
+      "defaultValue": "[concat('\\','slcesfs01\windowsserver2012r2\sources\sxs')]",
       "metadata": {
         "description": "Server 2012 R2 SxS source path for installing windows roles and features."
       }
