@@ -10,7 +10,7 @@
 #>
 
 
-Configuration CommonConfig
+Configuration BreServerConfig14x
  {
   Param (
          [Parameter(Mandatory=$True)]
