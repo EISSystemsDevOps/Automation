@@ -419,14 +419,14 @@ Configuration OC_CaptivaConfig
 
   #Disable IPv6
   #Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters" -Name “DisabledComponents” -Value 0xFF -Type "Dword"
-        Registry DisabledComponents
-        {
-            Ensure = "Present"
-            Key = "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters"
-            ValueName = “DisabledComponents”
-            ValueData = "0xFF"
-            ValueType = "Dword"
-        }
+  #      Registry DisabledComponents
+  #      {
+  #          Ensure = "Present"
+  #          Key = "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters"
+  #          ValueName = “DisabledComponents”
+  #          ValueData = "0xFF"
+  #          ValueType = "Dword"
+  #     }
 
 ########################
   #Change CDROM Drive to Z:
