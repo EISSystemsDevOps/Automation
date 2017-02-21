@@ -1933,7 +1933,7 @@
       "name": "[concat(parameters('RDSVMName'),'/ConfigureRDS')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments/', 'VMResource15')]",
+        "[resourceId('Microsoft.Resources/deployments/', 'VMResource15')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1944,10 +1944,6 @@
           "modulesUrl": "[variables('RDSDSCModuleUrL')]",
               "configurationFunction": "[variables('RDSConfigurationFunction')]",
           "Properties": {
-            "DomainName": "[parameters('DomainName')]",
-            "AdminCreds": {
-              "UserName": "[parameters('adminUsername')]",
-              "Password": "PrivateSettingsRef:AdminPassword"
             }
           }
         },
