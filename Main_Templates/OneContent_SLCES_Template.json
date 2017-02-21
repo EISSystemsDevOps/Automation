@@ -293,8 +293,8 @@
     "OCBDIConfigurationFunction": "OC_BDIConfig.ps1\\OC_BDIConfig",
     "OCCaptivaDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/OC_CaptivaConfig.ps1.zip')]",
     "OCCaptivaConfigurationFunction": "OC_CaptivaConfig.ps1\\OC_CaptivaConfig",
-    "RDSDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/RDS.ps1.zip')]",
-    "RDSConfigurationFunction": "RDS.ps1\\RDS",
+    "RDSDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/RDSConfig.ps1.zip')]",
+    "RDSConfigurationFunction": "RDSConfig.ps1\\RDSConfig",
 
     
     "Configurationurl":"https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",

@@ -1,4 +1,4 @@
-configuration RDS
+configuration RDSConfig
 {
 
 Import-DscResource -ModuleName xPendingReboot
