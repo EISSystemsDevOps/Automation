@@ -892,39 +892,40 @@
           }
         },
 // //       BRE Server
-//        {
-//          "type": "Microsoft.Compute/virtualMachines/extensions",
-//          "name": "[concat(parameters('VMNameBRE'),'/BreConfigDscExtension')]",
-//          "apiVersion": "2015-06-15",
-//          "location": "[resourceGroup().location]",
-//          "dependsOn": [
-//            "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
-//          ],
-//          "properties": {
-//            "publisher": "Microsoft.Powershell",
-//            "type": "DSC",
-//            "typeHandlerVersion": "2.19",
-//            "autoUpgradeMinorVersion": false,
-//            "settings": {
-//              "modulesUrl": "[variables('BreDSCModuleUrl')]",
-//              "SasToken": "",
-//              "configurationFunction": "[variables('BreConfigurationFunction')]",
-//              "configurationData": {
-//                "url": "[variables('Configurationurl')]"
-//               },
-//             // "wmfVersion": "4.0",
-//              "Properties": {
-////               "storageAccountName": "[parameters('dlStorageAccountName')]",
-////               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-////               "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
-////               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
-////               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
-////               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
-//              }
-//            },
-//            "protectedSettings": { }
-//          }
-//        },
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('VMNameBRE'),'/BreConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('BreDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('BreConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+               },
+             // "wmfVersion": "4.0",
+              "Properties": {
+                //               "storageAccountName": "[parameters('dlStorageAccountName')]",
+                //               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+                //               "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
+                //               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
+                //               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
+                //               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
+                                 "sourcepath": "[parameters('SourcePath')]"
+              }
+            },
+            "protectedSettings": { }
+          }
+        },
      //   NTier Server
         {
           "type": "Microsoft.Compute/virtualMachines/extensions",
@@ -950,7 +951,7 @@
               "Properties": {
  //              "storageAccountName": "[parameters('dlStorageAccountName')]",
  //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
- //              "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
+                 "sourcepath": "[parameters('SourcePath')]"
 
               }
             },

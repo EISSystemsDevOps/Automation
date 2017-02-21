@@ -1,26 +1,25 @@
 ﻿#Config file for Push mode and Azure setup with extension
 
-
 #PARAGON Server Common Config ####################################################################
 <#
 -Set PowerPlan to "High Performance"
 -Set various MSDTC configuration 
 -Set various Terminal Service settings
 -Set ParagonDisallowAnimations to enable
--Set-ParagonDisableForceUnloadProfile
+-Set ParagonDisableForceUnloadProfile
 #>
-Configuration NtierServerConfig14x
+
+
+Configuration CommonConfig
  {
   Param (
          [Parameter(Mandatory=$True)]
          [String[]]$SourcePath
          )
-  
+
   Node ("localhost")
    {
-
-
-       #Set-PowerPlan
+      #Set-PowerPlan
  		Script Set-ParagonPowerPlan
         {
 	        SetScript = { Powercfg -SETACTIVE SCHEME_MIN }
@@ -258,7 +257,7 @@ Configuration NtierServerConfig14x
             ValueData = "1"
         }
 
-       #Set-ParagonDisableForceUnloadProfile
+        #Set-ParagonDisableForceUnloadProfile
         #SET-ITEMPROPERTY -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' -name "DisableForceUnload" -Value 1 -ErrorAction Stop
         Registry DisableForceUnload
         {
@@ -271,16 +270,18 @@ Configuration NtierServerConfig14x
 
 
 #End of Paragon Common Config #########################################################################
+    
+    #BRE Configuration
+    
+		$WindowsFeatures = "Application-Server", "AS-NET-Framework", "AS-Ent-Services", "AS-Dist-Transaction", "AS-WS-Atomic", "AS-Incoming-Trans", "AS-Outgoing-Trans", "AS-TCP-Port-Sharing", "AS-Web-Support", `
+				            "AS-WAS-Support", "AS-HTTP-Activation", "AS-Named-Pipes", "AS-TCP-Activation", "FileAndStorage-Services", "Storage-Services", "Web-Server", "Web-WebServer", "Web-Common-Http", "Web-Default-Doc", `
+				            "Web-Dir-Browsing", "Web-Http-Errors", "Web-Static-Content", "Web-Http-Redirect", "Web-Health", "Web-Http-Logging", "Web-Log-Libraries", "Web-Request-Monitor", "Web-Performance", "Web-Stat-Compression", `
+				            "Web-Dyn-Compression", "Web-Security", "Web-Filtering", "Web-Basic-Auth", "Web-CertProvider", "Web-Client-Auth", "Web-Digest-Auth", "Web-Cert-Auth", "Web-IP-Security", "Web-Url-Auth", "Web-Windows-Auth", `
+				            "Web-App-Dev", "Web-Net-Ext45", "Web-Asp-Net45", "Web-ISAPI-Ext", "Web-ISAPI-Filter", "Web-Mgmt-Tools", "Web-Mgmt-Console", "Web-Mgmt-Compat", "Web-Metabase", "Web-Scripting-Tools", "Web-Mgmt-Service", `
+				            "NET-Framework-Features", "NET-Framework-Core", "NET-Framework-45-Features", "NET-Framework-45-Core", "NET-Framework-45-ASPNET", "NET-WCF-Services45", "NET-WCF-HTTP-Activation45", "NET-WCF-MSMQ-Activation45", `
+				            "NET-WCF-Pipe-Activation45", "NET-WCF-TCP-Activation45", "NET-WCF-TCP-PortSharing45", "MSMQ", "MSMQ-Services", "MSMQ-Server", "NLB", "RDC", "FS-SMB1", "User-Interfaces-Infra", "Server-Gui-Mgmt-Infra", "Server-Gui-Shell", `
+				            "PowerShellRoot", "PowerShell", "PowerShell-V2", "PowerShell-ISE", "WAS", "WAS-Process-Model", "WAS-Config-APIs", "WoW64-Support"
 
-       #Ntier Config
-
-   #Ntier Server Configuration specific settings
-   
-        
-    $WindowsFeatures = "Application-Server", "AS-NET-Framework", "AS-Ent-Services", "AS-Incoming-Trans", "AS-Outgoing-Trans", "Print-Services", "Print-Server", `
-					   "Web-Server", "Web-WebServer", "Web-Common-Http", "Web-Default-Doc", "Web-Dir-Browsing", "Web-Http-Errors", "Web-Static-Content", "Web-Health", "Web-Http-Logging", "Web-Http-Tracing", `
-					   "Web-Performance", "Web-Stat-Compression", "Web-Security", "Web-Filtering", "Web-App-Dev", "Web-Net-Ext45", "Web-Asp-Net45", "Web-ISAPI-Ext", "Web-ISAPI-Filter", "Web-Mgmt-Tools", `
-					   "Web-Mgmt-Console", "Web-Metabase", "NET-Framework-45-Features", "NET-Framework-45-Core", "NET-Framework-45-ASPNET", "NET-WCF-Services45", "NET-WCF-TCP-PortSharing45", "RSAT-Print-Services", "Web-Net-Ext", "Web-Asp-Net"
     foreach ($WindowsFeature in $WindowsFeatures)
      {
       WindowsFeature $WindowsFeature
@@ -290,10 +291,7 @@ Configuration NtierServerConfig14x
             Source = "$SourcePath"
 		}
      }
-        
-        
+         
 
-    }
  }
-
-
+}
