@@ -187,8 +187,8 @@
     "BreConfigurationFunction": "BreServerConfig.ps1\\BreServerConfig",
     "RDSDSCModuleUrL": "[concat(variables('DSCmodulesUrl'),'Configuration.zip')]",
     "DomainJoinFunction": "Configuration.ps1\\DomainJoin",
-    "DBDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'DBServerConfig.ps1.zip')]",
-    "DBConfigurationFunction": "DBServerConfig.ps1\\DBServerConfig",
+    "DBDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'DBServerConfigD2.ps1.zip')]",
+    "DBConfigurationFunction": "DBServerConfigD2.ps1\\DBServerConfigD2",
     "DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
        
 //    "DBDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'TestDSCScript.ps1.zip')]",
@@ -399,51 +399,45 @@
           "Password": "[parameters('DomPassword')]"
         }
       }
-    }
+    },
     //Paragon Configuration via DSC Extension
-        //   DB Server
-        //{
-        //  "type": "Microsoft.Compute/virtualMachines/extensions",
-        //  "name": "[concat(variables('VMName3'),'/DBConfigDscExtension')]",
-        //  "apiVersion": "2015-06-15",
-        //  "location": "[resourceGroup().location]",
-        //  "dependsOn": [
-        //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]",
-        //    "Microsoft.Compute/virtualMachines/DC01/extensions/CreateADPDC",
-        //    "Microsoft.Compute/virtualMachines/DB01/extensions/joindomain"
-
-        //  ],
-        //  "properties": {
-        //    "publisher": "Microsoft.Powershell",
-        //    "type": "DSC",
-        //    "typeHandlerVersion": "2.19",
-        //    "autoUpgradeMinorVersion": false,
-        //    "settings": {
-        //      "ModulesUrl": "[variables('DBDSCModuleUrl')]",
-        //      "SasToken": "",
-        //      "configurationFunction": "[variables('DBConfigurationFunction')]",
-        //      "configurationData": {
-        //        "url": "[variables('Configurationurl')]"
-        //      },
-        //     // "wmfVersion": "4.0",
-        //     "Properties": {
-        //        "DomainName": "[parameters('DomainName')]",
-        //        "AdminCreds": {
-        //          "UserName": "[parameters('adminUsername')]",
-        //          "Password": "PrivateSettingsRef:AdminPassword"
-        //      },
-        //       "storageAccountName": "[parameters('dlStorageAccountName')]",
-        //       "StorageAccountKey": "[parameters('dlStorageAccountKey')]",
-        //       "storageAccountContainer": "[parameters('dbStorageAccountContainer')]"
-        //      }
-        //    },
-        //    "protectedSettings": {
-        //      "Items": {
-        //        "AdminPassword": "[parameters('adminPassword')]"
-        //      }
-        //    }
-        //  }
-        //}
+     //      DB Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('VMNameDB'),'/DBConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "ModulesUrl": "[variables('DBDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('DBConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+              },
+             // "wmfVersion": "4.0",
+             "Properties": {
+                "DomainName": "[parameters('DomainName')]",
+                "AdminCreds": {
+                  "UserName": "[parameters('adminUsername')]",
+                  "Password": "PrivateSettingsRef:AdminPassword"
+                }
+              }
+            },
+            "protectedSettings": {
+              "Items": {
+                "AdminPassword": "[parameters('adminPassword')]"
+              }
+            }
+          }
+        }
 
   ] 
 }
