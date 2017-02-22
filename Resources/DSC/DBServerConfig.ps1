@@ -700,11 +700,11 @@ Configuration DBServerConfig
 
         }
 
-        xPendingReboot PostSQLInstall
-        { 
-            Name = "Check for a pending reboot after SQL install"
-            DependsOn = "[Script]InstallSQLServer"
-        }
+ #       xPendingReboot PostSQLInstall
+ #       { 
+ #           Name = "Check for a pending reboot after SQL install"
+ #           DependsOn = "[Script]InstallSQLServer"
+ #       }
 
 #Create BizTalk DB
         Script CreateBizTalkDb
