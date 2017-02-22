@@ -70,13 +70,6 @@
       }
     },
 
-    "HBVMName": {
-      "type": "string",
-      "metadata": {
-        "description": "Virtual Machine name."
-      }
-    },
-
     "PNNTierVMName": {
       "type": "string",
       "metadata": {
@@ -380,10 +373,6 @@
       "subnetRef": "[variables('SubnetRef')]"
     },
 
-    "NICObject12": {
-      "Name": "[concat(parameters('HBVMName'),'-Nic')]",
-      "subnetRef": "[variables('SubnetRef')]"
-    },
 
     "NICObject13": {
       "Name": "[concat(parameters('PNNTierVMName'),'-Nic')]",
@@ -577,22 +566,6 @@
 
     },
 
-    "VMObject12": {
-      "Name": "[parameters('HBVMName')]",
-      "Size": "[parameters('VMSize1')]",
-      "nicName": "[variables('NICObject12').Name]",
-      "adminUserName": "[parameters('adminUsername')]",
-      "adminPassword": "[parameters('adminPassword')]",
-      "publisher": "MicrosoftWindowsServer",
-      "offer": "WindowsServer",
-      "sku": "[parameters('windowsOSVersion')]",
-      "version":"latest",
-      "storageAccountName": "[parameters('storageAcctName')]",
-      "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
-      "URI": "[variables('VMOneDataDiskUri')]",
-      "DataDiskSizeGB": "80"
-
-    },
     "VMObject13": {
       "Name": "[parameters('PNNTierVMName')]",
       "Size": "[parameters('VMSize1')]",
@@ -883,26 +856,6 @@
 
           "NICObject": {
             "value": "[variables('NICObject11')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "NetworkInterfaceResource12",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2016-02-01",
-      "dependsOn": [
-     ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('NetworkInterfaceURI')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-
-          "NICObject": {
-            "value": "[variables('NICObject12')]"
           }
         }
       }
@@ -1201,28 +1154,6 @@
             }
           }
         },
-        {
-          "name": "VMResource12",
-          "type": "Microsoft.Resources/deployments",
-          "apiVersion": "2015-01-01",
-          "dependsOn": [
-            "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource12')]"
-          ],
-          "properties": {
-            "mode": "Incremental",
-            "templateLink": {
-              "uri": "[variables('VMObject12').URI]",
-              "contentVersion": "1.0.0.0"
-            },
-            "parameters": {
-              "VMObject": {
-                "value": "[variables('VMObject12')]"
-              }
-            }
-          }
-        },
-
         {
           "name": "VMResource13",
           "type": "Microsoft.Resources/deployments",
@@ -1608,35 +1539,6 @@
         },
          
          {
-            "comments": "join domain - jsonaddomainextension",
-            "apiVersion": "2015-06-15",
-            "dependsOn": [
-              "[resourceid('Microsoft.Resources/deployments/', 'VMResource12')]"
-            ],
-            "type": "microsoft.compute/virtualmachines/extensions",
-            "name": "[concat(parameters('HBVMName'),'/joindomain')]",
-            "location": "[resourcegroup().location]",
-            "properties": {
-                "publisher": "microsoft.compute",
-                "type": "jsonaddomainextension",
-                "typehandlerversion": "1.3",
-                "autoupgrademinorversion": true,
-                "settings": {
-                    "name": "[parameters('domainname')]",
-                    "user": "[variables('domainUser')]",
-                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",  
-                    "restart": "true",
-//                    "options": "[variables('domainjoinoptions')]",
-                    "options": "3"//,
-                   // "oupath": "ou=testou,dc=SLCES,dc=com"
-                },
-                "protectedsettings": {
-                    "password": "[parameters('dompassword')]"
-                }
-            }
-        },
-
-        {
             "comments": "join domain - jsonaddomainextension",
             "apiVersion": "2015-06-15",
             "dependsOn": [
