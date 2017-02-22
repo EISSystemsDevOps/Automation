@@ -427,13 +427,13 @@
                 "DomainName": "[parameters('DomainName')]",
                 "AdminCreds": {
                   "UserName": "[parameters('adminUsername')]",
-                  "Password": "PrivateSettingsRef:DomPassword"
+                  "Password": "PrivateSettingsRef:AdminPassword"
                 }
               }
             },
             "protectedSettings": {
               "Items": {
-                "AdminPassword": "[parameters('adminPassword')]"
+                "AdminPassword": "[parameters('domPassword')]"
               }
             }
           }
