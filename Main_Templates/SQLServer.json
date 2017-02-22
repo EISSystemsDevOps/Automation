@@ -426,7 +426,7 @@
              "Properties": {
                 "DomainName": "[parameters('DomainName')]",
                 "AdminCreds": {
-                  "UserName": "[variables('domainUser')]",
+                  "UserName": "[parameters('adminUsername')]",
                   "Password": "PrivateSettingsRef:DomPassword"
                 }
               }
