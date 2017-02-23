@@ -464,7 +464,7 @@ Configuration DBServerConfigD2
            		    Write-Error($DataDisks) -ErrorAction Stop
            		}
 	
-                If($LogDisks.Count -gt 0)
+                If($LogDisks)
 			    {
 			        $totalstorageconfigresult2 = New-StoragePool -FriendlyName "SQLLogsPool01A" -StorageSubsystemFriendlyName "Storage Spaces*" -PhysicalDisks $LogDisks | New-VirtualDisk -FriendlyName "SQLLogs1Disk01A" -Size 2044GB -ProvisioningType Fixed -ResiliencySettingName Simple|Initialize-Disk -PassThru | New-Partition -DriveLetter 'G' -UseMaximumSize
 			        write-output $totalstorageconfigresult2
@@ -482,7 +482,7 @@ Configuration DBServerConfigD2
            		Write-Error($PhysicalDisks) -ErrorAction Stop
            		}
            			
-		        If($SystemDisks.Count -gt 0)
+		        If($SystemDisks)
 			    {
                     $totalstorageconfigresult3 = New-StoragePool -FriendlyName "SQLSystemDBPool01A" -StorageSubsystemFriendlyName "Storage Spaces*" -PhysicalDisks $SystemDisks | New-VirtualDisk -FriendlyName "SQLSystemDBDisk01A" -Size 2044GB -ProvisioningType Fixed -ResiliencySettingName Simple|Initialize-Disk -PassThru | New-Partition -DriveLetter 'H' -UseMaximumSize
 			      	write-output $totalstorageconfigresult3
