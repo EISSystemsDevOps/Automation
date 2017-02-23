@@ -334,6 +334,8 @@
     "BreConfigurationFunction": "BreServerConfig14x.ps1\\BreServerConfig14x",
     "SvcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'SvcServerConfig14x.ps1.zip')]",
     "SvcConfigurationFunction": "SvcServerConfig14x.ps1\\SvcServerConfig14x",
+    "ConDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'ConServerConfig14x.ps1.zip')]",
+    "ConConfigurationFunction": "ConServerConfig14x.ps1\\ConServerConfig14x",
     "Configurationurl":"https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
     
       //Template URIs
@@ -993,6 +995,38 @@
 //          }
 //        },
 
+//     //   Connect Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('VMNameCON'),'/CONConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('CONDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('CONConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+               },
+              //"wmfVersion": "4.0",
+              "Properties": {
+ //              "storageAccountName": "[parameters('dlStorageAccountName')]",
+ //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+ //              "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
+                 "sourcepath": "[parameters('SourcePath')]"
+              }
+            },
+            "protectedSettings": { }
+          }
+        },
              //   Service Bus Server
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
