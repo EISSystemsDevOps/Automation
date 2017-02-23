@@ -447,7 +447,7 @@ Configuration DBServerConfigD2
 
 		        If($DataDisks.Count -gt 1)
 			    {
-			        $totalstorageconfigresult = New-StoragePool -FriendlyName "SQLData1Pool01A" -StorageSubsystemFriendlyName "Storage Spaces*" -PhysicalDisks $DataDisks | New-VirtualDisk -FriendlyName "SQLData1Disk01A" -Size 4088GB -ProvisioningType Fixed -ResiliencySettingName Simple|Initialize-Disk -PassThru | New-Partition -DriveLetter 'F' -UseMaximumSize
+			        $totalstorageconfigresult = New-StoragePool -FriendlyName "SQLData1Pool01A" -StorageSubsystemFriendlyName "Storage Spaces*" -PhysicalDisks $DataDisks | New-VirtualDisk -FriendlyName "SQLData1Disk01A" -Size 2044GB -ProvisioningType Fixed -ResiliencySettingName Simple|Initialize-Disk -PassThru | New-Partition -DriveLetter 'F' -UseMaximumSize
 			        write-output $totalstorageconfigresult
                     start-sleep -s 30
 			        $Partition = get-partition| Where-Object DriveLetter -eq "F" 
@@ -466,7 +466,7 @@ Configuration DBServerConfigD2
 	
                 If($LogDisks)
 			    {
-			        $totalstorageconfigresult2 = New-StoragePool -FriendlyName "SQLLogsPool01A" -StorageSubsystemFriendlyName "Storage Spaces*" -PhysicalDisks $LogDisks | New-VirtualDisk -FriendlyName "SQLLogs1Disk01A" -Size 2044GB -ProvisioningType Fixed -ResiliencySettingName Simple|Initialize-Disk -PassThru | New-Partition -DriveLetter 'G' -UseMaximumSize
+			        $totalstorageconfigresult2 = New-StoragePool -FriendlyName "SQLLogsPool01A" -StorageSubsystemFriendlyName "Storage Spaces*" -PhysicalDisks $LogDisks | New-VirtualDisk -FriendlyName "SQLLogs1Disk01A" -Size 1022GB -ProvisioningType Fixed -ResiliencySettingName Simple|Initialize-Disk -PassThru | New-Partition -DriveLetter 'G' -UseMaximumSize
 			        write-output $totalstorageconfigresult2
                     start-sleep -s 30
 			        $Partition = get-partition| Where-Object DriveLetter -eq "G" 
@@ -484,7 +484,7 @@ Configuration DBServerConfigD2
            			
 		        If($SystemDisks)
 			    {
-                    $totalstorageconfigresult3 = New-StoragePool -FriendlyName "SQLSystemDBPool01A" -StorageSubsystemFriendlyName "Storage Spaces*" -PhysicalDisks $SystemDisks | New-VirtualDisk -FriendlyName "SQLSystemDBDisk01A" -Size 2044GB -ProvisioningType Fixed -ResiliencySettingName Simple|Initialize-Disk -PassThru | New-Partition -DriveLetter 'H' -UseMaximumSize
+                    $totalstorageconfigresult3 = New-StoragePool -FriendlyName "SQLSystemDBPool01A" -StorageSubsystemFriendlyName "Storage Spaces*" -PhysicalDisks $SystemDisks | New-VirtualDisk -FriendlyName "SQLSystemDBDisk01A" -Size 1022GB -ProvisioningType Fixed -ResiliencySettingName Simple|Initialize-Disk -PassThru | New-Partition -DriveLetter 'H' -UseMaximumSize
 			      	write-output $totalstorageconfigresult3
                     start-sleep -s 30
 			        $Partition = get-partition| Where-Object DriveLetter -eq "H" 
