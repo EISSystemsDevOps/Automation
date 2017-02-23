@@ -665,6 +665,7 @@ Configuration DBServerConfigD2
                 }
             }
             GetScript ={<# This must return a hash table #>}
+            DependsOn = "[Script]Configure-MountPoints"
         }
 
     
