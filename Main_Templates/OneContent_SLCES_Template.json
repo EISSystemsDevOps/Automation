@@ -281,6 +281,10 @@
     "OCTransAgentDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/OC_TransAgentConfig.ps1.zip')]",
     "OCTransAgentConfigurationFunction": "OC_TransAgentConfig.ps1\\OC_TransAgentConfig",
 
+    "OCWebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/OC_Cluster.ps1.zip')]",
+    "OCWebConfigurationFunction": "OC_Cluster.ps1\\OC_ClusterConfig",
+
+
     "OCAppDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/OC_BackendConfig.ps1.zip')]",
     "OCAppConfigurationFunction": "OC_BackendConfig.ps1\\OC_BackendConfig",
 
@@ -1688,7 +1692,64 @@
             "protectedSettings": { }
           }
         },         
-    //    OC App1
+   //    OC WEb1
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('OCWeb1VMName'),'/OCWebDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('OCWebDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('OCWebConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+               },
+              //"wmfVersion": "4.0",
+              "Properties": {               
+              }
+            },
+            "protectedSettings": { }
+          }
+        },         
+    //    OC WEb2
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('OCWeb2VMName'),'/OCWebDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('OCWebDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('OCWebConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+               },
+              //"wmfVersion": "4.0",
+              "Properties": {               
+              }
+            },
+            "protectedSettings": { }
+          }
+        }, 
+    
+        //    OC App1
         {
           "type": "Microsoft.Compute/virtualMachines/extensions",
           "name": "[concat(parameters('OCApp1VMName'),'/OCAppDscExtension')]",

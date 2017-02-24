@@ -188,7 +188,7 @@
         }
 
   #Create Shortcut to Software$
-
+  <#
        Script Set-Softwarelnk
         {#beginning of script    
          SetScript = 
@@ -219,7 +219,7 @@
                 $Null
             }
            }
-
+#>
 
   #Create Shortcut to This PC
 
@@ -288,6 +288,6 @@
   } #end of node       
 }#end of configuration
 
-OC_ClusterConfig -OutputPath "C:\DSC"
+#OC_ClusterConfig -OutputPath "C:\DSC"
 #Start-DscConfiguration "C:\DSC" -wait -verbose -force 
 
