@@ -1691,7 +1691,7 @@
     //    OC App1
         {
           "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(parameters('OCTApp1VMName'),'/OCAppDscExtension')]",
+          "name": "[concat(parameters('OCApp1VMName'),'/OCAppDscExtension')]",
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
@@ -1719,7 +1719,7 @@
     //    OC App2
         {
           "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(parameters('OCTApp2VMName'),'/OCAppDscExtension')]",
+          "name": "[concat(parameters('OCApp2VMName'),'/OCAppDscExtension')]",
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
