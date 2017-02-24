@@ -281,8 +281,8 @@
     "OCTransAgentDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/OC_TransAgentConfig.ps1.zip')]",
     "OCTransAgentConfigurationFunction": "OC_TransAgentConfig.ps1\\OC_TransAgentConfig",
 
-    "OCWebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/OC_Cluster.ps1.zip')]",
-    "OCWebConfigurationFunction": "OC_Cluster.ps1\\OC_ClusterConfig",
+    "OCWebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/OC_ClusterConfig.ps1.zip')]",
+    "OCWebConfigurationFunction": "OC_ClusterConfig.ps1\\OC_ClusterConfig",
 
 
     "OCAppDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/OC_BackendConfig.ps1.zip')]",
