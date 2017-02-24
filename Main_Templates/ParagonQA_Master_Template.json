@@ -336,8 +336,8 @@
     "SvcConfigurationFunction": "SvcServerConfig14x.ps1\\SvcServerConfig14x",
     "ConDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'ConServerConfig14x.ps1.zip')]",
     "ConConfigurationFunction": "ConServerConfig14x.ps1\\ConServerConfig14x",
-    "PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'ppsServerConfig14x.ps1.zip')]",
-    "PpsConfigurationFunction": "ppsServerConfig14x.ps1\\ppsServerConfig14x",
+    "PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14x.ps1.zip')]",
+    "PpsConfigurationFunction": "PpsServerConfig14x.ps1\\PpsServerConfig14x",
     "Configurationurl":"https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
     
       //Template URIs
