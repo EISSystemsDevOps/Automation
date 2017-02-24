@@ -196,7 +196,7 @@
 
   #Create Shortcut to Software$
 
-       Script Set-Softwarelnk
+<#       Script Set-Softwarelnk
         {#beginning of script    
          SetScript = 
            {
@@ -226,7 +226,7 @@
                 $Null
             }
            }
-
+#>
 
   #Create Shortcut to This PC
 
@@ -295,6 +295,6 @@
   } #end of node       
 }#end of configuration
 
-OC_BackendConfig -OutputPath "C:\DSC"
+#OC_BackendConfig -OutputPath "C:\DSC"
 #Start-DscConfiguration "C:\DSC" -wait -verbose -force 
 
