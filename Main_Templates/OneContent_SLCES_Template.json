@@ -1978,9 +1978,41 @@
           "Properties": {
           }
         },
-          "protectedSettings": { }
-        }
+        "protectedSettings": { }
       }
+    }
+    //,
+    //    {
+    //        "comments": "Generalized from resource: '/subscriptions/33b63578-8e56-4ebe-bb38-538bfb4ff7de/resourcegroups/SLCES-Automation-RG/providers/Microsoft.Automation/automationAccounts/SLCES-Automation/runbooks/Reset-Local_Account'.",
+    //        "type": "Microsoft.Automation/automationAccounts/runbooks",
+    //        "name": "[variables('runbook_start_name')]",
+    //        "apiVersion": "2015-10-31",
+    //        "location": "eastus2",
+    //        "properties": {
+    //            "runbookType": "PowerShell",
+    //            "logVerbose": false,
+    //            "logProgress": false
+    //        },
+    //        "resources": [],
+    //        "dependsOn": []
+    //    },
+    //    {
+    //        "comments": "Generalized from resource: '/subscriptions/33b63578-8e56-4ebe-bb38-538bfb4ff7de/resourcegroups/SLCES-Automation-RG/providers/Microsoft.Automation/automationAccounts/SLCES-Automation/runbooks/Start-A00101OCIRG-VMs'.",
+    //        "type": "Microsoft.Automation/automationAccounts/runbooks",
+    //        "name": "[variables('runbook_start_name')]",
+    //        "apiVersion": "2015-10-31",
+    //        "location": "eastus2",
+    //        "properties": {
+    //            "runbookType": "PowerShell",
+    //            "logVerbose": false,
+    //            "logProgress": false
+    //        },
+    //        "resources": [],
+    //        "dependsOn": [
+    //        ]
+    //    }
+
+
   ] //,
   //"outputs": {
   //"hostname": {
