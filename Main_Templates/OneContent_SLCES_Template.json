@@ -1626,7 +1626,7 @@
                     "restart": "true",
 //                    "options": "[variables('domainjoinoptions')]",
                     "options": "3",
-                    "oupath": "ou=testou,dc=SLCES,dc=com"
+                    "oupath": "OU=A00101OCI,DC=SLCES,DC=com"
                 },
                 "protectedsettings": {
                     "password": "[parameters('dompassword')]"
