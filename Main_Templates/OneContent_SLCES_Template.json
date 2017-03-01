@@ -1508,7 +1508,7 @@
                     //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
                     "restart": "true",
 //                    "options": "[variables('domainjoinoptions')]",
-                    "options": "3"//,
+                    "options": "3",
                       "oupath": "[parameters('ouPath')]"
                 },
                 "protectedsettings": {
