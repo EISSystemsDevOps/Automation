@@ -89,6 +89,12 @@
         "description": "Virtual Machine name."
       }
     },
+    "DBSVMName": {
+      "type": "string",
+      "metadata": {
+        "description": "Virtual Machine name."
+      }
+    },
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -390,7 +396,10 @@
       "subnetRef": "[variables('SubnetRef')]"
     },
 
-
+    "NICObject12": {
+      "Name": "[concat(parameters('DBSVMName'),'-Nic')]",
+      "subnetRef": "[variables('SubnetRef')]"
+    },
     "NICObject13": {
       "Name": "[concat(parameters('PNNTierVMName'),'-Nic')]",
       "subnetRef": "[variables('SubnetRef')]"    
@@ -575,7 +584,7 @@
       "publisher": "MicrosoftWindowsServer",
       "offer": "WindowsServer",
       "sku": "[parameters('windowsOSVersion')]",
-      "version":"latest",
+      "version": "latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
@@ -583,6 +592,25 @@
 
     },
 
+    "VMObject12": {
+      "Name": "[parameters('DBSVMName')]",
+      "Size": "[parameters('VMSize2')]",
+      "nicName": "[variables('NICObject12').Name]",
+      "adminUserName": "[parameters('adminUsername')]",
+      "adminPassword": "[parameters('adminPassword')]",
+      "publisher": "MicrosoftSQLServer",
+      "offer": "SQL2014-WS2012R2",
+      "sku": "Enterprise",
+      "version":"latest",
+      "storageAccountName": "[parameters('storageAcctName')]",
+      "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
+      "URI": "[variables('VMFourDataDisksURI')]",
+      "DataDisk1SizeGB": "1023",
+      "DataDisk2SizeGB": "1023",
+      "DataDisk3SizeGB": "1023",
+      "DataDisk4SizeGB": "1023"
+
+    },
     "VMObject13": {
       "Name": "[parameters('PNNTierVMName')]",
       "Size": "[parameters('VMSize1')]",
@@ -1167,6 +1195,27 @@
             "parameters": {
               "VMObject": {
                 "value": "[variables('VMObject11')]"
+              }
+            }
+          }
+        },
+        {
+          "name": "VMResource12",
+          "type": "Microsoft.Resources/deployments",
+          "apiVersion": "2015-01-01",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource12')]"
+          ],
+          "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+              "uri": "[variables('VMObject12').URI]",
+              "contentVersion": "1.0.0.0"
+            },
+            "parameters": {
+              "VMObject": {
+                "value": "[variables('VMObject12')]"
               }
             }
           }

@@ -73,41 +73,28 @@
                 "version": "1.0.0.0"
               }
             }
-          }//,
-          //{
-          //  "name": "[parameters('credentialName')]",
-          //  "type": "credentials",
-          //  "apiVersion": "2015-01-01-preview",
-          //  "location": "[resourceGroup().location]",
-          //  "dependsOn": [
-          //    "[concat('Microsoft.Automation/automationAccounts/', parameters('AutomationAccountName'))]"
-          //  ],
-          //  "tags": { },
-          //  "properties": {
-          //    "userName": "[parameters('userName')]",
-          //    "password": "[parameters('password')]"
-          //  }
-          //},
-          //{
-          //  "name": "[parameters('jobId')]",
-          //  "type": "jobs",
-          //  "apiVersion": "2015-01-01-preview",
-          //  "location": "[resourceGroup().location]",
-          //  "dependsOn": [
-          //    "[concat('Microsoft.Automation/automationAccounts/', parameters('AutomationAccountName'))]",
-          //    "[concat('Microsoft.Automation/automationAccounts/', parameters('AutomationAccountName'), '/runbooks/',parameters('runbookName'))]"
-          //  ],
-          //  "tags": {
-          //    "key": "value"
-          //  },
-          //  "properties": {
-          //    "runbook": {
-          //      "name": "[parameters('runbookName')]"
-          //    }
-          //  }
-          //}
+          } //,
+
         ]
-      }
+      },
+     {
+            "comments": "",
+            "type": "Microsoft.Automation/automationAccounts/schedules",
+            "name": "[concat('Microsoft.Automation/automationAccounts/','WeekdaysAt6PMTEST')]",
+            "apiVersion": "2015-10-31",
+            "properties": {
+                "description": "",
+                "startTime": "2017-02-23T18:00:00-05:00",
+                "expiryTime": "9999-12-31T18:59:00-05:00",
+                "isEnabled": true,
+                "interval": 1,
+                "frequency": "Week"
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('AutomationAccountName'))]"
+            ]
+     }   
     ],
     "outputs": {}
 }
