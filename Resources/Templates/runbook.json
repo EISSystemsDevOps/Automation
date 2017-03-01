@@ -1,0 +1,113 @@
+{
+    "$schema": "http://schemas.microsoft.org/azure/deploymentTemplate?api-version=2015-01-01-preview#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "AutomationAccountName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Azure Automation account to deploy to."
+            }
+        },
+        "runbookName": {
+            "type": "string",
+            "defaultValue": "Get-AzureVMTutorial",
+            "metadata": {
+                "description": "Name of runbook to create within Automation Account."
+            }
+        },
+        "scriptUri": {
+            "type": "string",
+            "metadata": {
+                "description": "URI for script to be used inside of runbook.  Will copy content and put it into the runbook."
+            }
+        },
+        //"password": {
+        //    "type": "securestring",
+        //    "metadata": {
+        //        "description": "The password for the Azure Automation credential."
+        //    }
+        //},
+        //"jobId": {
+        //    "type": "string",
+        //    "metadata": {
+        //        "description": "The GUID for the runbook job to be started."
+        //    }
+        //}
+    },
+    "variables": {
+        //"runbookName": "Get-AzureVMTutorial",
+        //"scriptUri":  
+        "runbookDescription": "[parameters('runbookName')]",
+        "sku": "Free"
+    },
+    "resources": [
+      {
+        "name": "[parameters('AutomationAccountName')]",
+        "type": "Microsoft.Automation/automationAccounts",
+        "apiVersion": "2015-01-01-preview",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [ ],
+        "tags": { },
+        "properties": {
+          "sku": {
+            "name": "[variables('sku')]"
+          }
+        },
+        "resources": [
+          {
+            "name": "[parameters('runbookName')]",
+            "type": "runbooks",
+            "apiVersion": "2015-01-01-preview",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+              "[concat('Microsoft.Automation/automationAccounts/', parameters('AutomationAccountName'))]"
+            ],
+            "tags": { },
+            "properties": {
+              "runbookType": "Script",
+              "logProgress": "false",
+              "logVerbose": "false",
+              "description": "[variables('runbookDescription')]",
+              "publishContentLink": {
+                "uri": "[parameters('scriptUri')]",
+                "version": "1.0.0.0"
+              }
+            }
+          }//,
+          //{
+          //  "name": "[parameters('credentialName')]",
+          //  "type": "credentials",
+          //  "apiVersion": "2015-01-01-preview",
+          //  "location": "[resourceGroup().location]",
+          //  "dependsOn": [
+          //    "[concat('Microsoft.Automation/automationAccounts/', parameters('AutomationAccountName'))]"
+          //  ],
+          //  "tags": { },
+          //  "properties": {
+          //    "userName": "[parameters('userName')]",
+          //    "password": "[parameters('password')]"
+          //  }
+          //},
+          //{
+          //  "name": "[parameters('jobId')]",
+          //  "type": "jobs",
+          //  "apiVersion": "2015-01-01-preview",
+          //  "location": "[resourceGroup().location]",
+          //  "dependsOn": [
+          //    "[concat('Microsoft.Automation/automationAccounts/', parameters('AutomationAccountName'))]",
+          //    "[concat('Microsoft.Automation/automationAccounts/', parameters('AutomationAccountName'), '/runbooks/',parameters('runbookName'))]"
+          //  ],
+          //  "tags": {
+          //    "key": "value"
+          //  },
+          //  "properties": {
+          //    "runbook": {
+          //      "name": "[parameters('runbookName')]"
+          //    }
+          //  }
+          //}
+        ]
+      }
+    ],
+    "outputs": {}
+}
