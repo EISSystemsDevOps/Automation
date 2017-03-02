@@ -176,11 +176,7 @@
       "metadata": {
         "description": "Availability Set Name."
       }
-    },
-      "parameters('ASName')Name": {
-          "type": "string",
-          "minLength": 1
-      }
+    }
   
   },//End of Parameters
 
