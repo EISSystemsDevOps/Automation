@@ -240,7 +240,7 @@
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
     "NICObject6": {
-      "Name": "[concat(parameters('VMNameDC'),'-Nic')]",
+      "Name": "[concat(parameters('VMNameDC2'),'-Nic')]",
       "subnetRef": "[variables('subnetRef')]",
       "IPAddress": "[parameters('DC2IPAddress')]"
       //   "LoadBalancerName": "[concat(variables('VMName2'),'-LB')]",
