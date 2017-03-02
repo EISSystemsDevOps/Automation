@@ -9,6 +9,12 @@
         "description": "DC Virtual Machine name."
       }
     },
+    "VMNameDC2": {
+      "type": "string",
+      "metadata": {
+        "description": "DC Virtual Machine name 2."
+      }
+    },
     "DCIPAddress": {
       "type": "string",
       "metadata": {
