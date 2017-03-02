@@ -890,7 +890,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2016-02-01",
       "dependsOn": [
-     ],
+      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -901,6 +901,26 @@
 
           "NICObject": {
             "value": "[variables('NICObject11')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "NetworkInterfaceResource12",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+     ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+          "NICObject": {
+            "value": "[variables('NICObject12')]"
           }
         }
       }
