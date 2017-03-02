@@ -357,41 +357,41 @@
           }
         }
       }
-    },
-    //Active Directory Domain Controller Setup via DSC Extension
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMName'),'/CreateADPDC')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "modulesUrl": "[variables('DCDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "CreateADPDC.ps1\\CreateADPDC",
-          "wmfVersion": "4.0",
-          "Properties": {
-            "DomainName": "[parameters('domainName')]",
-            "AdminCreds": {
-              "UserName": "[parameters('adminUsername')]",
-              "Password": "PrivateSettingsRef:AdminPassword"
-            }
-          }
-        },
-        "protectedSettings": {
-          "Items": {
-            "AdminPassword": "[parameters('adminPassword')]"
-          }
-        }
-      }
     }
+    //Active Directory Domain Controller Setup via DSC Extension
+    //{
+    //  "type": "Microsoft.Compute/virtualMachines/extensions",
+    //  "name": "[concat(parameters('VMName'),'/CreateADPDC')]",
+    //  "apiVersion": "2015-06-15",
+    //  "location": "[resourceGroup().location]",
+    //  "dependsOn": [
+    //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
+    //  ],
+    //  "properties": {
+    //    "publisher": "Microsoft.Powershell",
+    //    "type": "DSC",
+    //    "typeHandlerVersion": "2.19",
+    //    "autoUpgradeMinorVersion": true,
+    //    "settings": {
+    //      "modulesUrl": "[variables('DCDSCModuleUrl')]",
+    //      "SasToken": "",
+    //      "configurationFunction": "CreateADPDC.ps1\\CreateADPDC",
+    //      "wmfVersion": "4.0",
+    //      "Properties": {
+    //        "DomainName": "[parameters('domainName')]",
+    //        "AdminCreds": {
+    //          "UserName": "[parameters('adminUsername')]",
+    //          "Password": "PrivateSettingsRef:AdminPassword"
+    //        }
+    //      }
+    //    },
+    //    "protectedSettings": {
+    //      "Items": {
+    //        "AdminPassword": "[parameters('adminPassword')]"
+    //      }
+    //    }
+    //  }
+    //}
 
   ] //,
   //"outputs": {
