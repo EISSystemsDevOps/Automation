@@ -176,7 +176,11 @@
       "metadata": {
         "description": "Availability Set Name."
       }
-    }
+    },
+      "parameters('ASName')Name": {
+          "type": "string",
+          "minLength": 1
+      }
   
   },//End of Parameters
 
@@ -352,7 +356,8 @@
       "apiVersion": "2015-01-01",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResourceDC')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResourceDC')]",
+        "[resourceid('Microsoft.Resources/deployments/', parameters('ASName'))]"
         //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
       ],
       "properties": {
@@ -402,7 +407,21 @@
           }
         }
       }
-    }
+    },
+      {
+          "name": "[parameters('ASName')]",
+          "type": "Microsoft.Compute/availabilitySets",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2015-06-15",
+          "dependsOn": [ ],
+          "tags": {
+              "displayName": "parameters('ASName')"
+          },
+          "properties": {
+              "platformUpdateDomainCount": 1,
+              "platformFaultDomainCount": 1
+          }
+      }
 
   ] //,
   //"outputs": {
