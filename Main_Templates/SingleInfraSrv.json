@@ -211,7 +211,7 @@
     },
     "NICObject5": {
       "Name": "[concat(parameters('VMName'),'-Nic')]",
-      "subnetRef": "[variables('subnetRef')]",   
+      "subnetRef": "[variables('subnetRef')]"  
      // "IPAddress": "[parameters('DCIPAddress')]"
       //   "LoadBalancerName": "[concat(variables('VMName2'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -323,7 +323,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceStaticURI')]",
+          "uri": "[variables('NetworkInterfaceURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
