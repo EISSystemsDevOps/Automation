@@ -374,6 +374,31 @@
         }
       }
     },
+
+    //{
+    //  "name": "VMResourceDC2",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2015-01-01",
+    //  "dependsOn": [
+    //    "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+    //    "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResourceDC2')]",
+    //    "[resourceid('Microsoft.Resources/deployments/', parameters('ASName'))]"
+    //    //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //      "uri": "[variables('VMObjectDC').Uri]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "VMObject": {
+    //        "value": "[variables('VMObjectDC')]"
+    //      }
+    //    }
+    //  }
+    //},
     //Active Directory Domain Controller Setup via DSC Extension
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
@@ -415,7 +440,6 @@
           "apiVersion": "2015-06-15",
           "dependsOn": [ ],
           "tags": {
-              "displayName": "parameters('ASName')"
           },
           "properties": {
               "platformUpdateDomainCount": 1,
