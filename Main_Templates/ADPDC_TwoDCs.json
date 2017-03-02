@@ -438,7 +438,7 @@
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
         "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResourceDC2')]",
-        "[resourceid('Microsoft.Resources/deployments/', parameters('ASName'))]"
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('ASName'))]"
         //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
       ],
       "properties": {
