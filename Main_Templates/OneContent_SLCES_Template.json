@@ -311,7 +311,8 @@
     "OCCaptivaConfigurationFunction": "OC_CaptivaConfig.ps1\\OC_CaptivaConfig",
     "RDSDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/RDSConfig.ps1.zip')]",
     "RDSConfigurationFunction": "RDSConfig.ps1\\RDSConfig",
-
+    "DBDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'DBServerConfigD2.ps1.zip')]",
+    "DBConfigurationFunction": "DBServerConfigD2.ps1\\DBServerConfigD2",
     
     "Configurationurl":"https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
@@ -2078,7 +2079,46 @@
         },
         "protectedSettings": { }
       }
-    }
+    },
+
+   //Paragon Configuration via DSC Extension
+     //      DB Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('DBSVMName'),'/DBConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource12')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "ModulesUrl": "[variables('DBDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('DBConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+              },
+             // "wmfVersion": "4.0",
+             "Properties": {
+                "DomainName": "[parameters('DomainName')]",
+                "AdminCreds": {
+                  "UserName": "[parameters('adminUsername')]",
+                  "Password": "PrivateSettingsRef:AdminPassword"
+                }
+              }
+            },
+            "protectedSettings": {
+              "Items": {
+                "AdminPassword": "[parameters('domPassword')]"
+              }
+            }
+          }
+        }
     //,
     //    {
     //        "comments": "Generalized from resource: '/subscriptions/33b63578-8e56-4ebe-bb38-538bfb4ff7de/resourcegroups/SLCES-Automation-RG/providers/Microsoft.Automation/automationAccounts/SLCES-Automation/runbooks/Reset-Local_Account'.",
