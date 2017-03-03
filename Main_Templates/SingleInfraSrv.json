@@ -468,9 +468,6 @@
             "name": "[concat(parameters('VMName'),'/IaaSAntimalware')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "location": "[resourceGroup().location]",
-            "dependsOn": [
-              "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
-            ],
             "apiVersion": "2015-06-15",
             "properties": {
                 "publisher": "Microsoft.Azure.Security",
