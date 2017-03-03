@@ -9,7 +9,7 @@
         "description": "Infrastructure Virtual Machine name."
       }
     },
-    
+
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -28,6 +28,26 @@
     //    "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
     //  }
     //},
+    "DomUserName": {
+      "type": "string",
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "DomPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
+    },
+    "OUPath": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "OU to place VMs when joining to domain."
+      }
+    },
+
     "windowsOSVersion": {
       "type": "string",
       "defaultValue": "2016-Datacenter",
@@ -107,7 +127,7 @@
       "allowedValues": [
         "new",
         "existing"
-      ] ,
+      ],
       "metadata": {
         "description": "Use a new or existing storage account"
       },
@@ -166,8 +186,8 @@
       }
     },
 
-        
-       
+
+
   },//End of Parameters
 
   "variables": {
@@ -178,7 +198,7 @@
     //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     // "domainUserA": "[concat(parameters('domainName'),'\\')]",
    //parameters('adminUsername'))",
-    
+    "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
     //Environment VM Names
     //Environment VM Sizes
     //"VMSize1": "Standard_A2",
@@ -355,6 +375,34 @@
           "VMObject": {
             "value": "[variables('VMObject')]"
           }
+        }
+      }
+    },
+
+    {
+      "comments": "Join domain - JsonADDomainExtension",
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('VMName'),'/joindomain')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "JsonADDomainExtension",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "Name": "[parameters('domainName')]",
+          "User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
+          "Restart": "true",
+          //                    "Options": "[variables('domainJoinOptions')]",
+          "Options": "3",
+          "OUPath": "[parameters('OUPath')]"
+        },
+        "protectedSettings": {
+          "Password": "[parameters('DomPassword')]"
         }
       }
     }
