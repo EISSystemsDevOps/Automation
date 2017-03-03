@@ -1623,7 +1623,35 @@
                 }
             }
         },
-         
+
+        {
+            "comments": "join domain - jsonaddomainextension",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+              "[resourceid('Microsoft.Resources/deployments/', 'VMResource12')]"
+            ],
+            "type": "microsoft.compute/virtualmachines/extensions",
+            "name": "[concat(parameters('DBSVMName'),'/joindomain')]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publisher": "microsoft.compute",
+                "type": "jsonaddomainextension",
+                "typehandlerversion": "1.3",
+                "autoupgrademinorversion": true,
+                "settings": {
+                    "name": "[parameters('domainname')]",
+                    "user": "[variables('domainUser')]",
+                    //"User": "[concat(parameters('domainName'), '\\LocalAdmin')]",
+                    "restart": "true",
+//                    "options": "[variables('domainjoinoptions')]",
+                    "options": "3",
+                      "oupath": "[parameters('ouPath')]"
+                },
+                "protectedsettings": {
+                    "password": "[parameters('dompassword')]"
+                }
+            }
+        },         
          {
             "comments": "join domain - jsonaddomainextension",
             "apiVersion": "2015-06-15",
@@ -1710,6 +1738,7 @@
                 }
             }
         },
+
 
     //    DSC Server Config
     //    OC Release Server
