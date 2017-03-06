@@ -1,5 +1,4 @@
-﻿
-#Config file for Push mode and Azure setup with extension
+﻿#Config file for Push mode and Azure setup with extension
 
 
 #PARAGON Server Common Config ####################################################################
@@ -10,26 +9,20 @@
 -Set ParagonDisallowAnimations to enable
 -Set-ParagonDisableForceUnloadProfile
 #>
-
-
-Configuration WebServerConfig14xWPrereqs
+Configuration NtierServerConfig14xWPrereqs
  {
   Param (
-         [Parameter(Mandatory=$True)]
-         [String[]]$SourcePath,
 
          [Parameter(Mandatory=$True)]
          [String[]]$SWPath
 
-         )
- 
+         )  
   
-  
-  Node ("localhost") 
+  Node ("localhost")
    {
 
 
-        #Set-PowerPlan
+       #Set-PowerPlan
  		Script Set-ParagonPowerPlan
         {
 	        SetScript = { Powercfg -SETACTIVE SCHEME_MIN }
@@ -276,74 +269,30 @@ Configuration WebServerConfig14xWPrereqs
             ValueName = "DisableForceUnload"
             ValueData = "1"
         }
+        
+
 
 #End of Paragon Common Config #########################################################################
-    
-  #WebConfiguration
-<#
--Install all the required Roles and Features
--Set App Pools Recycle Setting (Recycle at 2AM)
--Set WebStation to support 32bit
-#>
-    
-     #WebServer Configuration specific settings
-    WindowsFeature IISWindowsFeature
-    {
-     Ensure = "Present"
-     Name = "Web-Server"
-    }
 
+       #Ntier Config
+
+   #Ntier Server Configuration specific settings
+   
         
-    $WindowsFeatures = "AS-HTTP-Activation", "WAS-NET-Environment", "Web-WebServer", "Web-Common-Http", "Web-Default-Doc", "Web-Dir-Browsing", "Web-Http-Errors", `
-					   "Web-Static-Content", "Web-Health", "Web-Http-Logging", "Web-Http-Tracing", "Web-Performance", "Web-Stat-Compression", "Web-Security", "Web-Filtering", "Web-App-Dev", "Web-Net-Ext45", `
-					   "Web-Asp-Net45", "Web-ISAPI-Ext", "Web-ISAPI-Filter", "Web-Mgmt-Tools", "Web-Mgmt-Console", "Web-Mgmt-Compat", "Web-Metabase", "NET-Framework-Core", "NET-HTTP-Activation", "NET-Framework-45-Features", `
-					   "NET-Framework-45-Core", "NET-Framework-45-ASPNET", "NET-WCF-Services45", "NET-WCF-TCP-PortSharing45", "Web-Net-Ext", "Web-Asp-Net"
+    $WindowsFeatures = "Application-Server", "AS-NET-Framework", "AS-Ent-Services", "AS-Incoming-Trans", "AS-Outgoing-Trans", "Print-Services", "Print-Server", `
+					   "Web-Server", "Web-WebServer", "Web-Common-Http", "Web-Default-Doc", "Web-Dir-Browsing", "Web-Http-Errors", "Web-Static-Content", "Web-Health", "Web-Http-Logging", "Web-Http-Tracing", `
+					   "Web-Performance", "Web-Stat-Compression", "Web-Security", "Web-Filtering", "Web-App-Dev", "Web-Net-Ext45", "Web-Asp-Net45", "Web-ISAPI-Ext", "Web-ISAPI-Filter", "Web-Mgmt-Tools", `
+					   "Web-Mgmt-Console", "Web-Metabase", "NET-Framework-45-Features", "NET-Framework-45-Core", "NET-Framework-45-ASPNET", "NET-WCF-Services45", "NET-WCF-TCP-PortSharing45", "RSAT-Print-Services", "Web-Net-Ext", "Web-Asp-Net"
     foreach ($WindowsFeature in $WindowsFeatures)
      {
       WindowsFeature $WindowsFeature
 		{
 			Ensure = "Present"
 			Name = "$WindowsFeature"
-            Source = "$SourcePath"
-            DependsOn = "[WindowsFeature]IISWindowsFeature"
             
 		}
      }
-	
 
-
-   #Set the App Pools Recycle setting and WebStation to enable 32bit
-
-    Script SetAppPoolSetting
-     {
-      GetScript={$null}
-      TestScript={$false}
-      SetScript={ Import-Module WebAdministration
-                  $AppPools = Get-ChildItem IIS:\AppPools 
-                  $ParagonAppPools = $AppPools | Where {$_.Name -notlike "*.Net*"}
-                  foreach ($ParagonAppPool in $ParagonAppPools)
-                   {
-                    # set the Recycling Time Interval to 0, which disables the setting
-                    Set-ItemProperty -Path ("IIS:\AppPools\" + $ParagonappPool.name) -Name recycling.periodicrestart.time -Value ([TimeSpan]::FromMinutes(0))
-
-                    # set the Recycling schedule to 2 AM
-                    Set-ItemProperty -Path ("IIS:\AppPools\" + $ParagonAppPool.name) -Name recycling.periodicRestart.schedule -Value @{value="02:00:00"}
-                   }
-                   # set WebStation App Pool to enable 32 bit support
-                   If ($AppPools.Name -contains "WebStation")
-                    {
-                     $WSAppPool = "IIS:\AppPools\WebStation"
-                     $WS32BitApp = Get-ItemProperty -Path $WSAppPool -Name enable32BitAppOnWin64
-                    
-                     If ($WS32BitApp -ne "True")
-                      {Set-ItemProperty -Path $WSAppPool -Name enable32BitAppOnWin64 -Value True}
-                    }
-                   
-                }
-      DependsOn="[WindowsFeature]IISWindowsFeature"
-
-     }
- 
         Package AspNetMVC3
         {
             Ensure      = "Present"  # You can also set Ensure to "Absent"
@@ -372,28 +321,10 @@ Configuration WebServerConfig14xWPrereqs
             Arguments   = "/qn"
             DependsOn   = "[Package]SQLSysClrTypes"
         } 
+         
         
-        Package SQLNativeClient_2008R2
-        {
-            Ensure      = "Present"  # You can also set Ensure to "Absent"
-            Path        = "$SWPath\SQLNativeClient_2008R2\SQLNativeClient_2008R2\sqlncli2008r2.msi"
-            Name        = "Microsoft SQL Server 2008 R2 Native Client"
-            ProductId   = "{471AAD2C-9078-4DAC-BD43-FA10FB7C3FCE}"
-            Arguments   = "IACCEPTSQLNCLILICENSETERMS=YES /qn"
-            DependsOn   = "[Package]SQLSysClrTypes"
-        } 
 
-        Package SQLNativeClient_2012
-        {
-            Ensure      = "Present"  # You can also set Ensure to "Absent"
-            Path        = "$SWPath\SQLNativeClient_2012\SQLNativeClient_2012\sqlncli2012.msi"
-            Name        = "Microsoft SQL Server 2012 Native Client "
-            ProductId   = "{3965C9F9-9B9A-4391-AC4B-8388210D3AA0}"
-            Arguments   = "IACCEPTSQLNCLILICENSETERMS=YES /qn"
-            DependsOn   = "[Package]SQLSysClrTypes"
-        }
+    }#End of Node
+ }#End of Configuration
 
 
-
- }
-}

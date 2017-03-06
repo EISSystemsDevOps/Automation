@@ -295,9 +295,14 @@
     },
     "SourcePath": {
       "type": "string",
-      //"defaultValue": '\\azrdevfile01\Root\WindowsServer2012R2\sources\sxs',
       "metadata": {
         "description": "DSC path for WinSXS folder."
+      }
+    },
+    "SWPath": {
+      "type": "string",
+      "metadata": {
+        "description": "DSC path for Prerequisite software installation."
       }
     }
 
@@ -328,8 +333,8 @@
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
     "WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14xWPrereqs.ps1.zip')]",
     "WebConfigurationFunction": "WebServerConfig14xWPrereqs.ps1\\WebServerConfig14xWPrereqs",
-    "NtierDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtierServerConfig14x.ps1.zip')]",
-    "NtierConfigurationFunction": "NtierServerConfig14x.ps1\\NtierServerConfig14x",
+    "NtierDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtierServerConfig14xWPrereqs.ps1.zip')]",
+    "NtierConfigurationFunction": "NtierServerConfig14xWPrereqs.ps1\\NtierServerConfig14xWPrereqs",
     "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig14x.ps1.zip')]",
     "BreConfigurationFunction": "BreServerConfig14x.ps1\\BreServerConfig14x",
     "SvcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'SvcServerConfig14x.ps1.zip')]",
@@ -888,7 +893,8 @@
           "Properties": {
             //             "storageAccountName": "[parameters('dlStorageAccountName')]",
             //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            "sourcepath": "[parameters('SourcePath')]"
+            "sourcepath": "[parameters('SourcePath')]",
+            "SWPath": "[parameters('SWPath')]"
 
           }
         },
@@ -957,7 +963,7 @@
             //              "storageAccountName": "[parameters('dlStorageAccountName')]",
             //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
             //               "sourcepath": "[parameters('SourcePath')]"
-
+              "SWPath": "[parameters('SWPath')]"
           }
         },
         "protectedSettings": { }
