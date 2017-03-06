@@ -318,6 +318,15 @@ Configuration ConServerConfig14x
                 }
       DependsOn="[WindowsFeature]IISWindowsFeature"
      }
+  Package NET451_Dev_Pack
+  {
+        Ensure      = "Present"  # You can also set Ensure to "Absent"
+        Path        = "$SWPath\NET451_Dev_Pack\NDP451-KB2861696-x86-x64-DevPack.exe"
+        Name        = "Microsoft .NET Framework 4.5.1 Multi-Targeting Pack"
+        ProductId   = "{6A0C6700-EA93-372C-8871-DCCF13D160A4}"
+        Arguments   = "/q /norestart"
+  }
+
 
     Package SQLSysClrTypes
     {
