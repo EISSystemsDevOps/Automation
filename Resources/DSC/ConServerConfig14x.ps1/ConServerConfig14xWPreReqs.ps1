@@ -10,7 +10,7 @@
 #>
 
 
-Configuration ConServerConfig14x
+Configuration ConServerConfig14xWPreReqs
  {
   Param (
          [Parameter(Mandatory=$True)]
