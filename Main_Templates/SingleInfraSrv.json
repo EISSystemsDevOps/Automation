@@ -510,7 +510,7 @@
       "name": "[concat(parameters('VMName'),'/OMSAgent')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       //"name": "Microsoft.EnterpriseCloud.Monitoring",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2015-11-01-preview",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
