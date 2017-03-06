@@ -774,7 +774,7 @@ Configuration DBServerConfigD2
         }#End of script
 #>
 
-
+<#
 #New way
 #Install-AzurePowershellModules
 		Script InstallAzurePowershellModules
@@ -801,7 +801,7 @@ Configuration DBServerConfigD2
                     }
                 
         	}
-
+#>
 
 
     }#End of Node

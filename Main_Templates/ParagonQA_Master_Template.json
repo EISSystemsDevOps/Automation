@@ -326,8 +326,8 @@
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
-    "WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14x.ps1.zip')]",
-    "WebConfigurationFunction": "WebServerConfig14x.ps1\\WebServerConfig14x",
+    "WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14xWPrereqs.ps1.zip')]",
+    "WebConfigurationFunction": "WebServerConfig14xWPrereqs.ps1\\WebServerConfig14xWPrereqs",
     "NtierDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtierServerConfig14x.ps1.zip')]",
     "NtierConfigurationFunction": "NtierServerConfig14x.ps1\\NtierServerConfig14x",
     "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig14x.ps1.zip')]",
