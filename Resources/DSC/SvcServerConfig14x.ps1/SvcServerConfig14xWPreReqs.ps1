@@ -306,6 +306,14 @@ Configuration SvcServerConfig14xWPreReqs
         }
 
 
+        Package MSXML40Parser
+        {
+            Ensure      = "Present"  # You can also set Ensure to "Absent"
+            Path        = "$SWPath\MSXML40Parser\msxml.msi"
+            Name        = "MSXML 4.0 SP3 Parser"
+            ProductId   = "{196467F1-C11F-4F76-858B-5812ADC83B94}"
+            Arguments   = "/qn"
+        }
      
 
      
