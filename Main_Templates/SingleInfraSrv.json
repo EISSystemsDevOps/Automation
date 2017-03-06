@@ -234,14 +234,26 @@
                 "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
             }
         },
-        "ScheduledScanSettingsTime": {
-            "type": "string",
-            "defaultValue": "120",
-            "metadata": {
-                "description": "When to perform the scheduled scan, measured in minutes from midnight (0-1440). For example: 0 = 12AM, 60 = 1AM, 120 = 2AM."
-            }
-        }
-    
+    "ScheduledScanSettingsTime": {
+      "type": "string",
+      "defaultValue": "120",
+      "metadata": {
+        "description": "When to perform the scheduled scan, measured in minutes from midnight (0-1440). For example: 0 = 12AM, 60 = 1AM, 120 = 2AM."
+      }
+    },
+    "workspaceId": {
+      "type": "string",
+      "metadata": {
+        "description": "workspaceId."
+      }
+    },
+    "workspaceKey": {
+      "type": "string",
+      "metadata": {
+        "description": "workspaceKey."
+      }
+    }
+  
 
 
 
@@ -465,35 +477,57 @@
     },
     //Antimalware extension
     {
-            "name": "[concat(parameters('VMName'),'/IaaSAntimalware')]",
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-            "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
-            ],
-            "apiVersion": "2015-06-15",
-            "properties": {
-                "publisher": "Microsoft.Azure.Security",
-                "type": "IaaSAntimalware",
-                "typeHandlerVersion": "1.3",
-                "autoUpgradeMinorVersion": true,
-                "settings": {
-                    "AntimalwareEnabled": true,
-                    "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-                    "ScheduledScanSettings": {
-                        "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-                        "day": "[parameters('ScheduledScanSettingsDay')]",
-                        "time": "[parameters('ScheduledScanSettingsTime')]",
-                        "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-                    },
-                    "Exclusions": {
-                        "Extensions": "[parameters('ExclusionsExtensions')]",
-                        "Paths": "[parameters('ExclusionsPaths')]",
-                        "Processes": "[parameters('ExclusionsProcesses')]"
-                    }
-                }
-            }
+      "name": "[concat(parameters('VMName'),'/IaaSAntimalware')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
+      ],
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "publisher": "Microsoft.Azure.Security",
+        "type": "IaaSAntimalware",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "AntimalwareEnabled": true,
+          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+          "ScheduledScanSettings": {
+            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+            "day": "[parameters('ScheduledScanSettingsDay')]",
+            "time": "[parameters('ScheduledScanSettingsTime')]",
+            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+          },
+          "Exclusions": {
+            "Extensions": "[parameters('ExclusionsExtensions')]",
+            "Paths": "[parameters('ExclusionsPaths')]",
+            "Processes": "[parameters('ExclusionsProcesses')]"
+          }
         }
+      }
+    },
+    {
+      "name": "[concat(parameters('VMName'),'/OMSAgent')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      //"name": "Microsoft.EnterpriseCloud.Monitoring",
+      "apiVersion": "[variables('apiVersion')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+        "type": "MicrosoftMonitoringAgent",
+        "typeHandlerVersion": "1.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "workspaceId": "[parameters('workspaceId')]"
+        },
+        "protectedSettings": {
+          "workspaceKey": "[parameters('workspaceKey')]"
+        }
+      }
+    }
 
     //Active Directory Domain Controller Setup via DSC Extension
     //{
