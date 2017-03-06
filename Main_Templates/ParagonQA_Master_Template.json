@@ -304,6 +304,74 @@
       "metadata": {
         "description": "DSC path for Prerequisite software installation."
       }
+    },
+    "ExclusionsPaths": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Semicolon delimited list of file paths or locations to exclude from scanning"
+            }
+        },
+        "ExclusionsExtensions": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Semicolon delimited list of file extensions to exclude from scanning"
+            }
+        },
+        "ExclusionsProcesses": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Semicolon delimited list of process names to exclude from scanning"
+            }
+        },
+        "RealtimeProtectionEnabled": {
+            "type": "string",
+            "defaultValue": "true",
+            "metadata": {
+                "description": "Indicates whether or not real time protection is enabled (default is true)"
+            }
+        },
+        "ScheduledScanSettingsIsEnabled": {
+            "type": "string",
+            "defaultValue": "false",
+            "metadata": {
+                "description": "Indicates whether or not custom scheduled scan settings are enabled (default is false)"
+            }
+        },
+        "ScheduledScanSettingsScanType": {
+            "type": "string",
+            "defaultValue": "Quick",
+            "metadata": {
+                "description": "Indicates whether scheduled scan setting type is set to Quick or Full (default is Quick)"
+            }
+        },
+        "ScheduledScanSettingsDay": {
+            "type": "string",
+            "defaultValue": "7",
+            "metadata": {
+                "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
+            }
+        },
+    "ScheduledScanSettingsTime": {
+      "type": "string",
+      "defaultValue": "120",
+      "metadata": {
+        "description": "When to perform the scheduled scan, measured in minutes from midnight (0-1440). For example: 0 = 12AM, 60 = 1AM, 120 = 2AM."
+      }
+    },
+    "workspaceId": {
+      "type": "string",
+      "metadata": {
+        "description": "workspaceId."
+      }
+    },
+    "workspaceKey": {
+      "type": "string",
+      "metadata": {
+        "description": "workspaceKey."
+      }
     }
 
         
@@ -1236,6 +1304,330 @@
         },
         "protectedSettings": {
           "Password": "[parameters('DomPassword')]"
+        }
+      }
+    },
+    //Antimalware extension for PP server
+    {
+      "name": "[concat(parameters('VMNamePPS'),'/IaaSAntimalware')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+      ],
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "publisher": "Microsoft.Azure.Security",
+        "type": "IaaSAntimalware",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "AntimalwareEnabled": true,
+          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+          "ScheduledScanSettings": {
+            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+            "day": "[parameters('ScheduledScanSettingsDay')]",
+            "time": "[parameters('ScheduledScanSettingsTime')]",
+            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+          },
+          "Exclusions": {
+            "Extensions": "[parameters('ExclusionsExtensions')]",
+            "Paths": "[parameters('ExclusionsPaths')]",
+            "Processes": "[parameters('ExclusionsProcesses')]"
+          }
+        }
+      }
+    },
+    //Antimalware extension for Web server
+    {
+      "name": "[concat(parameters('VMNameWeb'),'/IaaSAntimalware')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
+      ],
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "publisher": "Microsoft.Azure.Security",
+        "type": "IaaSAntimalware",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "AntimalwareEnabled": true,
+          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+          "ScheduledScanSettings": {
+            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+            "day": "[parameters('ScheduledScanSettingsDay')]",
+            "time": "[parameters('ScheduledScanSettingsTime')]",
+            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+          },
+          "Exclusions": {
+            "Extensions": "[parameters('ExclusionsExtensions')]",
+            "Paths": "[parameters('ExclusionsPaths')]",
+            "Processes": "[parameters('ExclusionsProcesses')]"
+          }
+        }
+      }
+    },
+    //Antimalware extension for Bre server
+    {
+      "name": "[concat(parameters('VMNameBRE'),'/IaaSAntimalware')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+      ],
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "publisher": "Microsoft.Azure.Security",
+        "type": "IaaSAntimalware",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "AntimalwareEnabled": true,
+          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+          "ScheduledScanSettings": {
+            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+            "day": "[parameters('ScheduledScanSettingsDay')]",
+            "time": "[parameters('ScheduledScanSettingsTime')]",
+            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+          },
+          "Exclusions": {
+            "Extensions": "[parameters('ExclusionsExtensions')]",
+            "Paths": "[parameters('ExclusionsPaths')]",
+            "Processes": "[parameters('ExclusionsProcesses')]"
+          }
+        }
+      }
+    },
+    //Antimalware extension for Niter server
+    {
+      "name": "[concat(parameters('VMNameNTR'),'/IaaSAntimalware')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
+      ],
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "publisher": "Microsoft.Azure.Security",
+        "type": "IaaSAntimalware",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "AntimalwareEnabled": true,
+          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+          "ScheduledScanSettings": {
+            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+            "day": "[parameters('ScheduledScanSettingsDay')]",
+            "time": "[parameters('ScheduledScanSettingsTime')]",
+            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+          },
+          "Exclusions": {
+            "Extensions": "[parameters('ExclusionsExtensions')]",
+            "Paths": "[parameters('ExclusionsPaths')]",
+            "Processes": "[parameters('ExclusionsProcesses')]"
+          }
+        }
+      }
+    },
+    //Antimalware extension for CONNECT server
+    {
+      "name": "[concat(parameters('VMNameCON'),'/IaaSAntimalware')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]"
+      ],
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "publisher": "Microsoft.Azure.Security",
+        "type": "IaaSAntimalware",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "AntimalwareEnabled": true,
+          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+          "ScheduledScanSettings": {
+            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+            "day": "[parameters('ScheduledScanSettingsDay')]",
+            "time": "[parameters('ScheduledScanSettingsTime')]",
+            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+          },
+          "Exclusions": {
+            "Extensions": "[parameters('ExclusionsExtensions')]",
+            "Paths": "[parameters('ExclusionsPaths')]",
+            "Processes": "[parameters('ExclusionsProcesses')]"
+          }
+        }
+      }
+    },
+    //Antimalware extension for SVC server
+    {
+      "name": "[concat(parameters('VMNameSVC'),'/IaaSAntimalware')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
+      ],
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "publisher": "Microsoft.Azure.Security",
+        "type": "IaaSAntimalware",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "AntimalwareEnabled": true,
+          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+          "ScheduledScanSettings": {
+            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+            "day": "[parameters('ScheduledScanSettingsDay')]",
+            "time": "[parameters('ScheduledScanSettingsTime')]",
+            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+          },
+          "Exclusions": {
+            "Extensions": "[parameters('ExclusionsExtensions')]",
+            "Paths": "[parameters('ExclusionsPaths')]",
+            "Processes": "[parameters('ExclusionsProcesses')]"
+          }
+        }
+      }
+    },
+    //OMS agent for PPS Server
+    {
+      "name": "[concat(parameters('VMNamePPS'),'/OMSAgent')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      //"name": "Microsoft.EnterpriseCloud.Monitoring",
+      "apiVersion": "2017-03-30",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+        "type": "MicrosoftMonitoringAgent",
+        "typeHandlerVersion": "1.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "workspaceId": "[parameters('workspaceId')]"
+        },
+        "protectedSettings": {
+          "workspaceKey": "[parameters('workspaceKey')]"
+        }
+      }
+    },
+    //OMS agent for Web Server
+    {
+      "name": "[concat(parameters('VMNameWEB'),'/OMSAgent')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      //"name": "Microsoft.EnterpriseCloud.Monitoring",
+      "apiVersion": "2017-03-30",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+        "type": "MicrosoftMonitoringAgent",
+        "typeHandlerVersion": "1.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "workspaceId": "[parameters('workspaceId')]"
+        },
+        "protectedSettings": {
+          "workspaceKey": "[parameters('workspaceKey')]"
+        }
+      }
+    },
+    //OMS agent for BRE Server
+    {
+      "name": "[concat(parameters('VMNameBRE'),'/OMSAgent')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      //"name": "Microsoft.EnterpriseCloud.Monitoring",
+      "apiVersion": "2017-03-30",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+        "type": "MicrosoftMonitoringAgent",
+        "typeHandlerVersion": "1.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "workspaceId": "[parameters('workspaceId')]"
+        },
+        "protectedSettings": {
+          "workspaceKey": "[parameters('workspaceKey')]"
+        }
+      }
+    },
+    //OMS agent for NTR Server
+    {
+      "name": "[concat(parameters('VMNameNTR'),'/OMSAgent')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      //"name": "Microsoft.EnterpriseCloud.Monitoring",
+      "apiVersion": "2017-03-30",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+        "type": "MicrosoftMonitoringAgent",
+        "typeHandlerVersion": "1.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "workspaceId": "[parameters('workspaceId')]"
+        },
+        "protectedSettings": {
+          "workspaceKey": "[parameters('workspaceKey')]"
+        }
+      }
+    },
+    //OMS agent for CON Server
+    {
+      "name": "[concat(parameters('VMNameCON'),'/OMSAgent')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      //"name": "Microsoft.EnterpriseCloud.Monitoring",
+      "apiVersion": "2017-03-30",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+        "type": "MicrosoftMonitoringAgent",
+        "typeHandlerVersion": "1.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "workspaceId": "[parameters('workspaceId')]"
+        },
+        "protectedSettings": {
+          "workspaceKey": "[parameters('workspaceKey')]"
+        }
+      }
+    },
+    //OMS agent for SVC Server
+    {
+      "name": "[concat(parameters('VMNameSVC'),'/OMSAgent')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      //"name": "Microsoft.EnterpriseCloud.Monitoring",
+      "apiVersion": "2017-03-30",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+        "type": "MicrosoftMonitoringAgent",
+        "typeHandlerVersion": "1.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "workspaceId": "[parameters('workspaceId')]"
+        },
+        "protectedSettings": {
+          "workspaceKey": "[parameters('workspaceKey')]"
         }
       }
     }
