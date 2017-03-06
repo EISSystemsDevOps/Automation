@@ -383,7 +383,7 @@ Configuration WebServerConfig14xWPrereqs
         {
             Ensure      = "Present"  # You can also set Ensure to "Absent"
             Path        = "\\azrdevfile01.paragon.mckesson.com\Root\AutomatedInstallSW\SQLNativeClient_2012\SQLNativeClient_2012\sqlncli2012.msi"
-            Name        = "Microsoft SQL Server 2012 Native Client"
+            Name        = "Microsoft SQL Server 2012 Native Client "
             ProductId   = "{3965C9F9-9B9A-4391-AC4B-8388210D3AA0}"
             Arguments   = "IACCEPTSQLNCLILICENSETERMS=YES /qn"
             DependsOn   = "[Package]SQLSysClrTypes"
