@@ -342,7 +342,7 @@ Configuration ConServerConfig14xWPreReqs
         Ensure      = "Present"  # You can also set Ensure to "Absent"
         Path        = "$SWPath\ReportViewer2012\ReportViewer2012\ReportViewer2012.msi"
         Name        = "Microsoft Report Viewer 2012 Runtime"
-        ProductId   = "{89F4137D-6C26-4A84-BDB8-2E5A4BB71E00}"
+        ProductId   = "{C58378BC-0B7B-474E-855C-9D02E5E75D71}"
         Arguments   = "/qn"
         DependsOn   = "[Package]SQLSysClrTypes"
     } 
