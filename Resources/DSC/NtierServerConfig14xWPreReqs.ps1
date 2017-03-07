@@ -12,6 +12,8 @@
 Configuration NtierServerConfig14xWPrereqs
  {
   Param (
+         [Parameter(Mandatory=$True)]
+         [String[]]$SourcePath,
 
          [Parameter(Mandatory=$True)]
          [String[]]$SWPath
@@ -289,7 +291,7 @@ Configuration NtierServerConfig14xWPrereqs
 		{
 			Ensure = "Present"
 			Name = "$WindowsFeature"
-            
+            Source = "$SourcePath"            
 		}
      }
 
