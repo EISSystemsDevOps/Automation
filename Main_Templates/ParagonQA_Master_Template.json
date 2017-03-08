@@ -977,8 +977,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"//,
-        //"[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameBRE'),'/extensions/joindomain')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameBRE'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1048,7 +1048,8 @@
               "apiVersion": "2015-06-15",
               "location": "[resourceGroup().location]",
               "dependsOn": [
-                "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+                "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNamePPS'),'/extensions/joindomain')]"
               ],
               "properties": {
                 "publisher": "Microsoft.Powershell",
