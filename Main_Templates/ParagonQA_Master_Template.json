@@ -943,7 +943,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameBRE'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -976,8 +977,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameBRE'),'/extensions/joindomain')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"//,
+        //"[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameBRE'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1012,7 +1013,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1080,7 +1082,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameCON'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1113,7 +1116,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameSVC'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
