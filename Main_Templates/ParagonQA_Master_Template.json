@@ -977,7 +977,7 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]",
-        "Microsoft.Compute/virtualMachines/azrqabre1600cd4/extensions/joindomain"
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameBRE'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
