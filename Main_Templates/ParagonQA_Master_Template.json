@@ -1000,7 +1000,8 @@
             //               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
             //               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
             //               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
-            "sourcepath": "[parameters('SourcePath')]"
+            "sourcepath": "[parameters('SourcePath')]",
+            "SWPath": "[parameters('SWPath')]"
           }
         },
         "protectedSettings": { }
