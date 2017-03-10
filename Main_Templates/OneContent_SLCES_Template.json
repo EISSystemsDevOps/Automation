@@ -70,7 +70,7 @@
       }
     },
 
-    "PNNTierVMName": {
+    "PNNtrVMName": {
       "type": "string",
       "metadata": {
         "description": "Virtual Machine name."
@@ -284,8 +284,8 @@
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
     "PNWebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14x.ps1.zip')]",
     "PNWebConfigurationFunction": "WebServerConfig14x.ps1\\WebServerConfig14x",
-    "PNNtierDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtierServerConfig14x.ps1.zip')]",
-    "PNNtierConfigurationFunction": "NtierServerConfig14x.ps1\\NtierServerConfig14x",
+    "PNNtrDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtrServerConfig14x.ps1.zip')]",
+    "PNNtrConfigurationFunction": "NtrServerConfig14x.ps1\\NtrServerConfig14x",
     "PNBreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig.ps1.zip')]",
     "PNBreConfigurationFunction": "BreServerConfig.ps1\\BreServerConfig",
     "adPDCModulesURL": "[concat(parameters('_artifactsLocation'),'/CreateADPDC.ps1.zip')]",
@@ -402,7 +402,7 @@
       "subnetRef": "[variables('SubnetRef')]"
     },
     "NICObject13": {
-      "Name": "[concat(parameters('PNNTierVMName'),'-Nic')]",
+      "Name": "[concat(parameters('PNNtrVMName'),'-Nic')]",
       "subnetRef": "[variables('SubnetRef')]"    
     },
 
@@ -613,7 +613,7 @@
 
     },
     "VMObject13": {
-      "Name": "[parameters('PNNTierVMName')]",
+      "Name": "[parameters('PNNtrVMName')]",
       "Size": "[parameters('VMSize1')]",
       "nicName": "[variables('NICObject13').Name]",
       "adminUserName": "[parameters('adminUsername')]",
@@ -1660,7 +1660,7 @@
               "[resourceid('Microsoft.Resources/deployments/', 'VMResource13')]"
             ],
             "type": "microsoft.compute/virtualmachines/extensions",
-            "name": "[concat(parameters('PNNTierVMName'),'/joindomain')]",
+            "name": "[concat(parameters('PNNtrVMName'),'/joindomain')]",
             "location": "[resourcegroup().location]",
             "properties": {
                 "publisher": "microsoft.compute",
@@ -1999,10 +1999,10 @@
           }
         },            
   
-    //    PN NTier
+    //    PN Ntr
         {
           "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(parameters('PNNTierVMName'),'/PNNtierDscExtension')]",
+          "name": "[concat(parameters('PNNtrVMName'),'/PNNtrDscExtension')]",
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
@@ -2014,9 +2014,9 @@
             "typeHandlerVersion": "2.19",
             "autoUpgradeMinorVersion": false,
             "settings": {
-              "modulesUrl": "[variables('PNNtierDSCModuleUrl')]",
+              "modulesUrl": "[variables('PNNtrDSCModuleUrl')]",
               "SasToken": "",
-              "configurationFunction": "[variables('PNNtierConfigurationFunction')]",
+              "configurationFunction": "[variables('PNNtrConfigurationFunction')]",
               "configurationData": {
                 "url": "[variables('Configurationurl')]"
                },

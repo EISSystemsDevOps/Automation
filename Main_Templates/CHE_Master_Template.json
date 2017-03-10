@@ -217,9 +217,9 @@
         "description": "Storage account container for use when dowloading from storage account to local BRE VMs"
       }
     },
-    "ntierStorageAccountContainer": {
+    "NtrStorageAccountContainer": {
       "type": "string",
-      "defaultValue": "paragonntier121",
+      "defaultValue": "paragonntr121",
       "metadata": {
         "description": "Storage account container for use when dowloading from storage account to local NTIER VMs"
       }
@@ -272,7 +272,7 @@
     "VMName3": "[concat('DB',parameters('EnvironmentNumber'))]",
     "VMName4": "[concat('BRE',parameters('EnvironmentNumber'))]",
     "VMName5": "[concat('DC',parameters('EnvironmentNumber'))]",
-    "VMName6": "[concat('NTIER',parameters('EnvironmentNumber'))]",
+    "VMName6": "[concat('NTR',parameters('EnvironmentNumber'))]",
     "VMName7": "[concat('SVCBUS',parameters('EnvironmentNumber'))]",
     "VMName8": "[concat('WEB',parameters('EnvironmentNumber'))]",
     "VMName9": "[concat('RDSGW',parameters('EnvironmentNumber'))]",
@@ -294,8 +294,8 @@
     "MgmtConfigurationFunction": "MgmtServerConfig.ps1\\MgmtServerConfig",
     "WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig.ps1.zip')]",
     "WebConfigurationFunction": "WebServerConfig.ps1\\WebServerConfig",
-    "NtierDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtierServerConfig.ps1.zip')]",
-    "NtierConfigurationFunction": "NtierServerConfig.ps1\\NtierServerConfig",
+    "NtrDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtrServerConfig.ps1.zip')]",
+    "NtrConfigurationFunction": "NtrServerConfig.ps1\\NtrServerConfig",
     "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig.ps1.zip')]",
     "BreConfigurationFunction": "BreServerConfig.ps1\\BreServerConfig",
     "RDSDSCModuleUrL": "[concat(variables('DSCmodulesUrl'),'Configuration.zip')]",
@@ -1649,7 +1649,7 @@
      //   NTier Server
         {
           "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(variables('VMName6'),'/NtierConfigDscExtension')]",
+          "name": "[concat(variables('VMName6'),'/NtrConfigDscExtension')]",
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
@@ -1662,9 +1662,9 @@
             "typeHandlerVersion": "2.19",
             "autoUpgradeMinorVersion": false,
             "settings": {
-              "ModulesUrl": "[variables('NtierDSCModuleUrl')]",
+              "ModulesUrl": "[variables('NtrDSCModuleUrl')]",
               "SasToken": "",
-              "configurationFunction": "[variables('NtierConfigurationFunction')]",
+              "configurationFunction": "[variables('NtrConfigurationFunction')]",
               "configurationData": {
                 "url": "[variables('Configurationurl')]"
                },
@@ -1672,7 +1672,7 @@
               "Properties": {
                "storageAccountName": "[parameters('dlStorageAccountName')]",
                "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-               "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
+               "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]"
 
               }
             },

@@ -15,12 +15,12 @@
         "description": "Paragon server type, will determine which dsc config will be applied."
       },
        "allowedValues": [
-        "Ntier", //NTier
-        "WEB", 
-        "BRE",
-        "SVC", //Service bus
-        "CON",
-        "PPS" //Patient Portal
+        "Ntr", //Ntr
+        "Web", 
+        "Bre",
+        "Svc", //Service bus
+        "Con",
+        "Pps" //Patient Portal
       ]
     },
 
@@ -293,7 +293,7 @@
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     "DYNDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),parameters('servertype'),'ServerConfig14xWPreReqs.ps1.zip')]",
-    //"DYNConfigurationFunction": "NServerConfig14xWPrereqs.ps1\\NtierServerConfig14xWPrereqs",
+    //"DYNConfigurationFunction": "NtrServerConfig14xWPrereqs.ps1\\NtrServerConfig14xWPrereqs",
     "DYNConfigurationFunction": "[concat(parameters('servertype'),'ServerConfig14xWPrereqs.ps1\\',parameters('servertype'),'ServerConfig14xWPrereqs')]",
     "Configurationurl": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
 

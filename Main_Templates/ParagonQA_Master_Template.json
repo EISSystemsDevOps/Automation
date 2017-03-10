@@ -222,11 +222,11 @@
         "description": "Storage account container for use when dowloading from storage account to local BRE VMs"
       }
     },
-    "ntierStorageAccountContainer": {
+    "ntrStorageAccountContainer": {
       "type": "string",
-      "defaultValue": "paragonntier121",
+      "defaultValue": "paragonntr121",
       "metadata": {
-        "description": "Storage account container for use when dowloading from storage account to local NTIER VMs"
+        "description": "Storage account container for use when dowloading from storage account to local ntr VMs"
       }
     },
     "clientStorageAccountContainer": {
@@ -401,8 +401,8 @@
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
     "WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14xWPrereqs.ps1.zip')]",
     "WebConfigurationFunction": "WebServerConfig14xWPrereqs.ps1\\WebServerConfig14xWPrereqs",
-    "NtierDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtierServerConfig14xWPreReqs.ps1.zip')]",
-    "NtierConfigurationFunction": "NtierServerConfig14xWPrereqs.ps1\\NtierServerConfig14xWPrereqs",
+    "NtrDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtrServerConfig14xWPreReqs.ps1.zip')]",
+    "NtrConfigurationFunction": "NtrServerConfig14xWPrereqs.ps1\\NtrServerConfig14xWPrereqs",
     "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig14xWPreReqs.ps1.zip')]",
     "BreConfigurationFunction": "BreServerConfig14xWPreReqs.ps1\\BreServerConfig14xWPreReqs",
     "SvcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'SvcServerConfig14xWPreReqs.ps1.zip')]",
@@ -1010,7 +1010,7 @@
     //   NTier Server
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMNameNTR'),'/NtierConfigDscExtension')]",
+      "name": "[concat(parameters('VMNameNTR'),'/NtrConfigDscExtension')]",
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
@@ -1023,9 +1023,9 @@
         "typeHandlerVersion": "2.19",
         "autoUpgradeMinorVersion": false,
         "settings": {
-          "modulesUrl": "[variables('NtierDSCModuleUrl')]",
+          "modulesUrl": "[variables('NtrDSCModuleUrl')]",
           "SasToken": "",
-          "configurationFunction": "[variables('NtierConfigurationFunction')]",
+          "configurationFunction": "[variables('NtrConfigurationFunction')]",
           "configurationData": {
             "url": "[variables('Configurationurl')]"
           },
@@ -1068,7 +1068,7 @@
                   "Properties": {
      //              "storageAccountName": "[parameters('dlStorageAccountName')]",
      //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-     //              "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]",
+     //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
                      "sourcepath": "[parameters('SourcePath')]"
 
                   }
@@ -1103,7 +1103,7 @@
           "Properties": {
             //              "storageAccountName": "[parameters('dlStorageAccountName')]",
             //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            //              "storageAccountContainer": "[parameters('ntierStorageAccountContainer')]"
+            //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]"
             "sourcepath": "[parameters('SourcePath')]",
             "SWPath": "[parameters('SWPath')]"
           }
