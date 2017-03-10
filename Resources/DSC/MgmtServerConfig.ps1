@@ -112,7 +112,7 @@ Configuration MgmtServerConfig
 	            SetScript = 
                     {  
                         $trustrepo=Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-                        $install=install-module azure
+                        $install=install-module azure -AllowClobber
                         import-module azure 
                     }
 	            GetScript =  { @{} }
