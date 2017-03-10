@@ -292,9 +292,9 @@
     "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('SubnetName'))]",
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
-    "DYNDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),parameters('servertype'), 'ServerConfig14xWPreReqs.ps1.zip')]",
+    "DYNDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),parameters('servertype'),'ServerConfig14xWPreReqs.ps1.zip')]",
     //"DYNConfigurationFunction": "NServerConfig14xWPrereqs.ps1\\NtierServerConfig14xWPrereqs",
-    "DYNConfigurationFunction": "[concat(parameters('servertype'),'ServerConfig14xWPrereqs.ps1'\\,parameters('servertype'),'ServerConfig14xWPrereqs']",
+    "DYNConfigurationFunction": "[concat(parameters('servertype'),'ServerConfig14xWPrereqs.ps1\\',parameters('servertype'),'ServerConfig14xWPrereqs']",
     "Configurationurl": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
 
     //Template URIs
