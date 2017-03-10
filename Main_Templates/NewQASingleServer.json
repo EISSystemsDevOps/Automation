@@ -554,7 +554,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMName'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
