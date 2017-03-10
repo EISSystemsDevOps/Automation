@@ -9,7 +9,7 @@
 -Set ParagonDisallowAnimations to enable
 -Set-ParagonDisableForceUnloadProfile
 #>
-Configuration NtierServerConfig14xWPrereqs
+Configuration NtrServerConfig14xWPrereqs
  {
   Param (
          [Parameter(Mandatory=$True)]
