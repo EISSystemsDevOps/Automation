@@ -12,7 +12,7 @@
 #>
 
 
-Configuration WebServerConfig14xWPrereqs
+Configuration WebServerConfig14xWPreReqs
  {
   Param (
          [Parameter(Mandatory=$True)]
