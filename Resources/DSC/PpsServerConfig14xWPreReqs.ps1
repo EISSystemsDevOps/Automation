@@ -15,7 +15,11 @@ Configuration PPSServerConfig14xWPreReqs
 
   Param (
          [Parameter(Mandatory=$True)]
-         [String[]]$SourcePath
+         [String[]]$SourcePath,
+
+         [Parameter(Mandatory=$True)]
+         [String[]]$SWPath
+
          )
 
   Node ("localhost")
@@ -293,6 +297,26 @@ Configuration PPSServerConfig14xWPreReqs
             
 		}
      }
+
+     
+        Package AspNetMVC3
+        {
+            Ensure      = "Present"  # You can also set Ensure to "Absent"
+            Path        = "$SWPath\AspNetMVC3\AspNetMVC3Setup.exe"
+            Name        = "Microsoft ASP.NET MVC 3"
+            ProductId   = "{DCDEC776-BADD-48B9-8F9A-DFF513C3D7FA}"
+            Arguments   = "/q /norestart"
+        }
+
+
+        Package MSXML40Parser
+        {
+            Ensure      = "Present"  # You can also set Ensure to "Absent"
+            Path        = "$SWPath\MSXML40Parser\msxml.msi"
+            Name        = "MSXML 4.0 SP3 Parser"
+            ProductId   = "{196467F1-C11F-4F76-858B-5812ADC83B94}"
+            Arguments   = "/qn"
+        }
 
      
 
