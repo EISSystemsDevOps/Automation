@@ -6,9 +6,10 @@
     "VMName": {
       "type": "string",
       "metadata": {
-        "description": "Creating New Virtual Closing Machine."
+        "description": "Closing Machine Virtual Machine name."
       }
     },
+
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -252,18 +253,6 @@
         "description": "workspaceKey."
       }
     }
-    //"SourcePath": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "DSC path for WinSXS folder."
-    //  }
-    //},
-    //"SWPath": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "DSC path for Prerequisite software installation."
-    //  }
-    //}
   
 
 
@@ -271,18 +260,24 @@
   },//End of Parameters
 
   "variables": {
-
-
+    //"dnsLabelPrefix1": "[tolower(concat(parameters('CustomerName'),variables('VMName1'),'-pip'))]",
+    //"dnsLabelPrefix2": "[tolower(concat(parameters('CustomerName'),variables('VMName2'),'-pip'))]",
+    //"storageAccountName": "[parameters('storageAcctName')]",
+    //"virt adualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
+    //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
+    // "domainUserA": "[concat(parameters('domainName'),'\\')]",
+   //parameters('adminUsername'))",
     "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
+    //Environment VM Names
+    //Environment VM Sizes
+    //"VMSize1": "Standard_A2",
     "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('SubnetName'))]",
     //DSC URLs
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
-    //"DYNDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),parameters('servertype'),'ServerConfig14xWPreReqs.ps1.zip')]",
-    //"DYNConfigurationFunction": "NtrServerConfig14xWPrereqs.ps1\\NtrServerConfig14xWPrereqs",
-    //"DYNConfigurationFunction": "[concat(parameters('servertype'),'ServerConfig14xWPrereqs.ps1\\',parameters('servertype'),'ServerConfig14xWPrereqs')]",
-    "Configurationurl": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
-
-    //Template URIs
+    //"DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
+    "Configurationurl":"https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
+    
+      //Template URIs
     "TemplateUrl": "[concat(parameters('_artifactsLocation'),'/Templates')]",
     ////  This is a network interface with static IP address
     "NetworkInterfaceStaticURI": "[concat(variables('TemplateUrl'),'/','network_interface_static.json')]",
@@ -305,8 +300,8 @@
     },
     "NICObject5": {
       "Name": "[concat(parameters('VMName'),'-Nic')]",
-      "subnetRef": "[variables('subnetRef')]"
-      // "IPAddress": "[parameters('DCIPAddress')]"
+      "subnetRef": "[variables('subnetRef')]"  
+     // "IPAddress": "[parameters('DCIPAddress')]"
       //   "LoadBalancerName": "[concat(variables('VMName2'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
@@ -323,7 +318,7 @@
     //  "Rule1DestinationPort": "145",
     //  "Rule1Access": "Allow",
     //  "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
-    // },
+ // },
     "VMObject": {
       "Name": "[parameters('VMName')]",
       "Size": "[parameters('VMSize1')]",
@@ -334,12 +329,12 @@
       "publisher": "MicrosoftWindowsServer",
       "offer": "WindowsServer",
       "sku": "[parameters('windowsOSVersion')]",
-      "version": "latest",
+      "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMUri')]",
       "DataDiskSizeGB": "80"
-
+ 
     }
 
   },
@@ -532,40 +527,7 @@
           "workspaceKey": "[parameters('workspaceKey')]"
         }
       }
-    },
-    //{
-    //  "type": "Microsoft.Compute/virtualMachines/extensions",
-    //  "name": "[concat(parameters('VMName'),'/ConfigDscExtension')]",
-    //  "apiVersion": "2015-06-15",
-    //  "location": "[resourceGroup().location]",
-    //  "dependsOn": [
-    //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]",
-    //    "[concat('Microsoft.Compute/virtualMachines/',parameters('VMName'),'/extensions/joindomain')]"
-    //  ],
-    //  "properties": {
-    //    "publisher": "Microsoft.Powershell",
-    //    "type": "DSC",
-    //    "typeHandlerVersion": "2.19",
-    //    "autoUpgradeMinorVersion": false,
-    //    "settings": {
-    //      "modulesUrl": "[variables('DYNDSCModuleUrl')]",
-    //      "SasToken": "",
-    //      "configurationFunction": "[variables('DYNConfigurationFunction')]",
-    //      "configurationData": {
-    //        "url": "[variables('Configurationurl')]"
-    //      },
-    //      //"wmfVersion": "4.0",
-    //      "Properties": {
-    //        //             "storageAccountName": "[parameters('dlStorageAccountName')]",
-    //        //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-    //        "sourcepath": "[parameters('SourcePath')]",
-    //        "SWPath": "[parameters('SWPath')]"
-
-    //      }
-    //    },
-    //    "protectedSettings": { }
-    //  }
-    //}
+    }
 
     //Active Directory Domain Controller Setup via DSC Extension
     //{
