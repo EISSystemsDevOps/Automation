@@ -1076,7 +1076,8 @@
      //              "storageAccountName": "[parameters('dlStorageAccountName')]",
      //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
      //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
-                     "sourcepath": "[parameters('SourcePath')]"
+                     "sourcepath": "[parameters('SourcePath')]",  
+                     "SWPath": "[parameters('SWPath')]"
 
                   }
                 },
