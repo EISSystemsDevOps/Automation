@@ -273,8 +273,9 @@
     //"VMSize1": "Standard_A2",
     "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('SubnetName'))]",
     //DSC URLs
-    //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
-    //"DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
+    "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
+    "CMDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'ClosingMachineWPreReqs.ps1.zip')]",
+    "CMConfigurationFunction": "ClosingMachineWPreReqs.ps1\\ClosingMachineWPreReqs",
     "Configurationurl":"https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
     
       //Template URIs
@@ -526,6 +527,39 @@
         "protectedSettings": {
           "workspaceKey": "[parameters('workspaceKey')]"
         }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('VMName'),'/ConfigDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMName'),'/extensions/joindomain')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('DSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('ConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+            //             "storageAccountName": "[parameters('dlStorageAccountName')]",
+            //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+            //"sourcepath": "[parameters('SourcePath')]",
+            "SWPath": "[parameters('SWPath')]"
+
+          }
+        },
+        "protectedSettings": { }
       }
     }
 
