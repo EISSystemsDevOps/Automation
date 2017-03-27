@@ -253,10 +253,10 @@
         "description": "workspaceKey."
       }
     },
-    "SourcePath": {
+    "SWPath": {
       "type": "string",
       "metadata": {
-        "description": "DSC path for WinSXS folder."
+        "description": "DSC path for Prerequisite software installation."
       }
     }
   
