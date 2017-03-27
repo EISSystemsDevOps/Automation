@@ -252,6 +252,12 @@
       "metadata": {
         "description": "workspaceKey."
       }
+    },
+    "SourcePath": {
+      "type": "string",
+      "metadata": {
+        "description": "DSC path for WinSXS folder."
+      }
     }
   
 
