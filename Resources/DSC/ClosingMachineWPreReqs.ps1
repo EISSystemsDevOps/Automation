@@ -71,7 +71,7 @@ Configuration ClosingMachineWPreReqs
             ProductId   = "{9495AEB4-AB97-39DE-8C42-806EEF75ECA7}"
             Arguments   = "/q /norestart"
         }
-        #>
+        
 
         Package OfficeWordOnly2007
         {
@@ -91,3 +91,24 @@ Configuration ClosingMachineWPreReqs
     }#End of Node
  }#End of Configuration
 
+<#
+$cd = @{
+    AllNodes = @(
+        @{
+            NodeName = 'localhost'
+            PSDscAllowPlainTextPassword = $true
+            PSDSCAllowDomainUser=$True
+            RebootNodeIfNeeded = $true
+           
+
+        }
+    )
+}
+
+ClosingMachineWPreReqs -output C:\dsc\ClosingMachineTest -Swpath \\azrdevfile01\Root\AutomatedInstallSW -configurationdata $cd
+#Start-DscConfiguration -Force -Path C:\dsc\ClosingMachineTest -wait -verbose -force
+ #  $job= (Get-Job -Id 13).ChildJobs.progress
+
+
+
+#>
