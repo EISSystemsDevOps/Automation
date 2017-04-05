@@ -1127,10 +1127,10 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameSVC'),'/extensions/joindomain')]"
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameSVC'),'/extensions/joindomain')]",
          // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
         // DSC Config files timing out.  
-                "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameCON'),'/extensions/ConConfigDscExtension')]"
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameCON'),'/extensions/ConConfigDscExtension')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
