@@ -67,6 +67,7 @@
       "defaultValue": "Basic_A2",
       "allowedValues": [
         "Basic_A2",
+        "Basic_A3",
         "Standard_D1",
         "Standard_D2",
         "Standard_D3",
