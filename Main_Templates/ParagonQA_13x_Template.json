@@ -981,7 +981,7 @@
         "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameBRE'),'/extensions/joindomain')]",
         //NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
         // DSC Config files timing out.  
-        //"[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameWEB'),'/extensions/WebConfigDscExtension')]"
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameWEB'),'/extensions/WebConfigDscExtension')]"
 
       ],
       "properties": {
@@ -1019,10 +1019,10 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/joindomain')]"
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/joindomain')]",
         // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
         // DSC Config files timing out.  
-        //"[concat('Microsoft.Compute/virtualMachines/',parameters('VMNamePPS'),'/extensions/PPSConfigDscExtension')]"
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameCON'),'/extensions/CONConfigDscExtension')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
