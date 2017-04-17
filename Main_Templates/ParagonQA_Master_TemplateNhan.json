@@ -259,7 +259,7 @@
     },
     "VNetRG": {
       "type": "string",
-      "defaultValue": "SLCESTESTINGARMVNET",
+      "defaultValue": "SLCESTESTINGRG",
       "metadata": {
         "description": "VNet to deploy VMs into."
       }
