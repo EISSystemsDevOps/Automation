@@ -259,7 +259,7 @@
     },
     "VNetRG": {
       "type": "string",
-      "defaultValue": "ParagonDevOpsARMVNetRG",
+      "defaultValue": "SLCESTESTINGARMVNET",
       "metadata": {
         "description": "VNet to deploy VMs into."
       }
@@ -383,7 +383,7 @@
     //"dnsLabelPrefix2": "[tolower(concat(parameters('CustomerName'),parameters('VMNameBRE'),'-pip'))]",
     //"storageAccountName": "[parameters('storageAcctName')]",
     //"virt adualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
-    //"subnetRef": "/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1",
+    //"subnetRef": "/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/SLCESTESTINGARMVNET/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1",
     "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/slcestestingarmvnet/subnets/default')]",
     "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
     //"domainControllerIPAddress": "172.32.0.4",
