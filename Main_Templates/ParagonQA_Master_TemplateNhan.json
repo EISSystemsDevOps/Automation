@@ -259,7 +259,7 @@
     },
     "VNetRG": {
       "type": "string",
-      "defaultValue": "SLCESTESTINGRG",
+      "defaultValue": "rgslcesprodarmvnet",
       "metadata": {
         "description": "VNet to deploy VMs into."
       }
@@ -267,7 +267,7 @@
 
     "VNetName": {
       "type": "string",
-      "defaultValue": "ParagonDevOpsARMVNet",
+      "defaultValue": "slcesprodarmvnet",
       "metadata": {
         "description": "VNet resource group to deploy VMs into."
       }
