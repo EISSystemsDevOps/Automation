@@ -86,7 +86,48 @@
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
       }
     },
-
+    //"VMSize1": {
+    //  "type": "string",
+    //  "defaultValue": "Standard_D1",
+    //  "allowedValues": [
+    //    "Standard_D1",
+    //    "Standard_D2",
+    //    "Standard_D3",
+    //    "Standard_D4",
+    //    "Standard_D11",
+    //    "Standard_D12",
+    //    "Standard_D13",
+    //    "Standard_A1",
+    //    "Standard_A2",
+    //    "Standard_A3",
+    //    "Standard_A4",
+    //    "Standard_A5"
+    //  ],
+    //  "metadata": {
+    //    "description": "The size of the VM."
+    //  }
+    //},
+    //"vmsize1": {
+    //  "type": "string",
+    //  "defaultValue": "Standard_D1",
+    //  "allowedValues": [
+    //    "Standard_D1",
+    //    "Standard_D2",
+    //    "Standard_D3",
+    //    "Standard_D4",
+    //    "Standard_D11",
+    //    "Standard_D12",
+    //    "Standard_D13",
+    //    "Standard_A1",
+    //    "Standard_A2",
+    //    "Standard_A3",
+    //    "Standard_A4",
+    //    "Standard_A5"
+    //  ],
+    //  "metadata": {
+    //    "description": "The size of the VM."
+    //  }
+    //},
     "_artifactsLocation": {
       "type": "string",
       "metadata": {
@@ -145,77 +186,6 @@
       }
     },
 
-    "dlStorageAccountName": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Storage account for use when dowloading files to to local VMs"
-      }
-    },
-
-    "dlStorageAccountKey": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Storage account key for use when dowloading from storage account to local VMs"
-      }
-    },
-    "dlStorageAccountContainer": {
-      "type": "string",
-      "defaultValue": "test",
-      "metadata": {
-        "description": "Storage account container for use when dowloading from storage account to local VMs"
-      }
-    },
-    "webStorageAccountContainer": {
-      "type": "string",
-      "defaultValue": "paragonweb121",
-      "metadata": {
-        "description": "Storage account container for use when dowloading from storage account to local web VMs"
-      }
-    },
-    "breStorageAccountContainer": {
-      "type": "string",
-      "defaultValue": "paragonbre121",
-      "metadata": {
-        "description": "Storage account container for use when dowloading from storage account to local BRE VMs"
-      }
-    },
-    "ntrStorageAccountContainer": {
-      "type": "string",
-      "defaultValue": "paragonntr121",
-      "metadata": {
-        "description": "Storage account container for use when dowloading from storage account to local ntr VMs"
-      }
-    },
-    "clientStorageAccountContainer": {
-      "type": "string",
-      "defaultValue": "paragonclient121",
-      "metadata": {
-        "description": "Storage account container for use when dowloading from storage account to local client VMs"
-      }
-    },
-    "commonStorageAccountKey": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Storage account key for use when dowloading from storage account to local VMs"
-      }
-    },
-    "CommonStorageAccountContainer": {
-      "type": "string",
-      "defaultValue": "paragoncommon121",
-      "metadata": {
-        "description": "Storage account container for use when dowloading from storage account to local VMs"
-      }
-    },
-    "commonStorageAccountName": {
-      "type": "string",
-      "defaultValue": "sairmcuploads01",
-      "metadata": {
-        "description": "Storage account container for use when dowloading from storage account to local VMs"
-      }
-    },
     "VNetRG": {
       "type": "string",
       "defaultValue": "ParagonDevOpsARMVNetRG",
@@ -319,8 +289,8 @@
       "metadata": {
         "description": "When to perform the scheduled scan, measured in minutes from midnight (0-1440). For example: 0 = 12AM, 60 = 1AM, 120 = 2AM."
       }
-    },
-    "workspaceId": {
+    } /* ,
+   "workspaceId": {
       "type": "string",
       "metadata": {
         "description": "workspaceId."
@@ -332,7 +302,7 @@
         "description": "workspaceKey."
       }
     }
-
+    */
         
        
   },//End of Parameters
@@ -939,7 +909,7 @@
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]",
         "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameBRE'),'/extensions/joindomain')]",
         //NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
-        // DSC Config files timing out.  
+        // DSC Config files timing out.
         "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameWEB'),'/extensions/WebConfigDscExtension')]"
 
       ],
@@ -978,7 +948,10 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/joindomain')]"
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/joindomain')]",
+        // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
+        // DSC Config files timing out.
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNamePPS'),'/extensions/PPSConfigDscExtension')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -997,8 +970,8 @@
             //              "storageAccountName": "[parameters('dlStorageAccountName')]",
             //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
             //               "sourcepath": "[parameters('SourcePath')]"
-              "sourcepath": "[parameters('SourcePath')]",  
-              "SWPath": "[parameters('SWPath')]"
+            "sourcepath": "[parameters('SourcePath')]",
+            "SWPath": "[parameters('SWPath')]"
           }
         },
         "protectedSettings": { }
@@ -1006,43 +979,43 @@
     },
 
     //     //   Patient Portal Server
-            {
-              "type": "Microsoft.Compute/virtualMachines/extensions",
-              "name": "[concat(parameters('VMNamePPS'),'/PPSConfigDscExtension')]",
-              "apiVersion": "2015-06-15",
-              "location": "[resourceGroup().location]",
-              "dependsOn": [
-                "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNamePPS'),'/extensions/joindomain')]",
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('VMNamePPS'),'/PPSConfigDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNamePPS'),'/extensions/joindomain')]"
         // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
-        // DSC Config files timing out.  
-                "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/NtrConfigDscExtension')]"
-              ],
-              "properties": {
-                "publisher": "Microsoft.Powershell",
-                "type": "DSC",
-                "typeHandlerVersion": "2.19",
-                "autoUpgradeMinorVersion": false,
-                "settings": {
-                  "modulesUrl": "[variables('PPSDSCModuleUrl')]",
-                  "SasToken": "",
-                  "configurationFunction": "[variables('PPSConfigurationFunction')]",
-                  "configurationData": {
-                    "url": "[variables('Configurationurl')]"
-                   },
-                  //"wmfVersion": "4.0",
-                  "Properties": {
-     //              "storageAccountName": "[parameters('dlStorageAccountName')]",
-     //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-     //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
-                     "sourcepath": "[parameters('SourcePath')]",  
-                     "SWPath": "[parameters('SWPath')]"
+        // DSC Config files timing out.
+        //  "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/NtrConfigDscExtension')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('PPSDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('PPSConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+            //              "storageAccountName": "[parameters('dlStorageAccountName')]",
+            //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+            //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
+            "sourcepath": "[parameters('SourcePath')]",
+            "SWPath": "[parameters('SWPath')]"
 
-                  }
-                },
-                "protectedSettings": { }
-              }
-            },
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
 
     //     //   Connect Server
     {
@@ -1086,7 +1059,10 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameSVC'),'/extensions/joindomain')]"
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameSVC'),'/extensions/joindomain')]",
+        // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
+        // DSC Config files timing out.
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameCON'),'/extensions/ConConfigDscExtension')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1467,7 +1443,8 @@
         }
       }
     },
-    //OMS agent for PPS Server
+    /*  
+     //OMS agent for PPS Server
     {
       "name": "[concat(parameters('VMNamePPS'),'/OMSAgent')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
@@ -1605,6 +1582,7 @@
         }
       }
     }
+    */
   ] //,
   //"outputs": {
   //"hostname": {
