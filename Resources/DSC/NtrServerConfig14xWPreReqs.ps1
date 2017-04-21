@@ -19,6 +19,8 @@ Configuration NtrServerConfig14xWPrereqs
          [String[]]$SWPath
 
          )  
+
+  Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot
   
   Node ("localhost")
    {
@@ -324,9 +326,43 @@ Configuration NtrServerConfig14xWPrereqs
             DependsOn   = "[Package]SQLSysClrTypes"
         } 
          
+        Package VisualStudio2010
+        {
+            Ensure      = "Present"  # You can also set Ensure to "Absent"
+            Path        = "$SWPath\VSTools_OfficeRuntime2010\vstor_redist.exe"
+            Name        = "Microsoft Visual Studio 2010 Tools for Office Runtime (x64)"
+            ProductId   = "{9495AEB4-AB97-39DE-8C42-806EEF75ECA7}"
+            Arguments   = "/q /norestart /log %temp%\vstoolsinstall.log"
+        }
+
+        xPendingReboot RebootAsNeeded
+        { 
+            Name = "Check for a pending reboot before changing anything" 
+        }
         
 
     }#End of Node
  }#End of Configuration
 
+ <#
+$cd = @{
+    AllNodes = @(
+        @{
+            NodeName = 'localhost'
+            PSDscAllowPlainTextPassword = $true
+            PSDSCAllowDomainUser=$True
+            RebootNodeIfNeeded = $true
+           
+
+        }
+    )
+}
+
+ClosingMachineWPreReqs -output C:\dsc\ -Swpath \\servername\sharefolder -configurationdata $cd
+#Start-DscConfiguration -Path C:\dsc\ -wait -verbose -force
+ #  $job= (Get-Job -Id 13).ChildJobs.progress
+
+
+
+#>
 
