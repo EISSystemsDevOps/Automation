@@ -274,7 +274,7 @@
     },
     "SubnetName": {
       "type": "string",
-      "defaultValue": "Subnet-1",
+      "defaultValue": "Subnet-2",
       "metadata": {
         "description": "Subnet to deploy VMs into."
       }
