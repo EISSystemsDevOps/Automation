@@ -314,6 +314,7 @@ Configuration NtrServerConfig14xWPrereqs
             Name        = "Microsoft System CLR Types for SQL Server 2012 (x64)"
             ProductId   = "{F1949145-EB64-4DE7-9D81-E6D27937146C}"
             Arguments   = "/qn"
+            DependsOn   = "[Package]AspNetMVC3"
         }       
     
         Package ReportViewer
@@ -332,7 +333,9 @@ Configuration NtrServerConfig14xWPrereqs
             Path        = "$SWPath\VSTools_OfficeRuntime2010\vstor_redist.exe"
             Name        = "Microsoft Visual Studio 2010 Tools for Office Runtime (x64)"
             ProductId   = "{9495AEB4-AB97-39DE-8C42-806EEF75ECA7}"
-            Arguments   = "/q /norestart /log %temp%\vstoolsinstall.log"
+            Arguments   = "/q /log %temp%\vstoolsinstall.log"
+            DependsOn   = "[Package]ReportViewer"
+
         }
 
         xPendingReboot RebootAsNeeded
