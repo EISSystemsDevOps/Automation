@@ -20,7 +20,7 @@ Configuration NtrServerConfig14xWPrereqs
 
          )  
 
-  Import-DscResource -ModuleName PSDesiredStateConfiguration #, xPendingReboot
+  Import-DscResource -ModuleName PSDesiredStateConfiguration , xPendingReboot
   
   Node ("localhost")
    {
@@ -314,7 +314,6 @@ Configuration NtrServerConfig14xWPrereqs
             Name        = "Microsoft System CLR Types for SQL Server 2012 (x64)"
             ProductId   = "{F1949145-EB64-4DE7-9D81-E6D27937146C}"
             Arguments   = "/qn"
-            DependsOn   = "[Package]AspNetMVC3"
         }       
     
         Package ReportViewer
@@ -337,12 +336,12 @@ Configuration NtrServerConfig14xWPrereqs
             DependsOn   = "[Package]ReportViewer"
 
         }
-<#
+
         xPendingReboot RebootAsNeeded
         { 
             Name = "Check for a pending reboot before changing anything" 
         }
-  #>      
+       
 
     }#End of Node
  }#End of Configuration
