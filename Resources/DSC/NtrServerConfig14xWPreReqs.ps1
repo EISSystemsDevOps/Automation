@@ -20,7 +20,7 @@ Configuration NtrServerConfig14xWPrereqs
 
          )  
 
-  Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot
+  Import-DscResource -ModuleName PSDesiredStateConfiguration #, xPendingReboot
   
   Node ("localhost")
    {
@@ -337,12 +337,12 @@ Configuration NtrServerConfig14xWPrereqs
             DependsOn   = "[Package]ReportViewer"
 
         }
-
+<#
         xPendingReboot RebootAsNeeded
         { 
             Name = "Check for a pending reboot before changing anything" 
         }
-        
+  #>      
 
     }#End of Node
  }#End of Configuration
