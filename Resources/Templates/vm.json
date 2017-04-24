@@ -71,7 +71,11 @@
         "osProfile": {
           "computerName": "[parameters('VMObject').Name]",
           "adminUsername": "[parameters('VMObject').adminUserName]",
-          "adminPassword": "[parameters('VMObject').adminPassword]"
+          "adminPassword": "[parameters('VMObject').adminPassword]",
+           "windowsConfiguration": {
+                "provisionVMAgent": true,
+                "enableAutomaticUpdates": false
+            }
         },
         "storageProfile": {
           "imageReference": {
