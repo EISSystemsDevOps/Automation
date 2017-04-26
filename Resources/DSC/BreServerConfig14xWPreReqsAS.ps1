@@ -33,7 +33,7 @@ Configuration BreServerConfig14xWPreReqs
 
          )
 
-  Import-DscResource -ModuleName xPendingReboot
+  Import-DscResource -ModuleName xAzureStorage
 
   Node ("localhost")
    {
