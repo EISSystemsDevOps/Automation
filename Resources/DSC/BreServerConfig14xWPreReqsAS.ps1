@@ -348,7 +348,7 @@ Configuration BreServerConfig14xWPreReqs
 		{
 			Ensure = "Present"
 			Name = "$WindowsFeature"
-            Source = "$SourcePath"
+            Source = "C:\Sxs"
             DependsOn = "[XAzureBlobFiles]WinSxS"
 
 		}
