@@ -998,14 +998,14 @@
           },
           // "wmfVersion": "4.0",
           "Properties": {
-            //               "storageAccountName": "[parameters('dlStorageAccountName')]",
-            //               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            //               "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
+                           "storageAccountName": "[parameters('dlStorageAccountName')]",
+                           "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+                           "storageAccountContainer": "[parameters('dlStorageAccountContainer')]",
             //               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
             //               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
             //               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
             "sourcepath": "[parameters('SourcePath')]"//,
-         //   "SWPath": "[parameters('SWPath')]"
+            "SWPath": "[parameters('SWPath')]"
           }
         },
         "protectedSettings": { }
