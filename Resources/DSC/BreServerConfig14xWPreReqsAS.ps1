@@ -10,15 +10,15 @@
 #>
 
 
-Configuration BreServerConfig14xWPreReqs
+Configuration BreServerConfig14xWPreReqsAS
  {
   
   Param (
-         [Parameter(Mandatory=$True)]
-         [String[]]$SourcePath,
+ #        [Parameter(Mandatory=$True)]
+ #        [String[]]$SourcePath,
 
-         [Parameter(Mandatory=$True)]
-         [String[]]$SWPath,
+#         [Parameter(Mandatory=$True)]
+#         [String[]]$SWPath,
 
          
         [Parameter(Mandatory=$true)]
