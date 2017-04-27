@@ -1,16 +1,4 @@
-﻿#Config file for Push mode and Azure setup with extension
-
-#PARAGON Server Common Config ####################################################################
-<#
--Set PowerPlan to "High Performance"
--Set various MSDTC configuration 
--Set various Terminal Service settings
--Set ParagonDisallowAnimations to enable
--Set ParagonDisableForceUnloadProfile
-#>
-
-
-Configuration BreServerConfig14xWPreReqsAS
+﻿Configuration BreServerConfig14xWPreReqsAS
  {
   
   Param (
@@ -38,10 +26,7 @@ Configuration BreServerConfig14xWPreReqsAS
   Node ("localhost")
    {
 
-      #Check Reboot and reboot as needed
-      xPendingReboot CheckForReboot {
-         Name = "Check for Reboot and Reboot as needed"
-      }
+ 
 
       #Set-PowerPlan
  		Script Set-ParagonPowerPlan
@@ -349,12 +334,13 @@ Configuration BreServerConfig14xWPreReqsAS
 			Ensure = "Present"
 			Name = "$WindowsFeature"
             Source = "C:\Sxs"
-            DependsOn = "[XAzureBlobFiles]WinSxS"
+            DependsOn = "[xAzureBlobFiles]WinSxS"
 
 		}
      }
 
 <#
+
         Package SQLSysClrTypes
         {
             Ensure      = "Present"  # You can also set Ensure to "Absent"
@@ -386,3 +372,30 @@ Configuration BreServerConfig14xWPreReqsAS
 #>         
  }#End of Node
 }#End of Config
+
+
+<#
+$cd = @{
+    AllNodes = @(
+        @{
+            NodeName = 'localhost'
+            PSDscAllowPlainTextPassword = $true
+            PSDSCAllowDomainUser=$True
+            RebootNodeIfNeeded = $true
+           
+
+        }
+    )
+}
+
+
+$STorageACcountName='paragoncommonstorage'
+$StorageaccountContainer='sxs'
+$StorageACcountKey='927/1Bw7/y6oCbn3Ns7jbZCBsPy/PwdhX3BG+3lbQ3hvn+Q9TdvraKk5lsgs94OAqw6C5drlpAit8UwtTIQWew=='
+
+BreServerConfig14xWPreReqsAS -StorageAccountName $storageaccountName -STorageAccountKey $STorageACcountKey -STorageACcountCOntainer $STorageAccountCOntainer -configurationdata $cd
+Start-DscConfiguration -Force -Path C:\Windows\system32\BreServerConfig14xWPreReqsAS -verbose -wait
+   $job= (Get-Job -Id 13).ChildJobs.progress
+
+#>
+
