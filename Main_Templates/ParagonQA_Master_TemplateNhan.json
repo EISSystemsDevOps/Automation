@@ -384,7 +384,7 @@
     //"storageAccountName": "[parameters('storageAcctName')]",
     //"virt adualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
     //"subnetRef": "/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/SLCESTESTINGARMVNET/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1",
-    "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),parameters('SubnetName'))]",
+    "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('SubnetName'))]",
     "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
     //"domainControllerIPAddress": "172.32.0.4",
    // "domainUserA": "[concat(parameters('domainName'),'\\')]",
