@@ -456,7 +456,7 @@
       // "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
       //     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
       "subnetRef":"[variables('subnetRef')]"
-      //"dnsServer": "[variables('domainControllerIPAddress')]"
+      "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
@@ -466,7 +466,7 @@
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
       "subnetRef":"[variables('subnetRef')]"
-      //"dnsServer": "[variables('domainControllerIPAddress')]"
+      "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
@@ -476,7 +476,7 @@
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
       "subnetRef":"[variables('subnetRef')]"
-      //"dnsServer": "[variables('domainControllerIPAddress')]"
+      "dnsServer": "[variables('domainControllerIPAddress')]"
 
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -487,7 +487,7 @@
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
       "subnetRef":"[variables('subnetRef')]"
-      //"IPAddress": "[variables('domainControllerIPAddress')]"
+      "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
@@ -497,7 +497,7 @@
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
       "subnetRef":"[variables('subnetRef')]"
-          // "dnsServer": "[variables('domainControllerIPAddress')]"
+          "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
@@ -507,7 +507,7 @@
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
       "subnetRef":"[variables('subnetRef')]"
-     // "dnsServer": "[variables('domainControllerIPAddress')]"
+     "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
