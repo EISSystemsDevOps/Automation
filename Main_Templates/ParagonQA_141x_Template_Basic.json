@@ -203,7 +203,6 @@
     },
     "dlStorageAccountContainer": {
       "type": "string",
-      "defaultValue": "test",
       "metadata": {
         "description": "Storage account container for use when dowloading from storage account to local VMs"
       }
@@ -404,7 +403,7 @@
     "NtrDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtrServerConfig14x.ps1.zip')]",
     "NtrConfigurationFunction": "NtrServerConfig14x.ps1\\NtrServerConfig14x",
     "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig14xWPreReqsAS.ps1.zip')]",
-    "BreConfigurationFunction": "BreServerConfig14xWPreReqsAS.ps1\\BreServerConfig14xWPreReqs",
+    "BreConfigurationFunction": "BreServerConfig14xWPreReqsAS.ps1\\BreServerConfig14xWPreReqsAS",
     "SvcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'SvcServerConfig14x.ps1.zip')]",
     "SvcConfigurationFunction": "SvcServerConfig14x.ps1\\SvcServerConfig14x",
     "ConDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'ConServerConfig14x.ps1.zip')]",
@@ -1000,12 +999,13 @@
           "Properties": {
                            "storageAccountName": "[parameters('dlStorageAccountName')]",
                            "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-                           "storageAccountContainer": "[parameters('dlStorageAccountContainer')]"//,
+            "storageAccountContainer": "[parameters('dlStorageAccountContainer')]" 
+              //,
             //               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
             //               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
             //               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
-           // "sourcepath": "[parameters('SourcePath')]",
-          //  "SWPath": "[parameters('SWPath')]"
+            // "sourcepath": "[parameters('SourcePath')]",
+            //  "SWPath": "[parameters('SWPath')]"
           }
         },
         "protectedSettings": { }

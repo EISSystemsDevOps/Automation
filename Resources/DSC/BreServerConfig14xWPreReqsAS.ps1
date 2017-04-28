@@ -389,9 +389,9 @@ $cd = @{
 }
 
 
-$STorageACcountName='paragoncommonstorage'
-$StorageaccountContainer='sxs'
-$StorageACcountKey='927/1Bw7/y6oCbn3Ns7jbZCBsPy/PwdhX3BG+3lbQ3hvn+Q9TdvraKk5lsgs94OAqw6C5drlpAit8UwtTIQWew=='
+$STorageACcountName=''
+$StorageaccountContainer=''
+$StorageACcountKey=''
 
 BreServerConfig14xWPreReqsAS -StorageAccountName $storageaccountName -STorageAccountKey $STorageACcountKey -STorageACcountCOntainer $STorageAccountCOntainer -configurationdata $cd
 Start-DscConfiguration -Force -Path C:\Windows\system32\BreServerConfig14xWPreReqsAS -verbose -wait
