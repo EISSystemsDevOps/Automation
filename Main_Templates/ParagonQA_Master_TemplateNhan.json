@@ -386,7 +386,7 @@
     //"subnetRef": "/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/SLCESTESTINGARMVNET/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1",
     "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('SubnetName'))]",
     "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
-    //"domainControllerIPAddress": "172.32.0.4",
+    "domainControllerIPAddress": "172.216.16.4",
    // "domainUserA": "[concat(parameters('domainName'),'\\')]",
    //parameters('LocalAdminUserName'))",
     
@@ -696,7 +696,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceURI')]",
+          "uri": "[variables('NetworkInterfaceDNSURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -716,7 +716,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceURI')]",
+          "uri": "[variables('NetworkInterfaceDNSURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -736,7 +736,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceURI')]",
+          "uri": "[variables('NetworkInterfaceDNSURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -756,7 +756,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceURI')]",
+          "uri": "[variables('NetworkInterfaceDNSURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -776,7 +776,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceURI')]",
+          "uri": "[variables('NetworkInterfaceDNSURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -796,7 +796,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('NetworkInterfaceURI')]",
+          "uri": "[variables('NetworkInterfaceDNSURI')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
