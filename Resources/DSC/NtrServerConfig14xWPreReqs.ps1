@@ -325,7 +325,7 @@ Configuration NtrServerConfig14xWPrereqs
             Arguments   = "/qn"
             DependsOn   = "[Package]SQLSysClrTypes"
         } 
-         
+<#         
         Package VisualStudio2010
         {
             Ensure      = "Present"  # You can also set Ensure to "Absent"
@@ -336,6 +336,25 @@ Configuration NtrServerConfig14xWPrereqs
             DependsOn   = "[Package]ReportViewer"
 
         }
+#>
+      Script InstallVisualStudio2010
+        {
+         GetScript={$null}
+         TestScript={
+         $installed=Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* |  Where-object DisplayName -Like "*Microsoft Visual C++ 2010*"
+            if ($installed)
+            {
+                $True
+            }
+            else
+            {
+                $False
+            }
+         }
+         SetScript= {
+                    Start-Process -FilePath $SWPath\VSTools_OfficeRuntime2010\vstor_redist.exe -ArgumentList "/q /log" -Wait    
+                    }
+         }
 <#
         xPendingReboot RebootAsNeeded
         { 
