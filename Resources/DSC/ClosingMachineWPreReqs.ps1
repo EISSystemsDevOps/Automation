@@ -8,7 +8,7 @@ Configuration ClosingMachineWPreReqs
          [String[]]$SWPath
 
          )  
-  Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot
+  Import-DscResource -ModuleName PSDesiredStateConfiguration#, xPendingReboot
 
   Node ("localhost")
    {
@@ -99,12 +99,12 @@ Configuration ClosingMachineWPreReqs
             ProductId   = "{90120000-0011-0000-0000-0000000FF1CE}"
             Arguments   = "/adminfile ParagonWordOnlyInstall.MSP"
         }
-
+<#
         xPendingReboot RebootAsNeeded
         { 
             Name = "Check for a pending reboot before changing anything" 
         }
-        
+ #>       
 
     }#End of Node
  }#End of Configuration
