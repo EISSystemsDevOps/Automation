@@ -341,7 +341,7 @@ Configuration ConServerConfig14xWPreReqs
 		{
 			Ensure = "Present"
 			Name = "$WindowsFeature"
-            Source = "$SourcePath"
+            Source = "C:\Sxs"
             DependsOn = 'WindowsFeature]IISWindowsFeature','[XAzureBlobFiles]WinSxS'
 		}
      }

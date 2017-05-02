@@ -8,7 +8,7 @@ Configuration ClosingMachineWPreReqs
          [String[]]$SWPath
 
          )  
-  Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot
+  Import-DscResource -ModuleName PSDesiredStateConfiguration , xPendingReboot
 
   Node ("localhost")
    {
@@ -62,7 +62,7 @@ Configuration ClosingMachineWPreReqs
             Arguments   = "IACCEPTSQLNCLILICENSETERMS=YES /qn"
             DependsOn   = "[Package]SQLSysClrTypes"
         }
-
+<#
         Package VisualStudio2010
         {
             Ensure      = "Present"  # You can also set Ensure to "Absent"
@@ -71,7 +71,25 @@ Configuration ClosingMachineWPreReqs
             ProductId   = "{9495AEB4-AB97-39DE-8C42-806EEF75ECA7}"
             Arguments   = "/q /norestart"
         }
-        
+#>
+      Script InstallVisualStudio2010
+        {
+         GetScript={$null}
+         TestScript={
+         $installed=Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* |  Where-object DisplayName -Like "*Microsoft Visual C++ 2010*"
+            if ($installed)
+            {
+                $True
+            }
+            else
+            {
+                $False
+            }
+         }
+         SetScript= {
+                    Start-Process -FilePath $SWPath\VSTools_OfficeRuntime2010\vstor_redist.exe -ArgumentList "/q /log" -Wait    
+                    }
+         }        
 
         Package OfficeWordOnly2007
         {
@@ -86,7 +104,7 @@ Configuration ClosingMachineWPreReqs
         { 
             Name = "Check for a pending reboot before changing anything" 
         }
-        
+       
 
     }#End of Node
  }#End of Configuration
