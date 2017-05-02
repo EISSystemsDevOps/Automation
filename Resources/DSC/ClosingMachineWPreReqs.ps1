@@ -8,7 +8,7 @@ Configuration ClosingMachineWPreReqs
          [String[]]$SWPath
 
          )  
-  Import-DscResource -ModuleName PSDesiredStateConfiguration#, xPendingReboot
+  Import-DscResource -ModuleName PSDesiredStateConfiguration #, xPendingReboot
 
   Node ("localhost")
    {
