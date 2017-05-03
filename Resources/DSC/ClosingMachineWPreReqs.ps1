@@ -87,7 +87,7 @@ Configuration ClosingMachineWPreReqs
             }
          }
          SetScript= {
-                    Start-Process -FilePath $SWPath\VSTools_OfficeRuntime2010\vstor_redist.exe -ArgumentList "/q /log" -Wait    
+                    Start-Process -FilePath $SWPath\VSTools_OfficeRuntime2010\vstor_redist.exe -ArgumentList "/q" -Wait    
                     }
          }        
 
