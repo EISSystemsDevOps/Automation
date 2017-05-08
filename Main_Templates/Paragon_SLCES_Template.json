@@ -330,9 +330,9 @@
     "domainUser": "[concat(parameters('domainName'),'\\',parameters('DomUsername'))]",
     "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
     //"domainControllerIPAddress": "172.32.0.4",
-   // "domainUserA": "[concat(parameters('domainName'),'\\')]",
-   //parameters('LocalAdminUserName'))",
-    
+    // "domainUserA": "[concat(parameters('domainName'),'\\')]",
+    //parameters('LocalAdminUserName'))",
+
     //Environment VM Names
 
 
@@ -342,24 +342,35 @@
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
-    "WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14xWPreReqs.ps1.zip')]",
-    "WebConfigurationFunction": "WebServerConfig14xWPrereqs.ps1\\WebServerConfig14xWPrereqs",
+    //"WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14xWPreReqs.ps1.zip')]",
+    //"WebConfigurationFunction": "WebServerConfig14xWPrereqs.ps1\\WebServerConfig14xWPrereqs",
+    "WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "WebConfigurationFunction": "[concat('WebServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\WebServerConfig14x',parameters('DSCConfigurationLevel'))]",
     //"NtrDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtrServerConfig14xWPreReqs.ps1.zip')]",
-    "NtrDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtrServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
     //"NtrConfigurationFunction": "NtrServerConfig14xWPrereqs.ps1\\NtrServerConfig14xWPrereqs",
+    "NtrDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtrServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
     "NtrConfigurationFunction": "[concat('NtrServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\NtrServerConfig14x',parameters('DSCConfigurationLevel'))]",
-    "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
     //"BreConfigurationFunction": "BreServerConfig14xWPreReqs.ps1\\BreServerConfig14xWPreReqs",
+    "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
     "BreConfigurationFunction": "[concat('BreServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\BreServerConfig14x',parameters('DSCConfigurationLevel'))]",
-    "SvcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'SvcServerConfig14xWPreReqs.ps1.zip')]",
-    "SvcConfigurationFunction": "SvcServerConfig14xWPreReqs.ps1\\SvcServerConfig14xWPreReqs",
-    "ConDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'ConServerConfig14xWPreReqs.ps1.zip')]",
-    "ConConfigurationFunction": "ConServerConfig14xWPreReqs.ps1\\ConServerConfig14xWPreReqs",
-    "PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14xWPreReqs.ps1.zip')]",
-    "PpsConfigurationFunction": "PpsServerConfig14xWPreReqs.ps1\\PpsServerConfig14xWPreReqs",
-    "Configurationurl":"https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
-    
-      //Template URIs
+    //"SvcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'SvcServerConfig14xWPreReqs.ps1.zip')]",
+    //"SvcConfigurationFunction": "SvcServerConfig14xWPreReqs.ps1\\SvcServerConfig14xWPreReqs",
+    "SvcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'SvcServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "SvcConfigurationFunction": "[concat('SvcServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\SvcServerConfig14x',parameters('DSCConfigurationLevel'))]",
+
+    //"ConDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'ConServerConfig14xWPreReqs.ps1.zip')]",
+    //"ConConfigurationFunction": "ConServerConfig14xWPreReqs.ps1\\ConServerConfig14xWPreReqs",
+    "ConDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'ConServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "ConConfigurationFunction": "[concat('ConServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\ConServerConfig14x',parameters('DSCConfigurationLevel'))]",
+
+    //"PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14xWPreReqs.ps1.zip')]",
+    //"PpsConfigurationFunction": "PpsServerConfig14xWPreReqs.ps1\\PpsServerConfig14xWPreReqs",
+    "PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "PpsConfigurationFunction": "[concat('PpsServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\PpsServerConfig14x',parameters('DSCConfigurationLevel'))]",
+
+    "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
+
+    //Template URIs
     "TemplateUrl": "[concat(parameters('_artifactsLocation'),'/Templates')]",
     "AvailabilitySetURI": "[concat(variables('TemplateUrl'),'/','availability_set.json')]",
     ////  This is a NIC with a Load Balancer attached:
@@ -401,7 +412,7 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       // "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
       //     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      "subnetRef": "[variables('subnetRef')]"
       //"dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -410,8 +421,8 @@
       "Name": "[concat(parameters('VMNameNTR'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef": "[variables('subnetRef')]"
       //"dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -420,8 +431,8 @@
       "Name": "[concat(parameters('VMNameWEB'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef": "[variables('subnetRef')]"
       //"dnsServer": "[variables('domainControllerIPAddress')]"
 
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
@@ -431,8 +442,8 @@
       "Name": "[concat(parameters('VMNamePPS'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef": "[variables('subnetRef')]"
       //"IPAddress": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -441,9 +452,9 @@
       "Name": "[concat(parameters('VMNameCON'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
-          // "dnsServer": "[variables('domainControllerIPAddress')]"
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef": "[variables('subnetRef')]"
+      // "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
@@ -451,9 +462,9 @@
       "Name": "[concat(parameters('VMNameSVC'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
-     // "dnsServer": "[variables('domainControllerIPAddress')]"
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef": "[variables('subnetRef')]"
+      // "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
@@ -470,7 +481,7 @@
     //  "Rule1DestinationPort": "145",
     //  "Rule1Access": "Allow",
     //  "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
- // },
+    // },
     "VMObject1": {
       "Name": "[parameters('VMNameBRE')]",
       "Size": "[variables('VMSize1')]",
@@ -512,7 +523,7 @@
       "publisher": "MicrosoftWindowsServer",
       "offer": "WindowsServer",
       "sku": "[parameters('windowsOSVersion')]",
-      "version":"latest",
+      "version": "latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "Uri": "[variables('VMUri')]"
@@ -532,7 +543,7 @@
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "Uri": "[variables('VMUri')]"
- 
+
     },
     "VMObject5": {
       "Name": "[parameters('VMNameCON')]",
@@ -544,7 +555,7 @@
       "publisher": "MicrosoftWindowsServer",
       "offer": "WindowsServer",
       "sku": "[parameters('windowsOSVersion')]",
-      "version":"latest",
+      "version": "latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "Uri": "[variables('VMUri')]"
@@ -566,7 +577,7 @@
       "Uri": "[variables('VMUri')]"
 
     }
-     
+
   },
   "resources": [
     // {
