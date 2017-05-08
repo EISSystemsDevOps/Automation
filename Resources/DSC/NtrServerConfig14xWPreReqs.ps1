@@ -352,7 +352,8 @@ Configuration NtrServerConfig14xWPrereqs
             }
          }
          SetScript= {
-                    Start-Process -FilePath $SWPath\VSTools_OfficeRuntime2010\vstor_redist.exe -ArgumentList "/q /log" -Wait    
+                    $SWPath='\\azrdevfile01.paragon.mckesson.com\root\AutomatedInstallSW'
+			Start-Process -FilePath $SWPath\VSTools_OfficeRuntime2010\vstor_redist.exe -ArgumentList "/q /log" -Wait    
                     }
          }
 <#
