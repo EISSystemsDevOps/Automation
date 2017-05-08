@@ -511,7 +511,7 @@
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
-            "[resourceid('Microsoft.Resources/deployments/', 'VMResource12')]"
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
           ],
           "properties": {
             "publisher": "Microsoft.Powershell",
