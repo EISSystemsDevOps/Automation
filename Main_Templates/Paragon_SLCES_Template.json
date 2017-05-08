@@ -314,6 +314,7 @@
     //"virt adualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
     //"subnetRef": "/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1",
     "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/Subnet-1')]",
+    "domainUser": "[concat(parameters('domainName'),'\\',parameters('DomUsername'))]",
     "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
     //"domainControllerIPAddress": "172.32.0.4",
    // "domainUserA": "[concat(parameters('domainName'),'\\')]",
@@ -1105,7 +1106,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "Name": "[parameters('domainName')]",
-          "User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
+          "user": "[variables('domainUser')]",
           "Restart": "true",
           //                    "Options": "[variables('domainJoinOptions')]",
           "Options": "3",
