@@ -962,7 +962,7 @@
             //               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
             //               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
             "sourcepath": "[parameters('SourcePath')]" //,
-            //"SWPath": "[parameters('SWPath')]"
+              //"SWPath": "[parameters('SWPath')]"
           }
         },
         "protectedSettings": { }
