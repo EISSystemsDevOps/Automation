@@ -186,6 +186,19 @@
       }
     },
 
+    "DSCConfigurationLevel": {
+      "type": "string",
+      "metadata": {
+        "description": "Level of DSC Configuration for VMs."
+      },
+      "defaultValue": "WPreReqs",
+      "allowedValues": [
+        "None",
+        "RolesFeatures",
+        "WPreReqs",
+        ""
+      ]
+    },
     "VNetRG": {
       "type": "string",
 //      "defaultValue": "",
@@ -333,7 +346,7 @@
     "WebConfigurationFunction": "WebServerConfig14xWPrereqs.ps1\\WebServerConfig14xWPrereqs",
     "NtrDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtrServerConfig14xWPreReqs.ps1.zip')]",
     "NtrConfigurationFunction": "NtrServerConfig14xWPrereqs.ps1\\NtrServerConfig14xWPrereqs",
-    "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig14xWPreReqs.ps1.zip')]",
+    "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
     "BreConfigurationFunction": "BreServerConfig14xWPreReqs.ps1\\BreServerConfig14xWPreReqs",
     "SvcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'SvcServerConfig14xWPreReqs.ps1.zip')]",
     "SvcConfigurationFunction": "SvcServerConfig14xWPreReqs.ps1\\SvcServerConfig14xWPreReqs",
