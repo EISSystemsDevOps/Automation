@@ -918,8 +918,8 @@
           "Properties": {
             //             "storageAccountName": "[parameters('dlStorageAccountName')]",
             //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            "sourcepath": "[parameters('SourcePath')]" //,
-           // "SWPath": "[parameters('SWPath')]"
+            "sourcepath": "[parameters('SourcePath')]" ,
+            "SWPath": "[parameters('SWPath')]"
 
           }
         },
@@ -960,8 +960,8 @@
             //               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
             //               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
             //               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
-            "sourcepath": "[parameters('SourcePath')]" //,
-              //"SWPath": "[parameters('SWPath')]"
+            "sourcepath": "[parameters('SourcePath')]",
+              "SWPath": "[parameters('SWPath')]"
           }
         },
         "protectedSettings": { }
@@ -997,8 +997,8 @@
             //              "storageAccountName": "[parameters('dlStorageAccountName')]",
             //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
             //               "sourcepath": "[parameters('SourcePath')]"
-            "sourcepath": "[parameters('SourcePath')]" //,
-           // "SWPath": "[parameters('SWPath')]"
+            "sourcepath": "[parameters('SourcePath')]",
+            "SWPath": "[parameters('SWPath')]"
           }
         },
         "protectedSettings": { }
@@ -1035,8 +1035,8 @@
             //              "storageAccountName": "[parameters('dlStorageAccountName')]",
             //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
             //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
-           "sourcepath": "[parameters('SourcePath')]"//,
-           // "SWPath": "[parameters('SWPath')]"
+           "sourcepath": "[parameters('SourcePath')]",
+            "SWPath": "[parameters('SWPath')]"
 
           }
         },
@@ -1071,8 +1071,8 @@
             //              "storageAccountName": "[parameters('dlStorageAccountName')]",
             //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
             //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]"
-            "sourcepath": "[parameters('SourcePath')]" //,
-           // "SWPath": "[parameters('SWPath')]"
+            "sourcepath": "[parameters('SourcePath')]",
+            "SWPath": "[parameters('SWPath')]"
           }
         },
         "protectedSettings": { }
@@ -1108,7 +1108,7 @@
             //              "storageAccountName": "[parameters('dlStorageAccountName')]",
             //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
             "sourcepath": "[parameters('SourcePath')]",
-            //"SWPath": "[parameters('SWPath')]"
+            "SWPath": "[parameters('SWPath')]"
 
           }
         },
