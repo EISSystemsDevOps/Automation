@@ -319,7 +319,7 @@
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
       "publisher": "MicrosoftSQLServer",
-      "offer": "SQL2012-WS2012R2",
+      "offer": "SQL2012SP3-WS2012R2",
       "sku": "Enterprise",
       "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
