@@ -352,8 +352,15 @@ Configuration NtrServerConfig14xWPrereqs
             }
          }
          SetScript= {
-                    $SWPath='\\azrdevfile01.paragon.mckesson.com\root\AutomatedInstallSW'
-			Start-Process -FilePath $SWPath\VSTools_OfficeRuntime2010\vstor_redist.exe -ArgumentList "/q /log" -Wait    
+                   $SWPath=$Using:SWPath
+                   # $SWPath='\\azrdevfile01.paragon.mckesson.com\root\AutomatedInstallSW'
+                    $temp=get-item C:\temp
+                    if (!$temp)
+                    {
+                        Mkdir 'C:\temp'
+                    }
+                    copy-item $SWPath\VSTools_OfficeRuntime2010\vstor_redist.exe -Destination C:\temp
+        			Start-Process -FilePath C:\temp\vstor_redist.exe -ArgumentList "/q" -Wait -NoNewWindow   
                     }
          }
 <#
@@ -379,9 +386,10 @@ $cd = @{
         }
     )
 }
-
-ClosingMachineWPreReqs -output C:\dsc\ -Swpath \\servername\sharefolder -configurationdata $cd
-#Start-DscConfiguration -Path C:\dsc\ -wait -verbose -force
+$SourcePath=''
+$SWPath=''
+NtrServerConfig14xWPreReqs -output C:\dsc\ -Swpath $SWPath -SourcePath $SourcePath -configurationdata $cd
+Start-DscConfiguration -Path C:\dsc\ -wait -verbose -force
  #  $job= (Get-Job -Id 13).ChildJobs.progress
 
 
