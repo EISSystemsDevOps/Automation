@@ -286,45 +286,13 @@ Configuration BreServerConfig14xWPreReqs
 #End of Paragon Common Config #########################################################################
     
     #BRE Configuration
-
-       #Install-Net35WithDism
- 		Script Install-Net35WithDism
-        {
-	        SetScript = 
-            {
-                $SourcePath=$Using:SourcePath
-               # $sourcepath='\\azrdevfile01.paragon.mckesson.com\Root\WindowsServer2012R2\sources\sxs'
-                Start-process -Filepath Dism.exe -argumentlist "/online /enable-feature /featurename:NetFX3 /All /Source:$SourcePath /LimitAccess" -wait -NoNewWindow 
-            }
-	        TestScript = { Get-WindowsFeature -Name Net-Framework-Features }
-	        GetScript = {$null}
-        }
     
-    "NET-Framework-Features", "NET-Framework-Core"
-      WindowsFeature NET-Framework-Features
-		{
-			Ensure = "Present"
-			Name = "NET-Framework-Features"
-            Source = "$SourcePath"
-            DependsOn   = "[Script]Install-Net35WithDism"
-		}
-
-      WindowsFeature NET-Framework-Core
-		{
-			Ensure = "Present"
-			Name = "NET-Framework-Core"
-            Source = "$SourcePath"
-            DependsOn   = "[Script]Install-Net35WithDism"
-		}
-
-
-
 		$WindowsFeatures = "Application-Server", "AS-NET-Framework", "AS-Ent-Services", "AS-Dist-Transaction", "AS-WS-Atomic", "AS-Incoming-Trans", "AS-Outgoing-Trans", "AS-TCP-Port-Sharing", "AS-Web-Support", `
 				            "AS-WAS-Support", "AS-HTTP-Activation", "AS-Named-Pipes", "AS-TCP-Activation", "FileAndStorage-Services", "Storage-Services", "Web-Server", "Web-WebServer", "Web-Common-Http", "Web-Default-Doc", `
 				            "Web-Dir-Browsing", "Web-Http-Errors", "Web-Static-Content", "Web-Http-Redirect", "Web-Health", "Web-Http-Logging", "Web-Log-Libraries", "Web-Request-Monitor", "Web-Performance", "Web-Stat-Compression", `
 				            "Web-Dyn-Compression", "Web-Security", "Web-Filtering", "Web-Basic-Auth", "Web-CertProvider", "Web-Client-Auth", "Web-Digest-Auth", "Web-Cert-Auth", "Web-IP-Security", "Web-Url-Auth", "Web-Windows-Auth", `
 				            "Web-App-Dev", "Web-Net-Ext45", "Web-Asp-Net45", "Web-ISAPI-Ext", "Web-ISAPI-Filter", "Web-Mgmt-Tools", "Web-Mgmt-Console", "Web-Mgmt-Compat", "Web-Metabase", "Web-Scripting-Tools", "Web-Mgmt-Service", `
-				            "NET-Framework-45-Features", "NET-Framework-45-Core", "NET-Framework-45-ASPNET", "NET-WCF-Services45", "NET-WCF-HTTP-Activation45", "NET-WCF-MSMQ-Activation45", `
+				            "NET-Framework-Features", "NET-Framework-Core", "NET-Framework-45-Features", "NET-Framework-45-Core", "NET-Framework-45-ASPNET", "NET-WCF-Services45", "NET-WCF-HTTP-Activation45", "NET-WCF-MSMQ-Activation45", `
 				            "NET-WCF-Pipe-Activation45", "NET-WCF-TCP-Activation45", "NET-WCF-TCP-PortSharing45", "MSMQ", "MSMQ-Services", "MSMQ-Server", "NLB", "RDC", "FS-SMB1", "User-Interfaces-Infra", "Server-Gui-Mgmt-Infra", "Server-Gui-Shell", `
 				            "PowerShellRoot", "PowerShell", "PowerShell-V2", "PowerShell-ISE", "WAS", "WAS-Process-Model", "WAS-Config-APIs", "WoW64-Support"
 
@@ -368,28 +336,3 @@ Configuration BreServerConfig14xWPreReqs
         } 
  }#End of Node
 }#End of Config
-
-
- <#
-$cd = @{
-    AllNodes = @(
-        @{
-            NodeName = 'localhost'
-            PSDscAllowPlainTextPassword = $true
-            PSDSCAllowDomainUser=$True
-            RebootNodeIfNeeded = $true
-           
-
-        }
-    )
-}
-$SourcePath=''
-$SWPath=''
-BREServerConfig14xWPreReqs -output C:\dsc\ -Swpath $SWPath -SourcePath $SourcePath -configurationdata $cd
-Start-DscConfiguration -Path C:\dsc\ -wait -verbose -force
- #  $job= (Get-Job -Id 13).ChildJobs.progress
-
-
-
-#>
-
