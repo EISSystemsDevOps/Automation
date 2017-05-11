@@ -296,7 +296,18 @@ Configuration BreServerConfig14xWPreReqs
                # $sourcepath='\\azrdevfile01.paragon.mckesson.com\Root\WindowsServer2012R2\sources\sxs'
                 Start-process -Filepath Dism.exe -argumentlist "/online /enable-feature /featurename:NetFX3 /All /Source:$SourcePath /LimitAccess" -wait -NoNewWindow 
             }
-	        TestScript = { Get-WindowsFeature -Name Net-Framework-Features }
+	        TestScript = 
+		{ 
+			$feature=Get-WindowsFeature -Name Net-Framework-Features
+			if($feature)
+			{
+			    $true
+			}
+			else
+			{	
+				$false
+			} 
+		}
 	        GetScript = {$null}
         }
     
