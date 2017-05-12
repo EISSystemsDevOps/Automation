@@ -455,7 +455,7 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       // "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
       //     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      "subnetRef":"[variables('subnetRef')]",
       "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -465,7 +465,7 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      "subnetRef":"[variables('subnetRef')]",
       "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -475,7 +475,7 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      "subnetRef":"[variables('subnetRef')]",
       "dnsServer": "[variables('domainControllerIPAddress')]"
 
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
@@ -486,7 +486,7 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      "subnetRef":"[variables('subnetRef')]",
       "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -496,7 +496,7 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      "subnetRef":"[variables('subnetRef')]",
           "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -506,7 +506,7 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
 //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      "subnetRef":"[variables('subnetRef')]",
      "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
