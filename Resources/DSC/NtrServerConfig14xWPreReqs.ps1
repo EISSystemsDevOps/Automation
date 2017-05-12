@@ -341,7 +341,7 @@ Configuration NtrServerConfig14xWPrereqs
         {
          GetScript={$null}
          TestScript={
-         $installed=Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* |  Where-object DisplayName -Like "*Microsoft Visual C++ 2010*"
+         $installed=Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* |  Where-object DisplayName -Like "*Microsoft Visual Studio 2010 Tools For Office*"
             if ($installed)
             {
                 $True
