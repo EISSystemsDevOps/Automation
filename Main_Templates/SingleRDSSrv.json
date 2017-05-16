@@ -502,7 +502,7 @@
      //      RDS Server
         {
           "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(parameters('VMName'),'/DBConfigDscExtension')]",
+          "name": "[concat(parameters('VMName'),'/RDSConfigDscExtension')]",
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
@@ -522,10 +522,10 @@
               },
              // "wmfVersion": "4.0",
              "Properties": {
-                "DomainName": "[parameters('DomainName')]",
-                "AdminCreds": {
-                  "UserName": "[parameters('adminUsername')]",
-                  "Password": "PrivateSettingsRef:AdminPassword"
+              //  "DomainName": "[parameters('DomainName')]",
+               // "AdminCreds": {
+               //   "UserName": "[parameters('adminUsername')]",
+                //  "Password": "PrivateSettingsRef:AdminPassword"
                 }
               }
             },
