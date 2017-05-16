@@ -531,7 +531,7 @@
             },
             "protectedSettings": {
               "Items": {
-                "AdminPassword": "[parameters('domPassword')]"
+                //"AdminPassword": "[parameters('domPassword')]"
               }
             }
           }
