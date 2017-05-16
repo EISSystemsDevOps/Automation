@@ -1232,8 +1232,8 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "Name": "[parameters('domainName')]",
-          //"User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
-          "User": "octrain\nnguyen",
+          "User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
+          //"User": "octrain\nnguyen",
           "Restart": "true",
           //                    "Options": "[variables('domainJoinOptions')]",
           "Options": "3",
