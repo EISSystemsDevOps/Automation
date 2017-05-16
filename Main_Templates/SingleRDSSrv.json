@@ -527,12 +527,12 @@
                //   "UserName": "[parameters('adminUsername')]",
                 //  "Password": "PrivateSettingsRef:AdminPassword"
                 }
-              }
+              //}
             },
             "protectedSettings": {
-              "Items": {
+             // "Items": {
                 //"AdminPassword": "[parameters('domPassword')]"
-              }
+              //}
             }
           }
         }
