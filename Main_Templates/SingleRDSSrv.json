@@ -500,47 +500,42 @@
     
    //RDS Configuration via DSC Extension
      //      RDS Server
-        {
-          "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(parameters('VMName'),'/RDSConfigDscExtension')]",
-          "apiVersion": "2015-06-15",
-          "location": "[resourceGroup().location]",
-          "dependsOn": [
-            "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Powershell",
-            "type": "DSC",
-            "typeHandlerVersion": "2.19",
-            "autoUpgradeMinorVersion": false,
-            "settings": {
-              "ModulesUrl": "[variables('RDSDSCModuleUrl')]",
-              "SasToken": "",
-              "configurationFunction": "[variables('RDSConfigurationFunction')]",
-              "configurationData": {
-                "url": "[variables('Configurationurl')]"
-              },
-             // "wmfVersion": "4.0",
-             "Properties": {
-              //  "DomainName": "[parameters('DomainName')]",
-               // "AdminCreds": {
-               //   "UserName": "[parameters('adminUsername')]",
-                //  "Password": "PrivateSettingsRef:AdminPassword"
-                }
-              //}
-            },
-            "protectedSettings": {
-             // "Items": {
-                //"AdminPassword": "[parameters('domPassword')]"
-              //}
-            }
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('VMName'),'/RDSConfigDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "ModulesUrl": "[variables('RDSDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('RDSConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          // "wmfVersion": "4.0",
+          "Properties": {
+            //  "DomainName": "[parameters('DomainName')]",
+            // "AdminCreds": {
+            //   "UserName": "[parameters('adminUsername')]",
+            //  "Password": "PrivateSettingsRef:AdminPassword"
           }
-        }
-  ] //,
-  //"outputs": {
-  //"hostname": {
-  // "type": "string",
-  //"value": "[reference(variables('PIPObject').Name).dnsSettings.fqdn]"
-  // }
-  // }
+          //}
+        },
+        "protectedSettings": { }
+        // "protectedSettings": {
+        // "Items": {
+        //"AdminPassword": "[parameters('domPassword')]"
+        //}
+        //}
+        //}
+      }
+    }
 }
