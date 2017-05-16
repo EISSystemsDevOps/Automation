@@ -294,7 +294,7 @@
     //"VMFourDataDisksURI": "[concat(variables('TemplateUrl'),'/','vm_four_datadisks.json')]",
     "RDSDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'RDSConfig.ps1.zip')]",
     "RDSConfigurationFunction": "RDSConfig.ps1\\RDSConfig",
-    "RDSmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
+    "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
 
     "StorageAccountURI": "[concat(variables('TemplateUrl'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
     "NetworkSecurityGroupURI": "[concat(variables('TemplateUrl'),'/','rdp_network_security_group.json')]",
