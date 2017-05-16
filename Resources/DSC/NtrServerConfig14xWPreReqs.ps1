@@ -354,7 +354,7 @@ Configuration NtrServerConfig14xWPrereqs
          SetScript= {
                    $SWPath=$Using:SWPath
                    # $SWPath='\\azrdevfile01.paragon.mckesson.com\root\AutomatedInstallSW'
-                    $temp=get-item C:\temp
+                    $temp=get-item C:\temp -ErrorAction SilentlyContinue
                     if (!$temp)
                     {
                         Mkdir 'C:\temp'
