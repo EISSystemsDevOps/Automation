@@ -1,5 +1,5 @@
 {
-  
+
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
@@ -188,54 +188,54 @@
       }
     },
     "ExclusionsPaths": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Semicolon delimited list of file paths or locations to exclude from scanning"
-            }
-        },
-        "ExclusionsExtensions": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Semicolon delimited list of file extensions to exclude from scanning"
-            }
-        },
-        "ExclusionsProcesses": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Semicolon delimited list of process names to exclude from scanning"
-            }
-        },
-        "RealtimeProtectionEnabled": {
-            "type": "string",
-            "defaultValue": "true",
-            "metadata": {
-                "description": "Indicates whether or not real time protection is enabled (default is true)"
-            }
-        },
-        "ScheduledScanSettingsIsEnabled": {
-            "type": "string",
-            "defaultValue": "false",
-            "metadata": {
-                "description": "Indicates whether or not custom scheduled scan settings are enabled (default is false)"
-            }
-        },
-        "ScheduledScanSettingsScanType": {
-            "type": "string",
-            "defaultValue": "Quick",
-            "metadata": {
-                "description": "Indicates whether scheduled scan setting type is set to Quick or Full (default is Quick)"
-            }
-        },
-        "ScheduledScanSettingsDay": {
-            "type": "string",
-            "defaultValue": "7",
-            "metadata": {
-                "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
-            }
-        },
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Semicolon delimited list of file paths or locations to exclude from scanning"
+      }
+    },
+    "ExclusionsExtensions": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Semicolon delimited list of file extensions to exclude from scanning"
+      }
+    },
+    "ExclusionsProcesses": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Semicolon delimited list of process names to exclude from scanning"
+      }
+    },
+    "RealtimeProtectionEnabled": {
+      "type": "string",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "Indicates whether or not real time protection is enabled (default is true)"
+      }
+    },
+    "ScheduledScanSettingsIsEnabled": {
+      "type": "string",
+      "defaultValue": "false",
+      "metadata": {
+        "description": "Indicates whether or not custom scheduled scan settings are enabled (default is false)"
+      }
+    },
+    "ScheduledScanSettingsScanType": {
+      "type": "string",
+      "defaultValue": "Quick",
+      "metadata": {
+        "description": "Indicates whether scheduled scan setting type is set to Quick or Full (default is Quick)"
+      }
+    },
+    "ScheduledScanSettingsDay": {
+      "type": "string",
+      "defaultValue": "7",
+      "metadata": {
+        "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
+      }
+    },
     "ScheduledScanSettingsTime": {
       "type": "string",
       "defaultValue": "120",
@@ -255,11 +255,11 @@
         "description": "workspaceKey."
       }
     }
-  
 
 
 
-  },//End of Parameters
+
+  }, //End of Parameters
 
   "variables": {
     //"dnsLabelPrefix1": "[tolower(concat(parameters('CustomerName'),variables('VMName1'),'-pip'))]",
@@ -268,7 +268,7 @@
     //"virt adualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
     //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     // "domainUserA": "[concat(parameters('domainName'),'\\')]",
-   //parameters('adminUsername'))",
+    //parameters('adminUsername'))",
     "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
     //Environment VM Names
     //Environment VM Sizes
@@ -277,9 +277,9 @@
     //DSC URLs
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
-    "Configurationurl":"https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
-    
-      //Template URIs
+    "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
+
+    //Template URIs
     "TemplateUrl": "[concat(parameters('_artifactsLocation'),'/Templates')]",
     ////  This is a network interface with static IP address
     "NetworkInterfaceStaticURI": "[concat(variables('TemplateUrl'),'/','network_interface_static.json')]",
@@ -307,11 +307,11 @@
     },
     "NicObject": {
       "Name": "[concat(parameters('VMName'),'-Nic')]",
-      "subnetRef": "[variables('subnetRef')]"  
-     // "IPAddress": "[parameters('DCIPAddress')]"
+      "subnetRef": "[variables('subnetRef')]"
+      // "IPAddress": "[parameters('DCIPAddress')]"
       //   "LoadBalancerName": "[concat(variables('VMName2'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
-    }, 
+    },
     "VMObject": {
       "Name": "[parameters('VMName')]",
       "Size": "[parameters('VMSize')]",
@@ -321,7 +321,7 @@
       "publisher": "MicrosoftSQLServer",
       "offer": "SQL2012SP3-WS2012R2",
       "sku": "Enterprise",
-      "version":"latest",
+      "version": "latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMUri')]"
@@ -397,7 +397,7 @@
       "apiVersion": "2016-02-01",
       "dependsOn": [
         //       "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]",
-       // "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]" //,
+        // "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]" //,
         //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
       ],
       "properties": {
@@ -497,9 +497,9 @@
         }
       }
     },
-    
-   //RDS Configuration via DSC Extension
-     //      RDS Server
+
+    //RDS Configuration via DSC Extension
+    //      RDS Server
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('VMName'),'/RDSConfigDscExtension')]",
@@ -538,4 +538,5 @@
         //}
       }
     }
+  ]
 }
