@@ -298,7 +298,7 @@ Configuration BreServerConfig14xWPreReqs
             }
 	        TestScript = 
 		{ 
-			$feature=Get-WindowsFeature -Name Net-Framework-Features
+			$feature=Get-WindowsFeature -Name Net-Framework-Features -erroraction silentlycontinue
 			if($feature)
 			{
 			    $true

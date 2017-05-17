@@ -285,19 +285,59 @@ Configuration WebServerConfig14xWPreReqs
 -Set App Pools Recycle Setting (Recycle at 2AM)
 -Set WebStation to support 32bit
 #>
+ 
+       #Install-Net35WithDism
+ 		Script Install-Net35WithDism
+        {
+	        SetScript = 
+            {
+                $SourcePath=$Using:SourcePath
+               # $sourcepath='\\azrdevfile01.paragon.mckesson.com\Root\WindowsServer2012R2\sources\sxs'
+                Start-process -Filepath Dism.exe -argumentlist "/online /enable-feature /featurename:NetFX3 /All /Source:$SourcePath /LimitAccess" -wait -NoNewWindow 
+            }
+	        TestScript = 
+		{ 
+			$feature=Get-WindowsFeature -Name Net-Framework-Features -erroraction silentlycontinue
+			if($feature)
+			{
+			    $true
+			}
+			else
+			{	
+				$false
+			} 
+		}
+	        GetScript = {$null}
+        }
     
+   # NET-Framework-Core
+
+     WindowsFeature NETFrameworkCore
+		{
+			Ensure = "Present"
+			Name = "NET-Framework-Core"
+            Source = "$SourcePath"
+            DependsOn   = "[Script]Install-Net35WithDism"
+		}
+
+
+   
      #WebServer Configuration specific settings
     WindowsFeature IISWindowsFeature
     {
-     Ensure = "Present"
-     Name = "Web-Server"
+	Ensure = "Present"
+	Name = "Web-Server"
+	DependsOn = "[WindowsFeature]NetFrameworkCore"
     }
 
-        
+   
+
+     
     $WindowsFeatures = "AS-HTTP-Activation", "WAS-NET-Environment", "Web-WebServer", "Web-Common-Http", "Web-Default-Doc", "Web-Dir-Browsing", "Web-Http-Errors", `
 					   "Web-Static-Content", "Web-Health", "Web-Http-Logging", "Web-Http-Tracing", "Web-Performance", "Web-Stat-Compression", "Web-Security", "Web-Filtering", "Web-App-Dev", "Web-Net-Ext45", `
-					   "Web-Asp-Net45", "Web-ISAPI-Ext", "Web-ISAPI-Filter", "Web-Mgmt-Tools", "Web-Mgmt-Console", "Web-Mgmt-Compat", "Web-Metabase", "NET-Framework-Core", "NET-HTTP-Activation", "NET-Framework-45-Features", `
+					   "Web-Asp-Net45", "Web-ISAPI-Ext", "Web-ISAPI-Filter", "Web-Mgmt-Tools", "Web-Mgmt-Console", "Web-Mgmt-Compat", "Web-Metabase", "NET-HTTP-Activation", "NET-Framework-45-Features", `
 					   "NET-Framework-45-Core", "NET-Framework-45-ASPNET", "NET-WCF-Services45", "NET-WCF-TCP-PortSharing45", "Web-Net-Ext", "Web-Asp-Net"
+   
     foreach ($WindowsFeature in $WindowsFeatures)
      {
       WindowsFeature $WindowsFeature

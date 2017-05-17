@@ -272,6 +272,48 @@ Configuration ConServerConfig14xWPreReqs
 #>
 
  #ServiceBus Configuration specific settings
+        #Install-Net35WithDism
+ 		Script Install-Net35WithDism
+        {
+	        SetScript = 
+            {
+                $SourcePath=$Using:SourcePath
+               # $sourcepath='\\azrdevfile01.paragon.mckesson.com\Root\WindowsServer2012R2\sources\sxs'
+                Start-process -Filepath Dism.exe -argumentlist "/online /enable-feature /featurename:NetFX3 /All /Source:$SourcePath /LimitAccess" -wait -NoNewWindow 
+            }
+	        TestScript = 
+		{ 
+			$feature=Get-WindowsFeature -Name Net-Framework-Features -erroraction silentlycontinue
+			if($feature)
+			{
+			    $true
+			}
+			else
+			{	
+				$false
+			} 
+		}
+	        GetScript = {$null}
+        }
+    
+    "NET-Framework-Features", "NET-Framework-Core"
+      WindowsFeature NET-Framework-Features
+		{
+			Ensure = "Present"
+			Name = "NET-Framework-Features"
+            Source = "$SourcePath"
+            DependsOn   = "[Script]Install-Net35WithDism"
+		}
+
+      WindowsFeature NET-Framework-Core
+		{
+			Ensure = "Present"
+			Name = "NET-Framework-Core"
+            Source = "$SourcePath"
+            DependsOn   = "[Script]Install-Net35WithDism"
+		}
+
+ 
    
     WindowsFeature IISWindowsFeature
     {
@@ -282,7 +324,7 @@ Configuration ConServerConfig14xWPreReqs
     $WindowsFeatures = "FileAndStorage-Services","Web-WebServer","Web-Common-Http","Web-Default-Doc","Web-Dir-Browsing","Web-Http-Errors", `
                         "Web-Static-Content","Web-Health","Web-Http-Logging","Web-Performance","Web-Stat-Compression","Web-Security","Web-Filtering","Web-App-Dev", `
                         "Web-Net-Ext","Web-Net-Ext45","Web-Asp-Net","Web-Asp-Net45","Web-ISAPI-Ext","Web-ISAPI-Filter","Web-Mgmt-Tools","Web-Mgmt-Console", `
-                        "Web-Mgmt-Compat","Web-Metabase","NET-Framework-Features","NET-Framework-Core","NET-Framework-45-Features","NET-Framework-45-Core", `
+                        "Web-Mgmt-Compat","Web-Metabase","NET-Framework-45-Features","NET-Framework-45-Core", `
                         "NET-Framework-45-ASPNET","NET-WCF-Services45","NET-WCF-HTTP-Activation45","MSMQ","MSMQ-Services","MSMQ-Server","RDC","FS-SMB1","User-Interfaces-Infra", `
                         "Server-Gui-Mgmt-Infra","Server-Gui-Shell","PowerShellRoot","PowerShell","PowerShell-V2","PowerShell-ISE","WAS","WAS-Process-Model", `
                         "WAS-Config-APIs","WoW64-Support"
