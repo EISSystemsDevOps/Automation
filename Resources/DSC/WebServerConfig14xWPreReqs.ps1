@@ -298,7 +298,7 @@ Configuration WebServerConfig14xWPreReqs
 	        TestScript = 
 		{ 
 			$feature=Get-WindowsFeature -Name Net-Framework-Features -erroraction silentlycontinue
-			if($feature)
+			if($feature.Installed -eq $true)
 			{
 			    $true
 			}

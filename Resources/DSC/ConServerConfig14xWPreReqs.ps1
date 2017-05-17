@@ -284,7 +284,7 @@ Configuration ConServerConfig14xWPreReqs
 	        TestScript = 
 		{ 
 			$feature=Get-WindowsFeature -Name Net-Framework-Features -erroraction silentlycontinue
-			if($feature)
+			if($feature.Installed -eq $true)
 			{
 			    $true
 			}
@@ -296,8 +296,7 @@ Configuration ConServerConfig14xWPreReqs
 	        GetScript = {$null}
         }
     
-    "NET-Framework-Features", "NET-Framework-Core"
-      WindowsFeature NET-Framework-Features
+      WindowsFeature NETFrameworkFeatures
 		{
 			Ensure = "Present"
 			Name = "NET-Framework-Features"
@@ -305,7 +304,7 @@ Configuration ConServerConfig14xWPreReqs
             DependsOn   = "[Script]Install-Net35WithDism"
 		}
 
-      WindowsFeature NET-Framework-Core
+      WindowsFeature NETFrameworkCore
 		{
 			Ensure = "Present"
 			Name = "NET-Framework-Core"

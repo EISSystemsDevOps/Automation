@@ -293,13 +293,12 @@ Configuration BreServerConfig14xWPreReqs
 	        SetScript = 
             {
                 $SourcePath=$Using:SourcePath
-               # $sourcepath='\\azrdevfile01.paragon.mckesson.com\Root\WindowsServer2012R2\sources\sxs'
                 Start-process -Filepath Dism.exe -argumentlist "/online /enable-feature /featurename:NetFX3 /All /Source:$SourcePath /LimitAccess" -wait -NoNewWindow 
             }
 	        TestScript = 
 		{ 
 			$feature=Get-WindowsFeature -Name Net-Framework-Features -erroraction silentlycontinue
-			if($feature)
+			if($feature.Installed -eq $true)
 			{
 			    $true
 			}
@@ -311,8 +310,8 @@ Configuration BreServerConfig14xWPreReqs
 	        GetScript = {$null}
         }
     
-    "NET-Framework-Features", "NET-Framework-Core"
-      WindowsFeature NET-Framework-Features
+    #"NET-Framework-Features", "NET-Framework-Core"
+      WindowsFeature NETFrameworkFeatures
 		{
 			Ensure = "Present"
 			Name = "NET-Framework-Features"
@@ -320,7 +319,7 @@ Configuration BreServerConfig14xWPreReqs
             DependsOn   = "[Script]Install-Net35WithDism"
 		}
 
-      WindowsFeature NET-Framework-Core
+      WindowsFeature NETFrameworkCore
 		{
 			Ensure = "Present"
 			Name = "NET-Framework-Core"
