@@ -385,18 +385,19 @@
     //"dnsLabelPrefix2": "[tolower(concat(parameters('CustomerName'),parameters('VMNameBRE'),'-pip'))]",
     //"storageAccountName": "[parameters('storageAcctName')]",
     //"virt adualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
+     "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('SubnetName'))]",
     //"subnetRef": "/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1",
-    "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1')]",
+    //"subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1')]",
     "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
     //"domainControllerIPAddress": "172.32.0.4",
-   // "domainUserA": "[concat(parameters('domainName'),'\\')]",
-   //parameters('LocalAdminUserName'))",
-    
+    // "domainUserA": "[concat(parameters('domainName'),'\\')]",
+    //parameters('LocalAdminUserName'))",
+
     //Environment VM Names
 
 
     //Environment VM Sizes
-  //  "VMSize1": "Basic_A2",
+    //  "VMSize1": "Basic_A2",
 
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
@@ -413,9 +414,9 @@
     "ConConfigurationFunction": "ConServerConfig14xWPreReqs.ps1\\ConServerConfig14xWPreReqs",
     "PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14xWPreReqs.ps1.zip')]",
     "PpsConfigurationFunction": "PpsServerConfig14xWPreReqs.ps1\\PpsServerConfig14xWPreReqs",
-    "Configurationurl":"https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
-    
-      //Template URIs
+    "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
+
+    //Template URIs
     "TemplateUrl": "[concat(parameters('_artifactsLocation'),'/Templates')]",
     "AvailabilitySetURI": "[concat(variables('TemplateUrl'),'/','availability_set.json')]",
     ////  This is a NIC with a Load Balancer attached:
@@ -457,7 +458,7 @@
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       // "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
       //     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      "subnetRef": "[variables('subnetRef')]"
       //"dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -466,8 +467,8 @@
       "Name": "[concat(parameters('VMNameNTR'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef": "[variables('subnetRef')]"
       //"dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -476,8 +477,8 @@
       "Name": "[concat(parameters('VMNameWEB'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef": "[variables('subnetRef')]"
       //"dnsServer": "[variables('domainControllerIPAddress')]"
 
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
@@ -487,8 +488,8 @@
       "Name": "[concat(parameters('VMNamePPS'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef": "[variables('subnetRef')]"
       //"IPAddress": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
@@ -497,9 +498,9 @@
       "Name": "[concat(parameters('VMNameCON'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
-          // "dnsServer": "[variables('domainControllerIPAddress')]"
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef": "[variables('subnetRef')]"
+      // "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
@@ -507,9 +508,9 @@
       "Name": "[concat(parameters('VMNameSVC'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-//      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef":"[variables('subnetRef')]"
-     // "dnsServer": "[variables('domainControllerIPAddress')]"
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef": "[variables('subnetRef')]"
+      // "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
@@ -526,7 +527,7 @@
     //  "Rule1DestinationPort": "145",
     //  "Rule1Access": "Allow",
     //  "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
- // },
+    // },
     "VMObject1": {
       "Name": "[parameters('VMNameBRE')]",
       "Size": "[parameters('VMSize1')]",
@@ -568,7 +569,7 @@
       "publisher": "MicrosoftWindowsServer",
       "offer": "WindowsServer",
       "sku": "[parameters('windowsOSVersion')]",
-      "version":"latest",
+      "version": "latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "Uri": "[variables('VMUri')]"
@@ -588,7 +589,7 @@
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "Uri": "[variables('VMUri')]"
- 
+
     },
     "VMObject5": {
       "Name": "[parameters('VMNameCON')]",
@@ -600,7 +601,7 @@
       "publisher": "MicrosoftWindowsServer",
       "offer": "WindowsServer",
       "sku": "[parameters('windowsOSVersion')]",
-      "version":"latest",
+      "version": "latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "Uri": "[variables('VMUri')]"
@@ -622,7 +623,7 @@
       "Uri": "[variables('VMUri')]"
 
     }
-     
+
   },
   "resources": [
     // {
