@@ -1,0 +1,158 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualMachineName": {
+      "defaultValue": "VM1",
+      "type": "string"
+    },
+    "vmSize": {
+      "defaultValue": "Standard_A1",
+      "type": "string",
+      "allowedValues": [
+        "Basic_A2",
+        "Standard_A1",
+        "Standard_A2",
+        "Standard_A3"
+      ]
+    },
+    "SubscriptionID": {
+      "defaultValue": "33b63578-8e56-4ebe-bb38-538bfb4ff7de",
+      "type": "string"
+    },
+    "VNetRG": {
+      "defaultValue": "SLCESARMVNetRG",
+      "type": "string"
+    },
+    "Vnetname": {
+      "defaultValue": "SLCESARMVNet",
+      "type": "string"
+    },
+    "sku": {
+      "defaultValue": "2008-R2-SP1",
+      "type": "string",
+      "allowedValues": [
+        "2008-R2-SP1",
+        "2012-R2-Datacenter"
+      ]
+    },
+    "storageAccountName": {
+      "defaultValue": "testadminpromptsa",
+      "type": "string"
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
+    },
+    "privateIPaddress": {
+      "type": "string" 
+    }
+  },
+  "variables": {
+    "nicName1": "[concat(parameters('virtualMachineName'), '-nic')]",
+    "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/Subnet-1')]",
+    "vhdName": "[concat(parameters('virtualMachineName'), '-os-disk.vhd')]"
+  },
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/33b63578-8e56-4ebe-bb38-538bfb4ff7de/resourceGroups/testadminprompt/providers/Microsoft.Compute/virtualMachines/VM1'.",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachineName')]",
+            "apiVersion": "2016-04-30-preview",
+            "location": "eastus",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_A1"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "[parameters('sku')]",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Windows",
+                        "name": "[parameters('virtualMachineName')]",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccountName'), '.blob.core.windows.net', concat('/vhds/', variables('vhdName')))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": []
+                },
+              "osProfile": {
+                "computerName": "[parameters('virtualMachineName')]",
+                "adminUsername": "[parameters('adminUsername')]",
+                "adminPassword": "[parameters('adminPassword')]",
+                "windowsConfiguration": {
+                  "provisionVMAgent": true,
+                  "enableAutomaticUpdates": true
+                },
+                "secrets": [ ]
+              },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName1'))]"
+                        }
+                    ]
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName1'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/33b63578-8e56-4ebe-bb38-538bfb4ff7de/resourceGroups/testadminprompt/providers/Microsoft.Network/networkInterfaces/vm1673'.",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[variables('nicName1')]",
+            "apiVersion": "2017-03-01",
+            "location": "eastus",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                      "properties": {
+                        "privateIPAddress": "[parameters('privateIPaddress')]",
+                        "privateIPAllocationMethod": "Dynamic",
+                        "subnet": {
+                          "id": "[variables('subnetRef')]"
+                        }
+                      }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/33b63578-8e56-4ebe-bb38-538bfb4ff7de/resourceGroups/testadminprompt/providers/Microsoft.Storage/storageAccounts/testadminpromptsa'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccountName')]",
+            "apiVersion": "2016-01-01",
+            "location": "eastus",
+            "tags": {},
+            "properties": {},
+            "dependsOn": []
+        }
+    ]
+}
