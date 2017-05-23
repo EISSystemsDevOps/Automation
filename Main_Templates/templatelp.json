@@ -1,6 +1,6 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
   "parameters": {
     "virtualMachineName": {
       "defaultValue": "VM1",
@@ -17,11 +17,11 @@
       ]
     },
     "SubscriptionID": {
-      "defaultValue": "",
+      "defaultValue": "33b63578-8e56-4ebe-bb38-538bfb4ff7de",
       "type": "string"
     },
     "VNetRG": {
-      "defaultValue": "",
+      "defaultValue": "SLCESARMVNetRG",
       "type": "string"
     },
     "Vnetname": {
@@ -29,7 +29,7 @@
       "type": "string"
     },
     "sku": {
-      "defaultValue": "2008-R2-SP1",
+      "defaultValue": "",
       "type": "string",
       "allowedValues": [
         "2008-R2-SP1",
@@ -53,106 +53,194 @@
       }
     },
     "privateIPaddress": {
-      "type": "string" 
+      "type": "string"
+    },
+
+  "ExclusionsPaths": {
+    "type": "string",
+    "defaultValue": "",
+    "metadata": {
+      "description": "Semicolon delimited list of file paths or locations to exclude from scanning"
     }
   },
+  "ExclusionsExtensions": {
+    "type": "string",
+    "defaultValue": "",
+    "metadata": {
+      "description": "Semicolon delimited list of file extensions to exclude from scanning"
+    }
+  },
+  "ExclusionsProcesses": {
+    "type": "string",
+    "defaultValue": "",
+    "metadata": {
+      "description": "Semicolon delimited list of process names to exclude from scanning"
+    }
+  },
+  "RealtimeProtectionEnabled": {
+    "type": "string",
+    "defaultValue": "true",
+    "metadata": {
+      "description": "Indicates whether or not real time protection is enabled (default is true)"
+    }
+  },
+  "ScheduledScanSettingsIsEnabled": {
+    "type": "string",
+    "defaultValue": "false",
+    "metadata": {
+      "description": "Indicates whether or not custom scheduled scan settings are enabled (default is false)"
+    }
+  },
+  "ScheduledScanSettingsScanType": {
+    "type": "string",
+    "defaultValue": "Quick",
+    "metadata": {
+      "description": "Indicates whether scheduled scan setting type is set to Quick or Full (default is Quick)"
+    }
+  },
+  "ScheduledScanSettingsDay": {
+    "type": "string",
+    "defaultValue": "7",
+    "metadata": {
+      "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
+    }
+  },
+  "ScheduledScanSettingsTime": {
+    "type": "string",
+    "defaultValue": "120",
+    "metadata": {
+      "description": "When to perform the scheduled scan, measured in minutes from midnight (0-1440). For example: 0 = 12AM, 60 = 1AM, 120 = 2AM."
+    }
+  }
+},
   "variables": {
     "nicName1": "[concat(parameters('virtualMachineName'), '-nic')]",
     "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/Subnet-1')]",
     "vhdName": "[concat(parameters('virtualMachineName'), '-os-disk.vhd')]"
   },
-    "resources": [
-        {
-            "comments": "",
-            "type": "Microsoft.Compute/virtualMachines",
+  "resources": [
+    {
+      "comments": "",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('virtualMachineName')]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "eastus",
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_A1"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "[parameters('sku')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "osType": "Windows",
             "name": "[parameters('virtualMachineName')]",
-            "apiVersion": "2016-04-30-preview",
-            "location": "eastus",
-            "properties": {
-                "hardwareProfile": {
-                    "vmSize": "Standard_A1"
-                },
-                "storageProfile": {
-                    "imageReference": {
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServer",
-                        "sku": "[parameters('sku')]",
-                        "version": "latest"
-                    },
-                    "osDisk": {
-                        "osType": "Windows",
-                        "name": "[parameters('virtualMachineName')]",
-                        "createOption": "FromImage",
-                        "vhd": {
-                            "uri": "[concat('https', '://', parameters('storageAccountName'), '.blob.core.windows.net', concat('/vhds/', variables('vhdName')))]"
-                        },
-                        "caching": "ReadWrite"
-                    },
-                    "dataDisks": []
-                },
-              "osProfile": {
-                "computerName": "[parameters('virtualMachineName')]",
-                "adminUsername": "[parameters('adminUsername')]",
-                "adminPassword": "[parameters('adminPassword')]",
-                "windowsConfiguration": {
-                  "provisionVMAgent": true,
-                  "enableAutomaticUpdates": true
-                },
-                "secrets": [ ]
-              },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName1'))]"
-                        }
-                    ]
-                }
+            "createOption": "FromImage",
+            "vhd": {
+              "uri": "[concat('https', '://', parameters('storageAccountName'), '.blob.core.windows.net', concat('/vhds/', variables('vhdName')))]"
             },
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName1'))]"
-            ]
+            "caching": "ReadWrite"
+          },
+          "dataDisks": [ ]
         },
-        {
-            "comments": "",
-            "type": "Microsoft.Network/networkInterfaces",
-            "name": "[variables('nicName1')]",
-            "apiVersion": "2017-03-01",
-            "location": "eastus",
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                      "properties": {
-                        "privateIPAddress": "[parameters('privateIPaddress')]",
-                        "privateIPAllocationMethod": "Dynamic",
-                        "subnet": {
-                          "id": "[variables('subnetRef')]"
-                        }
-                      }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
-                },
-                "enableIPForwarding": false
-            },
-            "dependsOn": []
+        "osProfile": {
+          "computerName": "[parameters('virtualMachineName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]",
+          "windowsConfiguration": {
+            "provisionVMAgent": true,
+            "enableAutomaticUpdates": true
+          },
+          "secrets": [ ]
         },
-        {
-            "comments": "",
-            "type": "Microsoft.Storage/storageAccounts",
-            "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
-            },
-            "kind": "Storage",
-            "name": "[parameters('storageAccountName')]",
-            "apiVersion": "2016-01-01",
-            "location": "eastus",
-            "tags": {},
-            "properties": {},
-            "dependsOn": []
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName1'))]"
+            }
+          ]
         }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName1'))]"
+      ]
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/33b63578-8e56-4ebe-bb38-538bfb4ff7de/resourceGroups/testadminprompt/providers/Microsoft.Network/networkInterfaces/vm1673'.",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName1')]",
+      "apiVersion": "2017-03-01",
+      "location": "eastus",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAddress": "[parameters('privateIPaddress')]",
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              }
+            }
+          }
+        ],
+        "dnsSettings": {
+          "dnsServers": [ ]
+        },
+        "enableIPForwarding": false
+      },
+      "dependsOn": [ ]
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/33b63578-8e56-4ebe-bb38-538bfb4ff7de/resourceGroups/testadminprompt/providers/Microsoft.Storage/storageAccounts/testadminpromptsa'.",
+      "type": "Microsoft.Storage/storageAccounts",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "kind": "Storage",
+      "name": "[parameters('storageAccountName')]",
+      "apiVersion": "2016-01-01",
+      "location": "eastus",
+      "tags": { },
+      "properties": { },
+      "dependsOn": [ ]
+    },
+    //Antimalware extension
+    {
+        "name": "[concat(parameters('virtualMachineName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'virtualMachineName')]"
+      ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
+          }
+        }
+      }
     ]
 }
