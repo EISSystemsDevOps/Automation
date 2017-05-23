@@ -17,15 +17,15 @@
       ]
     },
     "SubscriptionID": {
-      "defaultValue": "33b63578-8e56-4ebe-bb38-538bfb4ff7de",
+      "defaultValue": "",
       "type": "string"
     },
     "VNetRG": {
-      "defaultValue": "SLCESARMVNetRG",
+      "defaultValue": "",
       "type": "string"
     },
     "Vnetname": {
-      "defaultValue": "SLCESARMVNet",
+      "defaultValue": "",
       "type": "string"
     },
     "sku": {
@@ -37,7 +37,7 @@
       ]
     },
     "storageAccountName": {
-      "defaultValue": "testadminpromptsa",
+      "defaultValue": "",
       "type": "string"
     },
     "adminUsername": {
@@ -63,7 +63,7 @@
   },
     "resources": [
         {
-            "comments": "Generalized from resource: '/subscriptions/33b63578-8e56-4ebe-bb38-538bfb4ff7de/resourceGroups/testadminprompt/providers/Microsoft.Compute/virtualMachines/VM1'.",
+            "comments": "",
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[parameters('virtualMachineName')]",
             "apiVersion": "2016-04-30-preview",
@@ -114,7 +114,7 @@
             ]
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/33b63578-8e56-4ebe-bb38-538bfb4ff7de/resourceGroups/testadminprompt/providers/Microsoft.Network/networkInterfaces/vm1673'.",
+            "comments": "",
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('nicName1')]",
             "apiVersion": "2017-03-01",
@@ -140,7 +140,7 @@
             "dependsOn": []
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/33b63578-8e56-4ebe-bb38-538bfb4ff7de/resourceGroups/testadminprompt/providers/Microsoft.Storage/storageAccounts/testadminpromptsa'.",
+            "comments": "",
             "type": "Microsoft.Storage/storageAccounts",
             "sku": {
                 "name": "Standard_LRS",
