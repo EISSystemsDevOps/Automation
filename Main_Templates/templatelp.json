@@ -6,6 +6,14 @@
       "defaultValue": "",
       "type": "string"
     },
+    "_artifactsLocation": {
+      "type": "string",
+      "metadata": {
+        "group": "Infrastructure settings",
+        "description": "Change this value to your repo name if deploying from a fork"
+      },
+      "defaultValue": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources"
+    },
     "vmSize": {
       "defaultValue": "",
       "type": "string",
@@ -121,9 +129,9 @@
     "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/Subnet-1')]",
     "NICObject1": {
       "Name": "[concat(parameters('virtualMachineName'),'-nic')]",
-      "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/Subnet-1')]",
-      "vhdName": "[concat(parameters('virtualMachineName'), '-os-disk.vhd')]"
-    }
+      "subnetRef": "[variables('subnetRef')]"
+    },
+        "vhdName": "[concat(parameters('virtualMachineName'), '-os-disk.vhd')]"
   },
   "resources": [
     {
@@ -255,7 +263,7 @@
       "apiVersion": "2016-02-01",
       "dependsOn": [
         //       "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]"
+        //       "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]"
         //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
       ],
       "properties": {
