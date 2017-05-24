@@ -75,6 +75,24 @@
       },
       "defaultValue": "vhds"
     },
+    "storageAcctNewOrExisting": {
+      "type": "string",
+      "allowedValues": [
+        "new",
+        "existing"
+      ],
+      "metadata": {
+        "description": "Use a new or existing storage account"
+      },
+      "defaultValue": "new"
+    },
+    "storageAcctResourceGroup": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource Group for storage account for VHD placement. Only needed if using existing storage account"
+      },
+      "defaultValue": ""
+    },
     "domainAdminUsername": {
       "type": "string",
       "metadata": {
@@ -213,7 +231,14 @@
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "Uri": "[variables('VMUri')]",
       "vhdName": "[concat(parameters('vmApp'), '-os-disk.vhd')]"
+    },
+    "StorageAccountURI": "[concat(variables('TemplateUrl'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
+    "StorageAccountObject": {
+      "Name": "[parameters('storageAccountName')]",
+      "SkuName": "Standard_LRS",
+      "ResourceGroup": "[parameters('storageAcctResourceGroup')]"
     }
+
   },
   "resources": [
     {
@@ -302,36 +327,57 @@
         }
       }
     },
-      //Antimalware extension
-      {
-        "name": "[concat(parameters('vmWeb'),'/IaaSAntimalware')]",
-        "type": "Microsoft.Compute/virtualMachines/extensions",
-        "location": "[resourceGroup().location]",
-        "dependsOn": [
-          "[resourceid('Microsoft.Compute/virtualMachines/', parameters('vmWeb'))]"
-        ],
-        "apiVersion": "2015-06-15",
-        "properties": {
-          "publisher": "Microsoft.Azure.Security",
-          "type": "IaaSAntimalware",
-          "typeHandlerVersion": "1.3",
-          "autoUpgradeMinorVersion": true,
-          "settings": {
-            "AntimalwareEnabled": true,
-            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-            "ScheduledScanSettings": {
-              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-              "day": "[parameters('ScheduledScanSettingsDay')]",
-              "time": "[parameters('ScheduledScanSettingsTime')]",
-              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-            },
-            "Exclusions": {
-              "Extensions": "[parameters('ExclusionsExtensions')]",
-              "Paths": "[parameters('ExclusionsPaths')]",
-              "Processes": "[parameters('ExclusionsProcesses')]"
-            }
+    //Storage Account 
+    {
+      "name": "StorageAccountResource",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [ ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('StorageAccountURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "StorageAccountObject": {
+            //"value": "[concat(parameters('VMNameBRE'),'-','availabilityset')]"
+            "value": "[variables('StorageAccountObject')]"
           }
         }
       }
-      ]
+    },
+
+    //Antimalware extension
+    {
+      "name": "[concat(parameters('vmWeb'),'/IaaSAntimalware')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Compute/virtualMachines/', parameters('vmWeb'))]"
+      ],
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "publisher": "Microsoft.Azure.Security",
+        "type": "IaaSAntimalware",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "AntimalwareEnabled": true,
+          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+          "ScheduledScanSettings": {
+            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+            "day": "[parameters('ScheduledScanSettingsDay')]",
+            "time": "[parameters('ScheduledScanSettingsTime')]",
+            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+          },
+          "Exclusions": {
+            "Extensions": "[parameters('ExclusionsExtensions')]",
+            "Paths": "[parameters('ExclusionsPaths')]",
+            "Processes": "[parameters('ExclusionsProcesses')]"
+          }
+        }
+      }
+    }
+  ]
     }
