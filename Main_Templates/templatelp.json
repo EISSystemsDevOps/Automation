@@ -213,100 +213,95 @@
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "Uri": "[variables('VMUri')]",
       "vhdName": "[concat(parameters('vmApp'), '-os-disk.vhd')]"
-    },
-    "resources": [
-      {
-        "comments": "",
-        "type": "Microsoft.Compute/virtualMachines",
-        "name": "[parameters('vmWeb')]",
-        "apiVersion": "2016-04-30-preview",
-        "location": "eastus",
-        "properties": {
-          "hardwareProfile": {
-            "vmSize": "Standard_A1"
-          },
-          "storageProfile": {
-            "imageReference": {
-              "publisher": "MicrosoftWindowsServer",
-              "offer": "WindowsServer",
-              "sku": "[parameters('sku')]",
-              "version": "latest"
-            },
-            "osDisk": {
-              "osType": "Windows",
-              "name": "[parameters('vmWeb')]",
-              "createOption": "FromImage",
-              "vhd": {
-                "uri": "[concat('https', '://', parameters('storageAccountName'), '.blob.core.windows.net', concat('/vhds/', variables('vhdName')))]"
-              },
-              "caching": "ReadWrite"
-            },
-            "dataDisks": [ ]
-          },
-          "osProfile": {
-            "computerName": "[parameters('vmWeb')]",
-            "adminUsername": "[parameters('localAdminName')]",
-            "adminPassword": "[parameters('localAdminPassword')]",
-            "windowsConfiguration": {
-              "provisionVMAgent": true,
-              "enableAutomaticUpdates": true
-            },
-            "secrets": [ ]
-          },
-          "networkProfile": {
-            "networkInterfaces": [
-              {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName1'))]"
-              }
-            ]
+    }
+  },
+  "resources": [
+    {
+      "name": "VMResource1",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('VMObject1').Uri]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "VMObject": {
+            "value": "[variables('VMObject1')]"
           }
+        }
+      }
+    },
+    {
+      "name": "VMResource2",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource2')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('VMObject2').Uri]",
+          "contentVersion": "1.0.0.0"
         },
-        "dependsOn": [
-          "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
-          "[resourceId('Microsoft.Network/networkInterfaces', variables('NICObject1'))]"
-        ]
-      },
-      {
-        "comments": "",
-        "type": "Microsoft.Network/networkInterfaces",
-        "name": "[variables('NICObject1')]",
-        "apiVersion": "2017-03-01",
-        "location": "eastus",
-        "properties": {
-          "ipConfigurations": [
-            {
-              "name": "ipconfig1",
-              "properties": {
-                "privateIPAddress": "[parameters('privateIPaddress')]",
-                "privateIPAllocationMethod": "Dynamic",
-                "subnet": {
-                  "id": "[variables('subnetRef')]"
-                }
-              }
-            }
-          ],
-          "dnsSettings": {
-            "dnsServers": [ ]
-          },
-          "enableIPForwarding": false
+        "parameters": {
+          "VMObject": {
+            "value": "[variables('VMObject2')]"
+          }
+        }
+      }
+    },
+    //networkProfile
+    {
+      "name": "NetworkInterfaceResource1",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+        //       "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]",
+        //"[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]" //,
+        //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceURI')]",
+          "contentVersion": "1.0.0.0"
         },
-        "dependsOn": [ ]
-      },
-      {
-        "comments": "",
-        "type": "Microsoft.Storage/storageAccounts",
-        "sku": {
-          "name": "Standard_LRS",
-          "tier": "Standard"
+        "parameters": {
+
+          "NICObject": {
+            "value": "[variables('NICObject1')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "NetworkInterfaceResource2",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceURI')]",
+          "contentVersion": "1.0.0.0"
         },
-        "kind": "Storage",
-        "name": "[parameters('storageAccountName')]",
-        "apiVersion": "2016-01-01",
-        "location": "eastus",
-        "tags": { },
-        "properties": { },
-        "dependsOn": [ ]
-      },
+        "parameters": {
+
+          "NICObject": {
+            "value": "[variables('NICObject2')]"
+          }
+        }
+      }
+    },
       //Antimalware extension
       {
         "name": "[concat(parameters('vmWeb'),'/IaaSAntimalware')]",
@@ -361,6 +356,5 @@
           }
         }
       }
-    ]
-  }
-}
+      ]
+    }
