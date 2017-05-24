@@ -332,29 +332,6 @@
             }
           }
         }
-      },
-      {
-        "name": "NetworkInterfaceResource1",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2016-02-01",
-        "dependsOn": [
-          //       "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]",
-          //       "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]"
-          //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
-        ],
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[variables('NetworkInterfaceURI')]",
-            "contentVersion": "1.0.0.0"
-          },
-          "parameters": {
-
-            "NICObject": {
-              "value": "[variables('NICObject1')]"
-            }
-          }
-        }
       }
       ]
     }
