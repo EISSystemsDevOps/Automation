@@ -6,6 +6,7 @@
       "defaultValue": "",
       "type": "string"
     },
+<<<<<<< HEAD
     "vmApp": {
       "defaultValue": "",
       "type": "string"
@@ -30,6 +31,10 @@
     //]
     //},
     "windowsOSVersion": {
+=======
+    "vmSize": {
+      "defaultValue": "",
+>>>>>>> parent of e4be483... Update NICObject
       "type": "string",
       "defaultValue": "2012-R2-Datacenter",
       "allowedValues": [
@@ -191,6 +196,7 @@
 
     //NIC Objects
     "NICObject1": {
+<<<<<<< HEAD
       "Name": "[concat(parameters('vmWeb'),'-nic')]",
       "subnetRef": "[variables('subnetRef')]"
     },
@@ -239,6 +245,12 @@
       "ResourceGroup": "[parameters('storageAcctResourceGroup')]"
     }
 
+=======
+      "Name": "[concat(parameters('virtualMachineName'),'-nic')]",
+      "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/Subnet-1')]",
+      "vhdName": "[concat(parameters('virtualMachineName'), '-os-disk.vhd')]"
+    }
+>>>>>>> parent of e4be483... Update NICObject
   },
   "resources": [
     {
@@ -378,6 +390,32 @@
           }
         }
       }
+<<<<<<< HEAD
+=======
+    },
+    {
+      "name": "NetworkInterfaceResource1",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+        //       "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]"
+        //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+          "NICObject": {
+            "value": "[variables('NICObject1')]"
+          }
+        }
+      }
+>>>>>>> parent of e4be483... Update NICObject
     }
   ]
     }
