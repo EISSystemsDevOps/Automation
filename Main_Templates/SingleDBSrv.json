@@ -22,12 +22,7 @@
         "description": "Password for the Virtual Machine."
       }
     },
-    //"dnsLabelPrefix": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
-    //  }
-    //},
+
     "DomUserName": {
       "type": "string",
       "metadata": {
@@ -319,7 +314,7 @@
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
       "publisher": "MicrosoftSQLServer",
-      "offer": "SQL2012SP3-WS2012R2",
+      "offer": "SQL2014-WS2012R2",
       "sku": "Enterprise",
       "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
