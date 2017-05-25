@@ -7,6 +7,7 @@
       "type": "string"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "vmApp": {
       "defaultValue": "",
       "type": "string"
@@ -32,6 +33,8 @@
     //},
     "windowsOSVersion": {
 =======
+=======
+>>>>>>> parent of e4be483... Update NICObject
     "vmSize": {
       "defaultValue": "",
 >>>>>>> parent of e4be483... Update NICObject
@@ -197,6 +200,7 @@
     //NIC Objects
     "NICObject1": {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "Name": "[concat(parameters('vmWeb'),'-nic')]",
       "subnetRef": "[variables('subnetRef')]"
     },
@@ -246,10 +250,15 @@
     }
 
 =======
+=======
+>>>>>>> parent of e4be483... Update NICObject
       "Name": "[concat(parameters('virtualMachineName'),'-nic')]",
       "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/Subnet-1')]",
       "vhdName": "[concat(parameters('virtualMachineName'), '-os-disk.vhd')]"
     }
+<<<<<<< HEAD
+>>>>>>> parent of e4be483... Update NICObject
+=======
 >>>>>>> parent of e4be483... Update NICObject
   },
   "resources": [
