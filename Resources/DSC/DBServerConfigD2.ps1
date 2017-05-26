@@ -502,7 +502,7 @@ Configuration DBServerConfigD2
 
 		    } #End of Set script for ConfigureStoragePool
 	            TestScript = { 
-                    $Storagepools=get-storagepool |Where-object friendlyname -in ('SQLData1Pool01A','SQLLogsPool01A','SQLSystemDBPool01A')
+                    $Storagepools=get-storagepool |Where-object friendlyname -in ('SQLData1Pool01A','SQLLogsPool01A','SQLSystemDBPool01A') -erroracction silentlycontinue
                     if($StoragePools.count -eq 3)
                     {
                         $True
@@ -569,9 +569,9 @@ Configuration DBServerConfigD2
                 }
 	            TestScript = {
 
-                $fdrive=get-partition -DriveLetter f
-                $gdrive=get-partition -DriveLetter g
-                $hdrive=get-partition -DriveLetter h
+                $fdrive=get-partition -DriveLetter f -erroracction silentlycontinue
+                $gdrive=get-partition -DriveLetter g -erroracction silentlycontinue 
+                $hdrive=get-partition -DriveLetter h -erroracction silentlycontinue
 
                 $datampdrive=$fdrive|where-object AccessPaths -eq 'C:\DataRoot\Data1\'
                 $logmpdrive=$gdrive|where-object AccessPaths -eq 'C:\DataRoot\logs\'
@@ -671,6 +671,7 @@ Configuration DBServerConfigD2
     
     #Install SQL using script method
     #C:\SQLServer_12.0_Full\setup.exe /q /Action=Install /IACCEPTSQLSERVERLICENSETERMS /UpdateEnabled=True /UpdateSource=C:\SQLServer_12.0_Full\CU /FEATURES=SQLEngine,FullText,RS,IS,BC,Conn,ADV_SSMS /ASCOLLATION=Latin1_General_BIN /InstanceName=PARLIVE /SQLBACKUPDIR=C:\DataRoot\SystemDB\Backup /INSTALLSQLDATADIR=C:\DataRoot\SystemDB /SQLSYSADMINACCOUNTS='+$LocalAdminSQL +' /SQLSVCSTARTUPTYPE=AUTOMATIC /SQLTEMPDBDIR=D:\TempDB\MSSQL\Data /SQLTEMPDBLOGDIR=D:\TempDB\MSSQL\Logs /SQLUSERDBDIR=C:\DataRoot\Data1 /SQLUSERDBLOGDIR=C:\DataRoot\Logs /RSINSTALLMODE=FilesOnlyMode
+<#
         Script InstallSQLServer
         {
             SetScript = 
@@ -690,10 +691,10 @@ Configuration DBServerConfigD2
                     $False
                 }
             }
-            GetScript ={<# This must return a hash table #>}
-                DependsOn = "[Script]Configure-MountPoints"
+            GetScript ={<# This must return a hash table #>#}
+               # DependsOn = "[Script]Configure-MountPoints"
         }#end of InstallSQLServer
-
+#>
         xPendingReboot CheckBeforeBeginning
         { 
             Name = "Check for a pending reboot before changing anything"
