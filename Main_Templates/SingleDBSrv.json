@@ -248,9 +248,29 @@
       "metadata": {
         "description": "workspaceKey."
       }
-    }
-  
+    },
 
+
+     "publisher": {
+            "type": "string",
+            "defaultValue": "7",
+            "metadata": {
+                "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
+            }
+        },
+    "offer": {
+      "type": "string",
+      "defaultValue": "120",
+      "metadata": {
+        "description": "When to perform the scheduled scan, measured in minutes from midnight (0-1440). For example: 0 = 12AM, 60 = 1AM, 120 = 2AM."
+      }
+    },
+    "sku": {
+      "type": "string",
+      "metadata": {
+        "description": "workspaceId."
+      }
+    }
 
 
   },//End of Parameters
@@ -312,9 +332,9 @@
       "nicName": "[variables('NICObject').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "publisher": "MicrosoftSQLServer",
-      "offer": "SQL2012SP3-WS2012R2",
-      "sku": "Enterprise",
+      "publisher": "[parameters('publisher')]",
+      "offer": "[parameters('offer')]",
+      "sku": "[parameters('sku')]",
       "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
