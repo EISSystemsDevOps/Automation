@@ -485,7 +485,7 @@
       // "dnsServer": "[variables('domainControllerIPAddress')]"
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
-    }
+    },
 
     //"NSGObject1": {
     //  "Name": "FrontEnd-NSG",
