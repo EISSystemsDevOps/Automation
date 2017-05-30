@@ -43,10 +43,15 @@
     "vmnameMWS": {
       "type": "string",
       "metadata": {
-        "description": "Virtual Machine name for SVC BUS server."
+        "description": "Virtual Machine name for Compliance advisor Middleware server."
       }
     },
-
+    "vmnameOCA": {
+      "type": "string",
+      "metadata": {
+        "description": "Virtual Machine name for OneContent Application server."
+      }
+    },
     "LocalAdminUserName": {
       "type": "string",
       "metadata": {
@@ -487,6 +492,16 @@
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
 
+    "NICObject8": {
+      "Name": "[concat(parameters('vmnameOCA'),'-Nic')]",
+      //"PublicIPAddressName": "[variables('PIPObject2').Name]",
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
+      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+      "subnetRef": "[variables('subnetRef')]"
+      // "dnsServer": "[variables('domainControllerIPAddress')]"
+      //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
+      // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
+    },
     //"NSGObject1": {
     //  "Name": "FrontEnd-NSG",
     //  "Rule1SourcePort": "*",
@@ -611,8 +626,23 @@
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "Uri": "[variables('VMUri')]"
 
-    }
+    },
+    "VMObject8": {
+      "Name": "[parameters('vmnameOCA')]",
+      "Size": "[variables('VMSize1')]",
+      //     "ASName": "[variables('ASObject2').Name]",
+      "nicName": "[variables('NICObject8').Name]",
+      "AdminUserName": "[parameters('LocalAdminUserName')]",
+      "AdminPassword": "[parameters('LocalAdminPassword')]",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version": "latest",
+      "storageAccountName": "[parameters('storageAcctName')]",
+      "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
+      "Uri": "[variables('VMUri')]"
 
+    }
 
   },
   "resources": [
@@ -972,6 +1002,27 @@
       }
     },
 
+    {
+      "name": "VMResource8",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource7')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('VMObject8').Uri]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "VMObject": {
+            "value": "[variables('VMObject8')]"
+          }
+        }
+      }
+    },
     //    Web Server
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
@@ -1391,7 +1442,33 @@
         }
       }
     },
-
+    {
+      "comments": "Join domain - JsonADDomainExtension",
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('vmnameOCA'),'/joindomain')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "JsonADDomainExtension",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "Name": "[parameters('domainName')]",
+          "User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
+          "Restart": "true",
+          //                    "Options": "[variables('domainJoinOptions')]",
+          "Options": "3",
+          "OUPath": "[parameters('OUPath')]"
+        },
+        "protectedSettings": {
+          "Password": "[parameters('DomPassword')]"
+        }
+      }
+    },
     //Antimalware extension for PP server
     {
       "name": "[concat(parameters('VMNamePPS'),'/IaaSAntimalware')]",
@@ -1584,6 +1661,36 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]"
+      ],
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "publisher": "Microsoft.Azure.Security",
+        "type": "IaaSAntimalware",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "AntimalwareEnabled": true,
+          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+          "ScheduledScanSettings": {
+            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+            "day": "[parameters('ScheduledScanSettingsDay')]",
+            "time": "[parameters('ScheduledScanSettingsTime')]",
+            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+          },
+          "Exclusions": {
+            "Extensions": "[parameters('ExclusionsExtensions')]",
+            "Paths": "[parameters('ExclusionsPaths')]",
+            "Processes": "[parameters('ExclusionsProcesses')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[concat(parameters('vmnameOCA'),'/IaaSAntimalware')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
       ],
       "apiVersion": "2015-06-15",
       "properties": {
