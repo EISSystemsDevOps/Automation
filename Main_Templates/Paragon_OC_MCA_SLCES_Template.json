@@ -850,7 +850,26 @@
         }
       }
     },
+ {
+      "name": "NetworkInterfaceResource8",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
 
+          "NICObject": {
+            "value": "[variables('NICObject8')]"
+          }
+        }
+      }
+    },
     {
       "name": "VMResource1",
       "type": "Microsoft.Resources/deployments",
