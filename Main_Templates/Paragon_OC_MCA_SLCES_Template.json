@@ -594,7 +594,7 @@
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "Uri": "[variables('VMUri')]"
-    }
+    },
 
     "VMObject7": {
       "Name": "[parameters('vmnameMWS')]",
