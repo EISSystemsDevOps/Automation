@@ -40,7 +40,7 @@
       }
     },
 
-    "VMNameCAM": {
+    "vmnameMWS": {
       "type": "string",
       "metadata": {
         "description": "Virtual Machine name for SVC BUS server."
@@ -477,7 +477,7 @@
     },
 
     "NICObject7": {
-      "Name": "[concat(parameters('VMNameCAM'),'-Nic')]",
+      "Name": "[concat(parameters('vmnameMWS'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
@@ -597,7 +597,7 @@
     }
 
     "VMObject7": {
-      "Name": "[parameters('VMNameCAM')]",
+      "Name": "[parameters('vmnameMWS')]",
       "Size": "[variables('VMSize1')]",
       //     "ASName": "[variables('ASObject2').Name]",
       "nicName": "[variables('NICObject7').Name]",
@@ -799,6 +799,28 @@
         }
       }
     },
+
+    {
+      "name": "NetworkInterfaceResource7",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+          "NICObject": {
+            "value": "[variables('NICObject7')]"
+          }
+        }
+      }
+    },
+
     {
       "name": "VMResource1",
       "type": "Microsoft.Resources/deployments",
@@ -923,6 +945,28 @@
         "parameters": {
           "VMObject": {
             "value": "[variables('VMObject6')]"
+          }
+        }
+      }
+    },
+
+    {
+      "name": "VMResource7",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource7')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('VMObject7').Uri]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "VMObject": {
+            "value": "[variables('VMObject7')]"
           }
         }
       }
@@ -1320,6 +1364,34 @@
         }
       }
     },
+    {
+      "comments": "Join domain - JsonADDomainExtension",
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('vmnameMWS'),'/joindomain')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "JsonADDomainExtension",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "Name": "[parameters('domainName')]",
+          "User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
+          "Restart": "true",
+          //                    "Options": "[variables('domainJoinOptions')]",
+          "Options": "3",
+          "OUPath": "[parameters('OUPath')]"
+        },
+        "protectedSettings": {
+          "Password": "[parameters('DomPassword')]"
+        }
+      }
+    },
+
     //Antimalware extension for PP server
     {
       "name": "[concat(parameters('VMNamePPS'),'/IaaSAntimalware')]",
@@ -1506,6 +1578,36 @@
         }
       }
     },
+    {
+      "name": "[concat(parameters('vmnameMWS'),'/IaaSAntimalware')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]"
+      ],
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "publisher": "Microsoft.Azure.Security",
+        "type": "IaaSAntimalware",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "AntimalwareEnabled": true,
+          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+          "ScheduledScanSettings": {
+            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+            "day": "[parameters('ScheduledScanSettingsDay')]",
+            "time": "[parameters('ScheduledScanSettingsTime')]",
+            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+          },
+          "Exclusions": {
+            "Extensions": "[parameters('ExclusionsExtensions')]",
+            "Paths": "[parameters('ExclusionsPaths')]",
+            "Processes": "[parameters('ExclusionsProcesses')]"
+          }
+        }
+      }
+    }
     /*  
      //OMS agent for PPS Server
     {
