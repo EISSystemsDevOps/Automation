@@ -86,27 +86,30 @@
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
       }
     },
-    //"VMSize1": {
-    //  "type": "string",
-    //  "defaultValue": "Standard_D1",
-    //  "allowedValues": [
-    //    "Standard_D1",
-    //    "Standard_D2",
-    //    "Standard_D3",
-    //    "Standard_D4",
-    //    "Standard_D11",
-    //    "Standard_D12",
-    //    "Standard_D13",
-    //    "Standard_A1",
-    //    "Standard_A2",
-    //    "Standard_A3",
-    //    "Standard_A4",
-    //    "Standard_A5"
-    //  ],
-    //  "metadata": {
-    //    "description": "The size of the VM."
-    //  }
-    //},
+    
+    "VMSize1": {
+      "type": "string",
+      "defaultValue": "Basic_A2",
+      "allowedValues": [
+        "Standard_D1",
+        "Standard_D2",
+        "Standard_D3",
+        "Standard_D4",
+        "Standard_D11",
+        "Standard_D12",
+        "Standard_D13",
+        "Standard_A1",
+        "Standard_A2",
+        "Standard_A3",
+        "Standard_A4",
+        "Standard_A5",
+        "Basic_A2",
+        "Basic_A3"
+      ],
+      "metadata": {
+        "description": "The size of the VM."
+      }
+    },
     //"vmsize1": {
     //  "type": "string",
     //  "defaultValue": "Standard_D1",
@@ -394,7 +397,7 @@
 
 
     //Environment VM Sizes
-    "VMSize1": "Basic_A2",
+   // "VMSize1": "Basic_A2",
 
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
@@ -527,7 +530,7 @@
  // },
     "VMObject1": {
       "Name": "[parameters('VMNameBRE')]",
-      "Size": "[variables('VMSize1')]",
+      "Size": "[parameters('VMSize1')]",
       //      "ASName": "[variables('ASObject1').Name]",
       "nicName": "[variables('NICObject1').Name]",
       "AdminUserName": "[parameters('LocalAdminUserName')]",
@@ -543,7 +546,7 @@
 
     "VMObject2": {
       "Name": "[parameters('VMNameNTR')]",
-      "Size": "[variables('VMSize1')]",
+      "Size": "[parameters('VMSize1')]",
       //      "ASName": "[variables('ASObject1').Name]",
       "nicName": "[variables('NICObject2').Name]",
       "AdminUserName": "[parameters('LocalAdminUserName')]",
@@ -558,7 +561,7 @@
     },
     "VMObject3": {
       "Name": "[parameters('VMNameWEB')]",
-      "Size": "[variables('VMSize1')]",
+      "Size": "[parameters('VMSize1')]",
       //     "ASName": "[variables('ASObject2').Name]",
       "nicName": "[variables('NICObject3').Name]",
       "AdminUserName": "[parameters('LocalAdminUserName')]",
@@ -590,7 +593,7 @@
     //},
     "VMObject5": {
       "Name": "[parameters('VMNameCON')]",
-      "Size": "[variables('VMSize1')]",
+      "Size": "[parameters('VMSize1')]",
       //     "ASName": "[variables('ASObject2').Name]",
       "nicName": "[variables('NICObject5').Name]",
       "AdminUserName": "[parameters('LocalAdminUserName')]",
