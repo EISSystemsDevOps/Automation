@@ -375,6 +375,10 @@
     "PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
     "PpsConfigurationFunction": "[concat('PpsServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\PpsServerConfig14x',parameters('DSCConfigurationLevel'))]",
 
+    "AdcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'AdcServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "AdcConfigurationFunction": "[concat('PpsServerConfig14x',parameters('AdcConfigurationLevel'),'.ps1\\PpsServerConfig14x',parameters('DSCConfigurationLevel'))]",
+
+
     "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
     //Template URIs
@@ -1218,7 +1222,7 @@
           "Properties": {
             //              "storageAccountName": "[parameters('dlStorageAccountName')]",
             //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            "sourcepath": "[parameters('SourcePath')]",
+            //"sourcepath": "[parameters('SourcePath')]",
             "SWPath": "[parameters('SWPath')]"
 
           }
