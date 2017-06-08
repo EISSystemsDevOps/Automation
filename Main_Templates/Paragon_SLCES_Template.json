@@ -1196,11 +1196,11 @@
     //   ADSC Closing Server
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMNameSVC'),'/ADCConfigDscExtension')]",
+      "name": "[concat(parameters('VMNameADC'),'/ADCConfigDscExtension')]",
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]",
         "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameADC'),'/extensions/joindomain')]"//,
         // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
         // DSC Config files timing out.
