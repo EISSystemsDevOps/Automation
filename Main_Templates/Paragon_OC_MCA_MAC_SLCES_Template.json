@@ -1563,7 +1563,7 @@
       "comments": "Join domain - JsonADDomainExtension",
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('vmnameOCA'),'/joindomain')]",
+      "name": "[concat(parameters('vmnameMAC'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]"
