@@ -52,10 +52,10 @@
         "description": "Virtual Machine name for OneContent Application server."
       }
     },
-    "vmnameMAC": {
+    "VMNameMAC": {
       "type": "string",
       "metadata": {
-        "description": "Virtual Machine name for MAC Application server."
+        "description": "Virtual Machine name for MAC Middleware server."
       }
     },
     "LocalAdminUserName": {
@@ -509,7 +509,7 @@
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
     "NICObject9": {
-      "Name": "[concat(parameters('vmnameMAC'),'-Nic')]",
+      "Name": "[concat(parameters('VMNameMAC'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
@@ -660,7 +660,7 @@
 
     },
     "VMObject9": {
-      "Name": "[parameters('vmnameMAC')]",
+      "Name": "[parameters('VMNameMAC')]",
       "Size": "[variables('VMSize1')]",
       //     "ASName": "[variables('ASObject2').Name]",
       "nicName": "[variables('NICObject9').Name]",
@@ -1563,7 +1563,7 @@
       "comments": "Join domain - JsonADDomainExtension",
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('vmnameMAC'),'/joindomain')]",
+      "name": "[concat(parameters('VMNameMAC'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]"
@@ -1833,7 +1833,7 @@
       }
     },
     {
-      "name": "[concat(parameters('vmnameMAC'),'/IaaSAntimalware')]",
+      "name": "[concat(parameters('VMNameMAC'),'/IaaSAntimalware')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "location": "[resourceGroup().location]",
       "dependsOn": [
