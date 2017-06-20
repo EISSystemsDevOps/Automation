@@ -1,4 +1,5 @@
-﻿#Config file for Push mode and Azure setup with extension
+﻿
+#Config file for Push mode and Azure setup with extension
 
 #PARAGON Server Common Config ####################################################################
 <#
