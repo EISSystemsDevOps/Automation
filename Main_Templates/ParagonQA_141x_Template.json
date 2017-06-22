@@ -154,7 +154,7 @@
       "allowedValues": [
         "new",
         "existing"
-      ] ,
+      ],
       "metadata": {
         "description": "Use a new or existing storage account"
       },
@@ -172,8 +172,8 @@
       "type": "string",
       "metadata": {
         "description": "Name of storage Account for VHD placement."
-      }//,
-//      "defaultValue": "[tolower(concat(parameters('CustomerName'),'sa'))]"
+      } //,
+      //      "defaultValue": "[tolower(concat(parameters('CustomerName'),'sa'))]"
     },
     "storageAcctContainerName": {
       "type": "string",
@@ -310,54 +310,54 @@
       }
     },
     "ExclusionsPaths": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Semicolon delimited list of file paths or locations to exclude from scanning"
-            }
-        },
-        "ExclusionsExtensions": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Semicolon delimited list of file extensions to exclude from scanning"
-            }
-        },
-        "ExclusionsProcesses": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Semicolon delimited list of process names to exclude from scanning"
-            }
-        },
-        "RealtimeProtectionEnabled": {
-            "type": "string",
-            "defaultValue": "true",
-            "metadata": {
-                "description": "Indicates whether or not real time protection is enabled (default is true)"
-            }
-        },
-        "ScheduledScanSettingsIsEnabled": {
-            "type": "string",
-            "defaultValue": "false",
-            "metadata": {
-                "description": "Indicates whether or not custom scheduled scan settings are enabled (default is false)"
-            }
-        },
-        "ScheduledScanSettingsScanType": {
-            "type": "string",
-            "defaultValue": "Quick",
-            "metadata": {
-                "description": "Indicates whether scheduled scan setting type is set to Quick or Full (default is Quick)"
-            }
-        },
-        "ScheduledScanSettingsDay": {
-            "type": "string",
-            "defaultValue": "7",
-            "metadata": {
-                "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
-            }
-        },
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Semicolon delimited list of file paths or locations to exclude from scanning"
+      }
+    },
+    "ExclusionsExtensions": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Semicolon delimited list of file extensions to exclude from scanning"
+      }
+    },
+    "ExclusionsProcesses": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Semicolon delimited list of process names to exclude from scanning"
+      }
+    },
+    "RealtimeProtectionEnabled": {
+      "type": "string",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "Indicates whether or not real time protection is enabled (default is true)"
+      }
+    },
+    "ScheduledScanSettingsIsEnabled": {
+      "type": "string",
+      "defaultValue": "false",
+      "metadata": {
+        "description": "Indicates whether or not custom scheduled scan settings are enabled (default is false)"
+      }
+    },
+    "ScheduledScanSettingsScanType": {
+      "type": "string",
+      "defaultValue": "Quick",
+      "metadata": {
+        "description": "Indicates whether scheduled scan setting type is set to Quick or Full (default is Quick)"
+      }
+    },
+    "ScheduledScanSettingsDay": {
+      "type": "string",
+      "defaultValue": "7",
+      "metadata": {
+        "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
+      }
+    },
     "ScheduledScanSettingsTime": {
       "type": "string",
       "defaultValue": "120",
@@ -376,10 +376,24 @@
       "metadata": {
         "description": "workspaceKey."
       }
+    },
+    "DSCConfigurationLevel": {
+      "type": "string",
+      "metadata": {
+        "description": "Level of DSC Configuration for VMs."
+      },
+      "defaultValue": "WPreReqs",
+      "allowedValues": [
+        "None",
+        "RolesFeatures",
+        "WPreReqs",
+        ""
+      ]
     }
 
-        
-       
+
+
+
   },//End of Parameters
 
   "variables": {
@@ -387,7 +401,7 @@
     //"dnsLabelPrefix2": "[tolower(concat(parameters('CustomerName'),parameters('VMNameBRE'),'-pip'))]",
     //"storageAccountName": "[parameters('storageAcctName')]",
     //"virt adualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
-     "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('SubnetName'))]",
+    "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('SubnetName'))]",
     //"subnetRef": "/subscriptions/18dd1721-6522-4c42-9fdf-00534ed402ff/resourceGroups/ParagonDevOpsARMVNetRG/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1",
     //"subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/ParagonDevOpsARMVNet/subnets/Subnet-1')]",
     "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
@@ -404,18 +418,29 @@
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
-    "WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14xWPreReqs.ps1.zip')]",
-    "WebConfigurationFunction": "WebServerConfig14xWPrereqs.ps1\\WebServerConfig14xWPrereqs",
-    "NtrDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtrServerConfig14xWPreReqs.ps1.zip')]",
-    "NtrConfigurationFunction": "NtrServerConfig14xWPrereqs.ps1\\NtrServerConfig14xWPrereqs",
-    "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig14xWPreReqs.ps1.zip')]",
-    "BreConfigurationFunction": "BreServerConfig14xWPreReqs.ps1\\BreServerConfig14xWPreReqs",
-    "SvcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'SvcServerConfig14xWPreReqs.ps1.zip')]",
-    "SvcConfigurationFunction": "SvcServerConfig14xWPreReqs.ps1\\SvcServerConfig14xWPreReqs",
-    "ConDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'ConServerConfig14xWPreReqs.ps1.zip')]",
-    "ConConfigurationFunction": "ConServerConfig14xWPreReqs.ps1\\ConServerConfig14xWPreReqs",
-    "PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14xWPreReqs.ps1.zip')]",
-    "PpsConfigurationFunction": "PpsServerConfig14xWPreReqs.ps1\\PpsServerConfig14xWPreReqs",
+    //"WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14xWPreReqs.ps1.zip')]",
+    //"WebConfigurationFunction": "WebServerConfig14xWPrereqs.ps1\\WebServerConfig14xWPrereqs",
+    //"NtrDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtrServerConfig14xWPreReqs.ps1.zip')]",
+    //"NtrConfigurationFunction": "NtrServerConfig14xWPrereqs.ps1\\NtrServerConfig14xWPrereqs",
+    //"BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig14xWPreReqs.ps1.zip')]",
+    //"BreConfigurationFunction": "BreServerConfig14xWPreReqs.ps1\\BreServerConfig14xWPreReqs",
+    //"SvcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'SvcServerConfig14xWPreReqs.ps1.zip')]",
+    //"SvcConfigurationFunction": "SvcServerConfig14xWPreReqs.ps1\\SvcServerConfig14xWPreReqs",
+    //"ConDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'ConServerConfig14xWPreReqs.ps1.zip')]",
+    //"ConConfigurationFunction": "ConServerConfig14xWPreReqs.ps1\\ConServerConfig14xWPreReqs",
+    //"PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14xWPreReqs.ps1.zip')]",
+    //"PpsConfigurationFunction": "PpsServerConfig14xWPreReqs.ps1\\PpsServerConfig14xWPreReqs",
+    "WebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "WebConfigurationFunction": "[concat('WebServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\WebServerConfig14x',parameters('DSCConfigurationLevel'))]",
+    "NtrDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtrServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "NtrConfigurationFunction": "[concat('NtrServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\NtrServerConfig14x',parameters('DSCConfigurationLevel'))]",
+    "BreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "BreConfigurationFunction": "[concat('BreServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\BreServerConfig14x',parameters('DSCConfigurationLevel'))]",
+    "SvcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'SvcServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "SvcConfigurationFunction": "[concat('SvcServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\SvcServerConfig14x',parameters('DSCConfigurationLevel'))]",
+    "ConDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'ConServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "ConConfigurationFunction": "[concat('ConServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\ConServerConfig14x',parameters('DSCConfigurationLevel'))]",
+
     "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
     //Template URIs
