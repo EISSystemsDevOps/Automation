@@ -440,6 +440,8 @@
     "SvcConfigurationFunction": "[concat('SvcServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\SvcServerConfig14x',parameters('DSCConfigurationLevel'))]",
     "ConDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'ConServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
     "ConConfigurationFunction": "[concat('ConServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\ConServerConfig14x',parameters('DSCConfigurationLevel'))]",
+    "PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "PpsConfigurationFunction": "[concat('PpsServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\PpsServerConfig14x',parameters('DSCConfigurationLevel'))]",
 
     "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
