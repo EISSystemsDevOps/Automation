@@ -1,5 +1,5 @@
 
-Configuration WebServerConfig
+Configuration WebServerConfigMACWPreReqs
 {
    param 
    ( 
@@ -22,7 +22,7 @@ Configuration WebServerConfig
         [String]$StorageAccountKey
 
     )
-    Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot, xAzureStorage #xSQLServer    
+    Import-DscResource -ModuleName PSDesiredStateConfiguration, #xPendingReboot, #xAzureStorage #xSQLServer    
 
 	Node ("localhost")
 	{
