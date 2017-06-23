@@ -386,6 +386,11 @@
     "PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
     "PpsConfigurationFunction": "[concat('PpsServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\PpsServerConfig14x',parameters('DSCConfigurationLevel'))]",
 
+    //"MACDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfigMAC.ps1.zip')]",
+    //"MACConfigurationFunction": "WebServerConfigMAC.ps1\\WebServerConfigMAC",
+    "MACDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfigMAC',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "MACConfigurationFunction": "[concat('WebServerConfigMAC',parameters('DSCConfigurationLevel'),'.ps1\\WebServerConfigMAC',parameters('DSCConfigurationLevel'))]",
+
     "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
     //Template URIs
@@ -1248,6 +1253,45 @@
           "modulesUrl": "[variables('PPSDSCModuleUrl')]",
           "SasToken": "",
           "configurationFunction": "[variables('PPSConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+            //              "storageAccountName": "[parameters('dlStorageAccountName')]",
+            //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+            //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
+            "sourcepath": "[parameters('SourcePath')]",
+            "SWPath": "[parameters('SWPath')]"
+
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
+
+    //     //   MAC Middleware Server
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('VMNameMAC'),'/MACConfigDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameMAC'),'/extensions/joindomain')]"
+        // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
+        // DSC Config files timing out.
+        //  "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/NtrConfigDscExtension')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('MACDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('MACConfigurationFunction')]",
           "configurationData": {
             "url": "[variables('Configurationurl')]"
           },
