@@ -24,7 +24,7 @@ Configuration WebServerConfigMACWPreReqs
     )
     Import-DscResource -ModuleName PSDesiredStateConfiguration, #xPendingReboot, #xAzureStorage #xSQLServer    
 
-	Node ("localhost")
+	Node localhost
 	{
 		#Install the IIS Role
 		WindowsFeature IIS
