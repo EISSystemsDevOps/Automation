@@ -109,7 +109,6 @@ Configuration WebServerConfigMACWPreReqs
 			Name = "Web-App-Dev"
 		}
 
-
 		#Install Web HTTP Tracing
 		WindowsFeature WebHttpTracing
 
@@ -124,7 +123,6 @@ Configuration WebServerConfigMACWPreReqs
 			Ensure = "Present"
 			Name = "Web-Health"
 		}
-
 
 		#Install Common HTTP Features 
 		WindowsFeature WebCommonHttp
@@ -146,8 +144,6 @@ Configuration WebServerConfigMACWPreReqs
 			Ensure = "Present"
 			Name = "NET-WCF-TCP-PortSharing45"
 		}
-
-
 
 		#Install .NET Framework Core
 		WindowsFeature NETFrameworkCore
@@ -251,56 +247,6 @@ Configuration WebServerConfigMACWPreReqs
 		{
 			Ensure = "Present"	
 			Name = "Web-Mgmt-Console"
-		}
-
-#Azure Web Server config
-
-#New way
-#Install-AzurePowershellModules
-		Script InstallAzurePowershellModules
-        	{
-	            SetScript = 
-                    {  
-                        $trustrepo=Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-                        $install=install-module azure
-                        import-module azure 
-                    }
-	            GetScript =  { @{} }
-	            TestScript = 
-                    { 
-                          $module=get-module -listavailable -name azure -refresh -erroraction silentlycontinue
-                          if($module)
-                          {
-                            $true
-                          }
-                          else
-                          {
-                            $false
-                          }                        
-                    }
-                
-        	}
-    
-        xAzureBlobFiles DownloadDBAndVardata 
-        {
-            Path                    = "C:\downloads"
-            StorageAccountName      = $StorageAccountName
-            StorageAccountContainer = $StorageAccountContainer
-            StorageAccountKey       = $StorageAccountKey
-            DependsOn = "[Script]InstallAzurePowershellModules"
-        }
-        
-        xPendingReboot RebootAsNeeded
-        { 
-            Name = "Check for a pending reboot before changing anything" 
-        }
-
-		
-#		WindowsFeature WASNETEnvironment
-#		{
-#			Ensure = "Present"	
-#			Name = "WAS-NET-Environment"
-#		}
-	
+		}	
     }
 } 
