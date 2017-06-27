@@ -1,27 +1,6 @@
 
 Configuration WebServerConfigMACWPreReqs
 {
-   param 
-   ( 
-       # [Parameter(Mandatory)]
-       # [String]$DomainName,
-
-       # [Parameter(Mandatory)]
-       # [System.Management.Automation.PSCredential]$Admincreds,
-
-       # [Int]$RetryCount=20,
-       # [Int]$RetryIntervalSec=30,
-
-        [Parameter(Mandatory)]
-        [String]$StorageAccountName,
-
-        [Parameter(Mandatory)]
-        [String]$StorageAccountContainer,
-
-        [Parameter(Mandatory)]
-        [String]$StorageAccountKey
-
-    )
     Import-DscResource -ModuleName PSDesiredStateConfiguration
 
 	Node localhost
