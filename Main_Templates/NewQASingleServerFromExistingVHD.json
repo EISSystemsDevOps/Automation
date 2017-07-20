@@ -11,12 +11,13 @@
     },
     "servertype": {
       "type": "string",
+      "defaultValue": "none",
       "metadata": {
         "description": "Paragon server type, will determine which dsc config will be applied."
       },
-       "allowedValues": [
+      "allowedValues": [
         "Ntr", //Ntr
-        "Web", 
+        "Web",
         "Bre",
         "Svc", //Service bus
         "Con",
