@@ -80,7 +80,7 @@
         "storageProfile": {
           "osDisk": {
             "name": "[concat(parameters('VMObject').Name,'-osdisk')]",
-            "osType": "Windows"
+            "osType": "Windows" ,
             "vhd": {
               //"uri": "[concat(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName')).primaryEndpoints.blob, 'vhds/',parameters('VMObject').Name,'-osdisk.vhd')]"
               "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-osdisk.vhd'))]"
