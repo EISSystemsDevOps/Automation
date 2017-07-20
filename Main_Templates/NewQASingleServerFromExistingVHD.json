@@ -20,7 +20,8 @@
         "Bre",
         "Svc", //Service bus
         "Con",
-        "Pps" //Patient Portal
+        "Pps", //Patient Portal,
+        "none"
       ]
     },
 
@@ -268,20 +269,7 @@
       "metadata": {
         "description": "workspaceKey."
       }
-    },
-    "SourcePath": {
-      "type": "string",
-      "metadata": {
-        "description": "DSC path for WinSXS folder."
-      }
-    },
-    "SWPath": {
-      "type": "string",
-      "metadata": {
-        "description": "DSC path for Prerequisite software installation."
-      }
     }
-  
 
 
 
@@ -548,39 +536,6 @@
         "protectedSettings": {
           "workspaceKey": "[parameters('workspaceKey')]"
         }
-      }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMName'),'/ConfigDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMName'),'/extensions/joindomain')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('DYNDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('DYNConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-            //             "storageAccountName": "[parameters('dlStorageAccountName')]",
-            //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            "sourcepath": "[parameters('SourcePath')]",
-            "SWPath": "[parameters('SWPath')]"
-
-          }
-        },
-        "protectedSettings": { }
       }
     }
 
