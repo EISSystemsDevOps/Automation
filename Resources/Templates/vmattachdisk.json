@@ -68,15 +68,7 @@
           ////"id": "[resourceId('Microsoft.Compute/availabilitySets','availabilityset')]"
 //          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('VMObject').ASName)]"
 //        },
-        "osProfile": {
-          "computerName": "[parameters('VMObject').Name]",
-          "adminUsername": "[parameters('VMObject').adminUserName]",
-          "adminPassword": "[parameters('VMObject').adminPassword]",
-           "windowsConfiguration": {
-                "provisionVMAgent": true,
-                "enableAutomaticUpdates": true
-            }
-        },
+  
         "storageProfile": {
           "osDisk": {
             "name": "[concat(parameters('VMObject').Name,'-osdisk')]",
