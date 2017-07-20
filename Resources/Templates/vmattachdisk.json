@@ -78,31 +78,15 @@
             }
         },
         "storageProfile": {
-          "imageReference": {
-            "publisher": "[parameters('VMObject').publisher]",
-            "offer": "[parameters('VMObject').offer]",
-            "sku": "[parameters('VMObject').sku]",
-            "version": "[parameters('VMObject').version]"
-          },
           "osDisk": {
             "name": "[concat(parameters('VMObject').Name,'-osdisk')]",
+            "osType": "Windows"
             "vhd": {
               //"uri": "[concat(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName')).primaryEndpoints.blob, 'vhds/',parameters('VMObject').Name,'-osdisk.vhd')]"
               "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-osdisk.vhd'))]"
             },
             "caching": "ReadWrite",
             "createOption": "Attach"
-            //"dataDisks": [
-            //  {
-            //    "name": "[concat(parameters('VMObject').Name,'-datadisk1')]",
-            //    "diskSizeGB": "100",
-            //    "lun": 0,
-            //    "vhd": {
-            //      "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))).primaryEndpoints.blob, 'vhds/',parameters('VMObject').Name,'-datadisk.vhd')]"
-            //    },
-            //    "createOption": "Empty"
-            //  }
-            // ]
           }
         },
         "networkProfile": {
