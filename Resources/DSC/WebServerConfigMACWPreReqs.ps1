@@ -6,7 +6,7 @@
          [String[]]$SourcePath
          )
 
-  Import-DscResource -ModuleName xPendingReboot
+  Import-DscResource 
 
   Node ("localhost")
    {
