@@ -1,12 +1,15 @@
 ﻿Configuration WebServerConfigMACWPreReqs
  {
-  
   Param (
          [Parameter(Mandatory=$True)]
-         [String[]]$SourcePath
+         [String[]]$SourcePath,
+         
+         [Parameter(Mandatory=$True)]
+         [String[]]$SWPath
+
          )
 
-   Node ("localhost")
+  Node ("localhost")
    {
 
       #Check Reboot and reboot as needed
