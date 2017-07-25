@@ -6,9 +6,7 @@
          [String[]]$SourcePath
          )
 
-  Import-DscResource 
-
-  Node ("localhost")
+   Node ("localhost")
    {
 
       #Check Reboot and reboot as needed
