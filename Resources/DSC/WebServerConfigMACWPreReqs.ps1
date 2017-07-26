@@ -1,44 +1,32 @@
 ﻿Configuration WebServerConfigMACWPreReqs
  {
-  
   Param (
          [Parameter(Mandatory=$True)]
          [String[]]$SourcePath,
 
          [Parameter(Mandatory=$True)]
-         [String[]]$SWPath,
+         [String[]]$SWPath
 
-         [Parameter(Mandatory=$True)]
-         [PSCredential]$LocalCred
+         )  
 
-         )
-
+  Import-DscResource -ModuleName PSDesiredStateConfiguration #, xPendingReboot
+  
   Node ("localhost")
    {
-      #Check Reboot and reboot as needed
-      xPendingReboot CheckForReboot {
-         Name = "Check for Reboot and Reboot as needed"
-      }
-	}
-
-    
-    #MAC Configuration
-    
-		$WindowsFeatures = "Web-Server", "Web-WebServer", "Web-Dir-Browsing", "Web-Http-Errors", "NET-HTTP-Activation", "Web-Mgmt-Tools", "Web-Mgmt-Compat", 
-                           "Web-Metabase", "Web-Performance", "Web-Http-Logging","Web-Security", "Web-App-Dev", "Web-Http-Tracing", "Web-Health", "Web-Common-Http",
-                           "Web-Asp-Net45", "NET-WCF-TCP-PortSharing45", "NET-Framework-Core","NET-Framework-45-Features", "NET-Framework-45-ASPNET", 
-                           "NET-WCF-Services45", "Web-Asp-Net", "Web-Net-Ext", "Web-Net-Ext45", "Web-ISAPI-Filter", "Web-ISAPI-Ext",
-                           "Web-Default-Doc", "Web-Static-Content", "AS-HTTP-Activation", "Web-Stat-Compression", "Web-Filtering", "Web-Mgmt-Console"
-
+        
+    $WindowsFeatures = "Application-Server", "AS-NET-Framework", "AS-Ent-Services", "AS-Incoming-Trans", "AS-Outgoing-Trans", "Print-Services", "Print-Server", `
+					   "Web-Server", "Web-WebServer", "Web-Common-Http", "Web-Default-Doc", "Web-Dir-Browsing", "Web-Http-Errors", "Web-Static-Content", "Web-Health", "Web-Http-Logging", "Web-Http-Tracing", `
+					   "Web-Performance", "Web-Stat-Compression", "Web-Security", "Web-Filtering", "Web-App-Dev", "Web-Net-Ext45", "Web-Asp-Net45", "Web-ISAPI-Ext", "Web-ISAPI-Filter", "Web-Mgmt-Tools", `
+					   "Web-Mgmt-Console", "Web-Metabase", "NET-Framework-45-Features", "NET-Framework-45-Core", "NET-Framework-45-ASPNET", "NET-WCF-Services45", "NET-WCF-TCP-PortSharing45", "RSAT-Print-Services", "Web-Net-Ext", "Web-Asp-Net"
     foreach ($WindowsFeature in $WindowsFeatures)
      {
       WindowsFeature $WindowsFeature
 		{
 			Ensure = "Present"
 			Name = "$WindowsFeature"
-            Source = "$SourcePath"
-		}
+            Source = "$SourcePath"            
+       }
      }
-         
-
+   }
  }
+
