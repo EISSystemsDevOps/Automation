@@ -1,21 +1,26 @@
 ﻿Configuration WebServerConfigMACWPreReqs
  {
+  
   Param (
          [Parameter(Mandatory=$True)]
          [String[]]$SourcePath,
-         
+
          [Parameter(Mandatory=$True)]
-         [String[]]$SWPath
+         [String[]]$SWPath,
 
- )
-    Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot, xAzureStorage #xSQLServer    
+         [Parameter(Mandatory=$True)]
+         [PSCredential]$LocalCred
 
-	Node ("localhost")
-	{
+         )
+
+  Node ("localhost")
+   {
       #Check Reboot and reboot as needed
       xPendingReboot CheckForReboot {
          Name = "Check for Reboot and Reboot as needed"
       }
+	}
+
     
     #MAC Configuration
     
@@ -37,4 +42,3 @@
          
 
  }
-}
