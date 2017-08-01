@@ -11,16 +11,18 @@
     },
     "servertype": {
       "type": "string",
+      "defaultValue": "none",
       "metadata": {
         "description": "Paragon server type, will determine which dsc config will be applied."
       },
-       "allowedValues": [
+      "allowedValues": [
         "Ntr", //Ntr
-        "Web", 
+        "Web",
         "Bre",
         "Svc", //Service bus
         "Con",
-        "Pps" //Patient Portal
+        "Pps", //Patient Portal,
+        "none"
       ]
     },
 
@@ -78,7 +80,7 @@
     },
     "VMSize1": {
       "type": "string",
-      "defaultValue": "Standard_A2_v2",
+      "defaultValue": "Basic_A2",
       "allowedValues": [
         "Basic_A2",
         "Standard_D1",
@@ -91,10 +93,7 @@
         "Standard_A1",
         "Standard_A2",
         "Standard_A2_v2",
-<<<<<<< HEAD
-=======
         "Standard_A4_v2",
->>>>>>> origin/master
         "Standard_A3",
         "Standard_A4",
         "Standard_A5"
@@ -271,20 +270,7 @@
       "metadata": {
         "description": "workspaceKey."
       }
-    },
-    "SourcePath": {
-      "type": "string",
-      "metadata": {
-        "description": "DSC path for WinSXS folder."
-      }
-    },
-    "SWPath": {
-      "type": "string",
-      "metadata": {
-        "description": "DSC path for Prerequisite software installation."
-      }
     }
-  
 
 
 
@@ -313,7 +299,7 @@
     "NetworkInterfaceDNSURI": "[concat(variables('TemplateUrl'),'/','network_interface_dns.json')]",
     ////  Comment out the LoadBalancerResource section as well if you want to forego Load balancer
     ////  Comment out the Public IP section as well if you want to forego Public IP
-    "VMUri": "[concat(variables('TemplateUrl'),'/','vm.json')]",
+    "VMUri": "[concat(variables('TemplateUrl'),'/','vmattachdisk.json')]",
     "StorageAccountURI": "[concat(variables('TemplateUrl'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
     "NetworkSecurityGroupURI": "[concat(variables('TemplateUrl'),'/','rdp_network_security_group.json')]",
     "LoadBalancerURI": "[concat(variables('TemplateUrl'),'/','load_balancer.json')]",
@@ -551,39 +537,6 @@
         "protectedSettings": {
           "workspaceKey": "[parameters('workspaceKey')]"
         }
-      }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMName'),'/ConfigDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMName'),'/extensions/joindomain')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('DYNDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('DYNConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-            //             "storageAccountName": "[parameters('dlStorageAccountName')]",
-            //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            "sourcepath": "[parameters('SourcePath')]",
-            "SWPath": "[parameters('SWPath')]"
-
-          }
-        },
-        "protectedSettings": { }
       }
     }
 

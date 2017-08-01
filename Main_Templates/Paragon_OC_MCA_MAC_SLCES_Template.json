@@ -386,8 +386,8 @@
     "PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
     "PpsConfigurationFunction": "[concat('PpsServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\PpsServerConfig14x',parameters('DSCConfigurationLevel'))]",
 
-    //"MACDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfigMAC.ps1.zip')]",
-    //"MACConfigurationFunction": "WebServerConfigMAC.ps1\\WebServerConfigMAC",
+    //"MACDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfigMACPreReqs.ps1.zip')]",
+    //"MACConfigurationFunction": "WebServerConfigMACPreReqs.ps1\\WebServerConfigMACPreReqs",
     "MACDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfigMAC',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
     "MACConfigurationFunction": "[concat('WebServerConfigMAC',parameters('DSCConfigurationLevel'),'.ps1\\WebServerConfigMAC',parameters('DSCConfigurationLevel'))]",
 
