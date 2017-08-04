@@ -5,11 +5,15 @@
          [String[]]$SourcePath,
 
          [Parameter(Mandatory=$True)]
-         [String[]]$SWPath
+         [String[]]$SWPath,
+
+	    [Parameter(Mandatory=$true)]
+	    [ValidateNotNullorEmpty()]
+	    [String]$SystemTimeZone="Eastern Standard Time"
 
          )  
 
-  Import-DscResource -ModuleName PSDesiredStateConfiguration #, xPendingReboot
+  Import-DscResource -ModuleName PSDesiredStateConfiguration, xTimeZone #, xPendingReboot
   
   Node ("localhost")
    {
@@ -28,5 +32,9 @@
        }
      }
    }
+	 xTimeZone TimeZoneExample
+	 {
+		 TimeZone=$SystemTimeZone
+	 }
  }
 
