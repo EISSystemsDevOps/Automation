@@ -106,7 +106,7 @@
     },
     "vmTimeZone": {
       "type": "string",
-	  "defaultValue": "Eastern Standard Time",
+      "defaultValue": "Eastern Standard Time",
       "metadata": {
         "description": "The time zone to be set for the Virtual Machine."
       }
@@ -1912,25 +1912,6 @@
           }
         }
       }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(parameters('VMNameMAC'))]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]"
-      ]
-    },
-        "osProfile":{
-          "computerName": "[parameters('VMNameMAC')]",
-          "adminUsername": "[parameters('DomUsername')]",
-          "adminPassword": "[parameters('DomPassword')]",
-          "windowsConfiguration": {
-            "timeZone": "[parameters('vmTimeZone')]",
-            "enableAutomaticUpdates": "true"
-          }
-
     }
     /*  
      //OMS agent for PPS Server
