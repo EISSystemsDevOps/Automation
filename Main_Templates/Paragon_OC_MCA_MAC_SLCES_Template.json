@@ -104,6 +104,13 @@
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
       }
     },
+    "vmTimeZone": {
+      "type": "string",
+	  "defaultValue": "Eastern Standard Time",
+      "metadata": {
+        "description": "The time zone to be set for the Virtual Machine."
+      }
+    },
     //"VMSize1": {
     //  "type": "string",
     //  "defaultValue": "Standard_D1",
@@ -671,9 +678,9 @@
       "nicName": "[variables('NICObject9').Name]",
       "AdminUserName": "[parameters('LocalAdminUserName')]",
       "AdminPassword": "[parameters('LocalAdminPassword')]",
-      "windowsConfiguration": { 
-        "timeZone": "Eastern Standard Time" 
-        },
+      "windowsConfiguration": {
+        "timeZone": "[parameters('vmTimeZone')]"
+      },
       "publisher": "MicrosoftWindowsServer",
       "offer": "WindowsServer",
       "sku": "[parameters('windowsOSVersion')]",
