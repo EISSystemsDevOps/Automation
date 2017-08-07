@@ -671,6 +671,9 @@
       "nicName": "[variables('NICObject9').Name]",
       "AdminUserName": "[parameters('LocalAdminUserName')]",
       "AdminPassword": "[parameters('LocalAdminPassword')]",
+      "windowsConfiguration": { 
+        "timeZone": "Eastern Standard Time" 
+        },
       "publisher": "MicrosoftWindowsServer",
       "offer": "WindowsServer",
       "sku": "[parameters('windowsOSVersion')]",
