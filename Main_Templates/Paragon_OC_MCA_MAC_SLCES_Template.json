@@ -678,9 +678,6 @@
       "nicName": "[variables('NICObject9').Name]",
       "AdminUserName": "[parameters('LocalAdminUserName')]",
       "AdminPassword": "[parameters('LocalAdminPassword')]",
-      "windowsConfiguration": {
-        "timeZone": "[parameters('vmTimeZone')]"
-      },
       "publisher": "MicrosoftWindowsServer",
       "offer": "WindowsServer",
       "sku": "[parameters('windowsOSVersion')]",
@@ -1286,6 +1283,9 @@
       "name": "[concat(parameters('VMNameMAC'),'/MACConfigDscExtension')]",
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
+      "windowsConfiguration": {
+        "timeZone": "[parameters('vmTimeZone')]"
+      },
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]",
         "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameMAC'),'/extensions/joindomain')]"
