@@ -1283,9 +1283,6 @@
       "name": "[concat(parameters('VMNameMAC'),'/MACConfigDscExtension')]",
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
-      "windowsConfiguration": {
-        "timeZone": "[parameters('vmTimeZone')]"
-      },
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]",
         "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameMAC'),'/extensions/joindomain')]"
@@ -1915,6 +1912,25 @@
           }
         }
       }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[concat(parameters('VMNameMAC'))]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]"
+      ]
+    },
+        "osProfile":{
+          "computerName": "[parameters('VMNameMAC')]",
+          "adminUsername": "[parameters('DomUsername')]",
+          "adminPassword": "[parameters('DomPassword')]",
+          "windowsConfiguration": {
+            "timeZone": "[parameters('vmTimeZone')]",
+            "enableAutomaticUpdates": "true"
+          }
+
     }
     /*  
      //OMS agent for PPS Server
