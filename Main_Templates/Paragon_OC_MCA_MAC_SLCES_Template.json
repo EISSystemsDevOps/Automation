@@ -684,7 +684,11 @@
       "version": "latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
-      "Uri": "[variables('VMUri')]"
+      "Uri": "[variables('VMUri')]",
+      "windowsConfiguration": {
+        "timeZone": "[parameters('vmTimeZone')]",
+        "enableAutomaticUpdates": false
+      }
     }
   },
   "resources": [
