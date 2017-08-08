@@ -28,9 +28,9 @@
        }
      }
    }
-	 { #Set-Eastern Standard Time
+	  #Set-Eastern Standard Time
 
-        #SET-ITEMPROPERTY -Path 'HKLM:\System\CurrentControlSet\Control\TimeZoneInformation\ -name "TimeZoneKeyName" -	Value Eastern Standard Time -ErrorAction Stop
+        #SET-ITEMPROPERTY -Path 'HKLM:\System\CurrentControlSet\Control\TimeZoneInformation -name "TimeZoneKeyName" -	Value Eastern Standard Time -ErrorAction Stop
         
 	Registry TimeZoneKeyName
         {
@@ -38,8 +38,9 @@
             Key = "HKLM:\System\CurrentControlSet\Control\TimeZoneInformation"
             ValueName = "TimeZoneKeyName"
             ValueData = "Eastern Standard Time"
+			ValueType = "String"
         }
 
 #End Set-Eastern Time Zone
  }
-	 }
+	 
