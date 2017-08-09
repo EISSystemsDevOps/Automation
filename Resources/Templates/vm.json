@@ -74,7 +74,7 @@
           "adminPassword": "[parameters('VMObject').adminPassword]",
            "windowsConfiguration": {
                 "provisionVMAgent": true,
-                "enableAutomaticUpdates": false
+                "enableAutomaticUpdates": true
             }
         },
         "storageProfile": {
