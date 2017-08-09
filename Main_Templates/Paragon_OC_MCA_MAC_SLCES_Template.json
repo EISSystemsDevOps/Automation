@@ -104,13 +104,6 @@
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
       }
     },
-    "vmTimeZone": {
-      "type": "string",
-      "defaultValue": "Eastern Standard Time",
-      "metadata": {
-        "description": "The time zone to be set for the Virtual Machine."
-      }
-    },
     //"VMSize1": {
     //  "type": "string",
     //  "defaultValue": "Standard_D1",
@@ -684,13 +677,9 @@
       "version": "latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
-      "Uri": "[variables('VMUri')]",
-      "windowsConfiguration": {
-        "timeZone": "[parameters('vmTimeZone')]",
-        "enableAutomaticUpdates": false
+      "Uri": "[variables('VMUri')]"
       }
-    }
-  },
+    },
   "resources": [
     // {
     //  "name": "AvailabilitySetResource1",
