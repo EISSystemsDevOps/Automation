@@ -72,10 +72,11 @@
           "computerName": "[parameters('VMObject').Name]",
           "adminUsername": "[parameters('VMObject').adminUserName]",
           "adminPassword": "[parameters('VMObject').adminPassword]",
-           "windowsConfiguration": {
-                "provisionVMAgent": true,
-                "enableAutomaticUpdates": true
-            }
+          "windowsConfiguration": {
+            "provisionVMAgent": true,
+            "enableAutomaticUpdates": true,
+            "timeZone": "Eastern Standard Time"
+          }
         },
         "storageProfile": {
           "imageReference": {
