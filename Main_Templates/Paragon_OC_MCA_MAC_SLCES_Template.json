@@ -678,8 +678,8 @@
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "Uri": "[variables('VMUri')]"
-    }
-  },
+      }
+    },
   "resources": [
     // {
     //  "name": "AvailabilitySetResource1",
@@ -1103,230 +1103,255 @@
       "apiVersion": "2015-01-01",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource9')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource7')]"
       ],
       "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('VMObject9').Uri]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "VMObject": {
-            "value": "[variables('VMObject9')]"
-          }
-        }
-      }
-    },
-    //    Web Server
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMNameWEB'),'/WebConfigDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameBRE'),'/extensions/joindomain')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('WebDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('WebConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-            //             "storageAccountName": "[parameters('dlStorageAccountName')]",
-            //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            "sourcepath": "[parameters('SourcePath')]",
-            "SWPath": "[parameters('SWPath')]"
-
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-    // //       BRE Server
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMNameBRE'),'/BreConfigDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameBRE'),'/extensions/joindomain')]"
-        //NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
-        // DSC Config files timing out.
-        //"[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameWEB'),'/extensions/WebConfigDscExtension')]"
-
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('BreDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('BreConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          // "wmfVersion": "4.0",
-          "Properties": {
-            //               "storageAccountName": "[parameters('dlStorageAccountName')]",
-            //               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            //               "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
-            //               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
-            //               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
-            //               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
-            "sourcepath": "[parameters('SourcePath')]",
-            "SWPath": "[parameters('SWPath')]"
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-    //   NTier Server
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMNameNTR'),'/NtrConfigDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/joindomain')]"
-        // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
-        // DSC Config files timing out.
-        //"[concat('Microsoft.Compute/virtualMachines/',parameters('VMNamePPS'),'/extensions/PPSConfigDscExtension')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('NtrDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('NtrConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-            //              "storageAccountName": "[parameters('dlStorageAccountName')]",
-            //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            //               "sourcepath": "[parameters('SourcePath')]"
-            "sourcepath": "[parameters('SourcePath')]",
-            "SWPath": "[parameters('SWPath')]"
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-
-    //     //   Patient Portal Server
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMNamePPS'),'/PPSConfigDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNamePPS'),'/extensions/joindomain')]"
-        // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
-        // DSC Config files timing out.
-        //  "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/NtrConfigDscExtension')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('PPSDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('PPSConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-            //              "storageAccountName": "[parameters('dlStorageAccountName')]",
-            //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
-            "sourcepath": "[parameters('SourcePath')]",
-            "SWPath": "[parameters('SWPath')]"
-
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-
-    //     //   MAC Middleware Server
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMNameMAC'),'/MACConfigDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameMAC'),'/extensions/joindomain')]"
-        // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
-        // DSC Config files timing out.
-        //  "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/NtrConfigDscExtension')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('MACDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('MACConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-            //              "storageAccountName": "[parameters('dlStorageAccountName')]",
-            //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
-            "sourcepath": "[parameters('SourcePath')]",
-            "SWPath": "[parameters('SWPath')]"
-
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-    {
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines",
-      "name": "[parameters('VMNameMAC')]",
-      "location": "[resourceGroup().location]",
-      "tags": {
-        "displayName": "VirtualMachine"
-      },
-      "dependsOn": [
-        "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAcctName'))]",
-       // "[concat('Microsoft.Network/networkInterfaces/', variables(''))]"
-      ],
-      "properties": {
-          "osProfile": {
-          "computerName": "[parameters('VMNameMAC')]",
+        "osProfile": {
+          "computerName": "VMResource9",
           "adminUsername": "[parameters('DomUsername')]",
           "adminPassword": "[parameters('DomPassword')]",
           "windowsConfiguration": {
+            "timeZone": "Eastern Standard Time",
             "enableAutomaticUpdates": true
+          },
+          "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+              "uri": "[variables('VMObject9').Uri]",
+              "contentVersion": "1.0.0.0"
+            },
+            "parameters": {
+              "VMObject": {
+                "value": "[variables('VMObject9')]"
+              }
+            }
+          }
+        },
+        //    Web Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('VMNameWEB'),'/WebConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]",
+            "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameBRE'),'/extensions/joindomain')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('WebDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('WebConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+              },
+              //"wmfVersion": "4.0",
+              "Properties": {
+                //             "storageAccountName": "[parameters('dlStorageAccountName')]",
+                //             "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+                "sourcepath": "[parameters('SourcePath')]",
+                "SWPath": "[parameters('SWPath')]"
+
+              }
+            },
+            "protectedSettings": { }
+          }
+        },
+        // //       BRE Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('VMNameBRE'),'/BreConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]",
+            "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameBRE'),'/extensions/joindomain')]"
+            //NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
+            // DSC Config files timing out.
+            //"[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameWEB'),'/extensions/WebConfigDscExtension')]"
+
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('BreDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('BreConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+              },
+              // "wmfVersion": "4.0",
+              "Properties": {
+                //               "storageAccountName": "[parameters('dlStorageAccountName')]",
+                //               "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+                //               "storageAccountContainer": "[parameters('breStorageAccountContainer')]",
+                //               "CommonStorageAccountName": "[parameters('CommonStorageAccountName')]",
+                //               "CommonStorageAccountContainer": "[parameters('CommonStorageAccountContainer')]",
+                //               "CommonStorageAccountKey": "[parameters('CommonStorageAccountKey')]"
+                "sourcepath": "[parameters('SourcePath')]",
+                "SWPath": "[parameters('SWPath')]"
+              }
+            },
+            "protectedSettings": { }
+          }
+        },
+        //   NTier Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('VMNameNTR'),'/NtrConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]",
+            "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/joindomain')]"
+            // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
+            // DSC Config files timing out.
+            //"[concat('Microsoft.Compute/virtualMachines/',parameters('VMNamePPS'),'/extensions/PPSConfigDscExtension')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('NtrDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('NtrConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+              },
+              //"wmfVersion": "4.0",
+              "Properties": {
+                //              "storageAccountName": "[parameters('dlStorageAccountName')]",
+                //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+                //               "sourcepath": "[parameters('SourcePath')]"
+                "sourcepath": "[parameters('SourcePath')]",
+                "SWPath": "[parameters('SWPath')]"
+              }
+            },
+            "protectedSettings": { }
+          }
+        },
+
+        //     //   Patient Portal Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('VMNamePPS'),'/PPSConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]",
+            "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNamePPS'),'/extensions/joindomain')]"
+            // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
+            // DSC Config files timing out.
+            //  "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/NtrConfigDscExtension')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('PPSDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('PPSConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+              },
+              //"wmfVersion": "4.0",
+              "Properties": {
+                //              "storageAccountName": "[parameters('dlStorageAccountName')]",
+                //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+                //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
+                "sourcepath": "[parameters('SourcePath')]",
+                "SWPath": "[parameters('SWPath')]"
+
+              }
+            },
+            "protectedSettings": { }
+          }
+        },
+
+        //     //   MAC Middleware Server
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('VMNameMAC'),'/MACConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]",
+            "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameMAC'),'/extensions/joindomain')]"
+            // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
+            // DSC Config files timing out.
+            //  "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/NtrConfigDscExtension')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('MACDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('MACConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+              },
+              //"wmfVersion": "4.0",
+              "Properties": {
+                //              "storageAccountName": "[parameters('dlStorageAccountName')]",
+                //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+                //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
+                "sourcepath": "[parameters('SourcePath')]",
+                "SWPath": "[parameters('SWPath')]"
+
+              }
+            },
+            "protectedSettings": { }
+          }
+        },
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('VMNameMAC'),'/MACConfigDscExtension')]",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]",
+            "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameMAC'),'/extensions/joindomain')]"
+            // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
+            // DSC Config files timing out.
+            //  "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/NtrConfigDscExtension')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "modulesUrl": "[variables('MACDSCModuleUrl')]",
+              "SasToken": "",
+              "configurationFunction": "[variables('MACConfigurationFunction')]",
+              "configurationData": {
+                "url": "[variables('Configurationurl')]"
+              },
+              //"wmfVersion": "4.0",
+              "Properties": {
+                //              "storageAccountName": "[parameters('dlStorageAccountName')]",
+                //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+                //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
+                "sourcepath": "[parameters('SourcePath')]",
+                "SWPath": "[parameters('SWPath')]"
+
+              }
+            },
+            "protectedSettings": { }
           }
         },
 
