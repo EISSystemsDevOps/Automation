@@ -92,7 +92,7 @@
               {
                 "name": "[concat(parameters('VMObject').Name,'-datadisk1')]",
                 //"diskSizeGB": "100",
-                "diskSizeGB": "[parameters('VMObject').DataDiskSize1GB]",
+                "diskSizeGB": "[parameters('VMObject').DataDisk1SizeGB]",
                 "lun": 0,
                 "vhd": {
               "uri": "[concat('https', '://', parameters('VMObject').storageAccountName, '.blob.core.windows.net', concat('/',parameters('VMObject').storageAccountContainerName,'/', parameters('VMObject').Name,'-datadisk1.vhd'))]"
