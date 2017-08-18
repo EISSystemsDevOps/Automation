@@ -58,7 +58,7 @@
     },
     "VMSize": {
       "type": "string",
-      "defaultValue": "Standard_DS2_V2",
+      "defaultValue": "Standard_D2_v2",
       "allowedValues": [
         "Basic_A2",
         "Basic_A3",
@@ -74,7 +74,7 @@
         "Standard_A3",
         "Standard_A4",
         "Standard_A5",
-        "Standard_DS2_V2"
+        "Standard_D2_v2"
       ],
       "metadata": {
         "description": "The size of the VM."
@@ -340,9 +340,7 @@
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMFourDataDisksURI')]",
       "DataDisk1SizeGB": "1023",
-      "DataDisk2SizeGB": "1023",
-      "DataDisk3SizeGB": "1023",
-      "DataDisk4SizeGB": "1023"
+      "DataDisk2SizeGB": "1023"
     }
 
 
