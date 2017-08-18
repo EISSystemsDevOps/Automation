@@ -58,7 +58,7 @@
     },
     "VMSize": {
       "type": "string",
-      "defaultValue": "Standard_D2_v2",
+      "defaultValue": "Standard_A2_v2",
       "allowedValues": [
         "Basic_A2",
         "Basic_A3",
@@ -74,7 +74,7 @@
         "Standard_A3",
         "Standard_A4",
         "Standard_A5",
-        "Standard_D2_v2"
+        "Standard_A2_v2"
       ],
       "metadata": {
         "description": "The size of the VM."
