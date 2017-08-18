@@ -118,7 +118,7 @@
         "description": "Local AD domain name to be setup."
       }
     },      
-    "VMNameDB": {
+    "VMName": {
       "type": "string",
       "metadata": {
         "description": "DB Server VM name"
@@ -235,7 +235,7 @@
     },
 
     "NICObject3": {
-      "Name": "[concat(parameters('VMNameDB'),'-Nic')]",
+      "Name": "[concat(parameters('VMName'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
       "subnetRef": "[variables('SubnetRef')]"
@@ -258,7 +258,7 @@
     //  "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
  // },
     "VMObject3": {
-      "Name": "[parameters('VMNameDB')]",
+      "Name": "[parameters('VMName')]",
       "Size": "[variables('VMSize3')]",
       //     "ASName": "[variables('ASObject2').Name]",
       "nicName": "[variables('NICObject3').Name]",
@@ -377,7 +377,7 @@
       "comments": "Join domain - JsonADDomainExtension",
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMNameDB'),'/joindomain')]",
+      "name": "[concat(parameters('VMName'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
@@ -404,7 +404,7 @@
      //      DB Server
         {
           "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(parameters('VMNameDB'),'/DBConfigDscExtension')]",
+          "name": "[concat(parameters('VMName'),'/DBConfigDscExtension')]",
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
