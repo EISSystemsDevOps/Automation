@@ -305,9 +305,9 @@
     ////  Comment out the LoadBalancerResource section as well if you want to forego Load balancer
     ////  Comment out the Public IP section as well if you want to forego Public IP
     "VMUri": "[concat(variables('TemplateUrl'),'/','vm.json')]",
-    "VMFourDataDisksURI": "[concat(variables('TemplateUrl'),'/','vm_four_datadisks.json')]",
-    "DBDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'DBServerConfigD2.ps1.zip')]",
-    "DBConfigurationFunction": "DBServerConfigD2.ps1\\DBServerConfigD2",
+    "VMTwoDataDisksURI": "[concat(variables('TemplateUrl'),'/','vm_two_datadisks.json')]",
+    "DBDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'DBServerConfigD3.ps1.zip')]",
+    "DBConfigurationFunction": "DBServerConfigD3.ps1\\DBServerConfigD3",
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
 
     "StorageAccountURI": "[concat(variables('TemplateUrl'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
@@ -338,7 +338,7 @@
       "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
-      "URI": "[variables('VMFourDataDisksURI')]",
+      "URI": "[variables('VMTwoDataDisksURI')]",
       "DataDisk1SizeGB": "1023",
       "DataDisk2SizeGB": "1023"
     }
