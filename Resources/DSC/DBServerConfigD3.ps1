@@ -32,8 +32,8 @@ Configuration DBServerConfigD2
 
 
     ) 
-
-    Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot #, xAzureStorage #xSQLServer    
+    
+    Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot #, xAzureStorage #xSQLServer   
     #Get-DscResource xSQLServerSetup |select -expand properties   
     #$admincreds=Get-Credential
     #$domainname='IRMCHOSTED.COM'
@@ -778,7 +778,7 @@ Configuration DBServerConfigD2
 
 
     }#End of Node
-}#End of config
+#End of config
  
 <#
 $cd = @{
