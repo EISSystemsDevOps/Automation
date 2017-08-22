@@ -485,7 +485,7 @@ Configuration DBServerConfigD3
            			
 		    } #End of Set script for ConfigureStoragePool
 	            TestScript = { 
-                    $Storagepools=get-storagepool |Where-object friendlyname -in ('SQLData1Pool01A','SQLLogsandSystemPool01A') -erroracction silentlycontinue
+                    $Storagepools=get-storagepool |Where-object friendlyname -in ('SQLData1Pool01A','SQLLogsandSystemPool01A') -erroraction silentlycontinue
                     if($StoragePools.count -eq 3)
                     {
                         $True
@@ -543,8 +543,8 @@ Configuration DBServerConfigD3
                 }
 	            TestScript = {
 
-                $fdrive=get-partition -DriveLetter f -erroracction silentlycontinue
-                $gdrive=get-partition -DriveLetter g -erroracction silentlycontinue 
+                $fdrive=get-partition -DriveLetter f -erroraction silentlycontinue
+                $gdrive=get-partition -DriveLetter g -erroraction silentlycontinue 
 
                 $datampdrive=$fdrive|where-object AccessPaths -eq 'C:\DataRoot\Data1\'
                 $logandsystemmpdrive=$gdrive|where-object AccessPaths -eq 'C:\DataRoot\LogandSystemDB\'
