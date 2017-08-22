@@ -1,4 +1,4 @@
-Configuration DBServerConfigD3
+Configuration DBServerConfigD2
 {
    param 
    ( 
@@ -667,9 +667,9 @@ Configuration DBServerConfigD3
                # DependsOn = "[Script]Configure-MountPoints"
         }#end of InstallSQLServer
 #>
-        xPendingReboot CheckBeforeBeginning
+#         xPendingReboot CheckBeforeBeginning
         { 
-            Name = "Check for a pending reboot before changing anything"
+#           Name = "Check for a pending reboot before changing anything"
 
         }
 
