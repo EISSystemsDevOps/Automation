@@ -482,22 +482,7 @@ Configuration DBServerConfigD3
            		Write-Output "$(get-date) : The Log and Systems disk is not available. Please review to confirm disk are created successfully. Details of disks are below"
            		Write-Error($PhysicalDisks) -ErrorAction Stop
            		}
-           			
-		    } #End of Set script for ConfigureStoragePool
-	            TestScript = { 
-                    $Storagepools=get-storagepool |Where-object friendlyname -in ('SQLData1Pool01A','SQLLogsandSystemPool01A') -erroraction silentlycontinue
-                    if($StoragePools.count -eq 3)
-                    {
-                        $True
-                    }
-                    else
-                    {
-                        $False
-                    }
-                } #End of Test Script
-	            GetScript = { <# This must return a hash table #> }
-                DependsOn = "[Script]Output-SQLAcct" 
-        	} #End of ConfigureStoragePool 
+               	} #End of ConfigureStoragePool 
 
 		Script Configure-MountPoints
         	{
