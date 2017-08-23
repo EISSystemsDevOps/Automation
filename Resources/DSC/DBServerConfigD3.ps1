@@ -481,7 +481,6 @@ Configuration DBServerConfigD3
 		        {
            		Write-Output "$(get-date) : The Log and Systems disk is not available. Please review to confirm disk are created successfully. Details of disks are below"
            		Write-Error($PhysicalDisks) -ErrorAction Stop
-           		}
                	} #End of ConfigureStoragePool 
 
 		Script Configure-MountPoints
@@ -652,9 +651,9 @@ Configuration DBServerConfigD3
                # DependsOn = "[Script]Configure-MountPoints"
         }#end of InstallSQLServer
 #>
-#         xPendingReboot CheckBeforeBeginning
+          xPendingReboot CheckBeforeBeginning
         { 
-#           Name = "Check for a pending reboot before changing anything"
+         Name = "Check for a pending reboot before changing anything"
 
         }
 
@@ -763,6 +762,7 @@ Configuration DBServerConfigD3
 
 
     }#End of Node
+} 
 } #End of config
  
 <#
