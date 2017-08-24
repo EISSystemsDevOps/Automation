@@ -778,7 +778,7 @@ Configuration DBServerConfigD3
 
 
     }#End of Node
-}#End of config
+#End of config
  
 <#
 $cd = @{
