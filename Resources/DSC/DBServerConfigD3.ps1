@@ -32,8 +32,8 @@ Configuration DBServerConfigD3
 
 
     ) 
-    
-    Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot #, xAzureStorage #xSQLServer  
+
+    Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot #, xAzureStorage #xSQLServer    
     #Get-DscResource xSQLServerSetup |select -expand properties   
     #$admincreds=Get-Credential
     #$domainname='IRMCHOSTED.COM'
@@ -446,9 +446,9 @@ Configuration DBServerConfigD3
                 #$LogDisks = $PhysicalDisks | Where-Object FriendlyName -in('PhysicalDisk3')
                 #$SystemDisks = $PhysicalDisks | Where-Object FriendlyName -in('PhysicalDisk5')
 
-		        If($DataDisks.Count -gt 1)
+		        If($DataDisks)
 			    {
-			        $totalstorageconfigresult = New-StoragePool -FriendlyName "SQLData1Pool01A" -StorageSubsystemFriendlyName "Storage Spaces*" -PhysicalDisks $DataDisks | New-VirtualDisk -FriendlyName "SQLData1Disk01A" -Size 2044GB -ProvisioningType Fixed -ResiliencySettingName Simple|Initialize-Disk -PassThru | New-Partition -DriveLetter 'F' -UseMaximumSize
+			        $totalstorageconfigresult = New-StoragePool -FriendlyName "SQLData1Pool01A" -StorageSubsystemFriendlyName "Storage Spaces*" -PhysicalDisks $DataDisks | New-VirtualDisk -FriendlyName "SQLData1Disk01A" -Size 1022GB -ProvisioningType Fixed -ResiliencySettingName Simple|Initialize-Disk -PassThru | New-Partition -DriveLetter 'F' -UseMaximumSize
 			        write-output $totalstorageconfigresult
                     start-sleep -s 30
 			        $Partition = get-partition| Where-Object DriveLetter -eq "F" 
@@ -481,7 +481,23 @@ Configuration DBServerConfigD3
 		        {
            		Write-Output "$(get-date) : The Log and Systems disk is not available. Please review to confirm disk are created successfully. Details of disks are below"
            		Write-Error($PhysicalDisks) -ErrorAction Stop
-               	} #End of ConfigureStoragePool 
+           		}
+           			
+		    } #End of Set script for ConfigureStoragePool
+	            TestScript = { 
+                    $Storagepools=get-storagepool |Where-object friendlyname -in ('SQLData1Pool01A','SQLLogsandSystemPool01A') -erroracction silentlycontinue
+                    if($StoragePools.count -eq 2)
+                    {
+                        $True
+                    }
+                    else
+                    {
+                        $False
+                    }
+                } #End of Test Script
+	            GetScript = { <# This must return a hash table #> }
+                DependsOn = "[Script]Output-SQLAcct" 
+        	} #End of ConfigureStoragePool 
 
 		Script Configure-MountPoints
         	{
@@ -651,9 +667,9 @@ Configuration DBServerConfigD3
                # DependsOn = "[Script]Configure-MountPoints"
         }#end of InstallSQLServer
 #>
-          xPendingReboot CheckBeforeBeginning
+#         xPendingReboot CheckBeforeBeginning
         { 
-         Name = "Check for a pending reboot before changing anything"
+#           Name = "Check for a pending reboot before changing anything"
 
         }
 
@@ -762,8 +778,7 @@ Configuration DBServerConfigD3
 
 
     }#End of Node
-} 
-} #End of config
+}#End of config
  
 <#
 $cd = @{
