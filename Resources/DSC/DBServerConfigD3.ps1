@@ -485,7 +485,7 @@ Configuration DBServerConfigD3
            			
 		    } #End of Set script for ConfigureStoragePool
 	            TestScript = { 
-                    $Storagepools=get-storagepool |Where-object friendlyname -in ('SQLData1Pool01A','SQLLogsandSystemPool01A') -erroracction silentlycontinue
+                    $Storagepools=get-storagepool |Where-object friendlyname -in ('SQLData1Pool01A','SQLLogsandSystemPool01A') -erroraction silentlycontinue
                     if($StoragePools.count -eq 2)
                     {
                         $True
