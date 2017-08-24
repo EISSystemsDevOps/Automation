@@ -654,12 +654,12 @@ Configuration DBServerConfigD3
             SetScript = 
             {
                 $Localadminsql=Get-Content C:\temp\username1.txt
-                $ArgumentList= "/q /Action=Install /IACCEPTSQLSERVERLICENSETERMS /UpdateEnabled=True /UpdateSource=C:\SQLServer_12.0_Full\CU /FEATURES=SQLEngine,FullText,RS,IS,BC,Conn,ADV_SSMS /SQLCOLLATION=Latin1_General_BIN /InstanceName=PARLIVE /SQLBACKUPDIR=C:\DataRoot\SystemDB\Backup /INSTALLSQLDATADIR=C:\DataRoot\SystemDB /SQLSYSADMINACCOUNTS=$LocalAdminSQL /SQLSVCSTARTUPTYPE=AUTOMATIC /SQLTEMPDBDIR=D:\TempDB\MSSQL\Data /SQLTEMPDBLOGDIR=D:\TempDB\MSSQL\Logs /SQLUSERDBDIR=C:\DataRoot\Data1 /SQLUSERDBLOGDIR=C:\DataRoot\Logs /RSINSTALLMODE=FilesOnlyMode"
+                $ArgumentList= "/q /Action=Install /IACCEPTSQLSERVERLICENSETERMS /UpdateEnabled=True /UpdateSource=C:\SQLServer_12.0_Full\PCU /FEATURES=SQLEngine,FullText,RS,IS,BC,Conn,ADV_SSMS /SQLCOLLATION=Latin1_General_BIN /InstanceName=$instanceName /SQLBACKUPDIR=C:\DataRoot\SystemDB\Backup /INSTALLSQLDATADIR=C:\DataRoot\SystemDB /SQLSYSADMINACCOUNTS=$LocalAdminSQL /SQLSVCSTARTUPTYPE=AUTOMATIC /SQLTEMPDBDIR=D:\TempDB\MSSQL\Data /SQLTEMPDBLOGDIR=D:\TempDB\MSSQL\Logs /SQLUSERDBDIR=C:\DataRoot\Data1 /SQLUSERDBLOGDIR=C:\DataRoot\Logs /RSINSTALLMODE=FilesOnlyMode"
                 Start-Process C:\SQLServer_12.0_Full\setup.exe  -ArgumentList $ArgumentList -Wait            }
             TestScript = 
             {
                 $SQLInstalled=[System.Data.Sql.SqlDataSourceEnumerator]::Instance.GetDataSources()
-                if ($SQLInstalled.InstanceName -eq 'PARLIVE')
+                if ($SQLInstalled.InstanceName -eq $instanceName)
                 {
                     $True
                 }
@@ -671,10 +671,10 @@ Configuration DBServerConfigD3
             GetScript ={<# This must return a hash table #>#}
                # DependsOn = "[Script]Configure-MountPoints"
         }#end of InstallSQLServer
-#>
-#         xPendingReboot CheckBeforeBeginning
+
+       xPendingReboot CheckBeforeBeginning
         { 
-#           Name = "Check for a pending reboot before changing anything"
+          Name = "Check for a pending reboot before changing anything"
 
         }
 
@@ -750,7 +750,7 @@ Configuration DBServerConfigD3
                DependsOn="[Script]InstallSQLServer"
 
         }#End of script
-#>
+
 
 <#
 #New way
@@ -782,8 +782,9 @@ Configuration DBServerConfigD3
 #>
 
 
-    }#End of Node
-}#End of config
+        }#End of Node
+    } #End of config
+}#End of script
  
 <#
 $cd = @{
