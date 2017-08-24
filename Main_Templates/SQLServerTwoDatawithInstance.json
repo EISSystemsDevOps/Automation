@@ -313,7 +313,7 @@
     "VMUri": "[concat(variables('TemplateUrl'),'/','vm.json')]",
     "VMTwoDataDisksURI": "[concat(variables('TemplateUrl'),'/','vm_two_datadisks.json')]",
     "DBDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'DBServerConfigD4.ps1.zip')]",
-    "DBConfigurationFunction": "DBServerConfigD3.ps1\\DBServerConfigD4",
+    "DBConfigurationFunction": "DBServerConfigD4.ps1\\DBServerConfigD4",
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
 
     "StorageAccountURI": "[concat(variables('TemplateUrl'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
