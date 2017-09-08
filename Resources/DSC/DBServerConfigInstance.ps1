@@ -1,4 +1,4 @@
-Configuration DBServerConfigD3
+Configuration DBServerConfigInstance
 {
    param 
    ( 
@@ -746,7 +746,8 @@ Configuration DBServerConfigD3
             Copy-Item -Path $sourceRoot -Recurse -Destination $destinationRoot04 -Container
             
             #Start Process
-            Start-Process C:\SQLServer_12.0_Full\setup.exe  -ArgumentList $ArgumentList -Wait  }
+            Start-Process C:\SQLServer_12.0_Full\setup.exe  -ArgumentList $ArgumentList -Wait  
+            }
             TestScript = 
             {
                 $SQLInstalled=[System.Data.Sql.SqlDataSourceEnumerator]::Instance.GetDataSources()
@@ -759,37 +760,22 @@ Configuration DBServerConfigD3
                     $False
                 }
             }
-            {
-                $SQLInstalled=[System.Data.Sql.SqlDataSourceEnumerator]::Instance.GetDataSources()
-                if ($SQLInstalled.InstanceName -eq $InstanceName2)
-                {
-                    $True
-                }
-                else
-                {
-                    $False
-                }
-            }
-            GetScript ={<# This must return a hash table #>#}
-               # DependsOn = "[Script]Configure-MountPoints"
-        }
-        
+           }    
 
 
         #end of InstallSQLServer
 
-         xPendingReboot CheckBeforeBeginning
-        { 
-           Name = "Check for a pending reboot before changing anything"
-
-        }
-
-        xPendingReboot PostSQLInstall
-        { 
-            Name = "Check for a pending reboot after SQL install"
-            DependsOn = "[Script]InstallSQLServer"
-       }
-    }
+#         xPendingReboot CheckBeforeBeginning
+#        { 
+#           Name = "Check for a pending reboot before changing anything"
+#
+#        }
+#
+#        xPendingReboot PostSQLInstall
+#        { 
+#            Name = "Check for a pending reboot after SQL install"
+#            DependsOn = "[Script]InstallSQLServer"
+#       }
 }
 
 #Create BizTalk DB
