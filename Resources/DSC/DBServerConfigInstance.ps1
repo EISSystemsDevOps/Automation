@@ -33,8 +33,8 @@ Configuration DBServerConfigD3
 
     ) 
 
-    Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot #, xAzureStorage #xSQLServer    
-    #Get-DscResource xSQLServerSetup |select -expand properties   
+    Import-DscResource -ModuleName PSDesiredStateConfiguration, xPendingReboot, xSQLServer    
+    Get-DscResource xSQLServerSetup |select -expand properties   
     #$admincreds=Get-Credential
     #$domainname='IRMCHOSTED.COM'
    
@@ -85,29 +85,6 @@ Configuration DBServerConfigD3
             ValueData = "2"
             ValueType ="Dword"
         }
-        
-        #SET-ITEMPROPERTY HKLM:\software\microsoft\ole -name "MachineLaunchRestriction" `
-        #            -value ([byte[]](0x01,0x00,0x04,0x80,0x90,0x00,0x00,0x00,0xa0,0x00,0x00,0x00,0x00, `
-        #            0x00,0x00,0x00,0x14,0x00,0x00,0x00,0x02,0x00,0x7c,0x00,0x05,0x00,0x00,0x00,0x00, `
-        #            0x00,0x14,0x00,0x1f,0x00,0x00,0x00,0x01,0x01,0x00,0x00,0x00,0x00,0x00,0x01,0x00, `
-        #            0x00,0x00,0x00,0x00,0x00,0x18,0x00,0x0b,0x00,0x00,0x00,0x01,0x02,0x00,0x00,0x00, `
-        #            0x00,0x00,0x0f,0x02,0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x18,0x00,0x1f, `
-        #            0x00,0x00,0x00,0x01,0x02,0x00,0x00,0x00,0x00,0x00,0x05,0x20,0x00,0x00,0x00,0x20, `
-        #            0x02,0x00,0x00,0x00,0x00,0x18,0x00,0x1f,0x00,0x00,0x00,0x01,0x02,0x00,0x00,0x00, `
-        #            0x00,0x00,0x05,0x20,0x00,0x00,0x00,0x2f,0x02,0x00,0x00,0x00,0x00,0x18,0x00,0x1f, `
-        #            0x00,0x00,0x00,0x01,0x02,0x00,0x00,0x00,0x00,0x00,0x05,0x20,0x00,0x00,0x00,0x32, `
-        #            0x02,0x00,0x00,0x01,0x02,0x00,0x00,0x00,0x00,0x00,0x05,0x20,0x00,0x00,0x00,0x20, `
-        #            0x02,0x00,0x00,0x01,0x02,0x00,0x00,0x00,0x00,0x00,0x05,0x20,0x00,0x00,0x00,0x20, `
-        #            0x02,0x00,0x00)) -ErrorAction Stop
-<#   
-        Registry MachineLaunchRestriction
-        {
-            Ensure = "Present"
-            Key = "HKLM:\software\microsoft\ole"
-            ValueName = "MachineLaunchRestriction"
-            ValueData = $value
-        }
-#>
 
 
         #SET-ITEMPROPERTY HKLM:\software\microsoft\MSDTC\security -name "networkdtcaccess" -value "1" -ErrorAction Stop
@@ -560,7 +537,8 @@ Configuration DBServerConfigD3
                  }#End of TestScript 
 	            GetScript = {<# This must return a hash table #> }
                 DependsOn = "[Script]Configure-StoragePool"
-        	}#End of script ConfigureMountPoints
+        	}
+    #End of script ConfigureMountPoints
 
     #Setup tempdb folders on D drive with scheduled task to auto recreate at startup
         Script Create-TempDBFolders
@@ -640,7 +618,84 @@ Configuration DBServerConfigD3
             DependsOn = "[Script]Configure-MountPoints"
         }
 
-    
+    #Create RG Folder Structure
+        Script Create-RGFolders
+        {
+            SetScript = 
+            {
+			    
+				#Define variables for RG Folders
+				$RG02=RG02
+                "C:\DataRoot\Data1\$InstanceName\$RG02"
+				$tempDbLogfolder="D:\TempDB\MSSQL\Logs"
+				$backupfolder="C:\DataRoot\LogandSystemDB\Backup"
+				$tempdbStartupScriptDest = 'C:\DataRoot\Data1\Scripts'
+				$Action = New-ScheduledTaskAction -Execute 'Powershell.exe' -Argument 'C:\DataRoot\Data1\Scripts\SQL-startup.ps1'
+				$Trigger = New-ScheduledTaskTrigger -AtStartup
+                $username=$using:username
+                #$username= get-content 'C:\temp\username1.txt'
+                $Pass=$using:pass
+				#Sqlstartup script definition in array
+				$sqlstartupscript = @()
+				$sqlstartupscript +={
+                    $tempDbDatafolder="D:\TempDB\MSSQL\Data"
+                    $tempDbLogfolder="D:\TempDB\MSSQL\Logs"
+					$SQLService='MSSQL$PARLIVE'
+					if (!(test-path -path $tempDbDatafolder)) 
+					{
+					Stop-Service $SQLService
+					New-Item -ItemType directory -Path $tempDbDatafolder
+					if (!(test-path -path $tempDbLogfolder)) 
+					{
+					New-Item -ItemType directory -Path $tempDbLogfolder
+					}
+					Start-Service $SQLService
+					}			    
+		        		                }
+				#Check if TempDB folders exist, if not, create them
+				if (!(test-path -path $tempDbDatafolder)) 
+				{
+			    	$tempDbDatafoldercreateresult = New-Item -ItemType directory -Path $tempDbDatafolder
+				}
+				if (!(test-path -path $tempDbLogfolder)) 
+				{
+		    		$tempDbLogfoldercreateresult = New-Item -ItemType directory -Path $tempDbLogfolder
+				}
+				#Create backup folder needed for SQL install as default backup directory
+				if (!(test-path -path $backupfolder)) 
+				{
+			    	$backupfoldercreateresult = New-Item -ItemType directory -Path $backupfolder
+				}
+				#Create TempDB scheduled task to recreate folder structure upon reboot	#
+				if(!(Get-ScheduledTask -TaskName 'TempDB Folder Structure Create' -ErrorAction SilentlyContinue))
+				{
+				    #$registerschedtaskresult = Register-ScheduledTask -Action $Action -Trigger $trigger -TaskName "TempDB Folder Structure Create" -Description "Create TempDB Folder Structure on D Drive and restart SQL"
+                    $registerschedtaskresult = Register-ScheduledTask -Action $Action -Trigger $trigger -TaskName "TempDB Folder Structure Create" -Description "Create TempDB Folder Structure on D Drive and restart SQL" -User $UserName -Password $Pass
+                }
+				#Create directory for tempdb Startup script
+				if (!(test-path -path $tempdbStartupScriptDest )) 
+				{
+			    	$tempdbStartupScriptDestcreateresult = New-Item -ItemType directory -Path $tempdbStartupScriptDest 
+				}
+				#Dynamically create PS1 file C:\DataRoot\Scripts\sql-startup.ps1
+				$createsqlstartupscriptresult = $sqlstartupscript|Out-File C:\DataRoot\Data1\Scripts\sql-startup.ps1 -Force
+            }
+            TestSCript = 
+            {
+                $tempDbDatafolder="D:\TempDB\MSSQL\Data"
+	            #Check if TempDB folders exist, if not, create them
+				if ((test-path -path $tempDbDatafolder -erroraction silentlycontinue)) 
+				{
+			    	$true
+				}
+                else
+                {
+                    $false
+                }
+            }
+            GetScript ={<# This must return a hash table #>}
+            DependsOn = "[Script]Configure-MountPoints"
+        }
     #Install SQL using script method
     #C:\SQLServer_12.0_Full\setup.exe /q /Action=Install /IACCEPTSQLSERVERLICENSETERMS /UpdateEnabled=True /UpdateSource=C:\SQLServer_12.0_Full\CU /FEATURES=SQLEngine,FullText,RS,IS,BC,Conn,ADV_SSMS /ASCOLLATION=Latin1_General_BIN /InstanceName=PARLIVE /SQLBACKUPDIR=C:\DataRoot\SystemDB\Backup /INSTALLSQLDATADIR=C:\DataRoot\SystemDB /SQLSYSADMINACCOUNTS='+$LocalAdminSQL +' /SQLSVCSTARTUPTYPE=AUTOMATIC /SQLTEMPDBDIR=D:\TempDB\MSSQL\Data /SQLTEMPDBLOGDIR=D:\TempDB\MSSQL\Logs /SQLUSERDBDIR=C:\DataRoot\Data1 /SQLUSERDBLOGDIR=C:\DataRoot\Logs /RSINSTALLMODE=FilesOnlyMode
 
@@ -649,13 +704,49 @@ Configuration DBServerConfigD3
             SetScript = 
             {
                 $Localadminsql=Get-Content C:\temp\username1.txt
-                $InstanceName="A004APP14_2"
-                $InstanceName2="A004BT14"
+                $InstanceName="A004APPTest3"
+                $sourceRoot = "C:\DataRoot\Data1\$InstanceName\RG02"
+                $destinationRoot03 = "C:\DataRoot\Data1\$InstanceName\RG03"
+                $destinationRoot04 = "C:\DataRoot\Data1\$InstanceName\RG04"
                 $UpdateSource="C:\SQLServer_12.0_Full\PCU"
                 $ArgumentList= "/q /Action=Install /IACCEPTSQLSERVERLICENSETERMS /UpdateEnabled=True /UpdateSource=$UpdateSource /FEATURES=SQLEngine,FullText,RS,IS,BC,Conn,ADV_SSMS /SQLCOLLATION=Latin1_General_BIN /InstanceName=$InstanceName /SQLBACKUPDIR=C:\DataRoot\LogandSystemDB\Backup\$InstanceName /INSTALLSQLDATADIR=C:\DataRoot\LogandSystemDB\$InstanceName /SQLSYSADMINACCOUNTS=$LocalAdminSQL /SQLSVCSTARTUPTYPE=AUTOMATIC /SQLTEMPDBDIR=D:\TempDB\MSSQL\Data\$InstanceName /SQLTEMPDBLOGDIR=D:\TempDB\MSSQL\Logs\$InstanceName /SQLUSERDBDIR=C:\DataRoot\Data1\$InstanceName /SQLUSERDBLOGDIR=C:\DataRoot\LogandSystemDB\$InstanceName  /RSINSTALLMODE=FilesOnlyMode"
-                $ArgumentList2= "/q /Action=Install /IACCEPTSQLSERVERLICENSETERMS /UpdateEnabled=True /UpdateSource=$UpdateSource /FEATURES=SQLEngine,FullText,RS,IS,BC,Conn,ADV_SSMS /SQLCOLLATION=Latin1_General_BIN /InstanceName=$InstanceName2 /SQLBACKUPDIR=C:\DataRoot\LogandSystemDB\Backup\$InstanceName2 /INSTALLSQLDATADIR=C:\DataRoot\LogandSystemDB\$InstanceName2 /SQLSYSADMINACCOUNTS=$LocalAdminSQL /SQLSVCSTARTUPTYPE=AUTOMATIC /SQLTEMPDBDIR=D:\TempDB\MSSQL\Data\$InstanceName2 /SQLTEMPDBLOGDIR=D:\TempDB\MSSQL\Logs\$InstanceName2 /SQLUSERDBDIR=C:\DataRoot\Data1\$InstanceName2 /SQLUSERDBLOGDIR=C:\DataRoot\LogandSystemDB\$InstanceName2  /RSINSTALLMODE=FilesOnlyMode"
-                Start-Process C:\SQLServer_12.0_Full\setup.exe  -ArgumentList $ArgumentList -Wait  
-                Start-Process C:\SQLServer_12.0_Full\setup.exe  -ArgumentList $ArgumentList2 -Wait          }
+            
+            #Create Instance Folder Structure
+            MKDIR C:\DataRoot\Data1\$InstanceName
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\Vardata
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\Vardata\AHFSFramework
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\Vardata\Formulary
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\Vardata\ERX_PHR_Load
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\Vardata\Paragon_Releases
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\Vardata\PhysDocTemplates
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\Vardata\RX_RPts
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\ATB
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\CCDA
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\CDC_Import
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\HL_Update
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\Paragon
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\Paragon\Logs
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\Paragon\XE_Files
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\PCON
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\PressGaney
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\QEM
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\RPTFiles
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\SSIS
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\SSIS\MPM
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\SSIS\MM
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\SSIS\QEM
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\Statements
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\ParagonSecure\UB92
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\FS\Traces
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\MSSQL\Backup
+            MKDIR C:\DataRoot\Data1\$InstanceName\$RG02\MSSQL\DATA
+            
+            #Copy structure to RG03 RG04
+            Copy-Item -Path $sourceRoot -Recurse -Destination $destinationRoot03 -Container 
+            Copy-Item -Path $sourceRoot -Recurse -Destination $destinationRoot04 -Container
+            
+            #Start Process
+            Start-Process C:\SQLServer_12.0_Full\setup.exe  -ArgumentList $ArgumentList -Wait  }
             TestScript = 
             {
                 $SQLInstalled=[System.Data.Sql.SqlDataSourceEnumerator]::Instance.GetDataSources()
@@ -681,7 +772,11 @@ Configuration DBServerConfigD3
             }
             GetScript ={<# This must return a hash table #>#}
                # DependsOn = "[Script]Configure-MountPoints"
-        }#end of InstallSQLServer
+        }
+        
+
+
+        #end of InstallSQLServer
 
          xPendingReboot CheckBeforeBeginning
         { 
@@ -694,6 +789,8 @@ Configuration DBServerConfigD3
             Name = "Check for a pending reboot after SQL install"
             DependsOn = "[Script]InstallSQLServer"
        }
+    }
+}
 
 #Create BizTalk DB
 <#        Script CreateBizTalkDb
@@ -793,7 +890,8 @@ Configuration DBServerConfigD3
 #>
 
 
-    }#End of Node
+    }
+    #End of Node
 #}#End of config
  
 <#
