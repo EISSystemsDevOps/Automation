@@ -682,7 +682,7 @@ Configuration DBServerConfigD3
             }
             GetScript ={<# This must return a hash table #>#}
                # DependsOn = "[Script]Configure-MountPoints"
-        }#end of InstallSQLServer
+        #end of InstallSQLServer
 #>
 #         xPendingReboot CheckBeforeBeginning
         { 
