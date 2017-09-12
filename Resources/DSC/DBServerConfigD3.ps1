@@ -530,6 +530,7 @@ Configuration DBServerConfigD3
                 {
     		        $partitiondatapathresult = Get-Partition -DriveLetter F |Add-PartitionAccessPath -PartitionNumber 2 -AccessPath $DataPath
                     write-output $partitiondatapathresult
+                    $removedriveletter=get-partition -DriveLetter F|Remove-PartitionAccessPath -AccessPath 'F:\'
                 }
                 $gdrive=get-partition -DriveLetter g
                 $logandsystemmpdrive=$gdrive|where-object AccessPaths -like "$LogandSystemDBPath\"
@@ -537,6 +538,7 @@ Configuration DBServerConfigD3
                 {
     		        $partitionlogpathresult = Get-Partition -DriveLetter G |Add-PartitionAccessPath -PartitionNumber 2 -AccessPath $LogandSystemDBPath
                     write-output $partitionlogpathresult
+                    $removedriveletter=get-partition -DriveLetter G|Remove-PartitionAccessPath -AccessPath 'G:\'
                 }
 
 		        Write-Output ("$(get-date) : Set-AzureParagonNthDBStorageConfiguration: Partitions mounted to mount point directories.")		
@@ -557,12 +559,28 @@ Configuration DBServerConfigD3
                     {
                         $False
                     }
+
+                    $datapath='C:\dataroot\data1\'
+                    $logpath='C:\DataRoot\LogandSystemDB\'
+                    $systempath='C:\DataRoot\LogandSystemDB\'
+                    $partitions=Get-Partition
+                    $Mountpoints=$partitions.AccessPaths
+                    
+                    if($Mountpoints -contains $datapath -and $Mountpoints -contains $logpath -and $Mountpoints -contains $systempath)
+                    {
+                        $true
+                    }
+                    else
+                    {
+                        $false
+                    } 
+
                  }#End of TestScript 
 	            GetScript = {<# This must return a hash table #> }
                 DependsOn = "[Script]Configure-StoragePool"
         	}#End of script ConfigureMountPoints
 
-    #Setup tempdb folders on D drive with scheduled task to auto recreate at startup
+ <#Setup tempdb folders on D drive with scheduled task to auto recreate at startup
         Script Create-TempDBFolders
         {
             SetScript = 
@@ -637,14 +655,13 @@ Configuration DBServerConfigD3
                 }
             }
             GetScript ={<# This must return a hash table #>}
-            DependsOn = "[Script]Configure-MountPoints"
+            #DependsOn = "[Script]Configure-MountPoints"
         }
 
     
     #Install SQL using script method
     #C:\SQLServer_12.0_Full\setup.exe /q /Action=Install /IACCEPTSQLSERVERLICENSETERMS /UpdateEnabled=True /UpdateSource=C:\SQLServer_12.0_Full\CU /FEATURES=SQLEngine,FullText,RS,IS,BC,Conn,ADV_SSMS /ASCOLLATION=Latin1_General_BIN /InstanceName=PARLIVE /SQLBACKUPDIR=C:\DataRoot\SystemDB\Backup /INSTALLSQLDATADIR=C:\DataRoot\SystemDB /SQLSYSADMINACCOUNTS='+$LocalAdminSQL +' /SQLSVCSTARTUPTYPE=AUTOMATIC /SQLTEMPDBDIR=D:\TempDB\MSSQL\Data /SQLTEMPDBLOGDIR=D:\TempDB\MSSQL\Logs /SQLUSERDBDIR=C:\DataRoot\Data1 /SQLUSERDBLOGDIR=C:\DataRoot\Logs /RSINSTALLMODE=FilesOnlyMode
-<#
-        Script InstallSQLServer
+  <#      Script InstallSQLServer
         {
             SetScript = 
             {
@@ -777,7 +794,7 @@ Configuration DBServerConfigD3
 #>
 
 
-    }#End of Node
+    #End of Node
 #End of config
  
 <#
