@@ -189,54 +189,54 @@
       }
     },
     "ExclusionsPaths": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Semicolon delimited list of file paths or locations to exclude from scanning"
-      }
-    },
-    "ExclusionsExtensions": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Semicolon delimited list of file extensions to exclude from scanning"
-      }
-    },
-    "ExclusionsProcesses": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Semicolon delimited list of process names to exclude from scanning"
-      }
-    },
-    "RealtimeProtectionEnabled": {
-      "type": "string",
-      "defaultValue": "true",
-      "metadata": {
-        "description": "Indicates whether or not real time protection is enabled (default is true)"
-      }
-    },
-    "ScheduledScanSettingsIsEnabled": {
-      "type": "string",
-      "defaultValue": "false",
-      "metadata": {
-        "description": "Indicates whether or not custom scheduled scan settings are enabled (default is false)"
-      }
-    },
-    "ScheduledScanSettingsScanType": {
-      "type": "string",
-      "defaultValue": "Quick",
-      "metadata": {
-        "description": "Indicates whether scheduled scan setting type is set to Quick or Full (default is Quick)"
-      }
-    },
-    "ScheduledScanSettingsDay": {
-      "type": "string",
-      "defaultValue": "7",
-      "metadata": {
-        "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
-      }
-    },
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Semicolon delimited list of file paths or locations to exclude from scanning"
+            }
+        },
+        "ExclusionsExtensions": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Semicolon delimited list of file extensions to exclude from scanning"
+            }
+        },
+        "ExclusionsProcesses": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Semicolon delimited list of process names to exclude from scanning"
+            }
+        },
+        "RealtimeProtectionEnabled": {
+            "type": "string",
+            "defaultValue": "true",
+            "metadata": {
+                "description": "Indicates whether or not real time protection is enabled (default is true)"
+            }
+        },
+        "ScheduledScanSettingsIsEnabled": {
+            "type": "string",
+            "defaultValue": "false",
+            "metadata": {
+                "description": "Indicates whether or not custom scheduled scan settings are enabled (default is false)"
+            }
+        },
+        "ScheduledScanSettingsScanType": {
+            "type": "string",
+            "defaultValue": "Quick",
+            "metadata": {
+                "description": "Indicates whether scheduled scan setting type is set to Quick or Full (default is Quick)"
+            }
+        },
+        "ScheduledScanSettingsDay": {
+            "type": "string",
+            "defaultValue": "7",
+            "metadata": {
+                "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
+            }
+        },
     "ScheduledScanSettingsTime": {
       "type": "string",
       "defaultValue": "120",
@@ -255,14 +255,8 @@
       "metadata": {
         "description": "workspaceKey."
       }
-    },
-    "AvailabilitySetName": {
-      "type": "string",
-      "metadata": {
-        "description": "workspaceKey."
-      }
     }
-
+  
 
 
 
@@ -275,7 +269,7 @@
     //"virt adualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
     //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     // "domainUserA": "[concat(parameters('domainName'),'\\')]",
-    //parameters('adminUsername'))",
+   //parameters('adminUsername'))",
     "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
     //Environment VM Names
     //Environment VM Sizes
@@ -284,9 +278,9 @@
     //DSC URLs
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
-    "Configurationurl": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
-
-    //Template URIs
+    "Configurationurl":"https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
+    
+      //Template URIs
     "TemplateUrl": "[concat(parameters('_artifactsLocation'),'/Templates')]",
     ////  This is a network interface with static IP address
     "NetworkInterfaceStaticURI": "[concat(variables('TemplateUrl'),'/','network_interface_static.json')]",
@@ -301,7 +295,6 @@
     "StorageAccountURI": "[concat(variables('TemplateUrl'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
     "NetworkSecurityGroupURI": "[concat(variables('TemplateUrl'),'/','rdp_network_security_group.json')]",
     "LoadBalancerURI": "[concat(variables('TemplateUrl'),'/','load_balancer.json')]",
-    "AvailabilitySetURI": "[concat(variables('TemplateUrl'),'/','availability_set.json')]",
 
     "StorageAccountObject": {
       "Name": "[parameters('storageAcctName')]",
@@ -310,8 +303,8 @@
     },
     "NICObject5": {
       "Name": "[concat(parameters('VMName'),'-Nic')]",
-      "subnetRef": "[variables('subnetRef')]"
-      // "IPAddress": "[parameters('DCIPAddress')]"
+      "subnetRef": "[variables('subnetRef')]"  
+     // "IPAddress": "[parameters('DCIPAddress')]"
       //   "LoadBalancerName": "[concat(variables('VMName2'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
@@ -322,25 +315,29 @@
     //  "Rule1Access": "Allow",
     //  "LoadBalancerBackEndName": "[variables('LBObject1').BackEndName]"
     //},
-    "ASObject": {
-      "Name": "[parameters('AvailabilitySetName')]"
-    },
+    //"NSGObject2": {
+    //  "Name": "FrontEnd-NSG-2",
+    //  "Rule1SourcePort": "*",
+    //  "Rule1DestinationPort": "145",
+    //  "Rule1Access": "Allow",
+    //  "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
+ // },
     "VMObject": {
       "Name": "[parameters('VMName')]",
       "Size": "[parameters('VMSize')]",
-      "ASName": "[variables('AsObject').Name]",
+      "ASName": "[variables('ASObject2').Name]",
       "nicName": "[variables('NICObject5').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
       "publisher": "MicrosoftWindowsServer",
       "offer": "WindowsServer",
       "sku": "[parameters('windowsOSVersion')]",
-      "version": "latest",
+      "version":"latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMUri')]",
       "DataDiskSizeGB": "80"
-
+ 
     }
 
   },
@@ -365,26 +362,26 @@
     //    }
     //  }
     //},
-     {
-      "name": "AvailabilitySetResource2",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2016-02-01",
-      "dependsOn": [],
-      "properties": {
-          "mode": "Incremental",
-        "templateLink": {
-         //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-          "uri": "[variables('AvailabilitySetURI')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "ASObject": {
-            //"value": "[concat(variables('VMName1'),'-','availabilityset')]"
-            "value": "[variables('AsObject')]"
-          }
-        }
-      }
-    },
+    // {
+    //  "name": "AvailabilitySetResource2",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [],
+    //  "properties": {
+    //      "mode": "Incremental",
+    //    "templateLink": {
+    //     //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //      "uri": "[variables('AvailabilitySetURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "ASObject": {
+    //        //"value": "[concat(variables('VMName1'),'-','availabilityset')]"
+    //        "value": "[variables('ASObject2')]"
+    //      }
+    //    }
+    //  }
+    //},
     {
       "name": "StorageAccountResource",
       "type": "Microsoft.Resources/deployments",
