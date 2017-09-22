@@ -136,7 +136,7 @@
     },
     "VMSize1": {
       "type": "string",
-      "defaultValue": "Standard_A2",
+      "defaultValue": "Standard_A2_v2",
       "allowedValues": [
         "Standard_D1",
         "Standard_D2",
