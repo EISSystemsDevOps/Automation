@@ -355,7 +355,7 @@
 
 
     //Environment VM Sizes
-    "VMSize1": "Basic_A2",
+    "VMSize1": "Standard_A2_v2",
 
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
