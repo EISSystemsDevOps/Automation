@@ -50,10 +50,11 @@
 
     "windowsOSVersion": {
       "type": "string",
-      "defaultValue": "RS2-Pro",
+      "defaultValue": "Win7-SP1-Ent-N-x64",
       "allowedValues": [
-        "RS2-Pro"
-
+        "Win7-SP1-Ent-N-x64",
+        "Win81-Ent-N-x64",
+        "Windows-10-N-x64"
       ],
       "metadata": {
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
@@ -326,15 +327,15 @@
       "nicName": "[variables('NICObject5').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "publisher": "MicrosoftWindowsDesktop",
+      "publisher": "MicrosoftVisualStudio",
       "offer": "Windows-10",
       "sku": "[parameters('windowsOSVersion')]",
-      "version":"latest",
+      "version": "latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMUri')]",
       "DataDiskSizeGB": "80"
- 
+
     }
 
   },
