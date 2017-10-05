@@ -328,7 +328,7 @@
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
       "publisher": "MicrosoftVisualStudio",
-      "offer": "Windows-10",
+      "offer": "Windows",
       "sku": "[parameters('windowsOSVersion')]",
       "version": "latest",
       "storageAccountName": "[parameters('storageAcctName')]",
