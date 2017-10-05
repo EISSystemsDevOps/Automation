@@ -39,27 +39,6 @@
         "description": "Dom Password."
       }
     },
-    //"dnsLabelPrefix": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
-    //  }
-    //},
-    "windowsOSVersion": {
-      "type": "string",
-      "defaultValue": "2012-R2-Datacenter", //,
-      //   "allowedValues": [
-      //  "2008-R2-SP1",
-      //  "2012-Datacenter",
-      //  "2012-R2-Datacenter",
-      //  "2016-Nano-Server-Technical-Preview",
-      //  "2016-Technical-Preview-with-Containers",
-      //  "Windows-Server-Technical-Preview"
-      //],
-      "metadata": {
-        "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
-      }
-    },
 
     "_artifactsLocation": {
       "type": "string",
@@ -152,7 +131,77 @@
       "metadata": {
         "description": "Sku"
       }
+    },
+
+    "ExclusionsPaths": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Semicolon delimited list of file paths or locations to exclude from scanning"
+      }
+    },
+    "ExclusionsExtensions": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Semicolon delimited list of file extensions to exclude from scanning"
+      }
+    },
+    "ExclusionsProcesses": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Semicolon delimited list of process names to exclude from scanning"
+      }
+    },
+    "RealtimeProtectionEnabled": {
+      "type": "string",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "Indicates whether or not real time protection is enabled (default is true)"
+      }
+    },
+    "ScheduledScanSettingsIsEnabled": {
+      "type": "string",
+      "defaultValue": "false",
+      "metadata": {
+        "description": "Indicates whether or not custom scheduled scan settings are enabled (default is false)"
+      }
+    },
+    "ScheduledScanSettingsScanType": {
+      "type": "string",
+      "defaultValue": "Quick",
+      "metadata": {
+        "description": "Indicates whether scheduled scan setting type is set to Quick or Full (default is Quick)"
+      }
+    },
+    "ScheduledScanSettingsDay": {
+      "type": "string",
+      "defaultValue": "7",
+      "metadata": {
+        "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
+      }
+    },
+    "ScheduledScanSettingsTime": {
+      "type": "string",
+      "defaultValue": "120",
+      "metadata": {
+        "description": "When to perform the scheduled scan, measured in minutes from midnight (0-1440). For example: 0 = 12AM, 60 = 1AM, 120 = 2AM."
+      }
+    },
+    "workspaceId": {
+      "type": "string",
+      "metadata": {
+        "description": "workspaceId."
+      }
+    },
+    "workspaceKey": {
+      "type": "string",
+      "metadata": {
+        "description": "workspaceKey."
+      }
     }
+
 
 
   },//End of Parameters
