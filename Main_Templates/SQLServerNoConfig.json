@@ -200,6 +200,13 @@
       "metadata": {
         "description": "workspaceKey."
       }
+    },
+
+    "OUPath": {
+      "type": "string",
+      "metadata": {
+        "description": "OUPath."
+      }
     }
 
 
@@ -442,7 +449,7 @@
           "Restart": "true",
           //                    "Options": "[variables('domainJoinOptions')]",
           "Options": "3" ,
-           //"OUPath": "[parameters('OUPath')]"
+           "OUPath": "[parameters('OUPath')]"
         },
         "protectedSettings": {
           "Password": "[parameters('DomPassword')]"
