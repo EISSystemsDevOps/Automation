@@ -120,6 +120,12 @@
         "description": "Subnet to deploy VMs into."
       }
     },
+    "Publisher": {
+      "type": "string",
+      "metadata": {
+        "description": "Publisher"
+      }
+    },
     "Offer": {
       "type": "string",
       "metadata": {
@@ -320,7 +326,7 @@
       "nicName": "[variables('NICObject').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "publisher": "MicrosoftSQLServer",
+      "publisher": "[parameters('Publisher')]",
       "offer": "[parameters('Offer')]",
       "sku": "[parameters('Sku')]",
       "version": "latest",
