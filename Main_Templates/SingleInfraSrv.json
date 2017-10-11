@@ -65,26 +65,6 @@
     "VMSize": {
       "type": "string",
       "defaultValue": "Standard_A2_v2",
-      "allowedValues": [
-        "Basic_A2",
-        "Basic_A3",
-        "Standard_D1",
-        "Standard_D2",
-        "Standard_D3",
-        "Standard_D4",
-        "Standard_D11",
-        "Standard_D12",
-        "Standard_D13",
-        "Standard_A1",
-        "Standard_A2",
-        "Standard_A2_v2",
-        "Standard_A3",
-        "Standard_A4",
-        "Standard_A5",
-        "Standard_D11_v2",
-        "Standard_D4S_v3"
-        
-      ],
       "metadata": {
         "description": "The size of the VM."
       }
