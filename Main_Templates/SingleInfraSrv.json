@@ -82,8 +82,9 @@
         "Standard_A4",
         "Standard_A5",
         "Standard_D11_v2",
-        "Standard_D4S_v3"
-        
+        "Standard_D4S_v3",
+        "Standard B2s"
+
       ],
       "metadata": {
         "description": "The size of the VM."

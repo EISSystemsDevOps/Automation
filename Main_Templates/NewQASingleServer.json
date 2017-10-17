@@ -91,13 +91,16 @@
         "Standard_A1",
         "Standard_A2",
         "Standard_A2_v2",
-<<<<<<< HEAD
-=======
+        "<<<<<<<",
+        "HEAD",
+        "=======",
         "Standard_A4_v2",
->>>>>>> origin/master
+        ">>>>>>>",
+        "origin/master",
         "Standard_A3",
         "Standard_A4",
-        "Standard_A5"
+        "Standard_A5",
+        "Standard B2s"
       ],
       "metadata": {
         "description": "The size of the VM."
