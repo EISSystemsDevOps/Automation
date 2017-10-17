@@ -120,6 +120,12 @@
         "description": "Subnet to deploy VMs into."
       }
     },
+    "Publisher": {
+      "type": "string",
+      "metadata": {
+        "description": "Publisher"
+      }
+    },
     "Offer": {
       "type": "string",
       "metadata": {
@@ -199,6 +205,13 @@
       "type": "string",
       "metadata": {
         "description": "workspaceKey."
+      }
+    },
+
+    "OUPath": {
+      "type": "string",
+      "metadata": {
+        "description": "OUPath."
       }
     }
 
@@ -313,7 +326,7 @@
       "nicName": "[variables('NICObject').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "publisher": "MicrosoftSQLServer",
+      "publisher": "[parameters('Publisher')]",
       "offer": "[parameters('Offer')]",
       "sku": "[parameters('Sku')]",
       "version": "latest",
@@ -442,7 +455,7 @@
           "Restart": "true",
           //                    "Options": "[variables('domainJoinOptions')]",
           "Options": "3" ,
-           //"OUPath": "[parameters('OUPath')]"
+           "OUPath": "[parameters('OUPath')]"
         },
         "protectedSettings": {
           "Password": "[parameters('DomPassword')]"

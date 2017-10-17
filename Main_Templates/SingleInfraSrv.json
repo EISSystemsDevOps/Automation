@@ -48,16 +48,24 @@
       }
     },
 
-    "windowsOSVersion": {
+    "Publisher": {
       "type": "string",
       "defaultValue": "2016-Datacenter",
-      "allowedValues": [
-        "2008-R2-SP1",
-        "2012-Datacenter",
-        "2012-R2-Datacenter",
-        "2016-Datacenter",
-        "Windows-Server-Technical-Preview"
-      ],
+      "metadata": {
+        "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
+      }
+    },
+    "Offer": {
+      "type": "string",
+      "defaultValue": "2016-Datacenter",
+      "metadata": {
+        "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
+      }
+    },
+
+    "sku": {
+      "type": "string",
+      "defaultValue": "2016-Datacenter",
       "metadata": {
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
       }
@@ -65,6 +73,7 @@
     "VMSize": {
       "type": "string",
       "defaultValue": "Standard_A2_v2",
+<<<<<<< HEAD
       "allowedValues": [
         "Basic_A2",
         "Basic_A3",
@@ -86,6 +95,8 @@
         "Standard B2s"
 
       ],
+=======
+>>>>>>> origin/master
       "metadata": {
         "description": "The size of the VM."
       }
@@ -192,54 +203,54 @@
       }
     },
     "ExclusionsPaths": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Semicolon delimited list of file paths or locations to exclude from scanning"
-            }
-        },
-        "ExclusionsExtensions": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Semicolon delimited list of file extensions to exclude from scanning"
-            }
-        },
-        "ExclusionsProcesses": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Semicolon delimited list of process names to exclude from scanning"
-            }
-        },
-        "RealtimeProtectionEnabled": {
-            "type": "string",
-            "defaultValue": "true",
-            "metadata": {
-                "description": "Indicates whether or not real time protection is enabled (default is true)"
-            }
-        },
-        "ScheduledScanSettingsIsEnabled": {
-            "type": "string",
-            "defaultValue": "false",
-            "metadata": {
-                "description": "Indicates whether or not custom scheduled scan settings are enabled (default is false)"
-            }
-        },
-        "ScheduledScanSettingsScanType": {
-            "type": "string",
-            "defaultValue": "Quick",
-            "metadata": {
-                "description": "Indicates whether scheduled scan setting type is set to Quick or Full (default is Quick)"
-            }
-        },
-        "ScheduledScanSettingsDay": {
-            "type": "string",
-            "defaultValue": "7",
-            "metadata": {
-                "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
-            }
-        },
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Semicolon delimited list of file paths or locations to exclude from scanning"
+      }
+    },
+    "ExclusionsExtensions": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Semicolon delimited list of file extensions to exclude from scanning"
+      }
+    },
+    "ExclusionsProcesses": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Semicolon delimited list of process names to exclude from scanning"
+      }
+    },
+    "RealtimeProtectionEnabled": {
+      "type": "string",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "Indicates whether or not real time protection is enabled (default is true)"
+      }
+    },
+    "ScheduledScanSettingsIsEnabled": {
+      "type": "string",
+      "defaultValue": "false",
+      "metadata": {
+        "description": "Indicates whether or not custom scheduled scan settings are enabled (default is false)"
+      }
+    },
+    "ScheduledScanSettingsScanType": {
+      "type": "string",
+      "defaultValue": "Quick",
+      "metadata": {
+        "description": "Indicates whether scheduled scan setting type is set to Quick or Full (default is Quick)"
+      }
+    },
+    "ScheduledScanSettingsDay": {
+      "type": "string",
+      "defaultValue": "7",
+      "metadata": {
+        "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
+      }
+    },
     "ScheduledScanSettingsTime": {
       "type": "string",
       "defaultValue": "120",
@@ -259,7 +270,7 @@
         "description": "workspaceKey."
       }
     }
-  
+
 
 
 
@@ -332,15 +343,14 @@
       "nicName": "[variables('NICObject5').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "publisher": "MicrosoftWindowsServer",
-      "offer": "WindowsServer",
-      "sku": "[parameters('windowsOSVersion')]",
-      "version":"latest",
+      "publisher": "[parameters('publisher')]",
+      "offer": "[parameters('offer')]",
+      "sku": "[parameters('sku')]",
+      "version": "latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMUri')]",
       "DataDiskSizeGB": "80"
- 
     }
 
   },
