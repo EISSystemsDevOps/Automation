@@ -284,9 +284,10 @@
     },
     "tentaclePort": {
       "defaultValue": 10933,
-      "minValue": 0,
+ /*     "minValue": 0,
       "maxValue": 65535,
-      "type": "int",
+   */
+         "type": "int",
       "metadata": {
         "description": "The port on which the Tentacle should listen, when CommunicationMode is set to Listen, or the port on which to poll the server, when CommunicationMode is set to Poll. By default, Tentacle's listen on 10933 and poll the Octopus Server on 10943."
       }
