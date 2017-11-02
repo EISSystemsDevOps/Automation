@@ -307,7 +307,7 @@
       }
     },
     "tentaclePublicHostNameConfiguration": {
-      "defaultValue": "PublicIP",
+      "defaultValue": "ComputerName",
       "allowedValues": [
         "PublicIP",
         "FQDN",
@@ -592,6 +592,7 @@
         "type": "OctopusDeployWindowsTentacle",
         "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": "true",
+        "forceUpdateTag": "1.0",
         "settings": {
           "OctopusServerUrl": [ "parameters('tentacleOctopusServerUrl')" ],
           "Environments": [ "parameters('tentacleEnvironments')" ],
