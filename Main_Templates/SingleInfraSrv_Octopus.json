@@ -347,7 +347,7 @@
     //"VMSize1": "Standard_A2",
     "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('SubnetName'))]",
     //DSC URLs
-    //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
+    "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
     "WebOctDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebOctServerPreReq',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
     "WebOctConfigurationFunction": "[concat('WebOctServerPreReq',parameters('DSCConfigurationLevel'),'.ps1\\WebOctServerPreReq',parameters('DSCConfigurationLevel'))]",
