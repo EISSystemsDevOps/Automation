@@ -172,6 +172,19 @@
         "description": "SubscriptionID where VNet resides"
       }
     },
+    "DSCConfigurationLevel": {
+      "type": "string",
+      "metadata": {
+        "description": "Level of DSC Configuration for VMs."
+      },
+      "defaultValue": "WPreReqs",
+      "allowedValues": [
+        "None",
+        "RolesFeatures",
+        "WPreReqs",
+        ""
+      ]
+    },
     "VNetRG": {
       "type": "string",
       "metadata": {
