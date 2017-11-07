@@ -283,7 +283,7 @@
       }
     },
     "tentaclePort": {
-      "defaultValue": 10933,
+      "defaultValue": "10933",
  /*     "minValue": 0,
       "maxValue": 65535,
    */
@@ -319,6 +319,13 @@
         "description": "How the Octopus Server should contact the Tentacle. Only required when CommunicationMode is 'Listen'."
       }
     },
+    "tentacleOctopusServerThumbprint": {
+      "defaultValue": "B823BCACC3434508BC3AA71E5C1EDDF83CF72241",
+      "type": "string",
+      "metadata": {
+        "description": "Value to register Tentacle with Octopus Server'."
+      }
+    },
     "tentacleCustomPublicHostName": {
       "type": "string",
       "defaultValue": "",
@@ -338,7 +345,7 @@
     //"virt adualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
     //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     // "domainUserA": "[concat(parameters('domainName'),'\\')]",
-   //parameters('adminUsername'))",
+    //parameters('adminUsername'))",
     "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
     //Environment VM Names
     //Environment VM Sizes
@@ -347,9 +354,11 @@
     //DSC URLs
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
-    "Configurationurl":"https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
-    
-      //Template URIs
+    "WebOctDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebOctServerPreReq',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "WebOctConfigurationFunction": "[concat('WebOctServerPreReq',parameters('DSCConfigurationLevel'),'.ps1\\WebOctServerPreReq',parameters('DSCConfigurationLevel'))]",
+    "Configurationurl": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
+
+    //Template URIs
     "TemplateUrl": "[concat(parameters('_artifactsLocation'),'/Templates')]",
     ////  This is a network interface with static IP address
     "NetworkInterfaceStaticURI": "[concat(variables('TemplateUrl'),'/','network_interface_static.json')]",
@@ -372,8 +381,8 @@
     },
     "NICObject5": {
       "Name": "[concat(parameters('VMName'),'-Nic')]",
-      "subnetRef": "[variables('subnetRef')]"  
-     // "IPAddress": "[parameters('DCIPAddress')]"
+      "subnetRef": "[variables('subnetRef')]"
+      // "IPAddress": "[parameters('DCIPAddress')]"
       //   "LoadBalancerName": "[concat(variables('VMName2'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
@@ -390,7 +399,7 @@
     //  "Rule1DestinationPort": "145",
     //  "Rule1Access": "Allow",
     //  "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
- // },
+    // },
     "VMObject": {
       "Name": "[parameters('VMName')]",
       "Size": "[parameters('VMSize')]",
@@ -401,12 +410,12 @@
       "publisher": "MicrosoftWindowsServer",
       "offer": "WindowsServer",
       "sku": "[parameters('windowsOSVersion')]",
-      "version":"latest",
+      "version": "latest",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMUri')]",
       "DataDiskSizeGB": "80"
- 
+
     }
 
   },
@@ -593,12 +602,18 @@
         "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": "true",
         "forceUpdateTag": "1.0",
-        "settings": {
-          "OctopusServerUrl": [ "parameters('tentacleOctopusServerUrl')" ],
-          "Environments": [ "parameters('tentacleEnvironments')" ],
-          "Roles": [ "parameters('tentacleRoles')" ],
-          "CommunicationMode": [ "parameters('tentacleCommunicationMode')" ],
-          "Port": [ "parameters('tentaclePort')" ]
+             "settings": {
+              "configurationFunction": "[variables('WebOctConfigurationFunction')]",
+              "configurationData": {
+              "url": "[variables('Configurationurl')]",
+
+            "configurationArguments": {
+              "ApiKey": "[parameters('tentacleApiKey')]",
+              "OctopusServerUrl": "[parameters('tentacleOctopusServerUrl')]",
+              "Environments": "[parameters('tentacleEnvironments')]",
+              "Roles": "[parameters('tentacleRoles')]",
+              "ServerPort": "[parameters('tentaclePort')]"
+            }
         },
         "protectedSettings": {
           "ApiKey": [ "parameters('tentacleApiKey')" ]
