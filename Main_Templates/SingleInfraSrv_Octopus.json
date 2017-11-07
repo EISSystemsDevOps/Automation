@@ -362,8 +362,8 @@
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
-    "WebOctDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebOctServerPreReq',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
-    "WebOctConfigurationFunction": "[concat('WebOctServerPreReq',parameters('DSCConfigurationLevel'),'.ps1\\WebOctServerPreReq',parameters('DSCConfigurationLevel'))]",
+    "WebOctDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebOctServerPreReq','.ps1.zip')]",
+    "WebOctConfigurationFunction": "[concat('WebOctServerPreReq','.ps1\\WebOctServerPreReq')]",
     "Configurationurl": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
 
     //Template URIs
