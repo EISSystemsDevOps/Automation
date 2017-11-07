@@ -602,10 +602,10 @@
         "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": "true",
         "forceUpdateTag": "1.0",
-             "settings": {
-              "configurationFunction": "[variables('WebOctConfigurationFunction')]",
-              "configurationData": {
-              "url": "[variables('Configurationurl')]",
+        "settings": {
+          "configurationFunction": "[variables('WebOctConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]",
 
             "configurationArguments": {
               "ApiKey": "[parameters('tentacleApiKey')]",
@@ -614,10 +614,11 @@
               "Roles": "[parameters('tentacleRoles')]",
               "ServerPort": "[parameters('tentaclePort')]"
             }
-        },
-        "protectedSettings": {
-          "ApiKey": [ "parameters('tentacleApiKey')" ]
+          },
+          "protectedSettings": {
+            "ApiKey": [ "parameters('tentacleApiKey')" ]
 
+          }
         }
       }
     }
