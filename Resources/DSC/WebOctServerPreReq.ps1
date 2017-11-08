@@ -1,4 +1,4 @@
-configuration OctopusTentacle
+configuration WebOctServerPreReq
 {
     param ($ApiKey, $OctopusServerUrl, $Environments, $Roles, $ServerPort, $OctopusServerThumbprint)
 
