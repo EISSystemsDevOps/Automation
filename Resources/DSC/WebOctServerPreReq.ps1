@@ -23,7 +23,7 @@ $workdir = "c:\Temp"
 $msiFilename =  Join-Path -Path $workdir -ChildPath "Octopus.Tentacle.msi" 
 $certpath = Join-Path -Path $workdir -ChildPath "OctopusServerCertificate.p7b"
 $tentaclepath = "C:\Program Files\Octopus Deploy\Tentacle"
-#$certurl = "HOST_YOUR_SERVER_CERTIFICATE_SOMEWHERE_ACCESSIBLE"
+
 
 if(!(Test-Path $workdir))
 {
@@ -131,19 +131,19 @@ else
 } 
 #>
 }
-}#End of config
-$cd = @{
-    AllNodes = @(
-        @{
-            NodeName = 'localhost'
-            PSDscAllowPlainTextPassword = $true
-            PSDSCAllowDomainUser=$True
-            RebootNodeIfNeeded = $true
-           
-
-        }
-    )
-} 
-OctopuswithTP -output c:\dsc -ConfigurationData $Cd
-Start-DscConfiguration -Path C:\dsc\ -wait -verbose -force
+#End of config
+#$cd = @{
+ #   AllNodes = @(
+ #       @{
+ #           NodeName = 'localhost'
+ #           PSDscAllowPlainTextPassword = $true
+ #           PSDSCAllowDomainUser=$True
+ #           RebootNodeIfNeeded = $true
+ #          
+#
+#        }
+#    )
+#} 
+#OctopuswithTP -output c:\dsc -ConfigurationData $Cd
+#Start-DscConfiguration -Path C:\dsc\ -wait -verbose -force
  #  $job= (Get-Job -Id 13).ChildJobs.progress
