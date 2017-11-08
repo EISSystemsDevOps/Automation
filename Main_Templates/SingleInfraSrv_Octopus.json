@@ -1,5 +1,5 @@
 {
-  
+
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
@@ -344,7 +344,7 @@
 
 
 
-  },//End of Parameters
+  }, //End of Parameters
 
   "variables": {
     //"dnsLabelPrefix1": "[tolower(concat(parameters('CustomerName'),variables('VMName1'),'-pip'))]",
@@ -598,38 +598,36 @@
     //Octopus extension
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMName'),'/OctopusDeployWindowsTentacle')]",
+      "name": "[concat(variables('VMName'),'/dscExtension')]",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
+        "[concat('Microsoft.Compute/virtualMachines/', variables('VMResource'))]"
       ],
       "properties": {
-        "publisher": "OctopusDeploy.Tentacle",
-        "type": "OctopusDeployWindowsTentacle",
-        "typeHandlerVersion": "2.0",
-        "autoUpgradeMinorVersion": "true",
-        "forceUpdateTag": "1.0",
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.20",
+        "autoUpgradeMinorVersion": true,
+        "forceUpdateTag": "2",
         "settings": {
-          "configurationFunction": "[variables('WebOctConfigurationFunction')]",
-          "configurationData": {
+          "configuration": {
             "url": "[variables('Configurationurl')]",
-
-            "configurationArguments": {
-              "ApiKey": "[parameters('tentacleApiKey')]",
-              "OctopusServerUrl": "[parameters('tentacleOctopusServerUrl')]",
-              "Environments": "[parameters('tentacleEnvironments')]",
-              "Roles": "[parameters('tentacleRoles')]",
-              "ServerPort": "[parameters('tentaclePort')]"
-            }
+            "modulesUrl": "[variables('WebOctDSCModuleUrl')]",
+            "configurationFunction": "[variables('WebOctConfigurationFunction')]"
           },
-          "protectedSettings": {
-            "ApiKey": [ "parameters('tentacleApiKey')" ]
-
+          "configurationArguments": {
+            "ApiKey": "[parameters('tentacleApiKey')]",
+            "OctopusServerUrl": "[parameters('tentacleOctopusServerUrl')]",
+            "Environments": "[parameters('tentacleEnvironments')]",
+            "Roles": "[parameters('tentacleRoles')]",
+            "ServerPort": "[parameters('tentaclePort')]"
           }
-        }
+        },
+        "protectedSettings": { }
       }
     }
+
   ] //,
   //"outputs": {
   //"hostname": {
