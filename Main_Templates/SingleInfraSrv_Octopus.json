@@ -364,7 +364,7 @@
     //"DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
     "WebOctDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebOctServerPreReq','.ps1.zip')]",
     "WebOctConfigurationFunction": "[concat('WebOctServerPreReq','.ps1\\WebOctServerPreReq')]",
-    "Configurationurl": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources/configurationdata.psd1",
+    "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
     //Template URIs
     "TemplateUrl": "[concat(parameters('_artifactsLocation'),'/Templates')]",
