@@ -3,7 +3,7 @@
 
 Param(
 	[Parameter(Mandatory=$True)]
-	[string]$environment = $vmName,
+	[string]$environment = "LPOctopus3",
 
 	[Parameter(Mandatory=$True)]
 	[string]$tentaclename = "Tentacle registered from client",
