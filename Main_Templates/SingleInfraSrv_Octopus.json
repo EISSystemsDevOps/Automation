@@ -598,11 +598,11 @@
     //Octopus extension
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('VMName'),'/dscExtension')]",
+      "name": "[concat(parameters('VMName'),'/dscExtension')]",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', variables('VMResource'))]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
