@@ -20,9 +20,10 @@ configuration OctopusTentacle
             OctopusServerUrl = $OctopusServerUrl
             Environments = $Environments
             Roles = $Roles
+            OctopusServerThumbprint = $OctopusServerThumbprint
 
             # How Tentacle will communicate with the server
-            CommunicationMode = "Poll"
+            CommunicationMode = "Listen"
             ServerPort = $ServerPort
 
             # Where deployed applications will be installed by Octopus
