@@ -611,10 +611,11 @@
         "autoUpgradeMinorVersion": true,
         "forceUpdateTag": "2",
         "settings": {
-          "configuration": {
-            "url": "[variables('Configurationurl')]",
-            "modulesUrl": "[variables('WebOctDSCModuleUrl')]",
-            "configurationFunction": "[variables('WebOctConfigurationFunction')]"
+          "modulesUrl": "[variables('WebOctDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('WebOctConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
           },
           "configurationArguments": {
             "ApiKey": "[parameters('tentacleApiKey')]",
