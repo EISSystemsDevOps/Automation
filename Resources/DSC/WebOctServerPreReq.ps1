@@ -3,13 +3,13 @@
 
 Param(
 	[Parameter(Mandatory=$True)]
-	[string]$environment = "AzrDevJasim2016.paragon.mckesson.com",
+	[string]$environment = $vmName,
 
 	[Parameter(Mandatory=$True)]
 	[string]$tentaclename = "Tentacle registered from client",
 
 	[Parameter(Mandatory=$True)]
-	[string]$endpointUrl = "https://AzrDevJasim2016:10933",
+	[string]$endpointUrl = "http://localhost:10933",
 	
 	[Parameter(Mandatory=$True)]
 	[string]$roles = "Web"
