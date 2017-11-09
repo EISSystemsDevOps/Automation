@@ -327,13 +327,6 @@
         "description": "How the Octopus Server should contact the Tentacle. Only required when CommunicationMode is 'Listen'."
       }
     },
-    "tentacleOctopusServerThumbprint": {
-      "defaultValue": "B823BCACC3434508BC3AA71E5C1EDDF83CF72241",
-      "type": "string",
-      "metadata": {
-        "description": "Value to register Tentacle with Octopus Server'."
-      }
-    },
     "tentacleCustomPublicHostName": {
       "type": "string",
       "defaultValue": "",
@@ -341,8 +334,6 @@
         "description": "The custom public host name that the Octopus Server should use to contact the Tentacle. Only required when communicationMode is 'Listen' and publicHostNameConfiguration is 'Custom'."
       }
     }
-
-
 
   }, //End of Parameters
 
@@ -362,8 +353,8 @@
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
-    "WebOctDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebOctServerPreReq','.ps1.zip')]",
-    "WebOctConfigurationFunction": "[concat('WebOctServerPreReq','.ps1\\WebOctServerPreReq')]",
+    "OctopusTentacleDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'OctopusTentacle','.ps1.zip')]",
+    "OctopusTentacleConfigurationFunction": "[concat('WebOctServerPreReq','.ps1\\OctopusTentacle')]",
     "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
     //Template URIs
@@ -611,9 +602,9 @@
         "autoUpgradeMinorVersion": true,
         "forceUpdateTag": "2",
         "settings": {
-          "modulesUrl": "[variables('WebOctDSCModuleUrl')]",
+          "modulesUrl": "[variables('OctopusTentacleDSCModuleUrl')]",
           "SasToken": "",
-          "configurationFunction": "[variables('WebOctConfigurationFunction')]",
+          "configurationFunction": "[variables('OctopusTentacleConfigurationFunction')]",
           "configurationData": {
             "url": "[variables('Configurationurl')]"
           },
