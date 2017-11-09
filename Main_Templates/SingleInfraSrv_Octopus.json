@@ -589,34 +589,26 @@
     //Octopus extension
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMName'),'/dscExtension')]",
-      "apiVersion": "2015-05-01-preview",
+      "name": "[concat(parameters('vmName'),'/OctopusDeployWindowsTentacle')]",
+      "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
-      ],
       "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.20",
+        "publisher": "OctopusDeploy.Tentacle",
+        "type": "OctopusDeployWindowsTentacle",
+        "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
-        "forceUpdateTag": "2",
         "settings": {
-          "modulesUrl": "[variables('OctopusTentacleDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('OctopusTentacleConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          "configurationArguments": {
-            "ApiKey": "[parameters('tentacleApiKey')]",
-            "OctopusServerUrl": "[parameters('tentacleOctopusServerUrl')]",
-            "Environments": "[parameters('tentacleEnvironments')]",
-            "Roles": "[parameters('tentacleRoles')]",
-            "ServerPort": "[parameters('tentaclePort')]"
-          }
+          "OctopusServerUrl": "[parameters('tentacleOctopusServerUrl')]",
+          "Environments": "[split(parameters('tentacleEnvironments'), ',')]",
+          "Roles": "[split(parameters('tentacleRoles'), ',')]",
+          "CommunicationMode": "[parameters('tentacleCommunicationMode')]",
+          "Port": "[parameters('tentaclePort')]",
+          "PublicHostNameConfiguration": "[parameters('tentaclePublicHostNameConfiguration')]",
+          "CustomPublicHostName": "[parameters('tentacleCustomPublicHostName')]"
         },
-        "protectedSettings": { }
+        "protectedSettings": {
+          "ApiKey": "[parameters('tentacleApiKey')]"
+        }
       }
     }
 
