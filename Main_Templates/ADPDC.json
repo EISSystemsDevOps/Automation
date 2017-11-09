@@ -113,7 +113,7 @@
       "allowedValues": [
         "new",
         "existing"
-      ] ,
+      ],
       "metadata": {
         "description": "Use a new or existing storage account"
       },
@@ -126,7 +126,13 @@
       },
       "defaultValue": ""
     },
-
+    "VMSize1": {
+      "type": "string",
+      "metadata": {
+        "description": "Azure VM Size"
+      },
+      "defaultValue": "Standard_A2_v2"
+    },
     "storageAcctName": {
       "type": "string",
       "metadata": {
@@ -177,7 +183,7 @@
         "description": "Availability Set Name."
       }
     }
-  
+
   },//End of Parameters
 
   "variables": {
