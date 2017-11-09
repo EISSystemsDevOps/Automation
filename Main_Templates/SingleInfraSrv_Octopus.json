@@ -592,6 +592,9 @@
       "name": "[concat(parameters('vmName'),'/OctopusDeployWindowsTentacle')]",
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
+      ],
       "properties": {
         "publisher": "OctopusDeploy.Tentacle",
         "type": "OctopusDeployWindowsTentacle",
