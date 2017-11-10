@@ -199,7 +199,7 @@
     //"dnsLabelPrefix2": "[tolower(concat(parameters('CustomerName'),variables('VMName2'),'-pip'))]",
     //"storageAccountName": "[parameters('storageAcctName')]",
     //"virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetname'))]",
+    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]",
     // "domainUserA": "[concat(parameters('domainName'),'\\')]",
    //parameters('adminUsername'))",
     
