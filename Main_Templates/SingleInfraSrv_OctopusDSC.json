@@ -360,8 +360,8 @@
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
-    "OctopusTentacleDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'OctopusTentacle','.ps1.zip')]",
-    "OctopusTentacleConfigurationFunction": "[concat('OctopusTentacle','.ps1\\OctopusTentacle')]",
+    "OctopusTentacleDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebOctServerPreReq','.ps1.zip')]",
+    "OctopusTentacleConfigurationFunction": "[concat('WebOctServerPreReq','.ps1\\WebOctServerPreReq')]",
     "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
     //Template URIs
@@ -617,14 +617,15 @@
             "url": "[variables('Configurationurl')]"
           },
           "configurationArguments": {
-            "ApiKey": "[parameters('tentacleApiKey')]",
             "OctopusServerUrl": "[parameters('tentacleOctopusServerUrl')]",
             "Environments": "[parameters('tentacleEnvironments')]",
             "Roles": "[parameters('tentacleRoles')]",
             "ServerPort": "[parameters('tentaclePort')]"
           }
         },
-        "protectedSettings": { }
+        "protectedSettings": {
+          "ApiKey": "[parameters('tentacleApiKey')]"
+        }
       }
     }
 
