@@ -266,26 +266,27 @@
     "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('SubnetName'))]",
 
     //Template URIs
-    "AvailabilitySetURI": "[concat(parameters('_artifactsLocation'),'/','availability_set.json')]",
+    "TemplateUrl": "[concat(parameters('_artifactsLocation'),'/Templates')]",
+    "AvailabilitySetURI": "[concat(variables('TemplateUrl'),'/','availability_set.json')]",
     ////  This is a NIC with a Load Balancer attached:
-    "NetworkInterfaceStaticURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_static.json')]",
-    "NetworkInterfaceLBURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_lb.json')]",
+    "NetworkInterfaceStaticURI": "[concat(variables('TemplateUrl'),'/','network_interface_static.json')]",
+    "NetworkInterfaceLBURI": "[concat(variables('TemplateUrl'),'/','network_interface_lb.json')]",
     ////This is a standard NIC with a Public IP attached:
-    "NetworkInterfacePIPURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_pip.json')]",
+    "NetworkInterfacePIPURI": "[concat(variables('TemplateUrl'),'/','network_interface_pip.json')]",
     ////This is a standard NIC without a Public IP or Load balancer:
-    "NetworkInterfaceURI": "[concat(parameters('_artifactsLocation'),'/','network_interface.json')]",
-    "NetworkInterfaceDNSURI": "[concat(parameters('_artifactsLocation'),'/','network_interface_dns.json')]",
+    "NetworkInterfaceURI": "[concat(variables('TemplateUrl'),'/','network_interface.json')]",
+    "NetworkInterfaceDNSURI": "[concat(variables('TemplateUrl'),'/','network_interface_dns.json')]",
     ////  Comment out the LoadBalancerResource section as well if you want to forego Load balancer
     ////  Comment out the Public IP section as well if you want to forego Public IP
-    "PublicIPURI": "[concat(parameters('_artifactsLocation'),'/','public_ip.json')]",
-    "VNetURI": "[concat(parameters('_artifactsLocation'),'/','full_vnet.json')]",
-    "VMURI": "[concat(parameters('_artifactsLocation'),'/','vm.json')]",
-    "VMOneDataDiskURI": "[concat(parameters('_artifactsLocation'),'/','vm_one_datadisk.json')]",
-    "VMTwoDataDisksURI": "[concat(parameters('_artifactsLocation'),'/','vm_two_datadisks.json')]",
-    "VMFourDataDisksURI": "[concat(parameters('_artifactsLocation'),'/','vm_four_datadisks.json')]",
-    "StorageAccountURI": "[concat(parameters('_artifactsLocation'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
-    "NetworkSecurityGroupURI": "[concat(parameters('_artifactsLocation'),'/','rdp_network_security_group.json')]",
-    "LoadBalancerURI": "[concat(parameters('_artifactsLocation'),'/','load_balancer.json')]",
+    "PublicIPURI": "[concat(variables('TemplateUrl'),'/','public_ip.json')]",
+    "VNetURI": "[concat(variables('TemplateUrl'),'/','full_vnet.json')]",
+    "VMURI": "[concat(variables('TemplateUrl'),'/','vm.json')]",
+    "VMOneDataDiskURI": "[concat(variables('TemplateUrl'),'/','vm_one_datadisk.json')]",
+    "VMTwoDataDisksURI": "[concat(variables('TemplateUrl'),'/','vm_two_datadisks.json')]",
+    "VMFourDataDisksURI": "[concat(variables('TemplateUrl'),'/','vm_four_datadisks.json')]",
+    "StorageAccountURI": "[concat(variables('TemplateUrl'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
+    "NetworkSecurityGroupURI": "[concat(variables('TemplateUrl'),'/','rdp_network_security_group.json')]",
+    "LoadBalancerURI": "[concat(variables('TemplateUrl'),'/','load_balancer.json')]",
 
     //Objects
     //"VNetObject": {
@@ -703,7 +704,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+          //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
           "uri": "[variables('PublicIPURI')]",
           "contentVersion": "1.0.0.0"
         },
@@ -723,7 +724,7 @@
     //"properties": {
     //    "mode": "Incremental",
     //  "templateLink": {
-    //   //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //   //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
     //    "uri": "[variables('PublicIPURI')]",
     //    "contentVersion": "1.0.0.0"
     //  },
@@ -1041,7 +1042,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+          //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
           "uri": "[variables('LoadBalancerURI')]",
           "contentVersion": "1.0.0.0"
         },
@@ -1063,7 +1064,7 @@
     //  "properties": {
     //      "mode": "Incremental",
     //    "templateLink": {
-    //     //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //     //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
     //      "uri": "[variables('LoadBalancerURI')]",
     //      "contentVersion": "1.0.0.0"
     //    },
@@ -1088,7 +1089,7 @@
     //  "properties": {
     //    "mode": "Incremental",
     //    "templateLink": {
-    //      //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //      //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
     //      "uri": "[variables('NetworkSecurityGroupURI')]",
     //      "contentVersion": "1.0.0.0"
     //    },
@@ -1110,7 +1111,7 @@
     //  "properties": {
     //    "mode": "Incremental",
     //    "templateLink": {
-    //      //"uri": "[concat(parameters('_artifactsLocation'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //      //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
     //      "uri": "[variables('NetworkSecurityGroupURI')]",
     //      "contentVersion": "1.0.0.0"
     //    },
@@ -1136,7 +1137,7 @@
     //  "properties": {
     //    "mode": "Incremental",
     //    "templateLink": {
-    //      //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //      //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
     //      "uri": "[variables('VMObject1').URI]",
     //      "contentVersion": "1.0.0.0"
     //    },
@@ -1159,7 +1160,7 @@
     //  "properties": {
     //    "mode": "Incremental",
     //    "templateLink": {
-    //      //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //      //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
     //      "uri": "[variables('VMObject2').URI]",
     //      "contentVersion": "1.0.0.0"
     //    },
@@ -1182,7 +1183,7 @@
     //  "properties": {
     //    "mode": "Incremental",
     //    "templateLink": {
-    //      //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //      //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
     //      "uri": "[variables('VMObject3').URI]",
     //      "contentVersion": "1.0.0.0"
     //    },
@@ -1205,7 +1206,7 @@
     //      "properties": {
     //        "mode": "Incremental",
     //        "templateLink": {
-    //          //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
     //          "uri": "[variables('VMObject4').URI]",
     //          "contentVersion": "1.0.0.0"
     //        },
@@ -1228,7 +1229,7 @@
     //      "properties": {
     //        "mode": "Incremental",
     //        "templateLink": {
-    //          //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
     //          "uri": "[variables('VMObject5').URI]",
     //          "contentVersion": "1.0.0.0"
     //        },
@@ -1251,7 +1252,7 @@
     //      "properties": {
     //        "mode": "Incremental",
     //        "templateLink": {
-    //          //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
     //          "uri": "[variables('VMObject6').URI]",
     //          "contentVersion": "1.0.0.0"
     //        },
@@ -1274,7 +1275,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
           "uri": "[variables('VMObject7').URI]",
           "contentVersion": "1.0.0.0"
         },
@@ -1297,7 +1298,7 @@
     //      "properties": {
     //        "mode": "Incremental",
     //        "templateLink": {
-    //          //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
     //          "uri": "[variables('VMObject8').URI]",
     //          "contentVersion": "1.0.0.0"
     //        },
@@ -1321,7 +1322,7 @@
     //      "properties": {
     //        "mode": "Incremental",
     //        "templateLink": {
-    //          //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
     //          "uri": "[variables('VMObject9').URI]",
     //          "contentVersion": "1.0.0.0"
     //        },
@@ -1344,7 +1345,7 @@
     //      "properties": {
     //        "mode": "Incremental",
     //        "templateLink": {
-    //          //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
     //          "uri": "[variables('VMObject10').URI]",
     //          "contentVersion": "1.0.0.0"
     //        },
@@ -1367,7 +1368,7 @@
     //      "properties": {
     //        "mode": "Incremental",
     //        "templateLink": {
-    //          //   "uri": "[concat(parameters('_artifactsLocation'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
     //          "uri": "[variables('VMObject11').URI]",
     //          "contentVersion": "1.0.0.0"
     //        },
