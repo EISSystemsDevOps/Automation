@@ -278,21 +278,21 @@
       }
     },
     "tentacleApiKey": {
-      "defaultValue": "API-IV08KCO7RVE2CPTOZBG26KGN0I",
+      "defaultValue": "",
       "type": "securestring",
       "metadata": {
         "description": "The Api Key to use to register the Tentacle with the server"
       }
     },
     "tentacleCommunicationMode": {
-      "defaultValue": "Listen",
+      "defaultValue": "",
       "type": "string",
       "metadata": {
         "description": "The type of Tentacle - whether the Tentacle listens for requests from server, or actively polls the server for requests"
       }
     },
     "tentaclePort": {
-      "defaultValue": 10933,
+      "defaultValue": "",
       "minValue": 0,
       "maxValue": 65535,
       "type": "int",
@@ -301,7 +301,7 @@
       }
     },
     "tentacleRoles": {
-      "defaultValue": "Web",
+      "defaultValue": "",
       "type": "string",
       "metadata": {
         "description": "Biztalk, Connect, N-Tier, PPS, SvcBus, Web"
@@ -322,7 +322,7 @@
       }
     },
     "tentaclePublicHostNameConfiguration": {
-      "defaultValue": "ComputerName",
+      "defaultValue": "",
       "allowedValues": [
         "PublicIP",
         "FQDN",
@@ -616,24 +616,12 @@
           "configurationData": {
             "url": "[variables('Configurationurl')]"
           },
-          "configurationArguments": {
-            "OctopusServerUrl": "[parameters('tentacleOctopusServerUrl')]",
-            "Environments": "[parameters('tentacleEnvironments')]",
-            "Roles": "[parameters('tentacleRoles')]",
-            "ServerPort": "[parameters('tentaclePort')]"
+          "protectedSettings": {
+            "ApiKey": "[parameters('tentacleApiKey')]"
           }
-        },
-        "protectedSettings": {
-          "ApiKey": "[parameters('tentacleApiKey')]"
         }
       }
     }
 
-  ] //,
-  //"outputs": {
-  //"hostname": {
-  // "type": "string",
-  //"value": "[reference(variables('PIPObject').Name).dnsSettings.fqdn]"
-  // }
-  // }
+  ] 
 }
