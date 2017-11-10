@@ -3,10 +3,10 @@
 
 Param(
 	[Parameter(Mandatory=$True)]
-	[string]$environment = "LPOctopus3",
+	[string]$environment = $VMName,
 
 	[Parameter(Mandatory=$True)]
-	[string]$tentaclename = "Tentacle registered from client",
+	[string]$tentaclename = "Tentacle",
 
 	[Parameter(Mandatory=$True)]
 	[string]$endpointUrl = "http://localhost:10933",
@@ -54,20 +54,15 @@ if (Test-Path $msiFilename)
 	}
 }
 
-    #Configure Tentacle
-	#.\Tentacle.exe create-instance --instance "Tentacle" --config "C:\Octopus\Tentacle.config" --console
-	#.\Tentacle.exe new-certificate --instance "Tentacle" --if-blank --console 
-	#.\Tentacle.exe configure --instance "Tentacle" --reset-trust --console 
-	#.\Tentacle.exe configure --instance "Tentacle" --home "C:\Octopus" --app "C:\Octopus\Applications" --port "10933" --noListen "False" --console 
-	#.\Tentacle.exe configure --instance "Tentacle" --trust "$thumbPrint" --console 
-	#.\Tentacle.exe service --instance "Tentacle" --install --start --console 
+C:\Program Files\Octopus Deploy\Tentacle
 
-    .\Tentacle\Tentacle.exe create-instance --instance "Tentacle" --config "C:\Octopus\Tentacle.config" 
-    .\Tentacle\Tentacle.exe new-certificate --instance "Tentacle" --if-blank
-    .\Tentacle\Tentacle.exe configure --instance "Tentacle" --reset-trust
-    .\Tentacle\Tentacle.exe configure --instance "Tentacle" --app "C:\Octopus\Applications" --port "10933" --noListen "False"
-    .\Tentacle\Tentacle.exe configure --instance "Tentacle" --trust "B823BCACC3434508BC3AA71E5C1EDDF83CF72241"
-    .\Tentacle\Tentacle.exe service --instance "Tentacle" --install --stop --start
+.\Tentacle.exe create-instance --instance "Tentacle" --config "C:\Octopus\Tentacle.config" --console
+.\Tentacle.exe new-certificate --instance "Tentacle" --if-blank --console
+.\Tentacle.exe configure --instance "Tentacle" --reset-trust --console
+.\Tentacle.exe configure --instance "Tentacle" --home "C:\Octopus" --app "C:\Octopus\Applications" --port "10933" --console
+.\Tentacle.exe configure --instance "Tentacle" --trust "B823BCACC3434508BC3AA71E5C1EDDF83CF72241" --console
+.\Tentacle.exe register-with --instance "Tentacle" --server "http://azrdevoctopus01.paragon.mckesson.com" --apiKey="API-IV08KCO7RVE2CPTOZBG26KGN0I" --role "$role" --environment "$vmName" --comms-style TentaclePassive --console
+.\Tentacle.exe service --instance "Tentacle" --install --start --console
 
 <# #Confirm Octopus Tentacle Service Is Running
 	$servname = "OctopusDeploy Tentacle"
