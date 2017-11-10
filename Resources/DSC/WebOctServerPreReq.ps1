@@ -1,29 +1,29 @@
 ﻿Configuration WebOctServerPreReq
 {
 
-Param(
-	[Parameter(Mandatory=$True)]
-	[string]$environment = "LPOctopus3",
+$Script='
+param
+        (
+            $role=$tentacleRoles
+            $ResourceGroupName=$ResourceGroupName,
+            $serverUrl=$tentacleOctopusServerUrl,
+            $apiKey=$tentacleApiKey,
+            $thumbPrint=$thumbPrint
+         
+        )
 
-	[Parameter(Mandatory=$True)]
-	[string]$tentaclename = "Tentacle registered from client",
 
-	[Parameter(Mandatory=$True)]
-	[string]$endpointUrl = "http://localhost:10933",
-	
-	[Parameter(Mandatory=$True)]
-	[string]$roles = "Web"
-)
-
+$vmName=$env:COMPUTERNAME+"."+$Env:USERDNSDOMAIN
+$role=$role
+$ResourceGroupName=$ResourceGroupName
 $downloadurl = "https://octopus.com/downloads/latest/OctopusTentacle64"
-$serverUrl = "http://azrdevoctopus01.paragon.mckesson.com"
-$apiKey = "API-IV08KCO7RVE2CPTOZBG26KGN0I"
-$thumbPrint = "B823BCACC3434508BC3AA71E5C1EDDF83CF72241" 
+$serverUrl = $serverUrl
+$apiKey = $apiKey
+$thumbPrint = $thumbprint 
 $workdir = "c:\Temp"
 $msiFilename =  Join-Path -Path $workdir -ChildPath "Octopus.Tentacle.msi" 
 $certpath = Join-Path -Path $workdir -ChildPath "OctopusServerCertificate.p7b"
 $tentaclepath = "C:\Program Files\Octopus Deploy\Tentacle"
-
 
 if(!(Test-Path $workdir))
 {
@@ -54,96 +54,57 @@ if (Test-Path $msiFilename)
 	}
 }
 
-    #Configure Tentacle
-	#.\Tentacle.exe create-instance --instance "Tentacle" --config "C:\Octopus\Tentacle.config" --console
-	#.\Tentacle.exe new-certificate --instance "Tentacle" --if-blank --console 
-	#.\Tentacle.exe configure --instance "Tentacle" --reset-trust --console 
-	#.\Tentacle.exe configure --instance "Tentacle" --home "C:\Octopus" --app "C:\Octopus\Applications" --port "10933" --noListen "False" --console 
-	#.\Tentacle.exe configure --instance "Tentacle" --trust "$thumbPrint" --console 
-	#.\Tentacle.exe service --instance "Tentacle" --install --start --console 
+cd "C:\Program Files\Octopus Deploy\Tentacle"
 
-    .\Tentacle\Tentacle.exe create-instance --instance "Tentacle" --config "C:\Octopus\Tentacle.config" 
-    .\Tentacle\Tentacle.exe new-certificate --instance "Tentacle" --if-blank
-    .\Tentacle\Tentacle.exe configure --instance "Tentacle" --reset-trust
-    .\Tentacle\Tentacle.exe configure --instance "Tentacle" --app "C:\Octopus\Applications" --port "10933" --noListen "False"
-    .\Tentacle\Tentacle.exe configure --instance "Tentacle" --trust "B823BCACC3434508BC3AA71E5C1EDDF83CF72241"
-    .\Tentacle\Tentacle.exe service --instance "Tentacle" --install --stop --start
+.\Tentacle.exe create-instance --instance "Tentacle" --config "C:\Octopus\Tentacle.config" --console
+.\Tentacle.exe new-certificate --instance "Tentacle" --if-blank --console
+.\Tentacle.exe configure --instance "Tentacle" --reset-trust --console
+.\Tentacle.exe configure --instance "Tentacle" --home "C:\Octopus" --app "C:\Octopus\Applications" --port "10933" --console
+.\Tentacle.exe configure --instance "Tentacle" --trust "B823BCACC3434508BC3AA71E5C1EDDF83CF72241" --console
+.\Tentacle.exe register-with --instance "Tentacle" --server "http://azrdevoctopus01.paragon.mckesson.com" --apiKey="API-IV08KCO7RVE2CPTOZBG26KGN0I" --role "$role" --environment "$vmName" --comms-style TentaclePassive --console
+.\Tentacle.exe service --instance "Tentacle" --install --start --console
+'
+$filepath = $env:TEMP+'\Script.ps1'
+$script|out-file $filepath -force
 
-<# #Confirm Octopus Tentacle Service Is Running
-	$servname = "OctopusDeploy Tentacle"
-	if ((Get-Service $servname).Status -ne "Running")
-	{
-		$counter = 0
-			
-		Do
-		{
-			(Get-Service $servname).Status
-			Start-Sleep -Seconds 5
-			$counter++
-		} while ( ($counter -lt 5) -and ((Get-Service $servname).Status -ne "Running")) 
+$VM=get-azurermvm -ResourceGroupName $ResourceGroupName -Name $VMName
+$Location=$VM.Location
 
-	}
-	else
-	{
-		Write-Output "Octopus Service Is Running" 
-	}
+# Get storage account name
+$storageaccountname = $vm.StorageProfile.OsDisk.Vhd.Uri.Split('.')[0].Replace('https://','')
 
-    #Get The Tentacle Client Thumbprint
-	$raw = .\Tentacle.exe show-thumbprint --nologo --console
-	("Raw = " + $raw)
-		
-	$client_thumbprint = $raw -Replace 'The thumbprint of this Tentacle is: ', ''
-	("Client Thumbprint = " + $client_thumbprint) | Out-File $logfile -Append
-		
-	$pathtodll = Join-Path -Path $tentaclepath -ChildPath "Octopus.Client.dll"
-	
-	if((Test-Path $pathtodll) -eq $f)
-	{
-		Write-Output ("Cannot find file Octopus.Client.dll" + $pathtodll)
-		exit 1
-	}
+#get storage account key
+$key = (Get-AzureRmStorageAccountKey -Name $storageaccountname -ResourceGroupName $ResourceGroupName)|where-object KeyName -eq 'key1'
 
-	Add-Type -Path 'Newtonsoft.Json.dll'
-	Add-Type -Path 'Octopus.Client.dll'
-  
-    #Register The Tentacle With Octopus Server
-	$endpoint = new-object Octopus.Client.OctopusServerEndpoint $serverUrl, $apiKey
-	$repository = new-object Octopus.Client.OctopusRepository $endpoint
-	$tentacle = New-Object Octopus.Client.Model.MachineResource
- 
-	$tentacle.name = $tentaclename
-	$tentacle.EnvironmentIds.Add($environment)
+#create storage context
+$storagecontext = New-AzureStorageContext -StorageAccountName $storageaccountname -StorageAccountKey $key.Value
 
-	foreach($role in (New-Object -TypeName System.String -ArgumentList $roles).Split(','))
-	{
-		$tentacle.Roles.Add($role)
-	}
-	
-	$tentacleEndpoint = New-Object Octopus.Client.Model.Endpoints.ListeningTentacleEndpointResource
-	$tentacle.EndPoint = $tentacleEndpoint
-	$tentacle.Endpoint.Uri = "$endpointUrl"  
-	$tentacle.Endpoint.Thumbprint = "$client_thumbprint"
-	$repository.machines.create($tentacle)   
+#create container if it doesn't exsit
+$scriptscontainer=get-azurestoragecontainer -name "scripts" -context $storagecontext -ErrorAction SilentlyContinue
+if($scriptscontainer -eq $null)
+{
+    Write-Output ("$(get-date) : Execute-AzureParagonNthCustomScriptExtension : Creating scripts container.")
+    $results=New-AzureStorageContainer -Name "scripts" -Context $storagecontext
 }
 else
 {
-	Write-Output ("Cannot find Octopus install file: " + $msiFilename)
-} 
-#>
+    write-output("$(get-date) : Execute-AzureParagonNthCustomScriptExtension : Scripts container already exists.")
 }
-#End of config
-#$cd = @{
- #   AllNodes = @(
- #       @{
- #           NodeName = 'localhost'
- #           PSDscAllowPlainTextPassword = $true
- #           PSDSCAllowDomainUser=$True
- #           RebootNodeIfNeeded = $true
- #          
-#
-#        }
-#    )
-#} 
-#OctopuswithTP -output c:\dsc -ConfigurationData $Cd
-#Start-DscConfiguration -Path C:\dsc\ -wait -verbose -force
- #  $job= (Get-Job -Id 13).ChildJobs.progress
+
+#upload the file
+$uploadresults=Set-AzureStorageBlobContent -Container "scripts" -File $filepath -Blob "Script.ps1" -Context $storagecontext -force
+
+#get handler version
+$TypeHandlerversion=get-azurermVMextensionImage -publishername Microsoft.Compute -type CustomScriptExtension -Location $Location |Measure-Object -property Version -Maximum
+$typehandlerversion=$typeHandlerversion.maximum
+
+#see if CSE exists now.
+$CSE=get-AzureRMVMCustomSCriptExtension -resourcegroupname $ResourceGroupname -VMName $VM.Name -Name "Script" -ErrorAction SilentlyContinue
+if($CSE -ne $NULL)
+{
+    $Results=Remove-AzureRmVMCustomScriptExtension -resourcegroupname $resourcegroupname -VMName $VM.Name -Name "Script" -force
+}
+
+$Results=Set-AzureRmVMCustomScriptExtension -resourcegroupname $resourcegroupname -VMName $VM.Name -Name "Script" -Location $Location -StorageAccountName $storageaccountname -StorageAccountKey $key.value -FileName "Script.ps1" -ContainerName "scripts" -RunFile "Script.ps1" -TypeHandlerVersion $TypeHandlerversion -verbose -Argument "$role $ResourceGroupName $serverUrl $apiKey $thumbPrint" -verbose
+}
+
