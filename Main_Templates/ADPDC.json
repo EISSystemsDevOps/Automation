@@ -64,7 +64,8 @@
         "Standard_A2",
         "Standard_A3",
         "Standard_A4",
-        "Standard_A5"
+        "Standard_A5",
+        "Standard_A2_v2"
       ],
       "metadata": {
         "description": "The size of the VM."
