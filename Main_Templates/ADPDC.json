@@ -199,14 +199,14 @@
     //"dnsLabelPrefix2": "[tolower(concat(parameters('CustomerName'),variables('VMName2'),'-pip'))]",
     //"storageAccountName": "[parameters('storageAcctName')]",
     //"virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]",
+    //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]",
     // "domainUserA": "[concat(parameters('domainName'),'\\')]",
    //parameters('adminUsername'))",
     
     //Environment VM Names
     //Environment VM Sizes
     //"VMSize1": "Standard_A2_v2",
-    //"subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('SubnetName'))]",
+    "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('SubnetName'))]",
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     "DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
