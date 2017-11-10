@@ -197,7 +197,7 @@
     
     //Environment VM Names
     //Environment VM Sizes
-    "VMSize1": "Standard_A2",
+    //"VMSize1": "Standard_A2_v2",
     "subnetRef": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('VNetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('SubnetName'))]",
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
@@ -248,7 +248,7 @@
  // },
     "VMObjectDC": {
       "Name": "[parameters('VMNameDC')]",
-      "Size": "[variables('VMSize1')]",
+      "Size": "[parameters('VMSize1')]",
       //     "ASName": "[variables('ASObject2').Name]",
       "nicName": "[variables('NICObject5').Name]",
       "adminUserName": "[parameters('adminUsername')]",
