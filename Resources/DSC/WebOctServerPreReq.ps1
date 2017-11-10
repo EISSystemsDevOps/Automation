@@ -105,6 +105,6 @@ if($CSE -ne $NULL)
     $Results=Remove-AzureRmVMCustomScriptExtension -resourcegroupname $resourcegroupname -VMName $VM.Name -Name "Script" -force
 }
 
-$Results=Set-AzureRmVMCustomScriptExtension -resourcegroupname $resourcegroupname -VMName $VM.Name -Name "Script" -Location $Location -StorageAccountName $storageaccountname -StorageAccountKey $key.value -FileName "Script.ps1" -ContainerName "scripts" -RunFile "Script.ps1" -TypeHandlerVersion $TypeHandlerversion -verbose
+$Results=Set-AzureRmVMCustomScriptExtension -resourcegroupname $resourcegroupname -VMName $VM.Name -Name "Script" -Location $Location -StorageAccountName $storageaccountname -StorageAccountKey $key.value -FileName "Script.ps1" -ContainerName "scripts" -RunFile "Script.ps1" -TypeHandlerVersion $TypeHandlerversion -verbose -Argument "$role $ResourceGroupName $serverUrl $apiKey $thumbPrint" -verbose
 }
 

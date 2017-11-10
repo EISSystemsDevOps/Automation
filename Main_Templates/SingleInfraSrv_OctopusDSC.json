@@ -307,6 +307,13 @@
         "description": "Biztalk, Connect, N-Tier, PPS, SvcBus, Web"
       }
     },
+    "tentacleThumbprint": {
+      "defaultValue": "",
+      "type": "string",
+      "metadata": {
+        "description": "Thumbprint of Octopus server to connect"
+      }
+    },
     "tentacleEnvironments": {
       "defaultValue": "",
       "type": "string",
@@ -589,7 +596,7 @@
     //Octopus Configuration
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMName'),'/octopusDscExtension')]",
+      "name": "[concat(parameters('VMName'),'/Script')]",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "dependsOn": [
