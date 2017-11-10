@@ -676,25 +676,25 @@
   },
   "resources": [
 
-    //{
-    //  "name": "StorageAccountResource",
-    //  "type": "Microsoft.Resources/deployments",
-    //  "apiVersion": "2016-02-01",
-    //  "dependsOn": [ ],
-    //  "properties": {
-    //    "mode": "Incremental",
-    //    "templateLink": {
-    //      "uri": "[variables('StorageAccountURI')]",
-    //      "contentVersion": "1.0.0.0"
-    //    },
-    //    "parameters": {
-    //      "StorageAccountObject": {
-    //        //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
-    //        "value": "[variables('StorageAccountObject')]"
-    //      }
-    //    }
-    //  }
-    //},
+    {
+      "name": "StorageAccountResource",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [ ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('StorageAccountURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "StorageAccountObject": {
+            //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+            "value": "[variables('StorageAccountObject')]"
+          }
+        }
+      }
+    },
     {
       "name": "PublicIPResource1",
       "type": "Microsoft.Resources/deployments",
@@ -1267,7 +1267,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+        //"[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
         "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource7')]"
         //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
       ],
