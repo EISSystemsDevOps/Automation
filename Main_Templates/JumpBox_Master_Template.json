@@ -2,12 +2,12 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "CustomerName": {
-      "type": "string",
-      "metadata": {
-        "description": "Customer  name."
-      }
-    },
+    //"CustomerName": {
+    //  "type": "string",
+    //  "metadata": {
+    //    "description": "Customer  name."
+    //  }
+    //},
     //"VMName1": {
     //  "type": "string",
     //  "metadata": {
@@ -44,7 +44,7 @@
     //    "description": "Virtual Machine name."
     //  }
     //},
-    "VMName7": {
+    "VMName": {
       "type": "string",
       "metadata": {
         "description": "Virtual Machine name."
@@ -108,7 +108,7 @@
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
       }
     },
-    "VMSize1": {
+    "VMSize": {
       "type": "string",
       "defaultValue": "Standard_A2",
       "allowedValues": [
@@ -129,34 +129,34 @@
         "description": "The size of the VM."
       }
     },
-    "VMSize2": {
-      "type": "string",
-      "defaultValue": "Standard_D2",
-      "allowedValues": [
-        "Standard_D1",
-        "Standard_D2",
-        "Standard_D3",
-        "Standard_D4",
-        "Standard_D11",
-        "Standard_D12",
-        "Standard_D13",
-        "Standard_A1",
-        "Standard_A2",
-        "Standard_A3",
-        "Standard_A4",
-        "Standard_A5"
-      ],
-      "metadata": {
-        "description": "The size of the VM."
-      }
-    },
+    //"VMSize2": {
+    //  "type": "string",
+    //  "defaultValue": "Standard_D2",
+    //  "allowedValues": [
+    //    "Standard_D1",
+    //    "Standard_D2",
+    //    "Standard_D3",
+    //    "Standard_D4",
+    //    "Standard_D11",
+    //    "Standard_D12",
+    //    "Standard_D13",
+    //    "Standard_A1",
+    //    "Standard_A2",
+    //    "Standard_A3",
+    //    "Standard_A4",
+    //    "Standard_A5"
+    //  ],
+    //  "metadata": {
+    //    "description": "The size of the VM."
+    //  }
+    //},
     "_artifactsLocation": {
       "type": "string",
       "metadata": {
         "group": "Infrastructure settings",
         "description": "Change this value to your repo name if deploying from a fork"
       },
-      "defaultValue": "https://raw.githubusercontent.com/djnavarrete/paragondev/master/Resources"
+      "defaultValue": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources"
     },
     "_artifactsLocationSasToken": {
       "type": "securestring",
@@ -176,7 +176,7 @@
       "metadata": {
         "description": "Use a new or existing storage account"
       },
-      "defaultValue": "new"
+      "defaultValue": "existing"
     },
     "storageAcctResourceGroup": {
       "type": "string",
@@ -190,8 +190,7 @@
       "type": "string",
       "metadata": {
         "description": "Name of storage Account for VHD placement."
-      },
-      "defaultValue": "[tolower(concat(parameters('CustomerName'),'sa'))]"
+      }
     },
     "storageAcctContainerName": {
       "type": "string",
@@ -318,10 +317,10 @@
       "ResourceGroup": "[parameters('storageAcctResourceGroup')]"
     },
     "PIPObject1": {
-      "Name": "[tolower(concat(parameters('VMName7'),'-pip'))]",
+      "Name": "[tolower(concat(parameters('VMName'),'-pip'))]",
       "AllocationMethod": "Static",
-      //      "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName7'),'-pip'))]"
-      "DnsLabelPrefix": "[tolower(concat(parameters('VMName7'),'-pip'))]"
+      //      "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName'),'-pip'))]"
+      "DnsLabelPrefix": "[tolower(concat(parameters('VMName'),'-pip'))]"
     },
     //"PIPObject2": {
     //  "Name": "[tolower(concat(parameters('VMName2'),'-pip'))]",
@@ -329,10 +328,10 @@
     //  "DnsLabelPrefix": "[tolower(concat(parameters('CustomerName'),parameters('VMName2'),'-pip'))]"
     //},
     "LBObject1": {
-      "Name": "[concat(parameters('VMName7'),'-LB')]",
-      "FrontEndName": "[concat(parameters('VMName7'),'-publicFrontEnd')]",
+      "Name": "[concat(parameters('VMName'),'-LB')]",
+      "FrontEndName": "[concat(parameters('VMName'),'-publicFrontEnd')]",
       "PIPName": "[variables('PIPObject1').Name]",
-      "BackEndName": "[concat(parameters('VMName7'),'-BackEnd')]",
+      "BackEndName": "[concat(parameters('VMName'),'-BackEnd')]",
       "FrontEndPort": "[parameters('frontEndPort')]",
       "BackEndPort": "[parameters('backEndPort')]"
     },
@@ -435,7 +434,7 @@
 
     //},
     "NICObject7": {
-      "Name": "[concat(parameters('VMName7'),'-Nic')]",
+      "Name": "[concat(parameters('VMName'),'-Nic')]",
       "PublicIPAddressName": "[variables('PIPObject1').Name]",
       "subnetRef": "[variables('subnetRef')]"
       //"subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]",
@@ -529,7 +528,7 @@
     //},
     //"VMObject2": {
     //  "Name": "[parameters('VMName2')]",
-    //  "Size": "[parameters('VMSize1')]",
+    //  "Size": "[parameters('VMSize')]",
     //  //     "ASName": "[variables('ASObject2').Name]",
     //  "nicName": "[variables('NICObject2').Name]",
     //  "adminUserName": "[parameters('adminUsername')]",
@@ -546,7 +545,7 @@
     //},
     //"VMObject3": {
     //  "Name": "[parameters('VMName3')]",
-    //  "Size": "[parameters('VMSize1')]",
+    //  "Size": "[parameters('VMSize')]",
     //  //     "ASName": "[variables('ASObject1').Name]",
     //  "nicName": "[variables('NICObject3').Name]",
     //  "adminUserName": "[parameters('adminUsername')]",
@@ -561,7 +560,7 @@
     //},
     //"VMObject4": {
     //  "Name": "[parameters('VMName4')]",
-    //  "Size": "[parameters('VMSize1')]",
+    //  "Size": "[parameters('VMSize')]",
     //  //     "ASName": "[variables('ASObject2').Name]",
     //  "nicName": "[variables('NICObject4').Name]",
     //  "adminUserName": "[parameters('adminUsername')]",
@@ -575,7 +574,7 @@
     //},
     //"VMObject5": {
     //  "Name": "[parameters('VMName5')]",
-    //  "Size": "[parameters('VMSize1')]",
+    //  "Size": "[parameters('VMSize')]",
     //  //     "ASName": "[variables('ASObject1').Name]",
     //  "nicName": "[variables('NICObject5').Name]",
     //  "adminUserName": "[parameters('adminUsername')]",
@@ -589,7 +588,7 @@
     //},
     //"VMObject6": {
     //  "Name": "[parameters('VMName6')]",
-    //  "Size": "[parameters('VMSize1')]",
+    //  "Size": "[parameters('VMSize')]",
     //  //     "ASName": "[variables('ASObject2').Name]",
     //  "nicName": "[variables('NICObject6').Name]",
     //  "adminUserName": "[parameters('adminUsername')]",
@@ -603,8 +602,8 @@
 
     //},
     "VMObject7": {
-      "Name": "[parameters('VMName7')]",
-      "Size": "[parameters('VMSize1')]",
+      "Name": "[parameters('VMName')]",
+      "Size": "[parameters('VMSize')]",
       //     "ASName": "[variables('ASObject1').Name]",
       "nicName": "[variables('NICObject7').Name]",
       "adminUserName": "[parameters('adminUsername')]",
@@ -618,7 +617,7 @@
     }
     //"VMObject8": {
     //  "Name": "[parameters('VMName8')]",
-    //  "Size": "[parameters('VMSize1')]",
+    //  "Size": "[parameters('VMSize')]",
     //  //     "ASName": "[variables('ASObject2').Name]",
     //  "nicName": "[variables('NICObject8').Name]",
     //  "adminUserName": "[parameters('adminUsername')]",
@@ -632,7 +631,7 @@
     //},
     //"VMObject9": {
     //  "Name": "[parameters('VMName9')]",
-    //  "Size": "[parameters('VMSize1')]",
+    //  "Size": "[parameters('VMSize')]",
     //  //    "ASName": "[variables('ASObject2').Name]",
     //  "nicName": "[variables('NICObject9').Name]",
     //  "adminUserName": "[parameters('adminUsername')]",
@@ -646,7 +645,7 @@
     //},
     //"VMObject10": {
     //  "Name": "[parameters('VMName10')]",
-    //  "Size": "[parameters('VMSize1')]",
+    //  "Size": "[parameters('VMSize')]",
     //  //    "ASName": "[variables('ASObject2').Name]",
     //  "nicName": "[variables('NICObject10').Name]",
     //  "adminUserName": "[parameters('adminUsername')]",
@@ -660,7 +659,7 @@
     //},
     //"VMObject11": {
     //  "Name": "[parameters('VMName11')]",
-    //  "Size": "[parameters('VMSize1')]",
+    //  "Size": "[parameters('VMSize')]",
     //  //    "ASName": "[variables('ASObject2').Name]",
     //  "nicName": "[variables('NICObject11').Name]",
     //  "adminUserName": "[parameters('adminUsername')]",
@@ -1452,7 +1451,7 @@
 //            "comments": "Join domain - JsonADDomainExtension",
 //            "apiVersion": "2015-06-15",
 //            "type": "Microsoft.Compute/virtualMachines/extensions",
-//            "name": "[concat(parameters('VMName7'),'/joindomain')]",
+//            "name": "[concat(parameters('VMName'),'/joindomain')]",
 //            "location": "[resourceGroup().location]",
 //            "properties": {
 //                "publisher": "Microsoft.Compute",
