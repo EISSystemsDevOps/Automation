@@ -438,7 +438,8 @@
       "Name": "[concat(parameters('VMName'),'-Nic')]",
       "PublicIPAddressName": "[variables('PIPObject1').Name]",
       "subnetRef": "[variables('subnetRef')]",
-      "LoadBalancerName": "[concat(parameters('VMName'),'-LB')]"
+      "LoadBalancerName": "[concat(parameters('VMName'),'-LB')]",
+      "LoadBalancerBackEndName": "[variables('LBObject1').BackEndName]"
       //"subnetRef": "[reference(resourceId(variables('VNetObject').ResourceGroup,'Microsoft.Network/virtualNetworks/subnets', variables('VNetObject').VnetName, variables('VNetObject').subnet2Name),'2015-06-15')]",
     },
     //"NICObject8": {

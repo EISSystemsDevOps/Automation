@@ -4,7 +4,7 @@
   "parameters": {
     "NICObject": {
       //NICObject requires following properties:
-      //Name // PublicIPAddressName // SubnetRef //LoadBalancerName 
+      //Name // PublicIPAddressName // SubnetRef //LoadBalancerName //LoadBalancerBackEndName 
       "type": "object",
       "metadata": {
         "description": "object containing network interface details."
@@ -13,7 +13,7 @@
   },
   "variables": {
     "loadBalancerName": "[parameters('NICObject').LoadBalancerName]",
-    "loadBalancerBackEndName": "[parameters('NICOBject').LoadBalancerBackEndName]",
+    "loadBalancerBackEndName": "[parameters('NICObject').LoadBalancerBackEndName]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]"
   },
   "resources": [
