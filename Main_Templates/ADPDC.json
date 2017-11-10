@@ -49,27 +49,27 @@
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
       }
     },
-    //"VMSize1": {
-    //  "type": "string",
-    //  "defaultValue": "Standard_D1",
-    //  "allowedValues": [
-    //    "Standard_D1",
-    //    "Standard_D2",
-    //    "Standard_D3",
-    //    "Standard_D4",
-    //    "Standard_D11",
-    //    "Standard_D12",
-    //    "Standard_D13",
-    //    "Standard_A1",
-    //    "Standard_A2",
-    //    "Standard_A3",
-    //    "Standard_A4",
-    //    "Standard_A5"
-    //  ],
-    //  "metadata": {
-    //    "description": "The size of the VM."
-    //  }
-    //},
+    "VMSize1": {
+      "type": "string",
+      "defaultValue": "Standard_A2_v2",
+      "allowedValues": [
+        "Standard_D1",
+        "Standard_D2",
+        "Standard_D3",
+        "Standard_D4",
+        "Standard_D11",
+        "Standard_D12",
+        "Standard_D13",
+        "Standard_A1",
+        "Standard_A2",
+        "Standard_A3",
+        "Standard_A4",
+        "Standard_A5"
+      ],
+      "metadata": {
+        "description": "The size of the VM."
+      }
+    },
     //"VMSize2": {
     //  "type": "string",
     //  "defaultValue": "Standard_D1",
@@ -125,13 +125,6 @@
         "description": "Resource Group for storage account for VHD placement. Only needed if using existing storage account"
       },
       "defaultValue": ""
-    },
-    "VMSize1": {
-      "type": "string",
-      "metadata": {
-        "description": "Azure VM Size"
-      },
-      "defaultValue": "Standard_A2_v2"
     },
     "storageAcctName": {
       "type": "string",
