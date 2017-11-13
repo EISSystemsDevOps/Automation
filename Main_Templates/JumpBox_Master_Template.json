@@ -718,6 +718,195 @@
         }
       }
     },
+    //{
+    //"name": "PublicIPResource2",
+    //"type": "Microsoft.Resources/deployments",
+    //"apiVersion": "2016-02-01",
+    //"dependsOn": [],
+    //"properties": {
+    //    "mode": "Incremental",
+    //  "templateLink": {
+    //   //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //    "uri": "[variables('PublicIPURI')]",
+    //    "contentVersion": "1.0.0.0"
+    //  },
+    //  "parameters": {
+    //    "PIPObject": {
+    //      //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+    //      "value": "[variables('PIPObject2')]"
+    //    }
+    //  }
+    //}
+    //},
+
+
+    //{
+    //  "name": "VirtualNetworkResource",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('VNetURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+
+    //      "VNetObject": {
+    //        "value": "[variables('VNetObject')]"
+    //      }
+    //    }
+    //  }
+    //},
+    //{
+    //  "name": "NetworkInterfaceResource1",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]",
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]",
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource1')]"
+
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('NetworkInterfaceStaticURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+
+    //      "NICObject": {
+    //        "value": "[variables('NICObject1')]"
+    //      }
+    //    }
+    //  }
+    //},
+    //{
+    //  "name": "NetworkInterfaceResource2",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [
+    //           "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]"
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]" //,
+    //    //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
+
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('NetworkInterfaceDNSURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+
+    //      "NICObject": {
+    //        "value": "[variables('NICObject2')]"
+    //      }
+    //    }
+    //  }
+    //},
+    //{
+    //  "name": "NetworkInterfaceResource3",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [
+    //           "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]"
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]",
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]",
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource1')]"
+
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('NetworkInterfaceDNSURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+
+    //      "NICObject": {
+    //        "value": "[variables('NICObject3')]"
+    //      }
+    //    }
+    //  }
+    //},
+    //{
+    //  "name": "NetworkInterfaceResource4",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [
+    //           "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]"
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]" //,
+    //    //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
+
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('NetworkInterfaceDNSURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+
+    //      "NICObject": {
+    //        "value": "[variables('NICObject4')]"
+    //      }
+    //    }
+    //  }
+    //},
+
+    //{
+    //  "name": "NetworkInterfaceResource5",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [
+    //            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]"
+    //           //"[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]",
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]",
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource1')]"
+
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('NetworkInterfaceDNSURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+
+    //      "NICObject": {
+    //        "value": "[variables('NICObject5')]"
+    //      }
+    //    }
+    //  }
+    //},
+    //{
+    //  "name": "NetworkInterfaceResource6",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [
+    //            "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]"
+
+    //           //       "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]",
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]" //,
+    //    //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
+
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('NetworkInterfaceDNSURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+
+    //      "NICObject": {
+    //        "value": "[variables('NICObject6')]"
+    //      }
+    //    }
+    //  }
+    //},
     {
       "name": "NetworkInterfaceResource7",
       "type": "Microsoft.Resources/deployments",
@@ -742,6 +931,109 @@
         }
       }
     },
+    //{
+    //  "name": "NetworkInterfaceResource8",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [
+    //              "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]"
+
+    //    //       "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]",
+    //    //       "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]" //,
+    //    //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
+
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('NetworkInterfaceDNSURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+
+    //      "NICObject": {
+    //        "value": "[variables('NICObject8')]"
+    //      }
+    //    }
+    //  }
+    //},
+    //{
+    //  "name": "NetworkInterfaceResource9",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [
+    //    "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]"
+
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]",
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]",
+    //    //"[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource1')]"
+
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('NetworkInterfaceDNSURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+
+    //      "NICObject": {
+    //        "value": "[variables('NICObject9')]"
+    //      }
+    //    }
+    //  }
+    //},
+    //{
+    //  "name": "NetworkInterfaceResource10",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [
+    //                  "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]"
+    //     //       "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]",
+    //    // "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]" //,
+    //    //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
+
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('NetworkInterfaceDNSURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+
+    //      "NICObject": {
+    //        "value": "[variables('NICObject10')]"
+    //      }
+    //    }
+    //  }
+    //},
+    //{
+    //  "name": "NetworkInterfaceResource11",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [
+    //                  "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]"
+    //     //       "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]",
+    //    // "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]" //,
+    //    //       "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource2')]"
+
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('NetworkInterfaceDNSURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+
+    //      "NICObject": {
+    //        "value": "[variables('NICObject11')]"
+    //      }
+    //    }
+    //  }
+    //},
+
     {
       "name": "LoadBalancerResource1",
       "type": "Microsoft.Resources/deployments",
@@ -764,6 +1056,215 @@
         }
       }
     },
+    // {
+    //  "name": "LoadBalancerResource2",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [
+    //        "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource2')]"
+    //  ],
+    //  "properties": {
+    //      "mode": "Incremental",
+    //    "templateLink": {
+    //     //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //      "uri": "[variables('LoadBalancerURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "LBObject": {
+    //        //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+    //        "value": "[variables('LBObject2')]"
+    //      }
+    //    }
+    //  }
+    //},
+
+
+
+    //{
+    //  "name": "NetworkSecurityGroupResource1",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  //    "dependsOn": [
+    //  //         "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"
+    //  //   ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //      "uri": "[variables('NetworkSecurityGroupURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "NSGObject": {
+    //        //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+    //        "value": "[variables('NSGObject1')]"
+    //      }
+    //    }
+    //  }
+    //},
+    //{
+    //  "name": "NetworkSecurityGroupResource2",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  //    "dependsOn": [
+    //  //         "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource')]"
+    //  //   ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+    //      "uri": "[variables('NetworkSecurityGroupURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "NSGObject": {
+    //        //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+    //        "value": "[variables('NSGObject2')]"
+    //      }
+    //    }
+    //  }
+    //},
+
+
+    //{
+    //  "name": "VMResource1",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2015-01-01",
+    //  "dependsOn": [
+    //    "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+    //    "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]",
+    //    //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //      "uri": "[variables('VMObject1').URI]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "VMObject": {
+    //        "value": "[variables('VMObject1')]"
+    //      }
+    //    }
+    //  }
+    //},
+    //{
+    //  "name": "VMResource2",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2015-01-01",
+    //  "dependsOn": [
+    //    "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+    //    "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource2')]",
+    //    //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //      "uri": "[variables('VMObject2').URI]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "VMObject": {
+    //        "value": "[variables('VMObject2')]"
+    //      }
+    //    }
+    //  }
+    //},
+    //{
+    //  "name": "VMResource3",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2015-01-01",
+    //  "dependsOn": [
+    //    "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+    //    "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource3')]",
+    //    //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //      "uri": "[variables('VMObject3').URI]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "VMObject": {
+    //        "value": "[variables('VMObject3')]"
+    //      }
+    //    }
+    //  }
+    //},
+    //    {
+    //      "name": "VMResource4",
+    //      "type": "Microsoft.Resources/deployments",
+    //      "apiVersion": "2015-01-01",
+    //      "dependsOn": [
+    //        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+    //        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource4')]",
+    ////        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+    //      ],
+    //      "properties": {
+    //        "mode": "Incremental",
+    //        "templateLink": {
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          "uri": "[variables('VMObject4').URI]",
+    //          "contentVersion": "1.0.0.0"
+    //        },
+    //        "parameters": {
+    //          "VMObject": {
+    //            "value": "[variables('VMObject4')]"
+    //          }
+    //        }
+    //      }
+    //    },
+    //    {
+    //      "name": "VMResource5",
+    //      "type": "Microsoft.Resources/deployments",
+    //      "apiVersion": "2015-01-01",
+    //      "dependsOn": [
+    //        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+    //        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource5')]",
+    ////        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+    //      ],
+    //      "properties": {
+    //        "mode": "Incremental",
+    //        "templateLink": {
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          "uri": "[variables('VMObject5').URI]",
+    //          "contentVersion": "1.0.0.0"
+    //        },
+    //        "parameters": {
+    //          "VMObject": {
+    //            "value": "[variables('VMObject5')]"
+    //          }
+    //        }
+    //      }
+    //    },
+    //    {
+    //      "name": "VMResource6",
+    //      "type": "Microsoft.Resources/deployments",
+    //      "apiVersion": "2015-01-01",
+    //      "dependsOn": [
+    //        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+    //        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource6')]",
+    ////        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+    //      ],
+    //      "properties": {
+    //        "mode": "Incremental",
+    //        "templateLink": {
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          "uri": "[variables('VMObject6').URI]",
+    //          "contentVersion": "1.0.0.0"
+    //        },
+    //        "parameters": {
+    //          "VMObject": {
+    //            "value": "[variables('VMObject6')]"
+    //          }
+    //        }
+    //      }
+    //    },
     {
       "name": "VMResource7",
       "type": "Microsoft.Resources/deployments",
@@ -786,7 +1287,169 @@
           }
         }
       }
-    }
+    },
+    //    {
+    //      "name": "VMResource8",
+    //      "type": "Microsoft.Resources/deployments",
+    //      "apiVersion": "2015-01-01",
+    //      "dependsOn": [
+    //        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+    //        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource8')]",
+    //        //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+    //      ],
+    //      "properties": {
+    //        "mode": "Incremental",
+    //        "templateLink": {
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          "uri": "[variables('VMObject8').URI]",
+    //          "contentVersion": "1.0.0.0"
+    //        },
+    //        "parameters": {
+    //          "VMObject": {
+    //            "value": "[variables('VMObject8')]"
+    //          }
+    //        }
+    //      }
+    //    },
+
+    //    {
+    //      "name": "VMResource9",
+    //      "type": "Microsoft.Resources/deployments",
+    //      "apiVersion": "2015-01-01",
+    //      "dependsOn": [
+    //        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+    //        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource9')]",
+    ////        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+    //      ],
+    //      "properties": {
+    //        "mode": "Incremental",
+    //        "templateLink": {
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          "uri": "[variables('VMObject9').URI]",
+    //          "contentVersion": "1.0.0.0"
+    //        },
+    //        "parameters": {
+    //          "VMObject": {
+    //            "value": "[variables('VMObject9')]"
+    //          }
+    //        }
+    //      }
+    //    },
+    //    {
+    //      "name": "VMResource10",
+    //      "type": "Microsoft.Resources/deployments",
+    //      "apiVersion": "2015-01-01",
+    //      "dependsOn": [
+    //        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+    //        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource10')]",
+    ////        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+    //      ],
+    //      "properties": {
+    //        "mode": "Incremental",
+    //        "templateLink": {
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          "uri": "[variables('VMObject10').URI]",
+    //          "contentVersion": "1.0.0.0"
+    //        },
+    //        "parameters": {
+    //          "VMObject": {
+    //            "value": "[variables('VMObject10')]"
+    //          }
+    //        }
+    //      }
+    //    },
+    //    {
+    //      "name": "VMResource11",
+    //      "type": "Microsoft.Resources/deployments",
+    //      "apiVersion": "2015-01-01",
+    //      "dependsOn": [
+    //        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+    //        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource11')]",
+    ////        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+    //      ],
+    //      "properties": {
+    //        "mode": "Incremental",
+    //        "templateLink": {
+    //          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //          "uri": "[variables('VMObject11').URI]",
+    //          "contentVersion": "1.0.0.0"
+    //        },
+    //        "parameters": {
+    //          "VMObject": {
+    //            "value": "[variables('VMObject11')]"
+    //          }
+    //        }
+    //      }
+    //    },
+
+    //{
+    //   "type": "Microsoft.Compute/virtualMachines/extensions",
+    //   "name": "[concat(parameters('VMName1'),'/CreateADPDC')]",
+    //   "apiVersion": "2015-06-15",
+    //   "location": "[resourceGroup().location]",
+    //   "dependsOn": [
+    //     "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+    //   ],
+    //   "properties": {
+    //     "publisher": "Microsoft.Powershell",
+    //     "type": "DSC",
+    //     "typeHandlerVersion": "2.19",
+    //     "autoUpgradeMinorVersion": true,
+    //     "settings": {
+    //       "modulesUrl": "[concat(parameters('_artifactsLocation'), '/CreateADPDC.zip', parameters('_artifactsLocationSasToken'))]",
+    //       "SasToken": "",
+    //       "configurationFunction": "CreateADPDC.ps1\\CreateADPDC",
+    //       "wmfVersion": "4.0",
+    //       "Properties": {
+    //         "DomainName": "[variables('domainName')]",
+    //             "AdminCreds": {
+    //               "UserName": "[parameters('adminUsername')]",
+    //               "Password": "PrivateSettingsRef:AdminPassword"
+    //             }
+    //       }
+    //     },
+    //     "protectedSettings": {
+    //       "Items": {
+    //         "AdminPassword": "[parameters('adminPassword')]"
+    //           }
+    //     }
+    //   }
+    // }//,
+
+    //{
+    //   "type": "Microsoft.Compute/virtualMachines/extensions",
+    //   "name": "[concat(parameters('VMName1'),'/CreateADPDC')]",
+    //   "apiVersion": "2015-06-15",
+    //   "location": "[resourceGroup().location]",
+    //   "dependsOn": [
+    //     "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+    //   ],
+    //   "properties": {
+    //     "publisher": "Microsoft.Powershell",
+    //     "type": "DSC",
+    //     "typeHandlerVersion": "2.19",
+    //     "autoUpgradeMinorVersion": true,
+    //     "settings": {
+    //       "modulesUrl": "[variables('adPDCModulesURL')]",
+    //       "SasToken": "",
+    //       "configurationFunction": "[variables('adPDCConfigurationFunction')]",
+    //       "wmfVersion": "4.0",
+    //       "Properties": {
+    //         "DomainName": "[variables('domainName')]",
+    //             "AdminCreds": {
+    //               "UserName": "[parameters('adminUsername')]",
+    //               "Password": "PrivateSettingsRef:AdminPassword"
+    //             }
+    //       }
+    //     },
+    //     "protectedSettings": {
+    //       "Items": {
+    //         "AdminPassword": "[parameters('adminPassword')]"
+    //           }
+    //     }
+    //   }
+    // }//,
+
 //        {
 //            "comments": "Join domain - JsonADDomainExtension",
 //            "apiVersion": "2015-06-15",
