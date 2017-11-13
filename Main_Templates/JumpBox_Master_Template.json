@@ -145,7 +145,7 @@
       }
     }
 
-  },//End of Parameters
+  }, //End of Parameters
 
 
   "variables": {
@@ -582,6 +582,7 @@
 
   },
   "resources": []
+}
   //"resources": [
   //  {
   //    "name": "StorageAccountResource",
@@ -693,4 +694,4 @@
   //}
 
   //]
-}
+
