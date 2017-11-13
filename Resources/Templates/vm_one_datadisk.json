@@ -103,7 +103,7 @@
             //"storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', parameters('VMObject').storageAccountName)).primaryEndpoints.blob]"
           }
         }
-      }
+      } //End of VM properties
     }  //End of VM resource
   ],
   "outputs": {
