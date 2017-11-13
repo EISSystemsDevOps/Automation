@@ -581,27 +581,27 @@
 
 
   },
-  "resources": []
-  //  {
-  //    "name": "StorageAccountResource",
-  //    "type": "Microsoft.Resources/deployments",
-  //    "apiVersion": "2016-02-01",
-  //    "dependsOn": [],
-  //    "properties": {
-  //      "mode": "Incremental",
-  //      "templateLink": {
-  //        "uri": "[variables('StorageAccountURI')]",
-  //        "contentVersion": "1.0.0.0"
-  //      },
-  //      "parameters": {
-  //        "StorageAccountObject": {
-  //          //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
-  //          "value": "[variables('StorageAccountObject')]"
-  //        }
-  //      }
-  //    }
-  //  }
-  //]
+  "resources": [
+    {
+      "name": "StorageAccountResource",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('StorageAccountURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "StorageAccountObject": {
+            //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+            "value": "[variables('StorageAccountObject')]"
+          }
+        }
+      }
+    }
+  ]
 
   //"resources": [
   //  {
