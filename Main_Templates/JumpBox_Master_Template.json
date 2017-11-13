@@ -666,7 +666,7 @@
           }
         }
       }
-    },
+    }
     //{
     //  "name": "VMResource7",
     //  "type": "Microsoft.Resources/deployments",
