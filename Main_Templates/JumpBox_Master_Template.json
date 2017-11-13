@@ -508,8 +508,6 @@
     //  "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
     //  "URI": "[variables('VMOneDataDiskUri')]",
     //  "DataDiskSizeGB": "80"
-
-
     //},
     "VMObject7": {
       "Name": "[parameters('VMName')]",
@@ -523,7 +521,6 @@
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
       "DataDiskSizeGB": "80"
-
     }
     //"VMObject8": {
     //  "Name": "[parameters('VMName8')]",
@@ -670,29 +667,29 @@
         }
       }
     },
-    {
-      "name": "VMResource7",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource7')]"
-        //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
-          "uri": "[variables('VMObject7').URI]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "VMObject": {
-            "value": "[variables('VMObject7')]"
-          }
-        }
-      }
-    }
+    //{
+    //  "name": "VMResource7",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2015-01-01",
+    //  "dependsOn": [
+    //    "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+    //    "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource7')]"
+    //    //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+    //      "uri": "[variables('VMObject7').URI]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "VMObject": {
+    //        "value": "[variables('VMObject7')]"
+    //      }
+    //    }
+    //  }
+    //}
   ] //,
   //"outputs": {
   //"hostname": {
