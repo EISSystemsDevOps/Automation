@@ -619,6 +619,7 @@
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMOneDataDiskUri')]",
       "DataDiskSizeGB": "80"
+
     }
     //"VMObject8": {
     //  "Name": "[parameters('VMName8')]",
