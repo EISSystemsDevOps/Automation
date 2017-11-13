@@ -89,6 +89,12 @@
         "description": "Virtual Machine name."
       }
     },
+    "DBSVMName": {
+      "type": "string",
+      "metadata": {
+        "description": "Virtual Machine name."
+      }
+    },
     "adminUsername": {
       "type": "string",
       "metadata": {
