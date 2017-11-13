@@ -29,27 +29,9 @@
     //"ASTemplateURL": "[concat(variables('TemplateRepository'),'/availability_set.json')]"
   },
   "resources": [
-    //     {
-    //   "name": "AvailabilitySetResource",
-    //   "type": "Microsoft.Resources/deployments",
-    //    "apiVersion": "2016-02-01",
-    //    "dependsOn": [],
-    //   "properties": {
-    //        "mode": "Incremental",
-    //        "templateLink": {
-    //           "uri": "",
-    //            "contentVersion": "1.0.0.0"
-    //        },
-    //      "parameters": {
-    //
-    //        "ASName": {
-    //          "value": "[parameters('VMObject').ASName]"
-    //       }
-    //     }
-    //   }
-    //},
 
-    {
+
+   {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('VMObject').Name]",
@@ -122,7 +104,7 @@
           }
         }
       }
-    }
+    }  //End of VM resource
   ],
   "outputs": {
     //"hostname": {
