@@ -602,7 +602,7 @@
       }
     }
   ]
-}
+
   //"resources": [
   //  {
   //    "name": "StorageAccountResource",
@@ -713,4 +713,5 @@
   //  }
   //}
 
-  //]}
+  //]
+}
