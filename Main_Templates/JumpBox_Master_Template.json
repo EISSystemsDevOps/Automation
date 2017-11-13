@@ -8,31 +8,6 @@
         "description": "Virtual Machine name."
       }
     },
-    //"VMName8": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Virtual Machine name."
-    //  }
-    //},
-
-    //"VMName9": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Virtual Machine name."
-    //  }
-    //},
-    //"VMName10": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Virtual Machine name."
-    //  }
-    //},
-    //"VMName11": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Virtual Machine name."
-    //  }
-    //},
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -45,12 +20,6 @@
         "description": "Password for the Virtual Machine."
       }
     },
-    //"dnsLabelPrefix": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
-    //  }
-    //},
     "windowsOSVersion": {
       "type": "string",
       "defaultValue": "2012-R2-Datacenter",
@@ -87,27 +56,7 @@
         "description": "The size of the VM."
       }
     },
-    //"VMSize2": {
-    //  "type": "string",
-    //  "defaultValue": "Standard_D2",
-    //  "allowedValues": [
-    //    "Standard_D1",
-    //    "Standard_D2",
-    //    "Standard_D3",
-    //    "Standard_D4",
-    //    "Standard_D11",
-    //    "Standard_D12",
-    //    "Standard_D13",
-    //    "Standard_A1",
-    //    "Standard_A2",
-    //    "Standard_A3",
-    //    "Standard_A4",
-    //    "Standard_A5"
-    //  ],
-    //  "metadata": {
-    //    "description": "The size of the VM."
-    //  }
-    //},
+
     "_artifactsLocation": {
       "type": "string",
       "metadata": {
