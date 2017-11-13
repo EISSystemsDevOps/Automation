@@ -2,48 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    //"CustomerName": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Customer  name."
-    //  }
-    //},
-    //"VMName1": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Virtual Machine name."
-    //  }
-    //},
-    //"VMName2": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Virtual Machine name."
-    //  }
-    //},
-    //"VMName3": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Virtual Machine name."
-    //  }
-    //},
-    //"VMName4": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Virtual Machine name."
-    //  }
-    //},
-    //"VMName5": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Virtual Machine name."
-    //  }
-    //},
-    //"VMName6": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Virtual Machine name."
-    //  }
-    //},
     "VMName": {
       "type": "string",
       "metadata": {
