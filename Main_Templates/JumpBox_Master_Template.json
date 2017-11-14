@@ -601,160 +601,95 @@
         }
       }
     },
-    //{
-    //  "name": "LoadBalancerResource1",
-    //  "type": "Microsoft.Resources/deployments",
-    //  "apiVersion": "2016-02-01",
-    //  "dependsOn": [
-    //    "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]"
-    //  ],
-    //  "properties": {
-    //    "mode": "Incremental",
-    //    "templateLink": {
-    //      //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-    //      "uri": "[variables('LoadBalancerURI')]",
-    //      "contentVersion": "1.0.0.0"
-    //    },
-    //    "parameters": {
-    //      "LBObject": {
-    //        //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
-    //        "value": "[variables('LBObject1')]"
-    //      }
-    //    }
-    //  }
-    //},
+    {
+      "name": "LoadBalancerResource1",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+          "uri": "[variables('LoadBalancerURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "LBObject": {
+            //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+            "value": "[variables('LBObject1')]"
+          }
+        }
+      }
+    },
 
-    //{
-    //  "name": "PublicIPResource1",
-    //  "type": "Microsoft.Resources/deployments",
-    //  "apiVersion": "2016-02-01",
-    //  "dependsOn": [],
-    //  "properties": {
-    //    "mode": "Incremental",
-    //    "templateLink": {
-    //      //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-    //      "uri": "[variables('PublicIPURI')]",
-    //      "contentVersion": "1.0.0.0"
-    //    },
-    //    "parameters": {
-    //      "PIPObject": {
-    //        //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
-    //        "value": "[variables('PIPObject1')]"
-    //      }
-    //    }
-    //  }
-    //}
+    {
+      "name": "PublicIPResource1",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
+          "uri": "[variables('PublicIPURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "PIPObject": {
+            //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
+            "value": "[variables('PIPObject1')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "NetworkInterfaceResource7",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+        //  "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]",
+        // "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource1')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('NetworkInterfaceLBURI')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+          "NICObject": {
+            "value": "[variables('NICObject7')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "VMResource7",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource7')]"
+        //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
+          "uri": "[variables('VMObject7').URI]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "VMObject": {
+            "value": "[variables('VMObject7')]"
+          }
+        }
+      }
+    }
   ]
-
-  //"resources": [
-  //  {
-  //    "name": "StorageAccountResource",
-  //    "type": "Microsoft.Resources/deployments",
-  //    "apiVersion": "2016-02-01",
-  //    "dependsOn": [],
-  //    "properties": {
-  //      "mode": "Incremental",
-  //      "templateLink": {
-  //        "uri": "[variables('StorageAccountURI')]",
-  //        "contentVersion": "1.0.0.0"
-  //      },
-  //      "parameters": {
-  //        "StorageAccountObject": {
-  //          //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
-  //          "value": "[variables('StorageAccountObject')]"
-  //        }
-  //      }
-  //    }
-  //  },
-  //{
-  //  "name": "PublicIPResource1",
-  //  "type": "Microsoft.Resources/deployments",
-  //  "apiVersion": "2016-02-01",
-  //  "dependsOn": [],
-  //  "properties": {
-  //    "mode": "Incremental",
-  //    "templateLink": {
-  //      //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-  //      "uri": "[variables('PublicIPURI')]",
-  //      "contentVersion": "1.0.0.0"
-  //    },
-  //    "parameters": {
-  //      "PIPObject": {
-  //        //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
-  //        "value": "[variables('PIPObject1')]"
-  //      }
-  //    }
-  //  }
-  //},
-  //{
-  //  "name": "NetworkInterfaceResource7",
-  //  "type": "Microsoft.Resources/deployments",
-  //  "apiVersion": "2016-02-01",
-  //  "dependsOn": [
-  //    //  "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource1')]",
-  //    "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]",
-  //    // "[resourceid('Microsoft.Resources/deployments/', 'VirtualNetworkResource')]",
-  //    "[resourceid('Microsoft.Resources/deployments/', 'LoadBalancerResource1')]"
-  //  ],
-  //  "properties": {
-  //    "mode": "Incremental",
-  //    "templateLink": {
-  //      "uri": "[variables('NetworkInterfaceLBURI')]",
-  //      "contentVersion": "1.0.0.0"
-  //    },
-  //    "parameters": {
-
-  //      "NICObject": {
-  //        "value": "[variables('NICObject7')]"
-  //      }
-  //    }
-  //  }
-  //},
-  //{
-  //  "name": "LoadBalancerResource1",
-  //  "type": "Microsoft.Resources/deployments",
-  //  "apiVersion": "2016-02-01",
-  //  "dependsOn": [
-  //    "[resourceid('Microsoft.Resources/deployments/', 'PublicIPResource1')]"
-  //  ],
-  //  "properties": {
-  //    "mode": "Incremental",
-  //    "templateLink": {
-  //      //"uri": "[concat(variables('TemplateUrl'),'/','availability_set.json', parameters('_artifactsLocationSasToken'))]",
-  //      "uri": "[variables('LoadBalancerURI')]",
-  //      "contentVersion": "1.0.0.0"
-  //    },
-  //    "parameters": {
-  //      "LBObject": {
-  //        //"value": "[concat(parameters('VMName1'),'-','availabilityset')]"
-  //        "value": "[variables('LBObject1')]"
-  //      }
-  //    }
-  //  }
-  //}
-  //{
-  //  "name": "VMResource7",
-  //  "type": "Microsoft.Resources/deployments",
-  //  "apiVersion": "2015-01-01",
-  //  "dependsOn": [
-  //    "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-  //    "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource7')]"
-  //    //        "[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource1')]"
-  //  ],
-  //  "properties": {
-  //    "mode": "Incremental",
-  //    "templateLink": {
-  //      //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
-  //      "uri": "[variables('VMObject7').URI]",
-  //      "contentVersion": "1.0.0.0"
-  //    },
-  //    "parameters": {
-  //      "VMObject": {
-  //        "value": "[variables('VMObject7')]"
-  //      }
-  //    }
-  //  }
-  //}
-
-  //]
 }
