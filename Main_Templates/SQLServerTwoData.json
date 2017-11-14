@@ -555,11 +555,5 @@
             }
           }
         }
-  ] //,
-  //"outputs": {
-  //"hostname": {
-  // "type": "string",
-  //"value": "[reference(variables('PIPObject').Name).dnsSettings.fqdn]"
-  // }
-  // }
+  ] 
 }
