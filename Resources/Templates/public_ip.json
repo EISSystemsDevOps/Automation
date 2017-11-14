@@ -24,6 +24,6 @@
           "domainNameLabel": "[parameters('PIPObject').DnsLabelPrefix]"
         }
       }
-    } // end of resources
+    }
   ] //end of resources
 }

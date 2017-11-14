@@ -49,7 +49,7 @@
               }
             }
           ] //end of security rules
-        },
-      } //End of resources
+        }
+      }
     ]//end of resources
 }

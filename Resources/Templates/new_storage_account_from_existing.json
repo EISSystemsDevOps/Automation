@@ -50,8 +50,6 @@
           }
         }
       }
-    } // end of get existing resource
+    }
   ] //end of resources
-  ,
-
 }

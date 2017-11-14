@@ -62,6 +62,6 @@
         }
       ]
     }
-  } //end of load balancer resource
+  } 
 ] //end of resources
 }

@@ -81,7 +81,7 @@
             }
           }        
         ]
-      } //end of vnet properties
-    } // end of vnet resource
-  ] //end of resources
+      } 
+    } 
+  ] 
 }
