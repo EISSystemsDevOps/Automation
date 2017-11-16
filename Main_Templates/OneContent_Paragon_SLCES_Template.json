@@ -248,6 +248,13 @@
         "description": "Subnet to deploy VMs into."
       }
     },
+    "SubscriptionID": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "subscription ID referenced by VNet."
+      }
+    },
     "ouPath": {
       "type": "string",
       "defaultValue": "",
