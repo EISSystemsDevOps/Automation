@@ -1942,7 +1942,7 @@
     },
     //Antimalware extension for OCTransAgent
     {
-      "name": "[concat(parameters('OCAgentVMName'),'/IaaSAntimalware')]",
+      "name": "[concat(parameters('OCTransAgentVMName'),'/IaaSAntimalware')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "location": "[resourceGroup().location]",
       "dependsOn": [
