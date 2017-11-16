@@ -223,7 +223,7 @@
       "metadata": {
         "description": "Local AD domain name to be setup."
       },
-      "defaultValue": "SLCES.COM"
+      "defaultValue": "SLCES.MCKESSON.COM"
     },
 
     "VNetRG": {
@@ -371,7 +371,7 @@
     "OCBDIConfigurationFunction": "OC_BDIConfig.ps1\\OC_BDIConfig",
     "OCCaptivaDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/OC_CaptivaConfig.ps1.zip')]",
     "OCCaptivaConfigurationFunction": "OC_CaptivaConfig.ps1\\OC_CaptivaConfig",
-    
+
     "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
     //Template URIs
@@ -672,7 +672,7 @@
       "URI": "[variables('VMOneDataDiskUri')]",
       "DataDiskSizeGB": "80"
     }
-    },
+  },
   "resources": [
 
     {
@@ -1231,7 +1231,321 @@
         }
       }
     },
+    //    DSC Server Config
+    //    OC Release Server
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('OCReleaseVMName'),'/OCReleaseDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('OCReleaseDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('OCReleaseConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
 
+    //    OC Trans Agent
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('OCTransAgentVMName'),'/OCTransAgentDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('OCTransAgentDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('OCTransAgentConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
+    //    OC WEb1
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('OCWeb1VMName'),'/OCWebDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('OCWebDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('OCWebConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
+    //    OC WEb2
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('OCWeb2VMName'),'/OCWebDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('OCWebDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('OCWebConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
+
+    //    OC App1
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('OCApp1VMName'),'/OCAppDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('OCAppDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('OCAppConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
+    //    OC App2
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('OCApp2VMName'),'/OCAppDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('OCAppDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('OCAppConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
+
+    //    OC Agent
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('OCAgentVMName'),'/OCAgentDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('OCAgentDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('OCAgentConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
+
+    //    OC BDI
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('OCBDIVMName'),'/OCBDIDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('OCBDIDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('OCBDIConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
+    //    OC Captiva
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('OCCaptivaVMName'),'/OCCaptivaDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource11')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('OCCaptivaDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('OCCaptivaConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
+
+    //    PN Ntr
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('PNNtrVMName'),'/PNNtrDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource12')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('PNNtrDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('PNNtrConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
+    //    PN Web
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('PNWebVMName'),'/PNWebDscExtension')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource13')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "modulesUrl": "[variables('PNWebDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('PNWebConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
+          },
+          //"wmfVersion": "4.0",
+          "Properties": {
+            "SourcePath": "[parameters('SourcePath')]"
+          }
+        },
+        "protectedSettings": { }
+      }
+    },
     {
       "comments": "Join domain - JsonADDomainExtension",
       "apiVersion": "2015-06-15",
@@ -1593,322 +1907,6 @@
         }
       }
     },
-    //    DSC Server Config
-    //    OC Release Server
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCReleaseVMName'),'/OCReleaseDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('OCReleaseDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('OCReleaseConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-
-    //    OC Trans Agent
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCTransAgentVMName'),'/OCTransAgentDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('OCTransAgentDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('OCTransAgentConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-    //    OC WEb1
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCWeb1VMName'),'/OCWebDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('OCWebDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('OCWebConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-    //    OC WEb2
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCWeb2VMName'),'/OCWebDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('OCWebDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('OCWebConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-
-    //    OC App1
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCApp1VMName'),'/OCAppDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('OCAppDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('OCAppConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-    //    OC App2
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCApp2VMName'),'/OCAppDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('OCAppDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('OCAppConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-
-    //    OC Agent
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCAgentVMName'),'/OCAgentDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('OCAgentDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('OCAgentConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-
-    //    OC BDI
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCBDIVMName'),'/OCBDIDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('OCBDIDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('OCBDIConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-    //    OC Captiva
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCCaptivaVMName'),'/OCCaptivaDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource11')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('OCCaptivaDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('OCCaptivaConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-
-    //    PN Ntr
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('PNNtrVMName'),'/PNNtrDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource12')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('PNNtrDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('PNNtrConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-    //    PN Web
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('PNWebVMName'),'/PNWebDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource13')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('PNWebDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('PNWebConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          //"wmfVersion": "4.0",
-          "Properties": {
-            "SourcePath": "[parameters('SourcePath')]"
-          }
-        },
-        "protectedSettings": { }
-      }
-    },
-
     //Antimalware extension for OCRelease
     {
       "name": "[concat(parameters('OCReleaseVMName'),'/IaaSAntimalware')]",
