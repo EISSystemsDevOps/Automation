@@ -1,6 +1,14 @@
 Configuration OC_CaptivaConfig
 {
-	Node ("localhost")
+  
+  Param (
+         
+         [Parameter(Mandatory=$True)]
+         [String[]]$OCReleaseVMName
+
+        )
+          
+    Node ("localhost")
 	{
 	    #Install File and Storage Services
 		WindowsFeature FileStorageServices
@@ -343,7 +351,7 @@ Configuration OC_CaptivaConfig
  #           ValueType = "Dword"
   #      }
 
-  #Disable Windows Firewall
+<#  #Disable Windows Firewall
   #Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\SharedAccess\Parameters\FirewallPolicy\DomainProfile" -Name “EnableFirewall” -Value 0 -Type "Dword"
         Registry FirewallPolicyDomain
         {
@@ -373,7 +381,7 @@ Configuration OC_CaptivaConfig
             ValueData = "0"
             ValueType = "Dword"
         }
-
+#>
   #Disable UAC
   #Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name “EnableLUA” -Value 0 -Type "Dword"
         Registry EnableLUA
@@ -429,7 +437,7 @@ Configuration OC_CaptivaConfig
   #     }
 
 ########################
-  #Change CDROM Drive to Z:
+<#  #Change CDROM Drive to Z:
 
        Script Set-CDROM
         {
@@ -455,7 +463,7 @@ Configuration OC_CaptivaConfig
            }#End of test script
          GetScript = {$Null}
         }
-
+#>
 ########################
   #Create Desktop Sortcuts
 
@@ -498,8 +506,8 @@ Configuration OC_CaptivaConfig
            {
              $WshShell = New-Object -comObject WScript.Shell
              $Shortcut = $WshShell.CreateShortcut("$env:Public\Desktop\Software.lnk")
-             $Shortcut.TargetPath = "\\ReleaseServer\Software$"
-             $Shortcut.WorkingDirectory = "\\ReleaseServer\Software$"
+             $Shortcut.TargetPath = "\\$OCReleaseVMName\Software$"
+             $Shortcut.WorkingDirectory = "\\$OCReleaseVMName\Software$"
              $Shortcut.Save()
            }
 	
