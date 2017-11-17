@@ -7,7 +7,7 @@
          [String[]]$OCReleaseVMName
 
         )
-    Import-DscResource -ModuleName PSDesiredStateConfiguration , xPendingReboot      
+    Import-DscResource -ModuleName PSDesiredStateConfiguration
     
     Node ("localhost")
 	{
