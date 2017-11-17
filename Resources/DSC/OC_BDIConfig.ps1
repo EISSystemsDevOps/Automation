@@ -24,7 +24,7 @@
 			Ensure = "Present"
 			Name = "File-Services"
 		}
-   #Install .NET Framework 3.5 Features
+  <# #Install .NET Framework 3.5 Features
 		WindowsFeature NETFrameworkFeatures
 		{
 			Ensure = "Present"
@@ -37,7 +37,7 @@
 			Ensure = "Present"
 			Name = "NET-Framework-Core"
         }
-
+#>
 ########################
 
 <#  #Disable Windows Firewall

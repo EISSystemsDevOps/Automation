@@ -40,7 +40,7 @@ Configuration OC_CaptivaConfig
 			Ensure = "Present"
 			Name = "Application-Server"
 		}			
-		#Install .NET Framework 3.5 Features
+<#		#Install .NET Framework 3.5 Features
 		WindowsFeature NETFrameworkFeatures
 		{
 			Ensure = "Present"
@@ -76,6 +76,7 @@ Configuration OC_CaptivaConfig
 			Ensure = "Present"
 			Name = "NET-WCF-Services45"
 		}
+#>
 		#Install NET WCF TCP Port Sharing45
 		WindowsFeature NETWCFTCPPortSharing45
 		{
