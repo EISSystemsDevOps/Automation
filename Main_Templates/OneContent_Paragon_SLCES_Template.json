@@ -1255,6 +1255,7 @@
           },
           //"wmfVersion": "4.0",
           "Properties": {
+            "OCReleaseVMName": "[parameters('OCReleaseVMName')]"
           }
         },
         "protectedSettings": { }
@@ -1284,7 +1285,8 @@
           },
           //"wmfVersion": "4.0",
           "Properties": {
-          }
+            "OCReleaseVMName": "[parameters('OCReleaseVMName')]" 
+         }
         },
         "protectedSettings": { }
       }
@@ -1312,6 +1314,7 @@
           },
           //"wmfVersion": "4.0",
           "Properties": {
+            "OCReleaseVMName": "[parameters('OCReleaseVMName')]"
           }
         },
         "protectedSettings": { }
@@ -1340,6 +1343,7 @@
           },
           //"wmfVersion": "4.0",
           "Properties": {
+            "OCReleaseVMName": "[parameters('OCReleaseVMName')]"
           }
         },
         "protectedSettings": { }
@@ -1369,6 +1373,7 @@
           },
           //"wmfVersion": "4.0",
           "Properties": {
+            "OCReleaseVMName": "[parameters('OCReleaseVMName')]"
           }
         },
         "protectedSettings": { }
@@ -1397,6 +1402,7 @@
           },
           //"wmfVersion": "4.0",
           "Properties": {
+            "OCReleaseVMName": "[parameters('OCReleaseVMName')]"
           }
         },
         "protectedSettings": { }
@@ -1426,6 +1432,7 @@
           },
           //"wmfVersion": "4.0",
           "Properties": {
+            "OCReleaseVMName": "[parameters('OCReleaseVMName')]"
           }
         },
         "protectedSettings": { }
@@ -1455,6 +1462,7 @@
           },
           //"wmfVersion": "4.0",
           "Properties": {
+            "OCReleaseVMName": "[parameters('OCReleaseVMName')]"
           }
         },
         "protectedSettings": { }
@@ -1483,6 +1491,7 @@
           },
           //"wmfVersion": "4.0",
           "Properties": {
+            "OCReleaseVMName": "[parameters('OCReleaseVMName')]"
           }
         },
         "protectedSettings": { }
