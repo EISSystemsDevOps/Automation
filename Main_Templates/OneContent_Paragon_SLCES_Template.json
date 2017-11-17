@@ -1239,7 +1239,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('OCReleaseVMName'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1269,7 +1270,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('OCTransAgentVMName'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1298,7 +1300,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('OCWeb1VMName'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1327,7 +1330,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('OCWeb2VMName'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1357,7 +1361,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('OCApp1VMName'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1386,7 +1391,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('OCApp2VMName'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1416,7 +1422,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('OCAgentVMName'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1446,7 +1453,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('OCBDIVMName'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1475,7 +1483,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource11')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource11')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('OCCaptivaVMName'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1505,7 +1514,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource12')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource12')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('PNNtrVMName'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1533,7 +1543,8 @@
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource13')]"
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource13')]",
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('PNWebVMName'),'/extensions/joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
