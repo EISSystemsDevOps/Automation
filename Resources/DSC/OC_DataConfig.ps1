@@ -1,6 +1,14 @@
 ﻿Configuration OC_DataConfig
 {
-	Node ("localhost")
+  
+  Param (
+         
+         [Parameter(Mandatory=$True)]
+         [String[]]$OCReleaseVMName
+
+        )
+          
+    Node ("localhost")
 	{
 ########################
    #Install the App Server Role
@@ -16,7 +24,7 @@
 			Ensure = "Present"
 			Name = "File-Services"
 		}
-   #Install .NET Framework 3.5 Features
+ <#  #Install .NET Framework 3.5 Features
 		WindowsFeature NETFrameworkFeatures
 		{
 			Ensure = "Present"
@@ -29,10 +37,10 @@
 			Ensure = "Present"
 			Name = "NET-Framework-Core"
         }
-
+#>
 ########################
 
-  #Disable Windows Firewall
+<#  #Disable Windows Firewall
   #Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\SharedAccess\Parameters\FirewallPolicy\DomainProfile" -Name “EnableFirewall” -Value 0 -Type "Dword"
         Registry FirewallPolicyDomain
         {
@@ -62,7 +70,7 @@
             ValueData = "0"
             ValueType = "Dword"
         }
-
+#>
   #Disable UAC
   #Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name “EnableLUA” -Value 0 -Type "Dword"
         Registry EnableLUA
@@ -139,7 +147,7 @@
         }
 
 ########################
-  #Change CDROM Drive to Z:
+<#  #Change CDROM Drive to Z:
 
        Script Set-CDROM
         {
@@ -165,7 +173,7 @@
            }#End of test script
          GetScript = {$Null}
         }
-
+#>
 ########################
   #Create Desktop Sortcuts
 
@@ -208,8 +216,8 @@
            {
              $WshShell = New-Object -comObject WScript.Shell
              $Shortcut = $WshShell.CreateShortcut("$env:Public\Desktop\Software.lnk")
-             $Shortcut.TargetPath = "\\ReleaseServer\Software$"
-             $Shortcut.WorkingDirectory = "\\ReleaseServer\Software$"
+             $Shortcut.TargetPath = "\\$OCReleaseVMName\Software$"
+             $Shortcut.WorkingDirectory = "\\$OCReleaseVMName\Software$"
              $Shortcut.Save()
            }
 	
