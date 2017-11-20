@@ -27,11 +27,18 @@
             TestScript = { $false }
         }
 	
+	    WindowsFeature RSATADDS 
+        { 
+            Ensure = "Present" 
+            Name = "RSAT-ADDS"		
+        }
+
 	    WindowsFeature DNS 
         { 
             Ensure = "Present" 
             Name = "DNS"		
         }
+
 
         Script script1
 	    {

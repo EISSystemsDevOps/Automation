@@ -143,7 +143,33 @@
       "metadata": {
         "description": "SubnetName."
       }
+    },
+    "DomUserName": {
+      "type": "string",
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "DomPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
+    },
+    "OUPath": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "OU to place VMs when joining to domain."
+      }
+    },
+    "domainName": {
+      "type": "string",
+      "metadata": {
+        "description": "Join to local domain."
+      }
     }
+
 
   }, //End of Parameters
 
@@ -154,8 +180,8 @@
     //"storageAccountName": "[parameters('storageAcctName')]",
     //"virtualNetworkName": "[concat(parameters('CustomerName'),'VNET01')]",
     //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
-    "domainName": "OCTRAIN.COM",
-    "domainUser": "concat(variables('domainName'),'\\',parameters('adminUsername'))",
+    //"domainUser": "concat(variables('domainName'),'\\',parameters('adminUsername'))",
+    "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
     //DSC URLs
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
@@ -509,7 +535,7 @@
     //  "URI": "[variables('VMOneDataDiskUri')]",
     //  "DataDiskSizeGB": "80"
     //},
-    "VMObject7": {
+    "VMObject": {
       "Name": "[parameters('VMName')]",
       "Size": "[parameters('VMSize')]",
       //     "ASName": "[variables('ASObject1').Name]",
@@ -672,7 +698,7 @@
       }
     },
     {
-      "name": "VMResource7",
+      "name": "VMResource",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
@@ -684,13 +710,40 @@
         "mode": "Incremental",
         "templateLink": {
           //   "uri": "[concat(variables('TemplateUrl'),'/','VM.json', parameters('_artifactsLocationSasToken'))]",
-          "uri": "[variables('VMObject7').URI]",
+          "uri": "[variables('VMObject').URI]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
           "VMObject": {
-            "value": "[variables('VMObject7')]"
+            "value": "[variables('VMObject')]"
           }
+        }
+      }
+    },
+    {
+      "comments": "Join domain - JsonADDomainExtension",
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('VMName'),'/joindomain')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "JsonADDomainExtension",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "Name": "[parameters('domainName')]",
+          "User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
+          "Restart": "true",
+          //                    "Options": "[variables('domainJoinOptions')]",
+          "Options": "3",
+          "OUPath": "[parameters('OUPath')]"
+        },
+        "protectedSettings": {
+          "Password": "[parameters('DomPassword')]"
         }
       }
     }
