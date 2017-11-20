@@ -208,7 +208,7 @@
          GetScript = {$Null}                
         }
 
-  #Create Shortcut to Software$
+<#  #Create Shortcut to Software$
 
        Script Set-Softwarelnk
         {#beginning of script    
@@ -241,7 +241,7 @@
             }
            }
 
-
+#>
   #Create Shortcut to This PC
 
        Script Set-Explorerexe
