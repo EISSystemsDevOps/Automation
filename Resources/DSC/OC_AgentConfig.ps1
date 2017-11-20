@@ -7,7 +7,7 @@
          [String[]]$OCReleaseVMName
 
         )
-    Import-DscResource -ModuleName PSDesiredStateConfiguration
+    
     
     Node ("localhost")
 	{
@@ -211,7 +211,7 @@
 
   #Create Shortcut to Software$
 
-       Script Set-Softwarelnk
+<#       Script Set-Softwarelnk
         {#beginning of script    
          SetScript = 
            {
@@ -242,7 +242,7 @@
             }
            }
 
-
+#>
   #Create Shortcut to This PC
 
        Script Set-Explorerexe
