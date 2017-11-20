@@ -1531,8 +1531,6 @@
           },
           //"wmfVersion": "4.0",
           "Properties": {
-            "sourcepath": "[parameters('SourcePath')]",
-            "SWPath": "[parameters('SWPath')]"
           }
         },
         "protectedSettings": { }
@@ -1562,9 +1560,8 @@
           },
           //"wmfVersion": "4.0",
           "Properties": {
-            "sourcepath": "[parameters('SourcePath')]",
-            "SWPath": "[parameters('SWPath')]"
-          }
+            "sourcepath": "[parameters('SourcePath')]"
+        }
         },
         "protectedSettings": { }
       }
