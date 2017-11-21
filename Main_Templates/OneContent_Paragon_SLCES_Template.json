@@ -346,8 +346,10 @@
     //"DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/')]",
     "PNWebDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebServerConfig14x.ps1.zip')]",
     "PNWebConfigurationFunction": "WebServerConfig14x.ps1\\WebServerConfig14x",
+    
     "PNNtrDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'NtrServerConfig14x.ps1.zip')]",
     "PNNtrConfigurationFunction": "NtrServerConfig14x.ps1\\NtrServerConfig14x",
+    
     "PNBreDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'BreServerConfig.ps1.zip')]",
     "PNBreConfigurationFunction": "BreServerConfig.ps1\\BreServerConfig",
     "adPDCModulesURL": "[concat(parameters('_artifactsLocation'),'/CreateADPDC.ps1.zip')]",
@@ -369,6 +371,7 @@
 
     "OCBDIDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/OC_BDIConfig.ps1.zip')]",
     "OCBDIConfigurationFunction": "OC_BDIConfig.ps1\\OC_BDIConfig",
+    
     "OCCaptivaDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'/OC_CaptivaConfig.ps1.zip')]",
     "OCCaptivaConfigurationFunction": "OC_CaptivaConfig.ps1\\OC_CaptivaConfig",
 
