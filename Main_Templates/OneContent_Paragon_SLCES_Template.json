@@ -1287,8 +1287,8 @@
           },
           //"wmfVersion": "4.0",
           "Properties": {
-            "OCReleaseVMName": "[parameters('OCReleaseVMName')]" 
-         }
+            "OCReleaseVMName": "[parameters('OCReleaseVMName')]"
+          }
         },
         "protectedSettings": { }
       }
@@ -1510,7 +1510,7 @@
     //    PN Ntr
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('PNNtrVMName'),'/PNNtrDscExtension')]",
+      "name": "[concat(parameters('PNNtrVMName'),'/NtrConfigDscExtension')]",
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
@@ -1531,6 +1531,9 @@
           },
           //"wmfVersion": "4.0",
           "Properties": {
+            //              "storageAccountName": "[parameters('dlStorageAccountName')]",
+            //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+            //               "sourcepath": "[parameters('SourcePath')]"
             "sourcepath": "[parameters('SourcePath')]",
             "SWPath": "[parameters('SWPath')]"
           }
@@ -1538,801 +1541,801 @@
         "protectedSettings": { }
       }
     },
-    //    PN Web
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('PNWebVMName'),'/PNWebDscExtension')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource13')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('PNWebVMName'),'/extensions/joindomain')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": false,
-        "settings": {
-          "modulesUrl": "[variables('PNWebDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('PNWebConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
+      //    PN Web
+      {
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('PNWebVMName'),'/PNWebDscExtension')]",
+        "apiVersion": "2015-06-15",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource13')]",
+          "[concat('Microsoft.Compute/virtualMachines/',parameters('PNWebVMName'),'/extensions/joindomain')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Powershell",
+          "type": "DSC",
+          "typeHandlerVersion": "2.19",
+          "autoUpgradeMinorVersion": false,
+          "settings": {
+            "modulesUrl": "[variables('PNWebDSCModuleUrl')]",
+            "SasToken": "",
+            "configurationFunction": "[variables('PNWebConfigurationFunction')]",
+            "configurationData": {
+              "url": "[variables('Configurationurl')]"
+            },
+            //"wmfVersion": "4.0",
+            "Properties": {
+              "sourcepath": "[parameters('SourcePath')]"
+            }
           },
-          //"wmfVersion": "4.0",
-          "Properties": {
-            "sourcepath": "[parameters('SourcePath')]"
+          "protectedSettings": { }
         }
-        },
-        "protectedSettings": { }
-      }
-    },
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCReleaseVMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "user": "[variables('domainUser')]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
+      },
+      {
+        "comments": "Join domain - JsonADDomainExtension",
+        "apiVersion": "2015-06-15",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('OCReleaseVMName'),'/joindomain')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "JsonADDomainExtension",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "Name": "[parameters('domainName')]",
+            "user": "[variables('domainUser')]",
+            "Restart": "true",
+            //                    "Options": "[variables('domainJoinOptions')]",
+            "Options": "3",
+            "OUPath": "[parameters('OUPath')]"
+          },
+          "protectedSettings": {
+            "Password": "[parameters('DomPassword')]"
+          }
         }
-      }
-    },
+      },
 
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCTransAgentVMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "user": "[variables('domainUser')]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
+      {
+        "comments": "Join domain - JsonADDomainExtension",
+        "apiVersion": "2015-06-15",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('OCTransAgentVMName'),'/joindomain')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "JsonADDomainExtension",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "Name": "[parameters('domainName')]",
+            "user": "[variables('domainUser')]",
+            "Restart": "true",
+            //                    "Options": "[variables('domainJoinOptions')]",
+            "Options": "3",
+            "OUPath": "[parameters('OUPath')]"
+          },
+          "protectedSettings": {
+            "Password": "[parameters('DomPassword')]"
+          }
         }
-      }
-    },
+      },
 
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCWeb1VMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "user": "[variables('domainUser')]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
+      {
+        "comments": "Join domain - JsonADDomainExtension",
+        "apiVersion": "2015-06-15",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('OCWeb1VMName'),'/joindomain')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "JsonADDomainExtension",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "Name": "[parameters('domainName')]",
+            "user": "[variables('domainUser')]",
+            "Restart": "true",
+            //                    "Options": "[variables('domainJoinOptions')]",
+            "Options": "3",
+            "OUPath": "[parameters('OUPath')]"
+          },
+          "protectedSettings": {
+            "Password": "[parameters('DomPassword')]"
+          }
         }
-      }
-    },
+      },
 
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCWeb2VMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "user": "[variables('domainUser')]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
+      {
+        "comments": "Join domain - JsonADDomainExtension",
+        "apiVersion": "2015-06-15",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('OCWeb2VMName'),'/joindomain')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "JsonADDomainExtension",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "Name": "[parameters('domainName')]",
+            "user": "[variables('domainUser')]",
+            "Restart": "true",
+            //                    "Options": "[variables('domainJoinOptions')]",
+            "Options": "3",
+            "OUPath": "[parameters('OUPath')]"
+          },
+          "protectedSettings": {
+            "Password": "[parameters('DomPassword')]"
+          }
         }
-      }
-    },
+      },
 
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCApp1VMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "user": "[variables('domainUser')]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
+      {
+        "comments": "Join domain - JsonADDomainExtension",
+        "apiVersion": "2015-06-15",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('OCApp1VMName'),'/joindomain')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "JsonADDomainExtension",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "Name": "[parameters('domainName')]",
+            "user": "[variables('domainUser')]",
+            "Restart": "true",
+            //                    "Options": "[variables('domainJoinOptions')]",
+            "Options": "3",
+            "OUPath": "[parameters('OUPath')]"
+          },
+          "protectedSettings": {
+            "Password": "[parameters('DomPassword')]"
+          }
         }
-      }
-    },
+      },
 
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCApp2VMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "user": "[variables('domainUser')]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
+      {
+        "comments": "Join domain - JsonADDomainExtension",
+        "apiVersion": "2015-06-15",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('OCApp2VMName'),'/joindomain')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "JsonADDomainExtension",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "Name": "[parameters('domainName')]",
+            "user": "[variables('domainUser')]",
+            "Restart": "true",
+            //                    "Options": "[variables('domainJoinOptions')]",
+            "Options": "3",
+            "OUPath": "[parameters('OUPath')]"
+          },
+          "protectedSettings": {
+            "Password": "[parameters('DomPassword')]"
+          }
         }
-      }
-    },
+      },
 
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCAgentVMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "user": "[variables('domainUser')]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
+      {
+        "comments": "Join domain - JsonADDomainExtension",
+        "apiVersion": "2015-06-15",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('OCAgentVMName'),'/joindomain')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "JsonADDomainExtension",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "Name": "[parameters('domainName')]",
+            "user": "[variables('domainUser')]",
+            "Restart": "true",
+            //                    "Options": "[variables('domainJoinOptions')]",
+            "Options": "3",
+            "OUPath": "[parameters('OUPath')]"
+          },
+          "protectedSettings": {
+            "Password": "[parameters('DomPassword')]"
+          }
         }
-      }
-    },
+      },
 
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCBDIVMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "user": "[variables('domainUser')]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
+      {
+        "comments": "Join domain - JsonADDomainExtension",
+        "apiVersion": "2015-06-15",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('OCBDIVMName'),'/joindomain')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "JsonADDomainExtension",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "Name": "[parameters('domainName')]",
+            "user": "[variables('domainUser')]",
+            "Restart": "true",
+            //                    "Options": "[variables('domainJoinOptions')]",
+            "Options": "3",
+            "OUPath": "[parameters('OUPath')]"
+          },
+          "protectedSettings": {
+            "Password": "[parameters('DomPassword')]"
+          }
         }
-      }
-    },
+      },
 
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('FormFastVMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "user": "[variables('domainUser')]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
+      {
+        "comments": "Join domain - JsonADDomainExtension",
+        "apiVersion": "2015-06-15",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('FormFastVMName'),'/joindomain')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "JsonADDomainExtension",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "Name": "[parameters('domainName')]",
+            "user": "[variables('domainUser')]",
+            "Restart": "true",
+            //                    "Options": "[variables('domainJoinOptions')]",
+            "Options": "3",
+            "OUPath": "[parameters('OUPath')]"
+          },
+          "protectedSettings": {
+            "Password": "[parameters('DomPassword')]"
+          }
         }
-      }
-    },
+      },
 
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCMDVMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource10')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "user": "[variables('domainUser')]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
+      {
+        "comments": "Join domain - JsonADDomainExtension",
+        "apiVersion": "2015-06-15",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('OCMDVMName'),'/joindomain')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource10')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "JsonADDomainExtension",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "Name": "[parameters('domainName')]",
+            "user": "[variables('domainUser')]",
+            "Restart": "true",
+            //                    "Options": "[variables('domainJoinOptions')]",
+            "Options": "3",
+            "OUPath": "[parameters('OUPath')]"
+          },
+          "protectedSettings": {
+            "Password": "[parameters('DomPassword')]"
+          }
         }
-      }
-    },
+      },
 
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('OCCaptivaVMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource11')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "user": "[variables('domainUser')]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
-        }
-      }
-    },
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('PNNtrVMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource12')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "user": "[variables('domainUser')]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
-        }
-      }
-    },
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('PNWebVMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource13')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "user": "[variables('domainUser')]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
-        }
-      }
-    },
-    //Antimalware extension for OCRelease
-    {
-      "name": "[concat(parameters('OCReleaseVMName'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+      {
+        "comments": "Join domain - JsonADDomainExtension",
+        "apiVersion": "2015-06-15",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('OCCaptivaVMName'),'/joindomain')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource11')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "JsonADDomainExtension",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "Name": "[parameters('domainName')]",
+            "user": "[variables('domainUser')]",
+            "Restart": "true",
+            //                    "Options": "[variables('domainJoinOptions')]",
+            "Options": "3",
+            "OUPath": "[parameters('OUPath')]"
           },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
+          "protectedSettings": {
+            "Password": "[parameters('DomPassword')]"
+          }
+        }
+      },
+      {
+        "comments": "Join domain - JsonADDomainExtension",
+        "apiVersion": "2015-06-15",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('PNNtrVMName'),'/joindomain')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource12')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "JsonADDomainExtension",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "Name": "[parameters('domainName')]",
+            "user": "[variables('domainUser')]",
+            "Restart": "true",
+            //                    "Options": "[variables('domainJoinOptions')]",
+            "Options": "3",
+            "OUPath": "[parameters('OUPath')]"
+          },
+          "protectedSettings": {
+            "Password": "[parameters('DomPassword')]"
+          }
+        }
+      },
+      {
+        "comments": "Join domain - JsonADDomainExtension",
+        "apiVersion": "2015-06-15",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(parameters('PNWebVMName'),'/joindomain')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource13')]"
+        ],
+        "properties": {
+          "publisher": "Microsoft.Compute",
+          "type": "JsonADDomainExtension",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "Name": "[parameters('domainName')]",
+            "user": "[variables('domainUser')]",
+            "Restart": "true",
+            //                    "Options": "[variables('domainJoinOptions')]",
+            "Options": "3",
+            "OUPath": "[parameters('OUPath')]"
+          },
+          "protectedSettings": {
+            "Password": "[parameters('DomPassword')]"
+          }
+        }
+      },
+      //Antimalware extension for OCRelease
+      {
+        "name": "[concat(parameters('OCReleaseVMName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource1')]"
+        ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
+          }
+        }
+      },
+      //Antimalware extension for OCTransAgent
+      {
+        "name": "[concat(parameters('OCTransAgentVMName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
+        ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
+          }
+        }
+      },
+      //Antimalware extension for OCWeb1
+      {
+        "name": "[concat(parameters('OCWeb1VMName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
+        ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
+          }
+        }
+      },
+      //Antimalware extension for OCWeb2
+      {
+        "name": "[concat(parameters('OCWeb2VMName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+        ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
+          }
+        }
+      },
+      //Antimalware extension for OCApp1
+      {
+        "name": "[concat(parameters('OCApp1VMName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]"
+        ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
+          }
+        }
+      },
+      //Antimalware extension for OCApp2
+      {
+        "name": "[concat(parameters('OCApp2VMName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
+        ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
+          }
+        }
+      },
+      //Antimalware extension for OCAgent
+      {
+        "name": "[concat(parameters('OCAgentVMName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]"
+        ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
+          }
+        }
+      },
+      //Antimalware extension for OCBDI
+      {
+        "name": "[concat(parameters('OCBDIVMName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
+        ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
+          }
+        }
+      },
+      //Antimalware extension for Form Fast
+      {
+        "name": "[concat(parameters('FormFastVMName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]"
+        ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
+          }
+        }
+      },
+      //Antimalware extension for OCMD
+      {
+        "name": "[concat(parameters('OCMDVMName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource10')]"
+        ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
+          }
+        }
+      },
+      //Antimalware extension for OCCaptiva
+      {
+        "name": "[concat(parameters('OCCaptivaVMName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource11')]"
+        ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
+          }
+        }
+      },
+      //Antimalware extension for Paragon NTier
+      {
+        "name": "[concat(parameters('PNNtrVMName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource12')]"
+        ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
+          }
+        }
+      },
+      //Antimalware extension for Paragon Web
+      {
+        "name": "[concat(parameters('PNWebVMName'),'/IaaSAntimalware')]",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource13')]"
+        ],
+        "apiVersion": "2015-06-15",
+        "properties": {
+          "publisher": "Microsoft.Azure.Security",
+          "type": "IaaSAntimalware",
+          "typeHandlerVersion": "1.3",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "AntimalwareEnabled": true,
+            "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+            "ScheduledScanSettings": {
+              "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+              "day": "[parameters('ScheduledScanSettingsDay')]",
+              "time": "[parameters('ScheduledScanSettingsTime')]",
+              "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+            },
+            "Exclusions": {
+              "Extensions": "[parameters('ExclusionsExtensions')]",
+              "Paths": "[parameters('ExclusionsPaths')]",
+              "Processes": "[parameters('ExclusionsProcesses')]"
+            }
           }
         }
       }
-    },
-    //Antimalware extension for OCTransAgent
-    {
-      "name": "[concat(parameters('OCTransAgentVMName'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource2')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-          },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
-          }
-        }
-      }
-    },
-    //Antimalware extension for OCWeb1
-    {
-      "name": "[concat(parameters('OCWeb1VMName'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource3')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-          },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
-          }
-        }
-      }
-    },
-    //Antimalware extension for OCWeb2
-    {
-      "name": "[concat(parameters('OCWeb2VMName'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-          },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
-          }
-        }
-      }
-    },
-    //Antimalware extension for OCApp1
-    {
-      "name": "[concat(parameters('OCApp1VMName'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource5')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-          },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
-          }
-        }
-      }
-    },
-    //Antimalware extension for OCApp2
-    {
-      "name": "[concat(parameters('OCApp2VMName'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource6')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-          },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
-          }
-        }
-      }
-    },
-    //Antimalware extension for OCAgent
-    {
-      "name": "[concat(parameters('OCAgentVMName'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource7')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-          },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
-          }
-        }
-      }
-    },
-    //Antimalware extension for OCBDI
-    {
-      "name": "[concat(parameters('OCBDIVMName'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource8')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-          },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
-          }
-        }
-      }
-    },
-    //Antimalware extension for Form Fast
-    {
-      "name": "[concat(parameters('FormFastVMName'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource9')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-          },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
-          }
-        }
-      }
-    },
-    //Antimalware extension for OCMD
-    {
-      "name": "[concat(parameters('OCMDVMName'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource10')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-          },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
-          }
-        }
-      }
-    },
-    //Antimalware extension for OCCaptiva
-    {
-      "name": "[concat(parameters('OCCaptivaVMName'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource11')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-          },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
-          }
-        }
-      }
-    },
-    //Antimalware extension for Paragon NTier
-    {
-      "name": "[concat(parameters('PNNtrVMName'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource12')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-          },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
-          }
-        }
-      }
-    },
-    //Antimalware extension for Paragon Web
-    {
-      "name": "[concat(parameters('PNWebVMName'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource13')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-          },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
-          }
-        }
-      }
+      ]
     }
-  ]
-  }
 
 
