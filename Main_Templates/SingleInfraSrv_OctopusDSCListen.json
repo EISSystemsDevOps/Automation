@@ -307,7 +307,7 @@
         "description": "Biztalk, Connect, N-Tier, PPS, SvcBus, Web"
       }
     },
-    "tentacleThumbprint": {
+    "ServerThumbprint": {
       "defaultValue": "",
       "type": "string",
       "metadata": {
