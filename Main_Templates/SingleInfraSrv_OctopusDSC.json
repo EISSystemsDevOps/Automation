@@ -360,8 +360,8 @@
     //DSC URLs
     "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
     //"DCDSCModuleUrl": "[concat(variables('DSCmodulesUrl'), 'CreateADPDC.zip')]",
-    "OctopusTentacleDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'WebOctServerPreReq','.ps1.zip')]",
-    "OctopusTentacleConfigurationFunction": "[concat('WebOctServerPreReq','.ps1\\WebOctServerPreReq')]",
+    "OctopusTentacleDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'OctopusTentacle','.ps1.zip')]",
+    "OctopusTentacleConfigurationFunction": "[concat('OctopusTentacle','.ps1\\OctopusTentacle')]",
     "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
     //Template URIs
@@ -596,32 +596,32 @@
     //Octopus Configuration
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMName'),'/Script')]",
-      "apiVersion": "2015-05-01-preview",
+      "name": "[concat(parameters('VMName'),'/OctConfigDscExtension')]",
+      "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMName'),'/extensions/joindomain')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.20",
-        "autoUpgradeMinorVersion": true,
-        "forceUpdateTag": "2",
-        "settings": {
-          "modulesUrl": "[variables('OctopusTentacleDSCModuleUrl')]",
-          "SasToken": "",
-          "configurationFunction": "[variables('OctopusTentacleConfigurationFunction')]",
-          "configurationData": {
-            "url": "[variables('Configurationurl')]"
-          },
-          "protectedSettings": {
-            "ApiKey": "[parameters('tentacleApiKey')]"
+          "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]",
+          "[concat('Microsoft.Compute/virtualMachines/',parameters('VMName'),'/extensions/joindomain')]"
+        ],
+        "properties":
+        {
+          "publisher": "Microsoft.Powershell",
+          "type": "DSC",
+          "typeHandlerVersion": "2.20",
+          "autoUpgradeMinorVersion": true,
+          "forceUpdateTag": "2",
+          "settings": {
+            "modulesUrl": "[variables('OctopusTentacleDSCModuleUrl')]",
+            "SasToken": "",
+            "configurationFunction": "[variables('OctopusTentacleConfigurationFunction')]",
+            "configurationData": {
+              "url": "[variables('Configurationurl')]"
+            },
+            "protectedSettings": {
+              "ApiKey": "[parameters('tentacleApiKey')]"
+            }
           }
         }
-      }
     }
-
   ] 
 }
