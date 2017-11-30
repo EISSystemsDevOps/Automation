@@ -611,14 +611,16 @@
           "autoUpgradeMinorVersion": true,
           "forceUpdateTag": "2",
           "settings": {
-            "modulesUrl": "[variables('OctopusTentacleDSCModuleUrl')]",
-            "SasToken": "",
-            "configurationFunction": "[variables('OctopusTentacleConfigurationFunction')]",
-            "configurationData": {
-              "url": "[variables('Configurationurl')]"
-            },
-            "protectedSettings": {
-              "ApiKey": "[parameters('tentacleApiKey')]"
+            "OctopusServerUrl": "[parameters('tentacleOctopusServerUrl')]",
+            "Environments": "[split(parameters('tentacleEnvironments'), ',')]",
+            "Roles": "[split(parameters('tentacleRoles'), ',')]",
+            "CommunicationMode": "[parameters('tentacleCommunicationMode')]",
+            "Port": "[parameters('tentaclePort')]",
+            "PublicHostNameConfiguration": "[parameters('tentaclePublicHostNameConfiguration')]",
+            "CustomPublicHostName": "[parameters('tentacleCustomPublicHostName')]"
+          },
+        "protectedSettings": {
+          "ApiKey": "[parameters('tentacleApiKey')]"
             }
           }
         }
