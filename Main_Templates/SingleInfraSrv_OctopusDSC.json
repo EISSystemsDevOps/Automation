@@ -307,13 +307,6 @@
         "description": "Biztalk, Connect, N-Tier, PPS, SvcBus, Web"
       }
     },
-    "tentacleThumbprint": {
-      "defaultValue": "",
-      "type": "string",
-      "metadata": {
-        "description": "Thumbprint of Octopus server to connect"
-      }
-    },
     "tentacleEnvironments": {
       "defaultValue": "",
       "type": "string",
@@ -603,26 +596,30 @@
           "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]",
           "[concat('Microsoft.Compute/virtualMachines/',parameters('VMName'),'/extensions/joindomain')]"
         ],
-        "properties":
-        {
-          "publisher": "Microsoft.Powershell",
-          "type": "DSC",
-          "typeHandlerVersion": "2.20",
-          "autoUpgradeMinorVersion": true,
-          "forceUpdateTag": "2",
-          "settings": {
-            "OctopusServerUrl": "[parameters('tentacleOctopusServerUrl')]",
-            "Environments": "[split(parameters('tentacleEnvironments'), ',')]",
-            "Roles": "[split(parameters('tentacleRoles'), ',')]",
-            "CommunicationMode": "[parameters('tentacleCommunicationMode')]",
-            "Port": "[parameters('tentaclePort')]",
-            "PublicHostNameConfiguration": "[parameters('tentaclePublicHostNameConfiguration')]",
-            "CustomPublicHostName": "[parameters('tentacleCustomPublicHostName')]"
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.20",
+        "autoUpgradeMinorVersion": true,
+        "forceUpdateTag": "2",
+        "settings": {
+          "modulesUrl": "[variables('OctopusTentacleDSCModuleUrl')]",
+          "SasToken": "",
+          "configurationFunction": "[variables('OctopusTentacleConfigurationFunction')]",
+          "configurationData": {
+            "url": "[variables('Configurationurl')]"
           },
+          "configurationArguments": {
+            "OctopusServerUrl": "[parameters('tentacleOctopusServerUrl')]",
+            "Environments": "[parameters('tentacleEnvironments')]",
+            "Roles": "[parameters('tentacleRoles')]",
+            "ServerPort": "[parameters('tentaclePort')]"
+          }
+        },
         "protectedSettings": {
           "ApiKey": "[parameters('tentacleApiKey')]"
-            }
-          }
+        }
+      }
     }
   ] 
 }
