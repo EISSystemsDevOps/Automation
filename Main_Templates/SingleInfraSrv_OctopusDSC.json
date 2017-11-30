@@ -623,7 +623,6 @@
           "ApiKey": "[parameters('tentacleApiKey')]"
             }
           }
-        }
     }
   ] 
 }
