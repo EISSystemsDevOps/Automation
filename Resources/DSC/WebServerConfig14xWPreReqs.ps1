@@ -292,7 +292,6 @@ Configuration WebServerConfig14xWPreReqs
 	        SetScript = 
             {
                 $SourcePath=$Using:SourcePath
-               # $sourcepath='\\azrdevfile01.paragon.mckesson.com\Root\WindowsServer2012R2\sources\sxs'
                 Start-process -Filepath Dism.exe -argumentlist "/online /enable-feature /featurename:NetFX3 /All /Source:$SourcePath /LimitAccess" -wait -NoNewWindow 
             }
 	        TestScript = 

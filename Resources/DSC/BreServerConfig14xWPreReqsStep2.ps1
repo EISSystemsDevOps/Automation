@@ -185,9 +185,7 @@ $LocalCredBiz=get-credential
 
 BREServerConfig14xWPreReqsStep2 -output C:\dsc\ -Swpath $SWPath -SourcePath $SourcePath -localcred $localcred -localcredbiz $localcredbiz -ServerInstance $ServerInstance -BiztalkDBname $BizTalkDBName -LocalInstallsFolderPath $LocalInstallsFolderPath -SourceUNCPathBRE $SourcePath -configurationdata $cd
 Start-DscConfiguration -Path C:\dsc\ -wait -verbose -force
- #  $job= (Get-Job -Id 13).ChildJobs.progress
-\\azrdevfile01.paragon.mckesson.com\root\AutomatedInstallSW\BizTalk2013R2_Standard\BizTalk2013R2_Standard\setup.exe /s C:\Installs\BREConfig.xml /CABPATH C:\Installs\BtsRedistW2K12EN64.cab
-
+#  $job= (Get-Job -Id 13).ChildJobs.progress
 $swinstalled=get-wmiobject -class Win32_Product|Where-object Name -eq "Microsoft BizTalk Server 2013 R2"
 #>
 

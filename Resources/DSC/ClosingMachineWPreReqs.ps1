@@ -122,8 +122,8 @@ $cd = @{
         }
     )
 }
-
-ClosingMachineWPreReqs -output C:\dsc\ClosingMachineTest -Swpath \\azrdevfile01\Root\AutomatedInstallSW -configurationdata $cd
+$SWPath=''
+ClosingMachineWPreReqs -output C:\dsc\ClosingMachineTest -Swpath $SWPath -configurationdata $cd
 #Start-DscConfiguration -Force -Path C:\dsc\ClosingMachineTest -wait -verbose -force
  #  $job= (Get-Job -Id 13).ChildJobs.progress
 

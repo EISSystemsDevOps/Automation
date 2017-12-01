@@ -61,7 +61,7 @@ cd "C:\Program Files\Octopus Deploy\Tentacle"
 .\Tentacle.exe configure --instance "Tentacle" --reset-trust --console
 .\Tentacle.exe configure --instance "Tentacle" --home "C:\Octopus" --app "C:\Octopus\Applications" --port "10933" --console
 .\Tentacle.exe configure --instance "Tentacle" --trust "B823BCACC3434508BC3AA71E5C1EDDF83CF72241" --console
-.\Tentacle.exe register-with --instance "Tentacle" --server "http://azrdevoctopus01.paragon.mckesson.com" --apiKey="API-IV08KCO7RVE2CPTOZBG26KGN0I" --role "$role" --environment "$vmName" --comms-style TentaclePassive --console
+.\Tentacle.exe register-with --instance "Tentacle" --server "" --apiKey="API-IV08KCO7RVE2CPTOZBG26KGN0I" --role "$role" --environment "$vmName" --comms-style TentaclePassive --console
 .\Tentacle.exe service --instance "Tentacle" --install --start --console
 '
 $filepath = $env:TEMP+'\Script.ps1'
