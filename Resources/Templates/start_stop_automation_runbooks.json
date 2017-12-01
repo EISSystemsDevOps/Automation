@@ -13,7 +13,7 @@
     },
     "state": "Ok",
     "creationTime": "2016-08-11T16:42:01.92+00:00",
-    "lastModifiedBy": "live.com#j_asim00@hotmail.com",
+    "lastModifiedBy": "",
     "lastModifiedTime": "2017-03-01T13:54:02.01+00:00"
   }
 }
@@ -47,7 +47,7 @@
         "type": "System.String",
         "isMandatory": false,
         "position": 0,
-        "defaultValue": "'TheWizard'"
+        "defaultValue": "''"
       }
     },
     "state": "Published",
@@ -56,7 +56,7 @@
     "serviceManagementTags": null,
     "outputTypes": [],
     "creationTime": "2017-02-22T13:53:12.747+00:00",
-    "lastModifiedBy": "live.com#j_asim00@hotmail.com",
+    "lastModifiedBy": "",
     "lastModifiedTime": "2017-02-22T13:53:47.263+00:00"
   }
 }
@@ -90,7 +90,7 @@
         "type": "System.String",
         "isMandatory": false,
         "position": 0,
-        "defaultValue": "'TheWizard'"
+        "defaultValue": "''"
       }
     },
     "state": "Published",
@@ -99,7 +99,7 @@
     "serviceManagementTags": null,
     "outputTypes": [],
     "creationTime": "2017-02-22T13:54:39.067+00:00",
-    "lastModifiedBy": "live.com#j_asim00@hotmail.com",
+    "lastModifiedBy": "",
     "lastModifiedTime": "2017-02-27T13:47:53.687+00:00"
   }
 }
