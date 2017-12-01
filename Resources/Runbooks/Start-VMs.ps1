@@ -35,13 +35,13 @@
 
 param (
     [Parameter(Mandatory=$false)] 
-    [String]  $AzureCredentialAssetName = 'TheWizard',
+    [String]  $AzureCredentialAssetName = '',
         
     [Parameter(Mandatory=$false)]
-    [String] $SubscriptionName = 'SLCES',
+    [String] $SubscriptionName = '',
 
     [Parameter(Mandatory=$false)] 
-    [String] $ResourceGroupName='A00101OCIRG'
+    [String] $ResourceGroupName=''
 )
 
 # Returns strings with status messages
