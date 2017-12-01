@@ -94,8 +94,6 @@
         "Standard_B2s"
 
       ],
-=======
->>>>>>> origin/master
       "metadata": {
         "description": "The size of the VM."
       }
