@@ -73,7 +73,6 @@
     "VMSize": {
       "type": "string",
       "defaultValue": "Standard_A2_v2",
-<<<<<<< HEAD
       "allowedValues": [
         "Basic_A2",
         "Basic_A3",
