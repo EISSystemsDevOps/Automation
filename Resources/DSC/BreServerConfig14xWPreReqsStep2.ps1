@@ -174,14 +174,14 @@ $cd = @{
         }
     )
 }
-$localcred=get-credential #domadd
-$SourcePath='\\slcesfs01.slces.mckesson.com\windowsserver2012r2\sources\sxs'
-$SWPath='\\azrdevfile01.paragon.mckesson.com\root\AutomatedInstallSW'
-$ServerInstance='AZRQABIZDB02\\PARBIZ'
-$BizTalkDBName='JasimTest'
+$localcred=get-credential #
+$SourcePath=''
+$SWPath=''
+$ServerInstance=''
+$BizTalkDBName=''
 $LocalInstallsFolderPath='C:\installs'
 $SourceUNCPathBRE=$SourcePath
-$LocalCredBiz=get-credential #AudParaBiz
+$LocalCredBiz=get-credential
 
 BREServerConfig14xWPreReqsStep2 -output C:\dsc\ -Swpath $SWPath -SourcePath $SourcePath -localcred $localcred -localcredbiz $localcredbiz -ServerInstance $ServerInstance -BiztalkDBname $BizTalkDBName -LocalInstallsFolderPath $LocalInstallsFolderPath -SourceUNCPathBRE $SourcePath -configurationdata $cd
 Start-DscConfiguration -Path C:\dsc\ -wait -verbose -force
