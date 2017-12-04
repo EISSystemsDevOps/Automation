@@ -285,7 +285,7 @@
       }
     },
     "tentacleCommunicationMode": {
-      "defaultValue": "Listening",
+      "defaultValue": "Listen",
       "type": "string",
       "metadata": {
         "description": "The type of Tentacle - whether the Tentacle listens for requests from server, or actively polls the server for requests"
@@ -613,13 +613,11 @@
             "OctopusServerUrl": "[parameters('tentacleOctopusServerUrl')]",
             "Environments": "[parameters('tentacleEnvironments')]",
             "Roles": "[parameters('tentacleRoles')]",
-            "CommunicationMode": "[parameters('tentacleCommunicationMode')]",
-            "ServerPort": "[parameters('tentaclePort')]"
+            "ServerPort": "[parameters('tentaclePort')]",
+            "ApiKey": "[parameters('tentacleApiKey')]"
           }
         },
-        "protectedSettings": {
-          "ApiKey": "[parameters('tentacleApiKey')]"
-        }
+        "protectedSettings": {}
       }
     }
   ] 
