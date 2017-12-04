@@ -285,7 +285,7 @@
       }
     },
     "tentacleCommunicationMode": {
-      "defaultValue": "Listen",
+      "defaultValue": "Listening",
       "type": "string",
       "metadata": {
         "description": "The type of Tentacle - whether the Tentacle listens for requests from server, or actively polls the server for requests"
