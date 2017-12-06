@@ -378,8 +378,8 @@
 
     //"PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14xWPreReqs.ps1.zip')]",
     //"PpsConfigurationFunction": "PpsServerConfig14xWPreReqs.ps1\\PpsServerConfig14xWPreReqs",
-    "AdcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'ADCServerConfig14xWPreReqs',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
-    "AdcConfigurationFunction": "[concat('ADCServerConfig14xWPreReqs',parameters('DSCConfigurationLevel'),'.ps1\\ADCServerConfig14xWPreReqs',parameters('DSCConfigurationLevel'))]",
+    "AdcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'AdcServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "AdcConfigurationFunction": "[concat('ADCServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\ADCServerConfig14x',parameters('DSCConfigurationLevel'))]",
 
     "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
