@@ -1231,18 +1231,18 @@
       }
     },
 
-    //     //   Patient Portal Server
+    //   ADSC Closing Server
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMNameADC'),'/AdcConfigDscExtension')]",
+      "name": "[concat(parameters('VMNameADC'),'/ADCConfigDscExtension')]",
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameADC'),'/extensions/joindomain')]"
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameADC'),'/extensions/joindomain')]"//,
         // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
         // DSC Config files timing out.
-        //  "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/NtrConfigDscExtension')]"
+        //"[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameCON'),'/extensions/ConConfigDscExtension')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -1250,9 +1250,9 @@
         "typeHandlerVersion": "2.19",
         "autoUpgradeMinorVersion": false,
         "settings": {
-          "modulesUrl": "[variables('AdcDSCModuleUrl')]",
+          "modulesUrl": "[variables('ADCDSCModuleUrl')]",
           "SasToken": "",
-          "configurationFunction": "[variables('AdcConfigurationFunction')]",
+          "configurationFunction": "[variables('ADCConfigurationFunction')]",
           "configurationData": {
             "url": "[variables('Configurationurl')]"
           },
@@ -1260,8 +1260,7 @@
           "Properties": {
             //              "storageAccountName": "[parameters('dlStorageAccountName')]",
             //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-            //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
-            "sourcepath": "[parameters('SourcePath')]",
+            //"sourcepath": "[parameters('SourcePath')]",
             "SWPath": "[parameters('SWPath')]"
 
           }
