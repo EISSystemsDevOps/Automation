@@ -21,10 +21,10 @@
         "description": "Virtual Machine name for WEB server."
       }
     },
-    "VMNamePPS": {
+    "VMNameADC": {
       "type": "string",
       "metadata": {
-        "description": "Virtual Machine name for Patient Portal server."
+        "description": "Virtual Machine name for Closingpc server."
       }
     },
     "VMNameCON": {
@@ -349,7 +349,7 @@
 
 
     //Environment VM Sizes
-    "VMSize1": "Standard_A2_v2", 
+    "VMSize1": "Standard_A2_v2",
 
 
     //DSC URLs
@@ -378,8 +378,8 @@
 
     //"PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14xWPreReqs.ps1.zip')]",
     //"PpsConfigurationFunction": "PpsServerConfig14xWPreReqs.ps1\\PpsServerConfig14xWPreReqs",
-    "PpsDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'PpsServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
-    "PpsConfigurationFunction": "[concat('PpsServerConfig14x',parameters('DSCConfigurationLevel'),'.ps1\\PpsServerConfig14x',parameters('DSCConfigurationLevel'))]",
+    "AdcDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'ADCServerConfig14xWPreReqs',parameters('DSCConfigurationLevel'),'.ps1.zip')]",
+    "AdcConfigurationFunction": "[concat('ADCServerConfig14xWPreReqs',parameters('DSCConfigurationLevel'),'.ps1\\ADCServerConfig14xWPreReqs',parameters('DSCConfigurationLevel'))]",
 
     "Configurationurl": "https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Resources/configurationdata.psd1",
 
@@ -452,7 +452,7 @@
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
     "NICObject4": {
-      "Name": "[concat(parameters('VMNamePPS'),'-Nic')]",
+      "Name": "[concat(parameters('VMNameADC'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
       //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
@@ -565,7 +565,7 @@
 
     },
     "VMObject4": {
-      "Name": "[parameters('VMNamePPS')]",
+      "Name": "[parameters('VMNameADC')]",
       "Size": "[variables('VMSize1')]",
       //      "ASName": "[variables('ASObject1').Name]",
       "nicName": "[variables('NICObject4').Name]",
@@ -1156,15 +1156,15 @@
       }
     },
 
-    //     //   Patient Portal Server
+    //     //   Closingpc Server
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMNamePPS'),'/PPSConfigDscExtension')]",
+      "name": "[concat(parameters('VMNameADC'),'/ADCConfigDscExtension')]",
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNamePPS'),'/extensions/joindomain')]"
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameADC'),'/extensions/joindomain')]"
         // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
         // DSC Config files timing out.
         //  "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/NtrConfigDscExtension')]"
@@ -1175,9 +1175,9 @@
         "typeHandlerVersion": "2.19",
         "autoUpgradeMinorVersion": false,
         "settings": {
-          "modulesUrl": "[variables('PPSDSCModuleUrl')]",
+          "modulesUrl": "[variables('AdcDSCModuleUrl')]",
           "SasToken": "",
-          "configurationFunction": "[variables('PPSConfigurationFunction')]",
+          "configurationFunction": "[variables('AdcConfigurationFunction')]",
           "configurationData": {
             "url": "[variables('Configurationurl')]"
           },
@@ -1356,7 +1356,7 @@
       "comments": "Join domain - JsonADDomainExtension",
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMNamePPS'),'/joindomain')]",
+      "name": "[concat(parameters('VMNameADC'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
@@ -1489,9 +1489,9 @@
         }
       }
     },
-    //Antimalware extension for PP server
+    //Antimalware extension for Closingpc server
     {
-      "name": "[concat(parameters('VMNamePPS'),'/IaaSAntimalware')]",
+      "name": "[concat(parameters('VMNameADC'),'/IaaSAntimalware')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "location": "[resourceGroup().location]",
       "dependsOn": [
