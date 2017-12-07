@@ -613,13 +613,11 @@
             "OctopusServerUrl": "[parameters('tentacleOctopusServerUrl')]",
             "Environments": "[parameters('tentacleEnvironments')]",
             "Roles": "[parameters('tentacleRoles')]",
-            "CommunicationMode": "[parameters('tentacleCommunicationMode')]",
-            "ServerPort": "[parameters('tentaclePort')]"
+            "ServerPort": "[parameters('tentaclePort')]",
+            "ApiKey": "[parameters('tentacleApiKey')]"
           }
         },
-        "protectedSettings": {
-          "ApiKey": "[parameters('tentacleApiKey')]"
-        }
+        "protectedSettings": {}
       }
     }
   ] 

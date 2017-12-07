@@ -1,6 +1,6 @@
 configuration OctopusTentacle
 {
-    param ($ApiKey, $OctopusServerUrl, $Environments, $Roles, $CommunicationMode, $Port)
+    param ($ApiKey, $OctopusServerUrl, $Environments, $Roles, $Port)
 
     Import-DscResource -Module OctopusDSC
 
@@ -24,7 +24,7 @@ configuration OctopusTentacle
             
 
             # How Tentacle will communicate with the server
-            CommunicationMode = $CommunicationMode
+            CommunicationMode = "Listen"
             ServerPort = $Port
 
             # Where deployed applications will be installed by Octopus
