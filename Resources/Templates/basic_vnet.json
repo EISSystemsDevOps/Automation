@@ -5,7 +5,6 @@
       "VNetObject": {
       //VNetObject required following properties:
       //Name // AddressPrefix // subnet(1-2)Name // subnet(1-2)Prefix
-      //DNSServer1 //DNSServer2
       "type": "object",
       "metadata": {
         "description": "object containing VirtualNetwork details."

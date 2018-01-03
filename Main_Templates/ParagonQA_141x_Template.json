@@ -514,16 +514,16 @@
       //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
     },
-    "NICObject4": {
-      "Name": "[concat(parameters('VMNamePPS'),'-Nic')]",
-      //"PublicIPAddressName": "[variables('PIPObject2').Name]",
-      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
-      //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
-      "subnetRef": "[variables('subnetRef')]"
-      //"IPAddress": "[variables('domainControllerIPAddress')]"
-      //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
-      // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
-    },
+    //"NICObject4": {
+    //  "Name": "[concat(parameters('VMNamePPS'),'-Nic')]",
+    //  //"PublicIPAddressName": "[variables('PIPObject2').Name]",
+    //  //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('SubnetName')]",
+    //  //      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('SubnetName'))]"
+    //  "subnetRef": "[variables('subnetRef')]"
+    //  //"IPAddress": "[variables('domainControllerIPAddress')]"
+    //  //   "LoadBalancerName": "[concat(parameters('VMNameBRE'),'-LB')]",
+    //  // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
+    //},
     "NICObject5": {
       "Name": "[concat(parameters('VMNameCON'),'-Nic')]",
       //"PublicIPAddressName": "[variables('PIPObject2').Name]",
@@ -605,22 +605,22 @@
       "Uri": "[variables('VMUri')]"
 
     },
-    "VMObject4": {
-      "Name": "[parameters('VMNamePPS')]",
-      "Size": "[parameters('VMSize1')]",
-      //      "ASName": "[variables('ASObject1').Name]",
-      "nicName": "[variables('NICObject4').Name]",
-      "AdminUserName": "[parameters('LocalAdminUserName')]",
-      "AdminPassword": "[parameters('LocalAdminPassword')]",
-      "publisher": "MicrosoftWindowsServer",
-      "offer": "WindowsServer",
-      "sku": "[parameters('windowsOSVersion')]",
-      "version": "latest",
-      "storageAccountName": "[parameters('storageAcctName')]",
-      "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
-      "Uri": "[variables('VMUri')]"
+    //"VMObject4": {
+    //  "Name": "[parameters('VMNamePPS')]",
+    //  "Size": "[parameters('VMSize1')]",
+    //  //      "ASName": "[variables('ASObject1').Name]",
+    //  "nicName": "[variables('NICObject4').Name]",
+    //  "AdminUserName": "[parameters('LocalAdminUserName')]",
+    //  "AdminPassword": "[parameters('LocalAdminPassword')]",
+    //  "publisher": "MicrosoftWindowsServer",
+    //  "offer": "WindowsServer",
+    //  "sku": "[parameters('windowsOSVersion')]",
+    //  "version": "latest",
+    //  "storageAccountName": "[parameters('storageAcctName')]",
+    //  "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
+    //  "Uri": "[variables('VMUri')]"
 
-    },
+    //},
     "VMObject5": {
       "Name": "[parameters('VMNameCON')]",
       "Size": "[parameters('VMSize1')]",
@@ -780,26 +780,26 @@
         }
       }
     },
-    {
-      "name": "NetworkInterfaceResource4",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2016-02-01",
-      "dependsOn": [
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('NetworkInterfaceURI')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
+    //{
+    //  "name": "NetworkInterfaceResource4",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2016-02-01",
+    //  "dependsOn": [
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('NetworkInterfaceURI')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
 
-          "NICObject": {
-            "value": "[variables('NICObject4')]"
-          }
-        }
-      }
-    },
+    //      "NICObject": {
+    //        "value": "[variables('NICObject4')]"
+    //      }
+    //    }
+    //  }
+    //},
     {
       "name": "NetworkInterfaceResource5",
       "type": "Microsoft.Resources/deployments",
@@ -904,27 +904,27 @@
       }
     },
 
-    {
-      "name": "VMResource4",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
-        "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource4')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('VMObject4').Uri]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "VMObject": {
-            "value": "[variables('VMObject4')]"
-          }
-        }
-      }
-    },
+    //{
+    //  "name": "VMResource4",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2015-01-01",
+    //  "dependsOn": [
+    //    "[resourceid('Microsoft.Resources/deployments/', 'StorageAccountResource')]",
+    //    "[resourceid('Microsoft.Resources/deployments/', 'NetworkInterfaceResource4')]"
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('VMObject4').Uri]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "VMObject": {
+    //        "value": "[variables('VMObject4')]"
+    //      }
+    //    }
+    //  }
+    //},
 
     {
       "name": "VMResource5",
@@ -1083,43 +1083,43 @@
     },
 
     //     //   Patient Portal Server
-            {
-              "type": "Microsoft.Compute/virtualMachines/extensions",
-              "name": "[concat(parameters('VMNamePPS'),'/PPSConfigDscExtension')]",
-              "apiVersion": "2015-06-15",
-              "location": "[resourceGroup().location]",
-              "dependsOn": [
-                "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]",
-        "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNamePPS'),'/extensions/joindomain')]"
-        // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
-        // DSC Config files timing out.  
-              //  "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/NtrConfigDscExtension')]"
-              ],
-              "properties": {
-                "publisher": "Microsoft.Powershell",
-                "type": "DSC",
-                "typeHandlerVersion": "2.19",
-                "autoUpgradeMinorVersion": false,
-                "settings": {
-                  "modulesUrl": "[variables('PPSDSCModuleUrl')]",
-                  "SasToken": "",
-                  "configurationFunction": "[variables('PPSConfigurationFunction')]",
-                  "configurationData": {
-                    "url": "[variables('Configurationurl')]"
-                   },
-                  //"wmfVersion": "4.0",
-                  "Properties": {
-     //              "storageAccountName": "[parameters('dlStorageAccountName')]",
-     //              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
-     //              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
-                     "sourcepath": "[parameters('SourcePath')]",  
-                     "SWPath": "[parameters('SWPath')]"
+     //       {
+     //         "type": "Microsoft.Compute/virtualMachines/extensions",
+     //         "name": "[concat(parameters('VMNamePPS'),'/PPSConfigDscExtension')]",
+     //         "apiVersion": "2015-06-15",
+     //         "location": "[resourceGroup().location]",
+     //         "dependsOn": [
+     //           "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]",
+     //   "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNamePPS'),'/extensions/joindomain')]"
+     //   // NOTE:  Adding some dependencies so not all DSC Configs kick off at the same time.  We were seeing some issues with valid
+     //   // DSC Config files timing out.  
+     //         //  "[concat('Microsoft.Compute/virtualMachines/',parameters('VMNameNTR'),'/extensions/NtrConfigDscExtension')]"
+     //         ],
+     //         "properties": {
+     //           "publisher": "Microsoft.Powershell",
+     //           "type": "DSC",
+     //           "typeHandlerVersion": "2.19",
+     //           "autoUpgradeMinorVersion": false,
+     //           "settings": {
+     //             "modulesUrl": "[variables('PPSDSCModuleUrl')]",
+     //             "SasToken": "",
+     //             "configurationFunction": "[variables('PPSConfigurationFunction')]",
+     //             "configurationData": {
+     //               "url": "[variables('Configurationurl')]"
+     //              },
+     //             //"wmfVersion": "4.0",
+     //             "Properties": {
+     ////              "storageAccountName": "[parameters('dlStorageAccountName')]",
+     ////              "storageAccountKey": "[parameters('dlStorageAccountKey')]",
+     ////              "storageAccountContainer": "[parameters('NtrStorageAccountContainer')]",
+     //                "sourcepath": "[parameters('SourcePath')]",  
+     //                "SWPath": "[parameters('SWPath')]"
 
-                  }
-                },
-                "protectedSettings": { }
-              }
-            },
+     //             }
+     //           },
+     //           "protectedSettings": { }
+     //         }
+     //       },
 
     //     //   Connect Server
     {
@@ -1278,33 +1278,33 @@
     },
 
     ////Domain Join using Native DomainJoin Extension - depends on AD Configuration Extension on Domain Controller
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMNamePPS'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
-        }
-      }
-    },
+    //{
+    //  "comments": "Join domain - JsonADDomainExtension",
+    //  "apiVersion": "2015-06-15",
+    //  "type": "Microsoft.Compute/virtualMachines/extensions",
+    //  "name": "[concat(parameters('VMNamePPS'),'/joindomain')]",
+    //  "location": "[resourceGroup().location]",
+    //  "dependsOn": [
+    //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+    //  ],
+    //  "properties": {
+    //    "publisher": "Microsoft.Compute",
+    //    "type": "JsonADDomainExtension",
+    //    "typeHandlerVersion": "1.3",
+    //    "autoUpgradeMinorVersion": true,
+    //    "settings": {
+    //      "Name": "[parameters('domainName')]",
+    //      "User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
+    //      "Restart": "true",
+    //      //                    "Options": "[variables('domainJoinOptions')]",
+    //      "Options": "3",
+    //      "OUPath": "[parameters('OUPath')]"
+    //    },
+    //    "protectedSettings": {
+    //      "Password": "[parameters('DomPassword')]"
+    //    }
+    //  }
+    //},
     //Domain Join using Native DomainJoin Extension - depends on AD Configuration Extension on Domain Controller
     {
       "comments": "Join domain - JsonADDomainExtension",
@@ -1362,36 +1362,36 @@
       }
     },
     //Antimalware extension for PP server
-    {
-      "name": "[concat(parameters('VMNamePPS'),'/IaaSAntimalware')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
-      ],
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publisher": "Microsoft.Azure.Security",
-        "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "AntimalwareEnabled": true,
-          "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
-          "ScheduledScanSettings": {
-            "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
-            "day": "[parameters('ScheduledScanSettingsDay')]",
-            "time": "[parameters('ScheduledScanSettingsTime')]",
-            "scanType": "[parameters('ScheduledScanSettingsScanType')]"
-          },
-          "Exclusions": {
-            "Extensions": "[parameters('ExclusionsExtensions')]",
-            "Paths": "[parameters('ExclusionsPaths')]",
-            "Processes": "[parameters('ExclusionsProcesses')]"
-          }
-        }
-      }
-    },
+    //{
+    //  "name": "[concat(parameters('VMNamePPS'),'/IaaSAntimalware')]",
+    //  "type": "Microsoft.Compute/virtualMachines/extensions",
+    //  "location": "[resourceGroup().location]",
+    //  "dependsOn": [
+    //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+    //  ],
+    //  "apiVersion": "2015-06-15",
+    //  "properties": {
+    //    "publisher": "Microsoft.Azure.Security",
+    //    "type": "IaaSAntimalware",
+    //    "typeHandlerVersion": "1.3",
+    //    "autoUpgradeMinorVersion": true,
+    //    "settings": {
+    //      "AntimalwareEnabled": true,
+    //      "RealtimeProtectionEnabled": "[parameters('RealtimeProtectionEnabled')]",
+    //      "ScheduledScanSettings": {
+    //        "isEnabled": "[parameters('ScheduledScanSettingsIsEnabled')]",
+    //        "day": "[parameters('ScheduledScanSettingsDay')]",
+    //        "time": "[parameters('ScheduledScanSettingsTime')]",
+    //        "scanType": "[parameters('ScheduledScanSettingsScanType')]"
+    //      },
+    //      "Exclusions": {
+    //        "Extensions": "[parameters('ExclusionsExtensions')]",
+    //        "Paths": "[parameters('ExclusionsPaths')]",
+    //        "Processes": "[parameters('ExclusionsProcesses')]"
+    //      }
+    //    }
+    //  }
+    //},
     //Antimalware extension for Web server
     {
       "name": "[concat(parameters('VMNameWeb'),'/IaaSAntimalware')]",
@@ -1548,28 +1548,28 @@
       }
     },
     //OMS agent for PPS Server
-    {
-      "name": "[concat(parameters('VMNamePPS'),'/OMSAgent')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      //"name": "Microsoft.EnterpriseCloud.Monitoring",
-      "apiVersion": "2017-03-30",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.EnterpriseCloud.Monitoring",
-        "type": "MicrosoftMonitoringAgent",
-        "typeHandlerVersion": "1.0",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "workspaceId": "[parameters('workspaceId')]"
-        },
-        "protectedSettings": {
-          "workspaceKey": "[parameters('workspaceKey')]"
-        }
-      }
-    },
+    //{
+    //  "name": "[concat(parameters('VMNamePPS'),'/OMSAgent')]",
+    //  "type": "Microsoft.Compute/virtualMachines/extensions",
+    //  //"name": "Microsoft.EnterpriseCloud.Monitoring",
+    //  "apiVersion": "2017-03-30",
+    //  "location": "[resourceGroup().location]",
+    //  "dependsOn": [
+    //    "[resourceid('Microsoft.Resources/deployments/', 'VMResource4')]"
+    //  ],
+    //  "properties": {
+    //    "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+    //    "type": "MicrosoftMonitoringAgent",
+    //    "typeHandlerVersion": "1.0",
+    //    "autoUpgradeMinorVersion": true,
+    //    "settings": {
+    //      "workspaceId": "[parameters('workspaceId')]"
+    //    },
+    //    "protectedSettings": {
+    //      "workspaceKey": "[parameters('workspaceKey')]"
+    //    }
+    //  }
+    //},
     //OMS agent for Web Server
     {
       "name": "[concat(parameters('VMNameWEB'),'/OMSAgent')]",
