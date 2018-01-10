@@ -1,4 +1,5 @@
 {
+  
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
@@ -21,7 +22,12 @@
         "description": "Password for the Virtual Machine."
       }
     },
-
+    //"dnsLabelPrefix": {
+    //  "type": "string",
+    //  "metadata": {
+    //    "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
+    //  }
+    //},
     "DomUserName": {
       "type": "string",
       "metadata": {
@@ -44,7 +50,7 @@
 
     "windowsOSVersion": {
       "type": "string",
-      "defaultValue": "2012-R2-Datacenter",
+      "defaultValue": "2016-Datacenter",
       "allowedValues": [
         "2008-R2-SP1",
         "2012-Datacenter",
@@ -58,7 +64,7 @@
     },
     "VMSize": {
       "type": "string",
-      "defaultValue": "Standard_DS2_v2",
+      "defaultValue": "Standard_A2_v2",
       "allowedValues": [
         "Basic_A2",
         "Basic_A3",
@@ -71,14 +77,13 @@
         "Standard_D13",
         "Standard_A1",
         "Standard_A2",
+        "Standard_A2_v2",
         "Standard_A3",
         "Standard_A4",
         "Standard_A5",
+        "Standard_D11_v2",
         "Standard_DS2_v2",
-        "Standard_B2s",
-        "Standard_B2ms",
-        "Standard_B4ms",
-        "Standard_A2_v2"
+        "Standard_B2s"
       ],
       "metadata": {
         "description": "The size of the VM."
@@ -252,29 +257,9 @@
       "metadata": {
         "description": "workspaceKey."
       }
-    },
-
-
-     "publisher": {
-            "type": "string",
-            "defaultValue": "7",
-            "metadata": {
-                "description": "Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)"
-            }
-        },
-    "offer": {
-      "type": "string",
-      "defaultValue": "120",
-      "metadata": {
-        "description": "When to perform the scheduled scan, measured in minutes from midnight (0-1440). For example: 0 = 12AM, 60 = 1AM, 120 = 2AM."
-      }
-    },
-    "sku": {
-      "type": "string",
-      "metadata": {
-        "description": "workspaceId."
-      }
     }
+  
+
 
 
   },//End of Parameters
@@ -309,11 +294,6 @@
     ////  Comment out the LoadBalancerResource section as well if you want to forego Load balancer
     ////  Comment out the Public IP section as well if you want to forego Public IP
     "VMUri": "[concat(variables('TemplateUrl'),'/','vm.json')]",
-    "VMTwoDataDisksURI": "[concat(variables('TemplateUrl'),'/','vm_two_datadisks.json')]",
-    "DBDSCModuleUrl": "[concat(variables('DSCmodulesUrl'),'DBServerConfigD3.ps1.zip')]",
-    "DBConfigurationFunction": "DBServerConfigD3.ps1\\DBServerConfigD3",
-    "DSCmodulesUrl": "[concat(parameters('_artifactsLocation'),'/DSC/')]",
-
     "StorageAccountURI": "[concat(variables('TemplateUrl'),'/',parameters('storageAcctNewOrExisting'),'_storage_account.json')]",
     "NetworkSecurityGroupURI": "[concat(variables('TemplateUrl'),'/','rdp_network_security_group.json')]",
     "LoadBalancerURI": "[concat(variables('TemplateUrl'),'/','load_balancer.json')]",
@@ -323,30 +303,44 @@
       "SkuName": "Standard_LRS",
       "ResourceGroup": "[parameters('storageAcctResourceGroup')]"
     },
-    "NicObject": {
+    "NICObject5": {
       "Name": "[concat(parameters('VMName'),'-Nic')]",
       "subnetRef": "[variables('subnetRef')]"  
      // "IPAddress": "[parameters('DCIPAddress')]"
       //   "LoadBalancerName": "[concat(variables('VMName2'),'-LB')]",
       // "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
-    }, 
+    },
+    //"NSGObject1": {
+    //  "Name": "FrontEnd-NSG",
+    //  "Rule1SourcePort": "*",
+    //  "Rule1DestinationPort": "145",
+    //  "Rule1Access": "Allow",
+    //  "LoadBalancerBackEndName": "[variables('LBObject1').BackEndName]"
+    //},
+    //"NSGObject2": {
+    //  "Name": "FrontEnd-NSG-2",
+    //  "Rule1SourcePort": "*",
+    //  "Rule1DestinationPort": "145",
+    //  "Rule1Access": "Allow",
+    //  "LoadBalancerBackEndName": "[variables('LBObject2').BackEndName]"
+ // },
     "VMObject": {
       "Name": "[parameters('VMName')]",
       "Size": "[parameters('VMSize')]",
-      "nicName": "[variables('NICObject').Name]",
+      //     "ASName": "[variables('ASObject2').Name]",
+      "nicName": "[variables('NICObject5').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "publisher": "[parameters('publisher')]",
-      "offer": "[parameters('offer')]",
-      "sku": "[parameters('sku')]",
-      "version":"latest",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "[parameters('windowsOSVersion')]",
+      "version": "2.127.20171115",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
-      "URI": "[variables('VMTwoDataDisksURI')]",
-      "DataDisk1SizeGB": "1023",
-      "DataDisk2SizeGB": "1023"
-    }
+      "URI": "[variables('VMUri')]",
+      "DataDiskSizeGB": "80"
 
+    }
 
   },
   "resources": [
@@ -429,7 +423,7 @@
         "parameters": {
 
           "NICObject": {
-            "value": "[variables('NicObject')]"
+            "value": "[variables('NICObject5')]"
           }
         }
       }
@@ -516,45 +510,15 @@
           }
         }
       }
-    },
-    
-   //Paragon Configuration via DSC Extension
-     //      DB Server
-        {
-          "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(parameters('VMName'),'/DBConfigDscExtension')]",
-          "apiVersion": "2015-06-15",
-          "location": "[resourceGroup().location]",
-          "dependsOn": [
-            "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Powershell",
-            "type": "DSC",
-            "typeHandlerVersion": "2.19",
-            "autoUpgradeMinorVersion": false,
-            "settings": {
-              "ModulesUrl": "[variables('DBDSCModuleUrl')]",
-              "SasToken": "",
-              "configurationFunction": "[variables('DBConfigurationFunction')]",
-              "configurationData": {
-                "url": "[variables('Configurationurl')]"
-              },
-             // "wmfVersion": "4.0",
-             "Properties": {
-                "DomainName": "[parameters('DomainName')]",
-                "AdminCreds": {
-                  "UserName": "[parameters('adminUsername')]",
-                  "Password": "PrivateSettingsRef:AdminPassword"
-                }
-              }
-            },
-            "protectedSettings": {
-              "Items": {
-                "AdminPassword": "[parameters('domPassword')]"
-              }
-            }
-          }
-        }
-  ] 
+    }
+
+
+
+  ] //,
+  //"outputs": {
+  //"hostname": {
+  // "type": "string",
+  //"value": "[reference(variables('PIPObject').Name).dnsSettings.fqdn]"
+  // }
+  // }
 }
