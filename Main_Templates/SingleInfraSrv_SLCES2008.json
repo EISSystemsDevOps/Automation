@@ -6,7 +6,7 @@
     "VMName": {
       "type": "string",
       "metadata": {
-        "description": "Infrastructure Virtual Machine name."
+        "description": "Infrastructure Virtual Machine Name."
       }
     },
 
