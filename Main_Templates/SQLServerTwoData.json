@@ -267,13 +267,13 @@
       "type": "string",
       "defaultValue": "120",
       "metadata": {
-        "description": "When to perform the scheduled scan, measured in minutes from midnight (0-1440). For example: 0 = 12AM, 60 = 1AM, 120 = 2AM."
+        "description": ""
       }
     },
     "sku": {
       "type": "string",
       "metadata": {
-        "description": "workspaceId."
+        "description": ""
       }
     }
 
