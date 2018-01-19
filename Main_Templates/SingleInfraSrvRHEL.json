@@ -404,34 +404,6 @@
         }
       }
     },
-
-    {
-      "comments": "Join domain - JsonADDomainExtension",
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('VMName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceid('Microsoft.Resources/deployments/', 'VMResource')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "Name": "[parameters('domainName')]",
-          "User": "[concat(parameters('domainName'), variables('DomUserNameSlashes'))]",
-          "Restart": "true",
-          //                    "Options": "[variables('domainJoinOptions')]",
-          "Options": "3",
-          "OUPath": "[parameters('OUPath')]"
-        },
-        "protectedSettings": {
-          "Password": "[parameters('DomPassword')]"
-        }
-      }
-    },
     //OMS Agent
      {
       "name": "[concat(parameters('VMName'),'/OMSAgent')]",
