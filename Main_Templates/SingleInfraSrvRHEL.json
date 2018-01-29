@@ -72,7 +72,8 @@
         "Standard_D11_v2",
         "Standard_D4S_v3",
         "Standard_B2s",
-        "Standard_B4ms"
+        "Standard_B4ms",
+        "Standard_A2M_v2"
       ],
       "metadata": {
         "description": "The size of the VM."
