@@ -28,26 +28,6 @@
     //    "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
     //  }
     //},
-    "DomUserName": {
-      "type": "string",
-      "metadata": {
-        "description": "Username for the Virtual Machine."
-      }
-    },
-    "DomPassword": {
-      "type": "securestring",
-      "metadata": {
-        "description": "Password for the Virtual Machine."
-      }
-    },
-    "OUPath": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "OU to place VMs when joining to domain."
-      }
-    },
-
     "Publisher": {
       "type": "string",
       "defaultValue": "2016-Datacenter",
@@ -169,12 +149,6 @@
       },
       "defaultValue": "vhds"
     },
-    "domainName": {
-      "type": "string",
-      "metadata": {
-        "description": "Join to local domain."
-      }
-    },
     "SubscriptionID": {
       "type": "string",
       "metadata": {
@@ -225,7 +199,6 @@
     //"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('VNetObject').subnet2Name)]",
     // "domainUserA": "[concat(parameters('domainName'),'\\')]",
    //parameters('adminUsername'))",
-    "DomUserNameSlashes": "[concat('\\',parameters('DomUserName'))]",
     //Environment VM Names
     //Environment VM Sizes
     //"VMSize1": "Standard_A2",
