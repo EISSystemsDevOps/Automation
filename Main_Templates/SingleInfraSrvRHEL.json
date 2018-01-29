@@ -40,14 +40,6 @@
         "description": "Password for the Virtual Machine."
       }
     },
-    "OUPath": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "OU to place VMs when joining to domain."
-      }
-    },
-
     "Publisher": {
       "type": "string",
       "defaultValue": "2016-Datacenter",
