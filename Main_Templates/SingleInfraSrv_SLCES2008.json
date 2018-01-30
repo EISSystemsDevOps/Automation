@@ -339,7 +339,6 @@
       "<<<<<<<" "HEAD",
       "version": "2.127.20170406",
       "=======": null,
-      "version": "2.127.20170406",
       ">>>>>>>" "e81d0c92728ed44c2d9ad8aae99528c359275751",
       "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
