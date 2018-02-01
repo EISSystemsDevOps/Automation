@@ -83,6 +83,8 @@
         "Standard_A5",
         "Standard_D11_v2",
         "Standard_DS2_v2",
+        "Standard_B1ms",
+        "Standard_B2ms",
         "Standard_B2s"
       ],
       "metadata": {
