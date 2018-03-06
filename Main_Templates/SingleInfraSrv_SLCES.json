@@ -501,7 +501,7 @@
       "properties": {
         "publisher": "Microsoft.Azure.Security",
         "type": "IaaSAntimalware",
-        "typeHandlerVersion": "latest",
+        "typeHandlerVersion": "1.*",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "AntimalwareEnabled": true,
