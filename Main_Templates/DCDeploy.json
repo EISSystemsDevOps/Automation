@@ -102,46 +102,7 @@
 }, 
 
   "resources": [
-    // {
-    //   "name": "[variables('myVNETName')]",
-    //   "type": "Microsoft.Network/virtualNetworks",
-    //   "location": "[parameters('location')]",
-    //   "apiVersion": "2016-03-30",
-    //   "dependsOn": [],
-    //   "tags": {
-    //     "displayName": "[variables('myVNETName')]"
-    //   },
-    //   "properties": {
-    //     "addressSpace": {
-    //       "addressPrefixes": [
-    //         "[variables('myVNETPrefix')]"
-    //       ]
-    //     },
-    //     "subnets": [
-    //       {
-    //         "name": "[variables('myVNETSubnet1Name')]",
-    //         "properties": {
-    //           "addressPrefix": "[variables('myVNETSubnet1Prefix')]"
-    //         }
-    //       }
-    //     ]
-    //   }
-    // },
-    // {
-    //   "name": "[variables('diagnosticStorageAccountName')]",
-    //   "type": "Microsoft.Storage/storageAccounts",
-    //   "location": "[parameters('location')]",
-    //   "apiVersion": "2016-01-01",
-    //   "sku": {
-    //     "name": "Standard_LRS"
-    //   },
-    //   "dependsOn": [],
-    //   "tags": {
-    //     "displayName": "diagnosticStorageAccount"
-    //   },
-    //   "kind": "Storage"
-    // },
-    {
+     {
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[parameters('availabilitySetName')]",
       "apiVersion": "2017-03-30",
