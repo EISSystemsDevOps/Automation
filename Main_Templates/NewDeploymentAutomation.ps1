@@ -1,0 +1,1 @@
+﻿New-AzureRmResourceGroupDeployment -Name tstdeploy -ResourceGroupName tst-1-mgt-001-rg -TemplateUri https://raw.githubusercontent.com/EISSystemsDevOps/Automation/master/Main_Templates/DCDeploytst.json
