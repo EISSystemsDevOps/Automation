@@ -246,7 +246,7 @@
       },
       "dependsOn": [
       //  "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP1'))]",
-        "[resourceId('Microsoft.Network/virtualNetworks/', variables('myVNETName'))]"
+        "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
       ]
     }
     // {
