@@ -55,18 +55,29 @@
       "type": "string",
       "metadata": {
         "description": "Availability Set Name where the VM will be placed"
-      }
+      },
+      "virtualNetworkName": {
+        "defaultValue": "tstvnet",  
+        "type": "string",
+        "metadata": {
+          "description": "VNET Name"
+        }
+      },
+      "virtualNetworkResourceGroup": {
+        "defaultValue": "tst-1-net-001-rg",  
+        "type": "string",
+        "metadata": {
+          "description": "Resource Group VNET is deployed in"
+        }
+      },
+      "subnet1Name": {
+        "defaultValue": "tstsubnet",
+        "type": "string",
+        "metadata": {
+          "description": "Name of the subnet inside the VNET"
+        } 
     },
-    // "dnsPrefixForPublicIP": {
-    //   "type": "string",
-    //   "minLength": 1,
-    //   "maxLength": 14,
-    //   "defaultValue": "[uniqueString(resourceGroup().id)]",
-    //   "metadata": {
-    //     "description": "Globally unique DNS prefix for the Public IPs used to access the Virtual Machines"
-    //   }
-    // },
-    "location": {
+      "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
       "metadata": {
@@ -75,10 +86,9 @@
     }
   },
   "variables": {
-    "myVNETName": "tstvnet",
-    "myVNETPrefix": "192.168.0.0/24",
-    "myVNETSubnet1Name": "tstsubnet",
-    "myVNETSubnet1Prefix": "192.168.0.0/28",
+    "vnetID": "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+    "subnet1Ref": "[concat(variables('vnetID'),'/subnets/', parameters('subnet1Name'))]"
+  },
 //"diagnosticStorageAccountName": "[concat('diagst', uniqueString(resourceGroup().id))]",
     "operatingSystemValues": {
         "Server2016": {
@@ -89,7 +99,7 @@
     },
     "availabilitySetPlatformFaultDomainCount": "2",
     "availabilitySetPlatformUpdateDomainCount": "5",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('myVNETName'),  variables('myVNETSubnet1Name'))]"
+    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'),  variables('subnet1Name'))]"
   },
   "resources": [
     // {
