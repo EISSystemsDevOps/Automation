@@ -88,17 +88,19 @@
   },
   "variables": {
     "vnetID": "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-    "subnet1Ref": "[concat(variables('vnetID'),'/subnets/', parameters('subnet1Name'))]"
-  },
+    "subnet1Ref": "[concat(variables('vnetID'),'/subnets/', parameters('subnet1Name'))]",
     "operatingSystemValues": {
         "Server2016": {
         "PublisherValue": "MicrosoftWindowsServer",
         "OfferValue": "WindowsServer",
-        "SkuValue": "2016-Datacenter-Server-Core",
+        "SkuValue": "2016-Datacenter-Server-Core"
+        }
+    }, 
     "availabilitySetPlatformFaultDomainCount": "2",
     "availabilitySetPlatformUpdateDomainCount": "5",
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'),  parameters('subnet1Name'))]"
-  },
+}, 
+
   "resources": [
     // {
     //   "name": "[variables('myVNETName')]",
