@@ -97,8 +97,7 @@
         }
     }, 
     "availabilitySetPlatformFaultDomainCount": "2",
-    "availabilitySetPlatformUpdateDomainCount": "5",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'),  parameters('subnet1Name'))]"
+    "availabilitySetPlatformUpdateDomainCount": "5"
 }, 
 
   "resources": [
@@ -195,7 +194,7 @@
               //  "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP1'))]"
               //},
               "subnet": {
-                "id": "[variables('subnetRef')]"
+                "id": "[variables('subnet1Ref')]"
               }
             }
           }
