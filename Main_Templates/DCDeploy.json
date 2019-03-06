@@ -65,7 +65,7 @@
       }
         },
       "virtualNetworkName": {
-        "defaultValue": "",  
+        "defaultValue": "tstvnet",  
         "type": "string",
         "metadata": {
           "description": "VNET Name"
@@ -94,7 +94,6 @@
     }
   },
   "variables": {
-    "vnetID": "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
     "subnet1Ref": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('virtualNetworkResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VirtualNetworkName'),'/subnets/',parameters('Subnet1Name'))]",
     "operatingSystemValues": {
         "Server2016": {
