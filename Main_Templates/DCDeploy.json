@@ -58,7 +58,7 @@
       }
         },
       "virtualNetworkName": {
-        "defaultValue": "tstvnet",  
+        "defaultValue": "",  
         "type": "string",
         "metadata": {
           "description": "VNET Name"
