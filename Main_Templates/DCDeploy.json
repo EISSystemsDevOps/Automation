@@ -9,6 +9,13 @@
         "description": "Administrator Username for the local admin account"
       }
     },
+    "SubscriptionID": {
+        "defaultValue": "fc71ccd3-7670-4dbb-b89b-a308ceaf23c0",
+        "type": "securestring",
+        "metadata": {
+          "description": "Administrator password for the local admin account"
+        }
+      },
     "virtualMachineAdminPassword": {
       "type": "securestring",
       "metadata": {
@@ -58,7 +65,7 @@
       }
         },
       "virtualNetworkName": {
-        "defaultValue": "",  
+        "defaultValue": "tstvnet",  
         "type": "string",
         "metadata": {
           "description": "VNET Name"
@@ -88,7 +95,7 @@
   },
   "variables": {
     "vnetID": "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-    "subnet1Ref": "[concat(variables('vnetID'),'/subnets/', parameters('subnet1Name'))]",
+    "subnet1Ref": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('virtualNetworkResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',parameters('VirtualNetworkName'),'/subnets/',parameters('Subnet1Name'))]",
     "operatingSystemValues": {
         "Server2016": {
         "PublisherValue": "MicrosoftWindowsServer",
