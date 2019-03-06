@@ -55,14 +55,15 @@
       "type": "string",
       "metadata": {
         "description": "Availability Set Name where the VM will be placed"
-      },
+      }
+        },
       "virtualNetworkName": {
         "defaultValue": "tstvnet",  
         "type": "string",
         "metadata": {
           "description": "VNET Name"
         }
-      },
+        },
       "virtualNetworkResourceGroup": {
         "defaultValue": "tst-1-net-001-rg",  
         "type": "string",
