@@ -183,10 +183,7 @@
             "dnsServers": []
           },
           "enableIPForwarding": false
-        },
-        "dependsOn": [
-          "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
-        ]
+        }    
       }
     ],
     "outputs": {}
