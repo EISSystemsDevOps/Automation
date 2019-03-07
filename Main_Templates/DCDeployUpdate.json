@@ -173,8 +173,8 @@
         }
       },
       "dependsOn": [
-        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
-        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC1'), '-NIC1'))]"
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]"
+        //"[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC1'), '-NIC1'))]"
       ]
     },
     {
@@ -227,8 +227,8 @@
         }
       },
       "dependsOn": [
-        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
-        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC2'), '-NIC2'))]"
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]"
+        //"[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC2'), '-NIC2'))]"
       ]
     },
     {
@@ -254,7 +254,7 @@
         "enableIPForwarding": false
       },
       "dependsOn": [
-      "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
+      //"[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
       ]
     }
   ],
