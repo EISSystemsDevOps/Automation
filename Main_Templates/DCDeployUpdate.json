@@ -25,7 +25,7 @@
     "VMNameDC1": {
       "defaultValue": "MyVM1",
       "type": "string",
-      "maxLength": 15,
+      "maxLength": 26,
       "metadata": {
         "description": "Name of the virtual machine to be created"
       }
@@ -33,7 +33,7 @@
     "VMNameDC2": {
       "defaultValue": "MyVM2",
       "type": "string",
-      "maxLength": 15,
+      "maxLength": 26,
       "metadata": {
         "description": "Name of the virtual machine to be created"
       }
