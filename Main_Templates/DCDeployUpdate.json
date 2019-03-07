@@ -167,8 +167,8 @@
         }
       },
       "dependsOn": [
-        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]"
-       // "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC1'), '-NIC1'))]"
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC1'), '-NIC1'))]"
       ]
     },
     {
