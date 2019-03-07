@@ -17,7 +17,7 @@
       }
     },
       "virtualMachineAdminPassword": {
-      "type": "securestring",
+      "type": "string",
       "metadata": {
         "description": "Administrator password for the local admin account"
       }
