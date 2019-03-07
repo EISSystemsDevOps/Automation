@@ -208,7 +208,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC2'), '-NIC1'))]"
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC2'), '-NIC2'))]"
             }
           ]
         },
@@ -218,12 +218,12 @@
       },
       "dependsOn": [
         "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
-        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC2'), '-NIC1'))]"
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC2'), '-NIC2'))]"
       ]
     },
     {
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[concat(parameters('VMNameDC2'), '-NIC1')]",
+      "name": "[concat(parameters('VMNameDC2'), '-NIC2')]",
       "apiVersion": "2016-03-30",
       "location": "[parameters('location')]",
       "properties": {
