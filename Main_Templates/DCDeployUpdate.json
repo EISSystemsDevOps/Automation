@@ -132,6 +132,11 @@
         "hardwareProfile": {
           "vmSize": "[parameters('virtualMachineSize')]"
         },
+        "apiVersion": "2016-03-30",
+        "type": "Microsoft.Network/networkInterfaces",
+        "name": "[variables('nicName')]",
+        "location": "[resourceGroup().location]" 
+    },
         "storageProfile": {
           "imageReference": {
             "publisher": "[variables('operatingSystemValues')[parameters('operatingSystem')].PublisherValue]",
@@ -147,11 +152,6 @@
             },
             "caching": "ReadWrite"
           },
-            "apiVersion": "2016-03-30",
-            "type": "Microsoft.Network/networkInterfaces",
-            "name": "[variables('nicName')]",
-            "location": "[resourceGroup().location]" 
-        },
         "osProfile": {
           "computerName": "[concat(parameters('VMNameDC1'))]",
           "adminUsername": "[parameters('virtualMachineAdminUserName')]",
@@ -173,8 +173,8 @@
         }
       },
       "dependsOn": [
-        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]"
-        //"[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC1'), '-NIC1'))]"
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC1'), '-NIC1'))]"
       ]
     },
     {
@@ -186,6 +186,11 @@
         "hardwareProfile": {
           "vmSize": "[parameters('virtualMachineSize')]"
         },
+        "apiVersion": "2016-03-30",
+        "type": "Microsoft.Network/networkInterfaces",
+        "name": "[variables('nicName2')]",
+        "location": "[resourceGroup().location]" 
+      },
         "storageProfile": {
           "imageReference": {
             "publisher": "[variables('operatingSystemValues')[parameters('operatingSystem')].PublisherValue]",
@@ -201,11 +206,6 @@
             },
             "caching": "ReadWrite"
           },
-          "apiVersion": "2016-03-30",
-          "type": "Microsoft.Network/networkInterfaces",
-          "name": "[variables('nicName2')]",
-          "location": "[resourceGroup().location]" 
-        },
         "osProfile": {
           "computerName": "[concat(parameters('VMNameDC2'))]",
           "adminUsername": "[parameters('virtualMachineAdminUserName')]",
@@ -227,8 +227,8 @@
         }
       },
       "dependsOn": [
-        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]"
-        //"[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC2'), '-NIC2'))]"
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC2'), '-NIC2'))]"
       ]
     },
     {
@@ -254,7 +254,7 @@
         "enableIPForwarding": false
       },
       "dependsOn": [
-      //"[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
+      "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
       ]
     }
   ],
