@@ -162,6 +162,7 @@
           "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC1'), '-NIC1'))]"
         ]
       },
+      
         "type": "Microsoft.Network/networkInterfaces",
         "name": "[concat(parameters('VMNameDC1'), '-NIC1')]",
         "apiVersion": "2017-06-01",
@@ -183,8 +184,8 @@
             "dnsServers": []
           },
           "enableIPForwarding": false
-        }    
-      }
+        } 
+    }   
     ],
     "outputs": {}
   }
