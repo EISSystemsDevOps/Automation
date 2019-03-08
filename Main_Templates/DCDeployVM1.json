@@ -100,6 +100,26 @@
 }, 
 
   "resources": [
+    {
+        "type": "Microsoft.Network/networkInterfaces",
+        "name": "[concat(parameters('VMNameDC1'), '-NIC1')]",
+        "apiVersion": "2017-06-01",
+        "location": "[parameters('location')]",
+      
+        "properties": {
+          "ipConfigurations": [
+            {
+              "name": "ipconfig1",
+              "properties": {
+                "privateIPAllocationMethod": "Dynamic",
+                  "subnet": {
+                  "id": "[variables('subnet1Ref')]"
+                }
+              }
+            }
+          ]
+        }
+    },
      {
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[parameters('availabilitySetName')]",
@@ -162,26 +182,6 @@
           "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
           "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC1'), '-NIC1'))]"
         ]
-    },
-    {
-        "type": "Microsoft.Network/networkInterfaces",
-        "name": "[concat(parameters('VMNameDC1'), '-NIC1')]",
-        "apiVersion": "2017-06-01",
-        "location": "[parameters('location')]",
-      
-        "properties": {
-          "ipConfigurations": [
-            {
-              "name": "ipconfig1",
-              "properties": {
-                "privateIPAllocationMethod": "Dynamic",
-                  "subnet": {
-                  "id": "[variables('subnet1Ref')]"
-                }
-              }
-            }
-          ]
-        }
     }
              ],
     "outputs": {}
