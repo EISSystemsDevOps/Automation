@@ -184,7 +184,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
-                "id": "/subscriptions/hos-blueprint-poc/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
+                "id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
                 //"id": "/subscriptions/.../resourceGroups/azrdp/providers/Microsoft.Network/virtualNetworks/azrdp-vnet/subnets/default"
               }
             }
@@ -261,7 +261,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
-                  "id": "/subscriptions/hos-blueprint-poc/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
+                  "id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
               }
             }
           }
