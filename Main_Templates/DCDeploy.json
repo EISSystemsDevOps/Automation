@@ -95,7 +95,7 @@
     }
   },
   "variables": {
-    "subnet1Ref": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('virtualNetworkResourceGroup'),parameters('VirtualNetworkName'),'/subnets/',parameters('Subnet1Name'))]",
+    "subnet1Ref": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('virtualNetworkResourceGroup'),'/virtualNetworks/',parameters('VirtualNetworkName'),'/subnets/',parameters('Subnet1Name'))]",
     "operatingSystemValues": {
         "Server2016": {
         "PublisherValue": "MicrosoftWindowsServer",
