@@ -168,7 +168,33 @@
       },
       "dependsOn": [
         "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
-        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC1'), '-NIC1'))]"
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC1'), '-nic'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[concat(parameters('VMNameDC1'), '-nic')]",
+      "apiVersion": "2016-03-30",
+      "location": "[parameters('location')]",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+                "subnet": {
+                "id": "[variables('subnet1Ref')]"
+              }
+            }
+          }
+        ],
+        "dnsSettings": {
+          "dnsServers": []
+        },
+        "enableIPForwarding": false
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
       ]
     },
     {
@@ -218,12 +244,12 @@
       },
       "dependsOn": [
         "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
-        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC2'), '-NIC1'))]"
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC2'), '-nic'))]"
       ]
     },
     {
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[concat(parameters('VMNameDC2'), '-NIC1')]",
+      "name": "[concat(parameters('VMNameDC2'), '-nic')]",
       "apiVersion": "2016-03-30",
       "location": "[parameters('location')]",
       "properties": {
