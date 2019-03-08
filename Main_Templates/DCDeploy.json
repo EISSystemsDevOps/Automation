@@ -2,6 +2,13 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "SubscriptionID": {
+      "defaultValue": "fc71ccd3-7670-4dbb-b89b-a308ceaf23c0",
+      "type": "securestring",
+      "metadata": {
+        "description": "Administrator password for the local admin account"
+      }
+    },
     "virtualMachineAdminUserName": {
       "defaultValue": "Allscriptsadmin",
       "type": "string",
@@ -9,32 +16,26 @@
         "description": "Administrator Username for the local admin account"
       }
     },
-    "SubscriptionID": {
-        "defaultValue": "fc71ccd3-7670-4dbb-b89b-a308ceaf23c0",
-        "type": "securestring",
-        "metadata": {
-          "description": "Administrator password for the local admin account"
-        }
-      },
-    "virtualMachineAdminPassword": {
+      "virtualMachineAdminPassword": {
       "type": "securestring",
       "metadata": {
         "description": "Administrator password for the local admin account"
       }
     },
-    "virtualMachineNamePrefix": {
-      "defaultValue": "MyVM0",
+    "VMNameDC1": {
+      "defaultValue": "MyVM1",
       "type": "string",
       "maxLength": 15,
       "metadata": {
         "description": "Name of the virtual machine to be created"
       }
     },
-    "virtualMachineCount": {
-      "type": "int",
-      "defaultValue": 2,
+    "VMNameDC2": {
+      "defaultValue": "MyVM2",
+      "type": "string",
+      "maxLength": 15,
       "metadata": {
-        "description": "Number of  virtual machines to be created"
+        "description": "Name of the virtual machine to be created"
       }
     },
     "virtualMachineSize": {
@@ -122,12 +123,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1))]",
+      "name": "[concat(parameters('VMNameDC1'))]",
       "apiVersion": "2017-03-30",
       "location": "[parameters('location')]",
       "copy": {
-        "name": "VMcopy",
-        "count": "[parameters('virtualMachineCount')]"
+        "name": "VMcopy"
       },
       "properties": {
         "hardwareProfile": {
@@ -141,7 +141,7 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "[concat(parameters('virtualMachineNamePrefix'),copyIndex(1))]",
+            "name": "[concat(parameters('VMNameDC1'))]",
             "createOption": "FromImage",
             "managedDisk": {
               "storageAccountType": "Standard_LRS"
@@ -150,7 +150,7 @@
           }
         },
         "osProfile": {
-          "computerName": "[concat(parameters('virtualMachineNamePrefix'),copyIndex(1))]",
+          "computerName": "[concat(parameters('VMNameDC1'))]",
           "adminUsername": "[parameters('virtualMachineAdminUserName')]",
           "windowsConfiguration": {
             "provisionVMAgent": true
@@ -161,34 +161,79 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-NIC1'))]"
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC1'), '-NIC1'))]"
             }
           ]
         },
         "availabilitySet": {
           "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName'))]"
         }
-        // "diagnosticsProfile": {
-        //   "bootDiagnostics": {
-        //     "enabled": true,
-        //     "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('diagnosticStorageAccountName')), '2016-01-01').primaryEndpoints.blob]"
-        //   }
-        // }
       },
       "dependsOn": [
         "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
-//        "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticStorageAccountName'))]",
-        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-NIC1'))]"
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC1'), '-NIC1'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[concat(parameters('VMNameDC2'))]",
+      "apiVersion": "2017-03-30",
+      "location": "[parameters('location')]",
+      "copy": {
+        "name": "VMcopy"
+      },
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('virtualMachineSize')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('operatingSystemValues')[parameters('operatingSystem')].PublisherValue]",
+            "offer": "[variables('operatingSystemValues')[parameters('operatingSystem')].OfferValue]",
+            "sku": "[variables('operatingSystemValues')[parameters('operatingSystem')].SkuValue]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "[concat(parameters('VMNameDC2'))]",
+            "createOption": "FromImage",
+            "managedDisk": {
+              "storageAccountType": "Standard_LRS"
+            },
+            "caching": "ReadWrite"
+          }
+        },
+        "osProfile": {
+          "computerName": "[concat(parameters('VMNameDC2'))]",
+          "adminUsername": "[parameters('virtualMachineAdminUserName')]",
+          "windowsConfiguration": {
+            "provisionVMAgent": true
+          },
+          "secrets": [],
+          "adminPassword": "[parameters('virtualMachineAdminPassword')]"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC2'), '-NIC1'))]"
+            }
+          ]
+        },
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName'))]"
+        }
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameDC2'), '-NIC1'))]"
       ]
     },
     {
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-NIC1')]",
+      "name": "[concat(parameters('VMNameDC2'), '-NIC1')]",
       "apiVersion": "2016-03-30",
       "location": "[parameters('location')]",
       "copy": {
-        "name": "NICCopy",
-        "count": "[parameters('virtualMachineCount')]"
+        "name": "NICCopy"
       },
       "properties": {
         "ipConfigurations": [
@@ -196,10 +241,7 @@
             "name": "ipconfig1",
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
-              //"publicIPAddress": {
-              //  "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP1'))]"
-              //},
-              "subnet": {
+                "subnet": {
                 "id": "[variables('subnet1Ref')]"
               }
             }
@@ -211,29 +253,9 @@
         "enableIPForwarding": false
       },
       "dependsOn": [
-      //  "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP1'))]",
         "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
       ]
     }
-    // {
-    //   "apiVersion": "2016-03-30",
-    //   "type": "Microsoft.Network/publicIPAddresses",
-    //   "name": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP1')]",
-    //   "location": "[parameters('location')]",
-    //   "copy": {
-    //     "name": "PIPCopy",
-    //     "count": "[parameters('virtualMachineCount')]"
-    //   },
-    //   "tags": {
-    //     "displayName": "[concat(parameters('virtualMachineNamePrefix'), copyIndex(1), '-PIP1')]"
-    //   },
-    //   "properties": {
-    //     "publicIPAllocationMethod": "Dynamic",
-    //     "dnsSettings": {
-    //       "domainNameLabel": "[concat(parameters('dnsPrefixForPublicIP'), copyIndex(1))]"
-    //     }
-    //   }
-    // }
   ],
   "outputs": {}
 }
