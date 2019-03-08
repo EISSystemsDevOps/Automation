@@ -84,8 +84,14 @@
         "type": "string",
         "metadata": {
           "description": "Name of the subnet inside the VNET"
-        } 
+        }   
     },
+    "subnetID": {
+      "type": "string",
+      "metadata": {
+        "description": "subnet ID inside the VNET"
+      }   
+  },
       "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
@@ -185,7 +191,7 @@
               "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
                 //"id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
-                "id": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('virtualNetworkResourceGroup'),'/providers/','/Microsoft.Network/virtualNetworks/',parameters('VirtualNetworkName'),'/subnets/',parameters('Subnet1Name'))]"
+                "id": "[parameters ('subnetId')]"
               }
             }
           }
@@ -262,7 +268,8 @@
               "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
                 //  "id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
-                "id": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('virtualNetworkResourceGroup'),'/providers/','/Microsoft.Network/virtualNetworks/',parameters('VirtualNetworkName'),'/subnets/',parameters('Subnet1Name'))]"
+                //"id": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('virtualNetworkResourceGroup'),'/providers/','/Microsoft.Network/virtualNetworks/',parameters('VirtualNetworkName'),'/subnets/',parameters('Subnet1Name'))]"
+                "id": "[parameters ('subnetId')]"
               }
             }
           }
