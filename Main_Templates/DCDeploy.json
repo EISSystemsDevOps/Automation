@@ -179,9 +179,6 @@
       "name": "[concat(parameters('VMNameDC2'))]",
       "apiVersion": "2017-03-30",
       "location": "[parameters('location')]",
-      "copy": {
-        "name": "VMcopy"
-      },
       "properties": {
         "hardwareProfile": {
           "vmSize": "[parameters('virtualMachineSize')]"
@@ -232,9 +229,6 @@
       "name": "[concat(parameters('VMNameDC2'), '-NIC1')]",
       "apiVersion": "2016-03-30",
       "location": "[parameters('location')]",
-      "copy": {
-        "name": "NICCopy"
-      },
       "properties": {
         "ipConfigurations": [
           {
