@@ -194,7 +194,7 @@
         "enableIPForwarding": false
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
+       // "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
       ]
     },
     {
@@ -270,7 +270,7 @@
         "enableIPForwarding": false
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
+      //  "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
       ]
     }
   ],
