@@ -126,9 +126,6 @@
       "name": "[concat(parameters('VMNameDC1'))]",
       "apiVersion": "2017-03-30",
       "location": "[parameters('location')]",
-      "copy": {
-        "name": "VMcopy"
-      },
       "properties": {
         "hardwareProfile": {
           "vmSize": "[parameters('virtualMachineSize')]"
