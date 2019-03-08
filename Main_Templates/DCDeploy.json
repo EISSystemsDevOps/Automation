@@ -184,8 +184,8 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
-                "id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
-                //"id": "/subscriptions/.../resourceGroups/azrdp/providers/Microsoft.Network/virtualNetworks/azrdp-vnet/subnets/default"
+                //"id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
+                "id": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('virtualNetworkResourceGroup'),'/Microsoft.Network/virtualNetworks/',parameters('VirtualNetworkName'),'/subnets/',parameters('Subnet1Name'))]"
               }
             }
           }
@@ -261,7 +261,8 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
-                  "id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
+                //  "id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
+                "id": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('virtualNetworkResourceGroup'),'/Microsoft.Network/virtualNetworks/',parameters('VirtualNetworkName'),'/subnets/',parameters('Subnet1Name'))]"
               }
             }
           }
