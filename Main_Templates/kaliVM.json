@@ -149,6 +149,7 @@
       "dependsOn": [
         "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMName1'), '-nic'))]"
       ]
+    }
     },
     {
       "type": "Microsoft.Network/networkInterfaces",
@@ -176,8 +177,7 @@
       "dependsOn": [
        // "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
       ]
-    },
-    {
+    }
   ],
   "outputs": {}
 }
