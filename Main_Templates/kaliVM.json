@@ -2,13 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "SubscriptionID": {
-      "defaultValue": "fc71ccd3-7670-4dbb-b89b-a308ceaf23c0",
-      "type": "securestring",
-      "metadata": {
-        "description": "Subscription for Deployment"
-      }
-    },
     "virtualMachineAdminUserName": {
       "defaultValue": "Allscriptsadmin",
       "type": "string",
@@ -61,27 +54,6 @@
       "metadata": {
         "description": "The sku for the VM. This will pick a fully patched image of this given version."
       }
-    },
-      "virtualNetworkName": {
-        "defaultValue": "tstvnet",  
-        "type": "string",
-        "metadata": {
-          "description": "VNET Name"
-        }
-        },
-      "virtualNetworkResourceGroup": {
-        "defaultValue": "tst-1-net-001-rg",  
-        "type": "string",
-        "metadata": {
-          "description": "Resource Group VNET is deployed in"
-        }
-      },
-      "subnet1Name": {
-        "defaultValue": "tstsubnet",
-        "type": "string",
-        "metadata": {
-          "description": "Name of the subnet inside the VNET"
-        }   
     },
     "subnetID": {
       "type": "string",
@@ -144,7 +116,7 @@
           ]
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMName1'), '-nic'))]"
       ]
     }
     },
