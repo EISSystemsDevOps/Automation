@@ -57,6 +57,7 @@
     },
     "subnetID": {
       "type": "string",
+      "defaultValue": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/rds-01-net-001-rg/providers/Microsoft.Network/virtualNetworks/rds-1-001-vnet/subnets/rds-1-mgmt-001-snet",
       "metadata": {
         "description": "subnet ID inside the VNET"
       }   
