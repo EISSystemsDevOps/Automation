@@ -139,7 +139,7 @@
           }
         ],
         "dnsSettings": {
-          "dnsServers": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMName1'), '-nic'))]"
+         // "dnsServers": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMName1'), '-nic'))]"
         },
         "enableIPForwarding": false
       }
