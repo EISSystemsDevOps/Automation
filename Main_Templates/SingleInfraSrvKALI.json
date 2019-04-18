@@ -59,6 +59,14 @@
         "description": "Name of storage account for VM VHD files."
       }
     },
+
+    "storageAccountName": {
+      "type": "string",
+        "defaultValue": "",
+        "metadata": {
+          "description": "Name of storage account for VM VHD files."
+        }
+      },
     
     "storageAcctNewOrExisting": {
       "type": "string",
