@@ -52,7 +52,7 @@
       }
     },
 
-    "AzrStorageAcctNameInput": {
+    "storageacctname": {
     "type": "string",
       "defaultValue": "",
       "metadata": {
