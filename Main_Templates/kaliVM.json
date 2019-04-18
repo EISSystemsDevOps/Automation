@@ -33,6 +33,14 @@
         "description": "Virtual Machine Size"
       }
     },
+    "VirtualNetworkName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": ""
+      }
+
+    },
     "Publisher": {
       "type": "string",
       "defaultValue": "",
