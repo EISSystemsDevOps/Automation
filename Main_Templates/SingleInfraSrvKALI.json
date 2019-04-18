@@ -51,6 +51,15 @@
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
       }
     },
+
+    "storageAccountName": {
+    "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Name of storage account for VM VHD files."
+      }
+    },
+
     "VMSize": {
       "type": "string",
       "defaultValue": "Standard_A2_v2",
