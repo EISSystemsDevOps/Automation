@@ -135,10 +135,10 @@
          // "dnsServers": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMName1'), '-nic'))]"
         },
         "enableIPForwarding": false
-      }
-      //"dependsOn": [
-      //  "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
-     // ]
+      },
+        "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VirtualNetworkName'))]"
+      ]
     }
   ],
   "outputs": {}
