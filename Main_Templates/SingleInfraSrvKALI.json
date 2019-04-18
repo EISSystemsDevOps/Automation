@@ -74,6 +74,14 @@
             "description": ""
           }
         },  
+
+        "storageAcctContainerName": {
+          "type": "string",
+            "defaultValue": "",
+            "metadata": {
+              "description": ""
+            }
+          },
     "VMSize": {
       "type": "string",
       "defaultValue": "Standard_A2_v2",
