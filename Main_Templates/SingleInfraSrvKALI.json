@@ -231,7 +231,6 @@
       "offer": "[parameters('offer')]",
       "sku": "[parameters('sku')]",
       "version": "latest",
-      "storageAccountName": "[parameters('storageAcctName')]",
       "storageAccountContainerName": "[parameters('storageAcctContainerName')]",
       "URI": "[variables('VMUri')]",
       "DataDiskSizeGB": "80"
