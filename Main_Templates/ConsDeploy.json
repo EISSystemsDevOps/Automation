@@ -48,15 +48,13 @@
         "description": "Virtual Machine Size"
       }
     },
-    "operatingSystem": {
-      "type": "string",
-      "defaultValue": "Server2016",
-      "metadata": {
-        "description": "Operating System of the Server"
-      },
-      "allowedValues": [
-        "Server2016"
-      ]
+    "windowsOSVersion": {
+        "type": "string",
+        "defaultValue": "2016-Datacenter",
+        "allowedValues": [      
+          "2012-R2-Datacenter",
+          "2016-Datacenter",
+          "2019-Datacenter"      ]
     },
     "availabilitySetName": {
       "defaultValue": "MyAvailabilitySet",
@@ -101,17 +99,16 @@
     }
   },
   "variables": {
-  //  "subnet1Ref": "[concat('/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('subnetname'))]",
-  //"subnet1Ref": "[concat('/subscriptions/',parameters('selectedSubscriptionID'),'/resourceGroups/',parameters('vnetResourceGroup'),'/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('subnetname'))]",
-    "operatingSystemValues": {
-        "Server2016": {
-        "PublisherValue": "MicrosoftWindowsServer",
-        "OfferValue": "WindowsServer",
-        "SkuValue": "2016-Datacenter-Server-Core"
-        }
-    }, 
-    "availabilitySetPlatformFaultDomainCount": "2",
-    "availabilitySetPlatformUpdateDomainCount": "5"
+//  "subnet1Ref": "[concat('/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('subnetname'))]",
+//"subnet1Ref": "[concat('/subscriptions/',parameters('selectedSubscriptionID'),'/resourceGroups/',parameters('vnetResourceGroup'),'/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('subnetname'))]",
+//  "operatingSystemValues": {
+//      "osversion": {
+//      "PublisherValue": "MicrosoftWindowsServer",
+//      "OfferValue": "WindowsServer",
+//     "SkuValue": "2016-Datacenter"
+//     }
+//  }, 
+    
 }, 
 
   "resources": [
@@ -121,8 +118,8 @@
       "apiVersion": "2017-03-30",
       "location": "[parameters('location')]",
       "properties": {
-        "platformFaultDomainCount": "[variables ('availabilitySetPlatformFaultDomainCount')]",
-        "platformUpdateDomainCount": "[variables ('availabilitySetPlatformUpdateDomainCount')]"
+        "platformFaultDomainCount": 2,
+        "platformUpdateDomainCount": 5
       },
       "sku": {
         "name": "Aligned"
@@ -139,13 +136,13 @@
         },
         "storageProfile": {
           "imageReference": {
-            "publisher": "[variables('operatingSystemValues')[parameters('operatingSystem')].PublisherValue]",
-            "offer": "[variables('operatingSystemValues')[parameters('operatingSystem')].OfferValue]",
-            "sku": "[variables('operatingSystemValues')[parameters('operatingSystem')].SkuValue]",
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "[parameters('windowsOSVersion')]",
             "version": "latest"
           },
           "osDisk": {
-            "name": "[concat(parameters('VMNameCon1'))]",
+            "name": "[concat(parameters('VMNameCon1'), '-disk')]",
             "createOption": "FromImage",
             "managedDisk": {
               "storageAccountType": "Standard_LRS"
@@ -153,6 +150,7 @@
             "caching": "ReadWrite"
           }
         },
+        "licenseType": "Windows_Server",
         "osProfile": {
           "computerName": "[concat(parameters('VMNameCon1'))]",
           "adminUsername": "[parameters('localvmadminusername')]",
@@ -222,7 +220,7 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "[concat(parameters('VMNameCon2'))]",
+            "name": "[concat(parameters('VMNameCon2'), '-disk')]",
             "createOption": "FromImage",
             "managedDisk": {
               "storageAccountType": "Standard_LRS"
