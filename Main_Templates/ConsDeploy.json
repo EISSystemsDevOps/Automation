@@ -213,12 +213,12 @@
           "vmSize": "[parameters('virtualMachineSize')]"
         },
         "storageProfile": {
-          "imageReference": {
-            "publisher": "[variables('operatingSystemValues')[parameters('operatingSystem')].PublisherValue]",
-            "offer": "[variables('operatingSystemValues')[parameters('operatingSystem')].OfferValue]",
-            "sku": "[variables('operatingSystemValues')[parameters('operatingSystem')].SkuValue]",
-            "version": "latest"
-          },
+            "imageReference": {
+              "publisher": "MicrosoftWindowsServer",
+              "offer": "WindowsServer",
+              "sku": "[parameters('windowsOSVersion')]",
+              "version": "latest"
+            },
           "osDisk": {
             "name": "[concat(parameters('VMNameCon2'), '-disk')]",
             "createOption": "FromImage",
