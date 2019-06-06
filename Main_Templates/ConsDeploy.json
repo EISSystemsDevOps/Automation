@@ -617,6 +617,19 @@
         ]
       },
       {
+        "type": "Microsoft.Compute/availabilitySets",
+        "name": "[parameters('availabilitySetNamehss')]",
+        "apiVersion": "2017-03-30",
+        "location": "[parameters('location')]",
+        "properties": {
+          "platformFaultDomainCount": 2,
+          "platformUpdateDomainCount": 5
+        },
+        "sku": {
+          "name": "Aligned"
+        }
+      },
+      {
         "type": "Microsoft.Compute/virtualMachines",
         "name": "[concat(parameters('VMNamehss1'))]",
         "apiVersion": "2017-03-30",
