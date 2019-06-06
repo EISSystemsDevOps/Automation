@@ -38,7 +38,31 @@
         "description": "Name of the virtual machine to be created"
       }
     },
-    "virtualMachineSize": {
+    "VMNameSQL1": {
+        "defaultValue": "MyVM3",
+        "type": "string",
+        "maxLength": 15,
+        "metadata": {
+          "description": "Name of the virtual machine to be created"
+        }
+      },
+      "VMNameSQL2": {
+        "defaultValue": "MyVM4",
+        "type": "string",
+        "maxLength": 15,
+        "metadata": {
+          "description": "Name of the virtual machine to be created"
+        }
+      },
+      "VMNameSQL3": {
+        "defaultValue": "MyVM5",
+        "type": "string",
+        "maxLength": 15,
+        "metadata": {
+          "description": "Name of the virtual machine to be created"
+        }
+      },
+    "virtualMachineSizecon": {
       "type": "string",
       "defaultValue": "Standard_B2s",
       "allowedValues": [
@@ -48,7 +72,17 @@
         "description": "Virtual Machine Size"
       }
     },
-    "windowsOSVersion": {
+    "virtualMachineSizesql": {
+        "type": "string",
+        "defaultValue": "Standard_B2s",
+        "allowedValues": [
+          "Standard_B2s"
+        ],
+        "metadata": {
+          "description": "Virtual Machine Size"
+        }
+      },
+    "windowsOSVersioncon": {
         "type": "string",
         "defaultValue": "2016-Datacenter",
         "allowedValues": [      
@@ -56,20 +90,28 @@
           "2016-Datacenter",
           "2019-Datacenter"      ]
     },
-    "availabilitySetName": {
+    "windowsOSVersionsql": {
+        "type": "string",
+        "defaultValue": "2016-Datacenter",
+        "allowedValues": [      
+          "2012-R2-Datacenter",
+          "2016-Datacenter",
+          "2019-Datacenter"      ]
+    },
+    "availabilitySetNamecon": {
       "defaultValue": "MyAvailabilitySet",
       "type": "string",
       "metadata": {
         "description": "Availability Set Name where the VM will be placed"
       }
         },
-      "vnetName": {
-        "defaultValue": "tstvnet",  
-        "type": "string",
-        "metadata": {
-          "description": "VNET Name"
-        }
-        },
+        "availabilitySetNamesql": {
+            "defaultValue": "MyAvailabilitySet",
+            "type": "string",
+            "metadata": {
+              "description": "Availability Set Name where the VM will be placed"
+            }
+              },
       "vnetResourceGroup": {
         "defaultValue": "tst-1-net-001-rg",  
         "type": "string",
@@ -77,19 +119,19 @@
           "description": "Resource Group VNET is deployed in"
         }
       },
-      "subnetname": {
-        "defaultValue": "tstsubnet",
-        "type": "string",
-        "metadata": {
-          "description": "Name of the subnet inside the VNET"
-        }   
-    },
-    "subnetID": {
+      
+    "subnetIDcon": {
       "type": "string",
       "metadata": {
         "description": "subnet ID inside the VNET"
       }   
   },
+  "subnetIDsql": {
+    "type": "string",
+    "metadata": {
+      "description": "subnet ID inside the VNET"
+    }   
+},
       "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
@@ -114,7 +156,7 @@
   "resources": [
      {
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[parameters('availabilitySetName')]",
+      "name": "[parameters('availabilitySetNamecon')]",
       "apiVersion": "2017-03-30",
       "location": "[parameters('location')]",
       "properties": {
@@ -132,13 +174,13 @@
       "location": "[parameters('location')]",
       "properties": {
         "hardwareProfile": {
-          "vmSize": "[parameters('virtualMachineSize')]"
+          "vmSize": "[parameters('virtualMachineSizecon')]"
         },
         "storageProfile": {
           "imageReference": {
             "publisher": "MicrosoftWindowsServer",
             "offer": "WindowsServer",
-            "sku": "[parameters('windowsOSVersion')]",
+            "sku": "[parameters('windowsOSVersioncon')]",
             "version": "latest"
           },
           "osDisk": {
@@ -168,11 +210,11 @@
           ]
         },
         "availabilitySet": {
-          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName'))]"
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetNamecon'))]"
         }
       },
       "dependsOn": [
-        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetNamecon'))]",
         "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameCon1'), '-nic'))]"
       ]
     },
@@ -189,7 +231,7 @@
               "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
                 //"id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
-                "id": "[parameters ('subnetId')]"
+                "id": "[parameters ('subnetIdcon')]"
               }
             }
           }
@@ -210,13 +252,13 @@
       "location": "[parameters('location')]",
       "properties": {
         "hardwareProfile": {
-          "vmSize": "[parameters('virtualMachineSize')]"
+          "vmSize": "[parameters('virtualMachineSizecon')]"
         },
         "storageProfile": {
             "imageReference": {
               "publisher": "MicrosoftWindowsServer",
               "offer": "WindowsServer",
-              "sku": "[parameters('windowsOSVersion')]",
+              "sku": "[parameters('windowsOSVersioncon')]",
               "version": "latest"
             },
           "osDisk": {
@@ -245,11 +287,11 @@
           ]
         },
         "availabilitySet": {
-          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName'))]"
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetNamecon'))]"
         }
       },
       "dependsOn": [
-        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetNamecon'))]",
         "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameCon2'), '-nic'))]"
       ]
     },
@@ -267,7 +309,7 @@
                 "subnet": {
                 //  "id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
                 //"id": "[concat('/subscriptions/',parameters('selectedSubscriptionID'),'/resourceGroups/',parameters('vnetResourceGroup'),'/providers/','/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('subnetname'))]"
-                "id": "[parameters ('subnetId')]"
+                "id": "[parameters ('subnetIdcon')]"
               }
             }
           }
@@ -280,7 +322,254 @@
       "dependsOn": [
       //  "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VnetName'))]"
       ]
-    }
+    },
+    {
+      "type": "Microsoft.Compute/availabilitySets",
+      "name": "[parameters('availabilitySetNamesql')]",
+      "apiVersion": "2017-03-30",
+      "location": "[parameters('location')]",
+      "properties": {
+        "platformFaultDomainCount": 2,
+        "platformUpdateDomainCount": 5
+      },
+      "sku": {
+        "name": "Aligned"
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[concat(parameters('VMNamesql1'))]",
+      "apiVersion": "2017-03-30",
+      "location": "[parameters('location')]",
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('virtualMachineSizesql')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "[parameters('windowsOSVersionsql')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "[concat(parameters('VMNamesql1'), '-disk')]",
+            "createOption": "FromImage",
+            "managedDisk": {
+              "storageAccountType": "Standard_LRS"
+            },
+            "caching": "ReadWrite"
+          }
+        },
+        "licenseType": "Windows_Server",
+        "osProfile": {
+          "computerName": "[concat(parameters('VMNamesql1'))]",
+          "adminUsername": "[parameters('localvmadminusername')]",
+          "windowsConfiguration": {
+            "provisionVMAgent": true
+          },
+          "secrets": [],
+          "adminPassword": "[parameters('localvmadminpassword')]"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNamesql1'), '-nic'))]"
+            }
+          ]
+        },
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetNamesql'))]"
+        }
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetNamesql'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNamesql1'), '-nic'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[concat(parameters('VMNamesql1'), '-nic')]",
+      "apiVersion": "2016-03-30",
+      "location": "[parameters('location')]",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+                "subnet": {
+                //"id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
+                "id": "[parameters ('subnetIdsql')]"
+              }
+            }
+          }
+        ],
+        "dnsSettings": {
+          "dnsServers": []
+        },
+        "enableIPForwarding": false
+      },
+      "dependsOn": [
+       // "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VnetName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[concat(parameters('VMNamesql2'))]",
+      "apiVersion": "2017-03-30",
+      "location": "[parameters('location')]",
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('virtualMachineSizesql')]"
+        },
+        "storageProfile": {
+            "imageReference": {
+              "publisher": "MicrosoftWindowsServer",
+              "offer": "WindowsServer",
+              "sku": "[parameters('windowsOSVersionsql')]",
+              "version": "latest"
+            },
+          "osDisk": {
+            "name": "[concat(parameters('VMNamesql2'), '-disk')]",
+            "createOption": "FromImage",
+            "managedDisk": {
+              "storageAccountType": "Standard_LRS"
+            },
+            "caching": "ReadWrite"
+          }
+        },
+        "osProfile": {
+          "computerName": "[concat(parameters('VMNamesql2'))]",
+          "adminUsername": "[parameters('localvmadminusername')]",
+          "windowsConfiguration": {
+            "provisionVMAgent": true
+          },
+          "secrets": [],
+          "adminPassword": "[parameters('localvmadminpassword')]"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNamesql2'), '-nic'))]"
+            }
+          ]
+        },
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetNamesql'))]"
+        }
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetNamesql'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNamesql2'), '-nic'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[concat(parameters('VMNamesql2'), '-nic')]",
+      "apiVersion": "2016-03-30",
+      "location": "[parameters('location')]",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+                "subnet": {
+                //  "id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
+                //"id": "[concat('/subscriptions/',parameters('selectedSubscriptionID'),'/resourceGroups/',parameters('vnetResourceGroup'),'/providers/','/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('subnetname'))]"
+                "id": "[parameters ('subnetIdsql')]"
+              }
+            }
+          }
+        ],
+        "dnsSettings": {
+          "dnsServers": []
+        },
+        "enableIPForwarding": false
+      },
+      "dependsOn": [
+      //  "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VnetName'))]"
+      ]
+    },
+    {
+        "type": "Microsoft.Compute/virtualMachines",
+        "name": "[concat(parameters('VMNamesql3'))]",
+        "apiVersion": "2017-03-30",
+        "location": "[parameters('location')]",
+        "properties": {
+          "hardwareProfile": {
+            "vmSize": "[parameters('virtualMachineSizesql')]"
+          },
+          "storageProfile": {
+              "imageReference": {
+                "publisher": "MicrosoftWindowsServer",
+                "offer": "WindowsServer",
+                "sku": "[parameters('windowsOSVersionsql')]",
+                "version": "latest"
+              },
+            "osDisk": {
+              "name": "[concat(parameters('VMNamesql3'), '-disk')]",
+              "createOption": "FromImage",
+              "managedDisk": {
+                "storageAccountType": "Standard_LRS"
+              },
+              "caching": "ReadWrite"
+            }
+          },
+          "osProfile": {
+            "computerName": "[concat(parameters('VMNamesql3'))]",
+            "adminUsername": "[parameters('localvmadminusername')]",
+            "windowsConfiguration": {
+              "provisionVMAgent": true
+            },
+            "secrets": [],
+            "adminPassword": "[parameters('localvmadminpassword')]"
+          },
+          "networkProfile": {
+            "networkInterfaces": [
+              {
+                "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNamesql3'), '-nic'))]"
+              }
+            ]
+          },
+          "availabilitySet": {
+            "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetNamesql'))]"
+          }
+        },
+        "dependsOn": [
+          "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetNamesql'))]",
+          "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNamesql3'), '-nic'))]"
+        ]
+      },
+      {
+        "type": "Microsoft.Network/networkInterfaces",
+        "name": "[concat(parameters('VMNamesql3'), '-nic')]",
+        "apiVersion": "2016-03-30",
+        "location": "[parameters('location')]",
+        "properties": {
+          "ipConfigurations": [
+            {
+              "name": "ipconfig1",
+              "properties": {
+                "privateIPAllocationMethod": "Dynamic",
+                  "subnet": {
+                  //  "id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
+                  //"id": "[concat('/subscriptions/',parameters('selectedSubscriptionID'),'/resourceGroups/',parameters('vnetResourceGroup'),'/providers/','/Microsoft.Network/virtualNetworks/',parameters('VnetName'),'/subnets/',parameters('subnetname'))]"
+                  "id": "[parameters ('subnetIdsql')]"
+                }
+              }
+            }
+          ],
+          "dnsSettings": {
+            "dnsServers": []
+          },
+          "enableIPForwarding": false
+        },
+        "dependsOn": [
+        //  "[resourceId('Microsoft.Network/virtualNetworks/', parameters ('VnetName'))]"
+        ]
+      }
   ],
   "outputs": {}
 }
