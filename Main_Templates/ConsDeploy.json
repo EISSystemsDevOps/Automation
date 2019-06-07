@@ -87,6 +87,30 @@
           "description": "Name of the virtual machine to be created"
         }
       },
+      "VMNamerds1": {
+        "defaultValue": "MyVM10",
+        "type": "string",
+        "maxLength": 15,
+        "metadata": {
+          "description": "Name of the virtual machine to be created"
+        }
+      },
+      "VMNamerds2": {
+        "defaultValue": "MyVM11",
+        "type": "string",
+        "maxLength": 15,
+        "metadata": {
+          "description": "Name of the virtual machine to be created"
+        }
+      },
+      "VMNamerds3": {
+        "defaultValue": "MyVM12",
+        "type": "string",
+        "maxLength": 15,
+        "metadata": {
+          "description": "Name of the virtual machine to be created"
+        }
+      },
     "virtualMachineSizecon": {
       "type": "string",
       "defaultValue": "Standard_B2s",
@@ -118,6 +142,16 @@
         }
       },
       "virtualMachineSizeELK": {
+        "type": "string",
+        "defaultValue": "Standard_B2s",
+        "allowedValues": [
+          "Standard_B2s"
+        ],
+        "metadata": {
+          "description": "Virtual Machine Size"
+        }
+      },
+      "virtualMachineSizerds": {
         "type": "string",
         "defaultValue": "Standard_B2s",
         "allowedValues": [
@@ -159,6 +193,14 @@
         "2016-Datacenter",
         "2019-Datacenter"      ]
   },
+  "windowsOSVersionrds": {
+    "type": "string",
+    "defaultValue": "2016-Datacenter",
+    "allowedValues": [      
+      "2012-R2-Datacenter",
+      "2016-Datacenter",
+      "2019-Datacenter"      ]
+},
     "availabilitySetNamecon": {
       "defaultValue": "MyAvailabilitySet",
       "type": "string",
@@ -185,8 +227,15 @@
           "type": "string",
           "metadata": {
             "description": "Availability Set Name where the VM will be placed"
-          }
-            },
+}
+},
+"availabilitySetNamerds": {
+"defaultValue": "MyAvailabilitySet",
+"type": "string",
+"metadata": {
+"description": "Availability Set Name where the VM will be placed"
+              }
+                },
     "subnetIDcon": {
       "type": "string",
       "metadata": {
@@ -211,6 +260,12 @@
       "description": "subnet ID inside the VNET"
     }   
    },
+   "subnetIDrds": {
+    "type": "string",
+    "metadata": {
+      "description": "subnet ID inside the VNET"
+    }   
+   }, 
       "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
@@ -789,170 +844,409 @@
         "dependsOn": [
         ]
       },
-      {
-        "type": "Microsoft.Compute/availabilitySets",
-        "name": "[parameters('availabilitySetNameelk')]",
-        "apiVersion": "2017-03-30",
-        "location": "[parameters('location')]",
-        "properties": {
-          "platformFaultDomainCount": 2,
-          "platformUpdateDomainCount": 5
-        },
-        "sku": {
-          "name": "Aligned"
-        }
-      },
-      {
-        "type": "Microsoft.Compute/virtualMachines",
-        "name": "[concat(parameters('VMNameelk1'))]",
-        "apiVersion": "2017-03-30",
-        "location": "[parameters('location')]",
-        "properties": {
-          "hardwareProfile": {
-            "vmSize": "[parameters('virtualMachineSizeelk')]"
+        {
+          "type": "Microsoft.Compute/availabilitySets",
+          "name": "[parameters('availabilitySetNameelk')]",
+          "apiVersion": "2017-03-30",
+          "location": "[parameters('location')]",
+          "properties": {
+            "platformFaultDomainCount": 2,
+            "platformUpdateDomainCount": 5
           },
-          "storageProfile": {
-            "imageReference": {
-              "publisher": "MicrosoftWindowsServer",
-              "offer": "WindowsServer",
-              "sku": "[parameters('windowsOSVersionelk')]",
-              "version": "latest"
-            },
-            "osDisk": {
-              "name": "[concat(parameters('VMNameelk1'), '-disk')]",
-              "createOption": "FromImage",
-              "managedDisk": {
-                "storageAccountType": "Standard_LRS"
-              },
-              "caching": "ReadWrite"
-            }
-          },
-          "licenseType": "Windows_Server",
-          "osProfile": {
-            "computerName": "[concat(parameters('VMNameelk1'))]",
-            "adminUsername": "[parameters('localvmadminusername')]",
-            "windowsConfiguration": {
-              "provisionVMAgent": true
-            },
-            "secrets": [],
-            "adminPassword": "[parameters('localvmadminpassword')]"
-          },
-          "networkProfile": {
-            "networkInterfaces": [
-              {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameelk1'), '-nic'))]"
-              }
-            ]
-          },
-          "availabilitySet": {
-            "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetNameelk'))]"
+          "sku": {
+            "name": "Aligned"
           }
         },
-        "dependsOn": [
-          "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetNameelk'))]",
-          "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameelk1'), '-nic'))]"
-        ]
-      },
-      {
-        "type": "Microsoft.Network/networkInterfaces",
-        "name": "[concat(parameters('VMNameelk1'), '-nic')]",
-        "apiVersion": "2016-03-30",
-        "location": "[parameters('location')]",
-        "properties": {
-          "ipConfigurations": [
-            {
-              "name": "ipconfig1",
-              "properties": {
-                "privateIPAllocationMethod": "Dynamic",
-                  "subnet": {
-                  "id": "[parameters ('subnetIdelk')]"
-                }
-              }
-            }
-          ],
-          "dnsSettings": {
-            "dnsServers": []
-          },
-          "enableIPForwarding": false
-        },
-        "dependsOn": [
-        ]
-      },
-      {
-        "type": "Microsoft.Compute/virtualMachines",
-        "name": "[concat(parameters('VMNameelk2'))]",
-        "apiVersion": "2017-03-30",
-        "location": "[parameters('location')]",
-        "properties": {
-          "hardwareProfile": {
-            "vmSize": "[parameters('virtualMachineSizeelk')]"
-          },
-          "storageProfile": {
+        {
+          "type": "Microsoft.Compute/virtualMachines",
+          "name": "[concat(parameters('VMNameelk1'))]",
+          "apiVersion": "2017-03-30",
+          "location": "[parameters('location')]",
+          "properties": {
+            "hardwareProfile": {
+              "vmSize": "[parameters('virtualMachineSizeelk')]"
+            },
+            "storageProfile": {
               "imageReference": {
                 "publisher": "MicrosoftWindowsServer",
                 "offer": "WindowsServer",
                 "sku": "[parameters('windowsOSVersionelk')]",
                 "version": "latest"
               },
-            "osDisk": {
-              "name": "[concat(parameters('VMNameelk2'), '-disk')]",
-              "createOption": "FromImage",
-              "managedDisk": {
-                "storageAccountType": "Standard_LRS"
+              "osDisk": {
+                "name": "[concat(parameters('VMNameelk1'), '-disk')]",
+                "createOption": "FromImage",
+                "managedDisk": {
+                  "storageAccountType": "Standard_LRS"
+                },
+                "caching": "ReadWrite"
+              }
+            },
+            "licenseType": "Windows_Server",
+            "osProfile": {
+              "computerName": "[concat(parameters('VMNameelk1'))]",
+              "adminUsername": "[parameters('localvmadminusername')]",
+              "windowsConfiguration": {
+                "provisionVMAgent": true
               },
-              "caching": "ReadWrite"
+              "secrets": [],
+              "adminPassword": "[parameters('localvmadminpassword')]"
+            },
+            "networkProfile": {
+              "networkInterfaces": [
+                {
+                  "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameelk1'), '-nic'))]"
+                }
+              ]
+            },
+            "availabilitySet": {
+              "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetNameelk'))]"
             }
           },
-          "osProfile": {
-            "computerName": "[concat(parameters('VMNameelk2'))]",
-            "adminUsername": "[parameters('localvmadminusername')]",
-            "windowsConfiguration": {
-              "provisionVMAgent": true
-            },
-            "secrets": [],
-            "adminPassword": "[parameters('localvmadminpassword')]"
-          },
-          "networkProfile": {
-            "networkInterfaces": [
-              {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameelk2'), '-nic'))]"
-              }
-            ]
-          },
-          "availabilitySet": {
-            "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetNameelk'))]"
-          }
+          "dependsOn": [
+            "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetNameelk'))]",
+            "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameelk1'), '-nic'))]"
+          ]
         },
-        "dependsOn": [
-          "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetNameelk'))]",
-          "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameelk2'), '-nic'))]"
-        ]
-      },
-      {
-        "type": "Microsoft.Network/networkInterfaces",
-        "name": "[concat(parameters('VMNameelk2'), '-nic')]",
-        "apiVersion": "2016-03-30",
-        "location": "[parameters('location')]",
-        "properties": {
-          "ipConfigurations": [
-            {
-              "name": "ipconfig1",
-              "properties": {
-                "privateIPAllocationMethod": "Dynamic",
-                  "subnet": {        
-                  "id": "[parameters ('subnetIdelk')]"
+        {
+          "type": "Microsoft.Network/networkInterfaces",
+          "name": "[concat(parameters('VMNameelk1'), '-nic')]",
+          "apiVersion": "2016-03-30",
+          "location": "[parameters('location')]",
+          "properties": {
+            "ipConfigurations": [
+              {
+                "name": "ipconfig1",
+                "properties": {
+                  "privateIPAllocationMethod": "Dynamic",
+                    "subnet": {
+                    "id": "[parameters ('subnetIdelk')]"
+                  }
                 }
               }
-            }
-          ],
-          "dnsSettings": {
-            "dnsServers": []
+            ],
+            "dnsSettings": {
+              "dnsServers": []
+            },
+            "enableIPForwarding": false
           },
-          "enableIPForwarding": false
+          "dependsOn": [
+          ]
         },
-        "dependsOn": [
-        ]   
-        } 
+        {
+          "type": "Microsoft.Compute/virtualMachines",
+          "name": "[concat(parameters('VMNameelk2'))]",
+          "apiVersion": "2017-03-30",
+          "location": "[parameters('location')]",
+          "properties": {
+            "hardwareProfile": {
+              "vmSize": "[parameters('virtualMachineSizeelk')]"
+            },
+            "storageProfile": {
+                "imageReference": {
+                  "publisher": "MicrosoftWindowsServer",
+                  "offer": "WindowsServer",
+                  "sku": "[parameters('windowsOSVersionelk')]",
+                  "version": "latest"
+                },
+              "osDisk": {
+                "name": "[concat(parameters('VMNameelk2'), '-disk')]",
+                "createOption": "FromImage",
+                "managedDisk": {
+                  "storageAccountType": "Standard_LRS"
+                },
+                "caching": "ReadWrite"
+              }
+            },
+            "osProfile": {
+              "computerName": "[concat(parameters('VMNameelk2'))]",
+              "adminUsername": "[parameters('localvmadminusername')]",
+              "windowsConfiguration": {
+                "provisionVMAgent": true
+              },
+              "secrets": [],
+              "adminPassword": "[parameters('localvmadminpassword')]"
+            },
+            "networkProfile": {
+              "networkInterfaces": [
+                {
+                  "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameelk2'), '-nic'))]"
+                }
+              ]
+            },
+            "availabilitySet": {
+              "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetNameelk'))]"
+            }
+          },
+          "dependsOn": [
+            "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetNameelk'))]",
+            "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNameelk2'), '-nic'))]"
+          ]
+        },
+        {
+          "type": "Microsoft.Network/networkInterfaces",
+          "name": "[concat(parameters('VMNameelk2'), '-nic')]",
+          "apiVersion": "2016-03-30",
+          "location": "[parameters('location')]",
+          "properties": {
+            "ipConfigurations": [
+              {
+                "name": "ipconfig1",
+                "properties": {
+                  "privateIPAllocationMethod": "Dynamic",
+                    "subnet": {        
+                    "id": "[parameters ('subnetIdelk')]"
+                  }
+                }
+              }
+            ],
+            "dnsSettings": {
+              "dnsServers": []
+            },
+            "enableIPForwarding": false
+          },
+          "dependsOn": [
+          ]   
+          },
+          {
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "[parameters('availabilitySetNamerds')]",
+            "apiVersion": "2017-03-30",
+            "location": "[parameters('location')]",
+            "properties": {
+              "platformFaultDomainCount": 2,
+              "platformUpdateDomainCount": 5
+            },
+            "sku": {
+              "name": "Aligned"
+            }
+          },
+          {
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[concat(parameters('VMNamerds1'))]",
+            "apiVersion": "2017-03-30",
+            "location": "[parameters('location')]",
+            "properties": {
+              "hardwareProfile": {
+                "vmSize": "[parameters('virtualMachineSizerds')]"
+              },
+              "storageProfile": {
+                "imageReference": {
+                  "publisher": "MicrosoftWindowsServer",
+                  "offer": "WindowsServer",
+                  "sku": "[parameters('windowsOSVersionrds')]",
+                  "version": "latest"
+                },
+                "osDisk": {
+                  "name": "[concat(parameters('VMNamerds1'), '-disk')]",
+                  "createOption": "FromImage",
+                  "managedDisk": {
+                    "storageAccountType": "Standard_LRS"
+                  },
+                  "caching": "ReadWrite"
+                }
+              },
+              "licenseType": "Windows_Server",
+              "osProfile": {
+                "computerName": "[concat(parameters('VMNamerds1'))]",
+                "adminUsername": "[parameters('localvmadminusername')]",
+                "windowsConfiguration": {
+                  "provisionVMAgent": true
+                },
+                "secrets": [],
+                "adminPassword": "[parameters('localvmadminpassword')]"
+              },
+              "networkProfile": {
+                "networkInterfaces": [
+                  {
+                    "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNamerds1'), '-nic'))]"
+                  }
+                ]
+              },
+              "availabilitySet": {
+                "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetNamerds'))]"
+              }
+            },
+            "dependsOn": [
+              "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetNamerds'))]",
+              "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNamerds1'), '-nic'))]"
+            ]
+          },
+          {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[concat(parameters('VMNamerds1'), '-nic')]",
+            "apiVersion": "2016-03-30",
+            "location": "[parameters('location')]",
+            "properties": {
+              "ipConfigurations": [
+                {
+                  "name": "ipconfig1",
+                  "properties": {
+                    "privateIPAllocationMethod": "Dynamic",
+                      "subnet": {
+                      "id": "[parameters ('subnetIdrds')]"
+                    }
+                  }
+                }
+              ],
+              "dnsSettings": {
+                "dnsServers": []
+              },
+              "enableIPForwarding": false
+            },
+            "dependsOn": [
+            ]
+          },
+          {
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[concat(parameters('VMNamerds2'))]",
+            "apiVersion": "2017-03-30",
+            "location": "[parameters('location')]",
+            "properties": {
+              "hardwareProfile": {
+                "vmSize": "[parameters('virtualMachineSizerds')]"
+              },
+              "storageProfile": {
+                  "imageReference": {
+                    "publisher": "MicrosoftWindowsServer",
+                    "offer": "WindowsServer",
+                    "sku": "[parameters('windowsOSVersionrds')]",
+                    "version": "latest"
+                  },
+                "osDisk": {
+                  "name": "[concat(parameters('VMNamerds2'), '-disk')]",
+                  "createOption": "FromImage",
+                  "managedDisk": {
+                    "storageAccountType": "Standard_LRS"
+                  },
+                  "caching": "ReadWrite"
+                }
+              },
+              "osProfile": {
+                "computerName": "[concat(parameters('VMNamerds2'))]",
+                "adminUsername": "[parameters('localvmadminusername')]",
+                "windowsConfiguration": {
+                  "provisionVMAgent": true
+                },
+                "secrets": [],
+                "adminPassword": "[parameters('localvmadminpassword')]"
+              },
+              "networkProfile": {
+                "networkInterfaces": [
+                  {
+                    "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNamerds2'), '-nic'))]"
+                  }
+                ]
+              },
+              "availabilitySet": {
+                "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetNamerds'))]"
+              }
+            },
+            "dependsOn": [
+              "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetNamerds'))]",
+              "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNamerds2'), '-nic'))]"
+            ]
+          },
+          {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[concat(parameters('VMNamerds2'), '-nic')]",
+            "apiVersion": "2016-03-30",
+            "location": "[parameters('location')]",
+            "properties": {
+              "ipConfigurations": [
+                {
+                  "name": "ipconfig1",
+                  "properties": {
+                    "privateIPAllocationMethod": "Dynamic",
+                      "subnet": {        
+                      "id": "[parameters ('subnetIdrds')]"
+                    }
+                  }
+                }
+              ],
+              "dnsSettings": {
+                "dnsServers": []
+              },
+              "enableIPForwarding": false
+            },
+            "dependsOn": [
+            ]   
+          },
+          {
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[concat(parameters('VMNamerds3'))]",
+            "apiVersion": "2017-03-30",
+            "location": "[parameters('location')]",
+            "properties": {
+              "hardwareProfile": {
+                "vmSize": "[parameters('virtualMachineSizerds')]"
+              },
+              "storageProfile": {
+                  "imageReference": {
+                    "publisher": "MicrosoftWindowsServer",
+                    "offer": "WindowsServer",
+                    "sku": "[parameters('windowsOSVersionrds')]",
+                    "version": "latest"
+                  },
+                "osDisk": {
+                  "name": "[concat(parameters('VMNamerds3'), '-disk')]",
+                  "createOption": "FromImage",
+                  "managedDisk": {
+                    "storageAccountType": "Standard_LRS"
+                  },
+                  "caching": "ReadWrite"
+                }
+              },
+              "osProfile": {
+                "computerName": "[concat(parameters('VMNamerds3'))]",
+                "adminUsername": "[parameters('localvmadminusername')]",
+                "windowsConfiguration": {
+                  "provisionVMAgent": true
+                },
+                "secrets": [],
+                "adminPassword": "[parameters('localvmadminpassword')]"
+              },
+              "networkProfile": {
+                "networkInterfaces": [
+                  {
+                    "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNamerds3'), '-nic'))]"
+                  }
+                ]
+              },
+              "availabilitySet": {
+                "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetNamerds'))]"
+              }
+            },
+            "dependsOn": [
+              "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetNamerds'))]",
+              "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('VMNamerds3'), '-nic'))]"
+            ]
+          },
+          {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[concat(parameters('VMNamerds3'), '-nic')]",
+            "apiVersion": "2016-03-30",
+            "location": "[parameters('location')]",
+            "properties": {
+              "ipConfigurations": [
+                {
+                  "name": "ipconfig1",
+                  "properties": {
+                    "privateIPAllocationMethod": "Dynamic",
+                      "subnet": {        
+                      "id": "[parameters ('subnetIdrds')]"
+                    }
+                  }
+                }
+              ],
+              "dnsSettings": {
+                "dnsServers": []
+              },
+              "enableIPForwarding": false
+            },
+            "dependsOn": [
+            ]   
+          }              
   ],
   "outputs": {}
 }
