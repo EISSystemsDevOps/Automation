@@ -50,6 +50,7 @@
         "2012-Datacenter",
         "2012-R2-Datacenter",
         "2016-Datacenter",
+        "2019-Datacenter"
         "Windows-Server-Technical-Preview"
       ],
       "metadata": {
@@ -335,6 +336,7 @@
       "nicName": "[variables('NICObject').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
+      "LicenseType": "Windows_Server",
       "publisher": "[parameters('publisher')]",
       "offer": "[parameters('offer')]",
       "sku": "[parameters('sku')]",
