@@ -337,7 +337,6 @@
       "nicName": "[variables('NICObject').Name]",
       "adminUserName": "[parameters('adminUsername')]",
       "adminPassword": "[parameters('adminPassword')]",
-      "LicenseType": "Windows_Server",
       "publisher": "[parameters('publisher')]",
       "offer": "[parameters('offer')]",
       "sku": "[parameters('sku')]",
