@@ -62,6 +62,7 @@
         //"[resourceid('Microsoft.Resources/deployments/', 'AvailabilitySetResource')]"
       ],
       "properties": {
+        "licenseType": "Windows_Server",
         "hardwareProfile": {
           //"vmSize": "Standard_D1"
           "vmSize": "[parameters('VMObject').Size]"
