@@ -56,6 +56,7 @@
       ],
       "properties": {
         "hardwareProfile": {
+          "licenseType": "Windows_Server",
           //"vmSize": "Standard_D1"
           "vmSize": "[parameters('VMObject').Size]"
         },
