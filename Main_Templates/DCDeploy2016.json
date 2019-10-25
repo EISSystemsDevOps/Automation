@@ -134,6 +134,7 @@
       "apiVersion": "2017-03-30",
       "location": "[parameters('location')]",
       "properties": {
+        "licenseType": "Windows_Server",
         "hardwareProfile": {
           "vmSize": "[parameters('virtualMachineSize')]"
         },
