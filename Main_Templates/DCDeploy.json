@@ -3,14 +3,14 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "SubscriptionID": {
-      "defaultValue": "fc71ccd3-7670-4dbb-b89b-a308ceaf23c0",
+      "defaultValue": "",
       "type": "securestring",
       "metadata": {
         "description": "Administrator password for the local admin account"
       }
     },
     "virtualMachineAdminUserName": {
-      "defaultValue": "Allscriptsadmin",
+      "defaultValue": "",
       "type": "string",
       "metadata": {
         "description": "Administrator Username for the local admin account"
@@ -191,7 +191,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
-                //"id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
+                //"id": "/subscriptions//resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
                 "id": "[parameters ('subnetId')]"
               }
             }
@@ -268,7 +268,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
-                //  "id": "/subscriptions/fc71ccd3-7670-4dbb-b89b-a308ceaf23c0/resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
+                //  "id": "/subscriptions//resourceGroups/tst-1-net-001-rg/providers/Microsoft.Network/virtualNetworks/tstvnet/subnets/tstsubnet"
                 //"id": "[concat('/subscriptions/',parameters('SubscriptionID'),'/resourceGroups/',parameters('virtualNetworkResourceGroup'),'/providers/','/Microsoft.Network/virtualNetworks/',parameters('VirtualNetworkName'),'/subnets/',parameters('Subnet1Name'))]"
                 "id": "[parameters ('subnetId')]"
               }
