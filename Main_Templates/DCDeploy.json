@@ -6,7 +6,7 @@
       "defaultValue": "",
       "type": "securestring",
       "metadata": {
-        "description": "Administrator password for the local admin account"
+        "description": "Subscription ID to deploy resources"
       }
     },
     "virtualMachineAdminUserName": {
