@@ -395,6 +395,7 @@
       "dependsOn": [ ],
       "properties": {
         "mode": "Incremental",
+        "allowBlobPublicAccess": false,
         "templateLink": {
           "uri": "[variables('StorageAccountURI')]",
           "contentVersion": "1.0.0.0"
